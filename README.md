@@ -78,6 +78,55 @@ You can disable minification if you don't need it with minify option:
 }
 ```
 
+### Transpile template literals
+
+Template literals are not supported yet by some browsers. You'll probably transpile your code with some preset that includes `babel-plugin-transform-es2015-template-literals` to make it work in older browsers, but there is one tiny caveat. Output of that plugin is quite wordy. It's done this way to meet specification requirements.
+
+```JS
+// processed with babel-preset-latest
+
+var _templateObject = _taggedTemplateLiteral(['width: 100%;'], ['width: 100%;']);
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+var Simple = _styledComponents2.default.div(_templateObject);
+```   
+
+Styled-components do not require full spec compatibility. So in order to reduce bundle size this plugin will  transpile template literals attached to styled-component to the form that works in older browsers but have smaller footprint.
+
+```JS
+// processed with babel-preset-latest
+// and babel-plugin-styled-components with { transpileTemplateLiterals: true } option
+
+var Simple = _styledComponents2.default.div(['width: 100%;']);
+```
+
+Take a note that it will keep other template literals not related to styled-components as is.
+
+```JS
+// following will be converted:
+styled.div``
+keyframe``
+css``
+
+// But this will not be converted and will arise syntax error in IE:
+`some text`
+
+// In next example outer template literal will be converted because it's attached to component factory,
+// but inner template literals will not be touched and will generate syntax error in older browsers.
+styled.div`color: ${ light ? `white` : `black`};`
+```
+
+You can disable this feature with `transpileTemplateLiterals` option:
+
+```JSON
+{
+  "plugins": [
+    ["styled-components", {
+      "transpileTemplateLiterals": false
+    }]
+  ]
+}
+```
+
 ## License
 
 Licensed under the MIT License, Copyright © 2016 Vladimir Danchenkov and Maximilian Stoiber.

@@ -5,8 +5,8 @@
   "plugins": [
     ["../../../src", {
       "ssr": false,
-      "displayName": false,
-      "transpileTemplateLiterals": false
+      "displayName": true,
+      "transpileTemplateLiterals": true
     }]
   ]
 }
