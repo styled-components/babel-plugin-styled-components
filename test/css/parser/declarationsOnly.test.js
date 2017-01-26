@@ -12,6 +12,7 @@ describe('parse declarations only', () => {
     expect(() => parse`
       color: red;
       text-align: center
+      font-family: "Operator Mono";
     `).toThrow();
   });
 

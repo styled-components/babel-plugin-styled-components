@@ -20,8 +20,8 @@ export const selectorNode = (css, interpolations, start, end) => ({
 export const propertyNode = (css, interpolations, start, end) => {
   const value = css.slice(start, end)
 
-  if (value.includes(';')) {
-    throw new Error(`Unexpected token! Properties cannot contain ';'.`)
+  if (value.includes(';') || value.includes(':')) {
+    throw new Error(`Unexpected token! Properties cannot contain ';' or ':'.`)
   } else if (/\s/g.test(value.trim())) {
     throw new Error(`Unexpected token! Properties cannot contain whitespaces.`)
   } else if (interpolations.length) {
@@ -35,12 +35,20 @@ export const propertyNode = (css, interpolations, start, end) => {
   }
 }
 
-export const valueNode = (css, interpolations, start, end) => ({
-  type: 'ValueLiteral',
-  loc: [start, end],
-  interpolations,
-  value: css.slice(start, end)
-})
+export const valueNode = (css, interpolations, start, end) => {
+  const value = css.slice(start, end)
+
+  if (value.includes(';') || value.includes(':')) {
+    throw new Error(`Unexpected token! Values cannot contain ';' or ':'.`)
+  }
+
+  return {
+    type: 'ValueLiteral',
+    loc: [start, end],
+    interpolations,
+    value
+  }
+}
 
 // Parses a declaration of the form `property: value`
 export const declarationNode = (css, interpolations, start, separator, end) => ({
@@ -100,18 +108,18 @@ export const blockNode = (css, interpolations, start, end) => {
       ))
 
       index = _start = _end + 1
-    } else if (token === ':') {
-      const _end = findToken(css, ';', index, end)
+    } else if (token === ';') {
+      const separator = findToken(css, ':', _start, index)
 
       declarations.push(declarationNode(
         css,
-        filterNodesForLocation(interpolations, _start, _end),
+        filterNodesForLocation(interpolations, _start, index),
         _start,
-        index,
-        _end
+        separator,
+        index
       ))
 
-      index = _start = _end + 1
+      index = _start = index + 1
     } else {
       index++
     }
