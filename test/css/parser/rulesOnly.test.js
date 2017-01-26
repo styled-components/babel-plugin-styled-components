@@ -2,20 +2,20 @@ import parse from '../../../src/css/parser';
 
 describe('parse rules only', () => {
   it('parses normal rules', () => {
-    const ast = parse(`
+    const ast = parse`
       .class {
       }
-    `)
+    `
 
     expect(ast).toMatchSnapshot();
     expect(ast.rules[0].selector.value).toBe('.class');
   });
 
   it('parses multiple rules', () => {
-    const ast = parse(`
+    const ast = parse`
       .classA {}
       .classB {}
-    `)
+    `
 
     expect(ast).toMatchSnapshot();
     expect(ast.rules[0].selector.value).toBe('.classA');
@@ -23,18 +23,18 @@ describe('parse rules only', () => {
   });
 
   it('parses nested rules', () => {
-    const ast = parse(`
+    const ast = parse`
       .outer {
         .inner {}
       }
-    `)
+    `
 
     expect(ast).toMatchSnapshot();
     expect(ast.rules[0].selector.value).toBe('.outer');
   });
 
   it('parses multiple nested rules', () => {
-    const ast = parse(`
+    const ast = parse`
       .outerA {
         .innerA {}
       }
@@ -42,7 +42,7 @@ describe('parse rules only', () => {
       .outerB {
         .innerB {}
       }
-    `)
+    `
 
     expect(ast).toMatchSnapshot();
     expect(ast.rules[0].selector.value).toBe('.outerA');
@@ -50,11 +50,11 @@ describe('parse rules only', () => {
   });
 
   it('parses rules containing declarations', () => {
-    const ast = parse(`
+    const ast = parse`
       .class {
         text-align: center;
       }
-    `)
+    `
 
     expect(ast).toMatchSnapshot();
     expect(ast.rules[0].block.declarations[0].property.value).toBe('text-align');
@@ -62,10 +62,10 @@ describe('parse rules only', () => {
   });
 
   it('throws if closing paranthesis is missing', () => {
-    expect(() => parse(`
+    expect(() => parse`
       .class {
         text-align: center;
-    `)).toThrow()
+    `).toThrow()
   });
 
   it('throws if closing paranthesis is missing', () => {
