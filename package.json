@@ -15,7 +15,12 @@
   "devDependencies": {
     "babel-cli": "^6.4.5",
     "babel-preset-env": "^1.1.8",
-    "jest": "^17.0.3"
+    "jest": "^17.0.3",
+    "react": "^15.4.2",
+    "styled-components": "^1.4.0"
+  },
+  "peerDependencies": {
+    "styled-components": ">=1.4.0"
   },
   "scripts": {
     "clean": "rm -rf lib",
