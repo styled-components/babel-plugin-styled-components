@@ -1,0 +1,267 @@
+exports[`unnest should work on nested rules 1`] = `
+Array [
+  Object {
+    "block": Object {
+      "declarations": Array [
+        Object {
+          "loc": Array [
+            0,
+            17,
+          ],
+          "property": Object {
+            "loc": Array [
+              0,
+              12,
+            ],
+            "type": "PropertyLiteral",
+            "value": "
+      color",
+          },
+          "type": "Declaration",
+          "value": Object {
+            "interpolations": Array [],
+            "loc": Array [
+              13,
+              17,
+            ],
+            "type": "ValueLiteral",
+            "value": " red",
+          },
+        },
+        Object {
+          "loc": Array [
+            18,
+            41,
+          ],
+          "property": Object {
+            "loc": Array [
+              18,
+              35,
+            ],
+            "type": "PropertyLiteral",
+            "value": "
+      background",
+          },
+          "type": "Declaration",
+          "value": Object {
+            "interpolations": Array [],
+            "loc": Array [
+              36,
+              41,
+            ],
+            "type": "ValueLiteral",
+            "value": " blue",
+          },
+        },
+      ],
+      "loc": Array [
+        0,
+        93,
+      ],
+      "rules": Array [],
+      "type": "Block",
+    },
+    "loc": Array [
+      0,
+      93,
+    ],
+    "selector": Object {
+      "interpolations": Array [],
+      "loc": Array [
+        0,
+        0,
+      ],
+      "type": "SelectorLiteral",
+      "value": "&",
+    },
+    "type": "Rule",
+  },
+  Object {
+    "block": Object {
+      "declarations": Array [
+        Object {
+          "loc": Array [
+            59,
+            80,
+          ],
+          "property": Object {
+            "loc": Array [
+              59,
+              73,
+            ],
+            "type": "PropertyLiteral",
+            "value": "
+        color",
+          },
+          "type": "Declaration",
+          "value": Object {
+            "interpolations": Array [],
+            "loc": Array [
+              74,
+              80,
+            ],
+            "type": "ValueLiteral",
+            "value": " green",
+          },
+        },
+      ],
+      "loc": Array [
+        59,
+        88,
+      ],
+      "rules": Array [],
+      "type": "Block",
+    },
+    "loc": Array [
+      42,
+      89,
+    ],
+    "selector": Object {
+      "interpolations": Array [],
+      "loc": Array [
+        42,
+        57,
+      ],
+      "type": "SelectorLiteral",
+      "value": "
+
+      & > div",
+    },
+    "type": "Rule",
+  },
+]
+`;
+
+exports[`unnest should work on nested rules containing pseudo selectors 1`] = `
+Array [
+  Object {
+    "block": Object {
+      "declarations": Array [
+        Object {
+          "loc": Array [
+            0,
+            17,
+          ],
+          "property": Object {
+            "loc": Array [
+              0,
+              12,
+            ],
+            "type": "PropertyLiteral",
+            "value": "
+      color",
+          },
+          "type": "Declaration",
+          "value": Object {
+            "interpolations": Array [],
+            "loc": Array [
+              13,
+              17,
+            ],
+            "type": "ValueLiteral",
+            "value": " red",
+          },
+        },
+        Object {
+          "loc": Array [
+            18,
+            41,
+          ],
+          "property": Object {
+            "loc": Array [
+              18,
+              35,
+            ],
+            "type": "PropertyLiteral",
+            "value": "
+      background",
+          },
+          "type": "Declaration",
+          "value": Object {
+            "interpolations": Array [],
+            "loc": Array [
+              36,
+              41,
+            ],
+            "type": "ValueLiteral",
+            "value": " blue",
+          },
+        },
+      ],
+      "loc": Array [
+        0,
+        93,
+      ],
+      "rules": Array [],
+      "type": "Block",
+    },
+    "loc": Array [
+      0,
+      93,
+    ],
+    "selector": Object {
+      "interpolations": Array [],
+      "loc": Array [
+        0,
+        0,
+      ],
+      "type": "SelectorLiteral",
+      "value": "&",
+    },
+    "type": "Rule",
+  },
+  Object {
+    "block": Object {
+      "declarations": Array [
+        Object {
+          "loc": Array [
+            59,
+            80,
+          ],
+          "property": Object {
+            "loc": Array [
+              59,
+              73,
+            ],
+            "type": "PropertyLiteral",
+            "value": "
+        color",
+          },
+          "type": "Declaration",
+          "value": Object {
+            "interpolations": Array [],
+            "loc": Array [
+              74,
+              80,
+            ],
+            "type": "ValueLiteral",
+            "value": " green",
+          },
+        },
+      ],
+      "loc": Array [
+        59,
+        88,
+      ],
+      "rules": Array [],
+      "type": "Block",
+    },
+    "loc": Array [
+      42,
+      89,
+    ],
+    "selector": Object {
+      "interpolations": Array [],
+      "loc": Array [
+        42,
+        57,
+      ],
+      "type": "SelectorLiteral",
+      "value": "
+
+      &:hover",
+    },
+    "type": "Rule",
+  },
+]
+`;
