@@ -44,13 +44,8 @@ export const findClosingParanthesis = (css, start, end) => {
 
 // Filters nodes for `loc` that falls in-between start and end
 export const filterNodesForLocation = (nodes, start, end) => nodes
-  .filter(({ loc }) => {
-    const nodeStart = Math.max(0, loc[0] - 1)
-    const nodeEnd = Math.max(0, loc[1] - 1)
-
-    return (
-      nodeStart >= start && nodeStart <= end &&
-      nodeEnd >= start && nodeEnd <= end
-    )
-  })
+  .filter(({ loc }) => (
+    loc[0] >= start && loc[0] <= end &&
+    loc[1] >= start && loc[1] <= end
+  ))
 

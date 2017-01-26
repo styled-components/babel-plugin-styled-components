@@ -129,7 +129,7 @@ const parse = (cssArr, ...nodes) => {
   for (let i = 0; i < cssArr.length; i++) {
     css += cssArr[i]
 
-    const loc = css.length
+    const loc = Math.max(0, css.length - 1)
     const node = nodes[i]
 
     interpolations.push(interpolationNode(node, loc))
