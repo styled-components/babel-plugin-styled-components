@@ -1,126 +1,87 @@
-const parse = css => {
-  const findToken = (needle, start, end) => {
-    let index = start;
+import {
+  findToken,
+  findClosingParanthesis
+} from './utils/parsingUtils'
 
-    while (
-      css[index] !== needle &&
-      index <= end
-    ) {
-      index++;
-    }
+export const selectorNode = (css, start, end) => ({
+  type: 'SelectorLiteral',
+  loc: [start, end],
+  value: css.slice(start, end).trim()
+})
 
-    // Throw if there's no matching token
-    if (index > end) {
-      throw new Error(`Unexpected token! Unable to find matching '${needle}'.`);
-    }
+export const propertyNode = (css, start, end) => {
+  const value = css.slice(start, end).trim()
 
-    return index;
-  };
+  if (value.includes(';')) {
+    throw new Error(`Unexpected token! Properties cannot contain ';'.`)
+  } else if (/\s/g.test(value)) {
+    throw new Error(`Unexpected token! Properties cannot contain whitespaces.`)
+  }
 
-  const findClosingParanthesis = (start, end) => {
-    let level = 1;
-    let index;
+  return {
+    type: 'PropertyLiteral',
+    loc: [start, end],
+    value
+  }
+}
 
-    for(
-      index = start;
-      level > 0 && index <= end;
+export const valueNode = (css, start, end) => ({
+  type: 'ValueLiteral',
+  loc: [start, end],
+  value: css.slice(start, end).trim()
+})
+
+// Parses a declaration of the form `property: value`
+export const declarationNode = (css, start, separator, end) => ({
+  type: 'Declaration',
+  loc: [start, end],
+  property: propertyNode(css, start, separator),
+  value: valueNode(css, separator + 1, end)
+})
+
+// Parses a rule of the form `selector { body }`
+export const ruleNode = (css, start, separator, end) => ({
+  type: 'Rule',
+  loc: [start, end],
+  selector: selectorNode(css, start, separator - 1),
+  block: blockNode(css, separator + 1, end - 1)
+})
+
+export const blockNode = (css, start, end) => {
+  let _start = start
+  let index = start
+
+  const declarations = []
+  const rules = []
+
+  while (index <= end) {
+    const token = css[index]
+
+    if (token === '{') {
+      const _end = findClosingParanthesis(css, index + 1, end)
+      rules.push(ruleNode(css, _start, index, _end))
+
+      index = _start = _end + 1
+    } else if (token === ':') {
+      const _end = findToken(css, ';', index, end)
+      declarations.push(declarationNode(css, _start, index, _end))
+
+      index = _start = _end + 1
+    } else {
       index++
-    ) {
-      const token = css[index];
-
-      if (token === '{') {
-        level++;
-      } else if (token === '}') {
-        level--;
-      }
     }
+  }
 
-    // Throw if there's no matching token
-    if (index >= end) {
-      throw new Error(`Unexpected token! Unable to find matching '}'.`);
-    }
-
-    return index;
-  };
-
-  const parseSelector = (start, end) => ({
-    type: 'SelectorLiteral',
+  return {
+    type: 'Block',
     loc: [start, end],
-    value: css.slice(start, end).trim()
-  });
+    declarations,
+    rules
+  }
+}
 
-  const parseProperty = (start, end) => {
-    const value = css.slice(start, end).trim();
+const parse = css => {
+  return blockNode(css, 0, css.length - 1)
+}
 
-    if (value.includes(';')) {
-      throw new Error(`Unexpected token! Properties cannot contain ';'.`);
-    } else if (/\s/g.test(value)) {
-      throw new Error(`Unexpected token! Properties cannot contain whitespaces.`);
-    }
-
-    return {
-      type: 'PropertyLiteral',
-      loc: [start, end],
-      value
-    };
-  };
-
-  const parseValue = (start, end) => ({
-    type: 'ValueLiteral',
-    loc: [start, end],
-    value: css.slice(start, end).trim()
-  });
-
-  // Parses a declaration of the form `property: value;`
-  const parseDeclaration = (start, separator, end) => ({
-    type: 'Declaration',
-    loc: [start, end],
-    property: parseProperty(start, separator),
-    value: parseValue(separator + 1, end)
-  });
-
-  // Parses a rule of the form `selector { body }`
-  const parseRule = (start, separator, end) => ({
-    type: 'Rule',
-    loc: [start, end],
-    selector: parseSelector(start, separator - 1),
-    block: parseBlock(separator + 1, end - 1)
-  });
-
-  const parseBlock = (start, end) => {
-    let _start = start;
-    let index = start;
-
-    const declarations = [];
-    const rules = [];
-
-    while (index <= end) {
-      const token = css[index];
-
-      if (token === '{') {
-        const _end = findClosingParanthesis(index + 1, end);
-        rules.push(parseRule(_start, index, _end));
-
-        index = _start = _end + 1;
-      } else if (token === ':') {
-        const _end = findToken(';', index, end);
-        declarations.push(parseDeclaration(_start, index, _end));
-
-        index = _start = _end + 1;
-      } else {
-        index++;
-      }
-    }
-
-    return {
-      type: 'Block',
-      loc: [start, end],
-      declarations,
-      rules
-    };
-  };
-
-  return parseBlock(0, css.length - 1);
-};
-
-export default parse;
+export default parse
