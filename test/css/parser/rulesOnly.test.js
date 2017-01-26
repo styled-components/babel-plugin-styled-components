@@ -8,7 +8,7 @@ describe('parse rules only', () => {
     `
 
     expect(ast).toMatchSnapshot();
-    expect(ast.rules[0].selector.value).toBe('.class');
+    expect(ast.rules[0].selector.value.trim()).toBe('.class');
   });
 
   it('parses multiple rules', () => {
@@ -18,8 +18,8 @@ describe('parse rules only', () => {
     `
 
     expect(ast).toMatchSnapshot();
-    expect(ast.rules[0].selector.value).toBe('.classA');
-    expect(ast.rules[1].selector.value).toBe('.classB');
+    expect(ast.rules[0].selector.value.trim()).toBe('.classA');
+    expect(ast.rules[1].selector.value.trim()).toBe('.classB');
   });
 
   it('parses nested rules', () => {
@@ -30,7 +30,7 @@ describe('parse rules only', () => {
     `
 
     expect(ast).toMatchSnapshot();
-    expect(ast.rules[0].selector.value).toBe('.outer');
+    expect(ast.rules[0].selector.value.trim()).toBe('.outer');
   });
 
   it('parses multiple nested rules', () => {
@@ -45,8 +45,8 @@ describe('parse rules only', () => {
     `
 
     expect(ast).toMatchSnapshot();
-    expect(ast.rules[0].selector.value).toBe('.outerA');
-    expect(ast.rules[1].selector.value).toBe('.outerB');
+    expect(ast.rules[0].selector.value.trim()).toBe('.outerA');
+    expect(ast.rules[1].selector.value.trim()).toBe('.outerB');
   });
 
   it('parses rules containing declarations', () => {
@@ -57,8 +57,8 @@ describe('parse rules only', () => {
     `
 
     expect(ast).toMatchSnapshot();
-    expect(ast.rules[0].block.declarations[0].property.value).toBe('text-align');
-    expect(ast.rules[0].block.declarations[0].value.value).toBe('center');
+    expect(ast.rules[0].block.declarations[0].property.value.trim()).toBe('text-align');
+    expect(ast.rules[0].block.declarations[0].value.value.trim()).toBe('center');
   });
 
   it('throws if closing paranthesis is missing', () => {

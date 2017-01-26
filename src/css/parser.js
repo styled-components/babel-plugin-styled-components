@@ -13,16 +13,19 @@ export const interpolationNode = (babelNode, loc) => ({
 export const selectorNode = (css, interpolations, start, end) => ({
   type: 'SelectorLiteral',
   loc: [start, end],
-  value: css.slice(start, end).trim()
+  interpolations,
+  value: css.slice(start, end)
 })
 
 export const propertyNode = (css, interpolations, start, end) => {
-  const value = css.slice(start, end).trim()
+  const value = css.slice(start, end)
 
   if (value.includes(';')) {
     throw new Error(`Unexpected token! Properties cannot contain ';'.`)
-  } else if (/\s/g.test(value)) {
+  } else if (/\s/g.test(value.trim())) {
     throw new Error(`Unexpected token! Properties cannot contain whitespaces.`)
+  } else if (interpolations.length) {
+    throw new Error(`Unexpected interpolation! Properties cannot contain interpolations.`)
   }
 
   return {
@@ -35,7 +38,8 @@ export const propertyNode = (css, interpolations, start, end) => {
 export const valueNode = (css, interpolations, start, end) => ({
   type: 'ValueLiteral',
   loc: [start, end],
-  value: css.slice(start, end).trim()
+  interpolations,
+  value: css.slice(start, end)
 })
 
 // Parses a declaration of the form `property: value`

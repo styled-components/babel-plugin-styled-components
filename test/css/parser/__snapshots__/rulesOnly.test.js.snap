@@ -29,12 +29,14 @@ Object {
               35,
             ],
             "selector": Object {
+              "interpolations": Array [],
               "loc": Array [
                 16,
                 32,
               ],
               "type": "SelectorLiteral",
-              "value": ".innerA",
+              "value": "
+        .innerA",
             },
             "type": "Rule",
           },
@@ -46,12 +48,14 @@ Object {
         43,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           0,
           14,
         ],
         "type": "SelectorLiteral",
-        "value": ".outerA",
+        "value": "
+      .outerA",
       },
       "type": "Rule",
     },
@@ -78,12 +82,14 @@ Object {
               79,
             ],
             "selector": Object {
+              "interpolations": Array [],
               "loc": Array [
                 60,
                 76,
               ],
               "type": "SelectorLiteral",
-              "value": ".innerB",
+              "value": "
+        .innerB",
             },
             "type": "Rule",
           },
@@ -95,12 +101,14 @@ Object {
         87,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           44,
           58,
         ],
         "type": "SelectorLiteral",
-        "value": ".outerB",
+        "value": "
+      .outerB",
       },
       "type": "Rule",
     },
@@ -132,12 +140,14 @@ Object {
         17,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           0,
           14,
         ],
         "type": "SelectorLiteral",
-        "value": ".classA",
+        "value": "
+      .classA",
       },
       "type": "Rule",
     },
@@ -156,12 +166,13 @@ Object {
         34,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           18,
           31,
         ],
         "type": "SelectorLiteral",
-        "value": ".classB",
+        "value": "      .classB",
       },
       "type": "Rule",
     },
@@ -201,12 +212,14 @@ Object {
               33,
             ],
             "selector": Object {
+              "interpolations": Array [],
               "loc": Array [
                 15,
                 30,
               ],
               "type": "SelectorLiteral",
-              "value": ".inner",
+              "value": "
+        .inner",
             },
             "type": "Rule",
           },
@@ -218,12 +231,14 @@ Object {
         41,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           0,
           13,
         ],
         "type": "SelectorLiteral",
-        "value": ".outer",
+        "value": "
+      .outer",
       },
       "type": "Rule",
     },
@@ -255,12 +270,14 @@ Object {
         23,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           0,
           13,
         ],
         "type": "SelectorLiteral",
-        "value": ".class",
+        "value": "
+      .class",
       },
       "type": "Rule",
     },
@@ -291,16 +308,18 @@ Object {
                 34,
               ],
               "type": "PropertyLiteral",
-              "value": "text-align",
+              "value": "
+        text-align",
             },
             "type": "Declaration",
             "value": Object {
+              "interpolations": Array [],
               "loc": Array [
                 35,
                 42,
               ],
               "type": "ValueLiteral",
-              "value": "center",
+              "value": " center",
             },
           },
         ],
@@ -316,12 +335,14 @@ Object {
         51,
       ],
       "selector": Object {
+        "interpolations": Array [],
         "loc": Array [
           0,
           13,
         ],
         "type": "SelectorLiteral",
-        "value": ".class",
+        "value": "
+      .class",
       },
       "type": "Rule",
     },
