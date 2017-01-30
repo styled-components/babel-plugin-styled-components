@@ -1,3 +1,9 @@
+jest.mock('shortid', () => ({
+  generate() {
+    return 'SHORTID'
+  }
+}))
+
 import path from 'path'
 import fs from 'fs'
 import { transformFileSync } from 'babel-core'
