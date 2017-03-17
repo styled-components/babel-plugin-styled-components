@@ -1,0 +1,352 @@
+exports[`parse rules only parses multiple nested rules 1`] = `
+Object {
+  "declarations": Array [],
+  "loc": Array [
+    0,
+    91,
+  ],
+  "rules": Array [
+    Object {
+      "block": Object {
+        "declarations": Array [],
+        "loc": Array [
+          16,
+          42,
+        ],
+        "rules": Array [
+          Object {
+            "block": Object {
+              "declarations": Array [],
+              "loc": Array [
+                34,
+                34,
+              ],
+              "rules": Array [],
+              "type": "Block",
+            },
+            "loc": Array [
+              16,
+              35,
+            ],
+            "selector": Object {
+              "interpolations": Array [],
+              "loc": Array [
+                16,
+                32,
+              ],
+              "type": "SelectorLiteral",
+              "value": "
+        .innerA",
+            },
+            "type": "Rule",
+          },
+        ],
+        "type": "Block",
+      },
+      "loc": Array [
+        0,
+        43,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          0,
+          14,
+        ],
+        "type": "SelectorLiteral",
+        "value": "
+      .outerA",
+      },
+      "type": "Rule",
+    },
+    Object {
+      "block": Object {
+        "declarations": Array [],
+        "loc": Array [
+          60,
+          86,
+        ],
+        "rules": Array [
+          Object {
+            "block": Object {
+              "declarations": Array [],
+              "loc": Array [
+                78,
+                78,
+              ],
+              "rules": Array [],
+              "type": "Block",
+            },
+            "loc": Array [
+              60,
+              79,
+            ],
+            "selector": Object {
+              "interpolations": Array [],
+              "loc": Array [
+                60,
+                76,
+              ],
+              "type": "SelectorLiteral",
+              "value": "
+        .innerB",
+            },
+            "type": "Rule",
+          },
+        ],
+        "type": "Block",
+      },
+      "loc": Array [
+        44,
+        87,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          44,
+          58,
+        ],
+        "type": "SelectorLiteral",
+        "value": "
+      .outerB",
+      },
+      "type": "Rule",
+    },
+  ],
+  "type": "Block",
+}
+`;
+
+exports[`parse rules only parses multiple rules 1`] = `
+Object {
+  "declarations": Array [],
+  "loc": Array [
+    0,
+    38,
+  ],
+  "rules": Array [
+    Object {
+      "block": Object {
+        "declarations": Array [],
+        "loc": Array [
+          16,
+          16,
+        ],
+        "rules": Array [],
+        "type": "Block",
+      },
+      "loc": Array [
+        0,
+        17,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          0,
+          14,
+        ],
+        "type": "SelectorLiteral",
+        "value": "
+      .classA",
+      },
+      "type": "Rule",
+    },
+    Object {
+      "block": Object {
+        "declarations": Array [],
+        "loc": Array [
+          33,
+          33,
+        ],
+        "rules": Array [],
+        "type": "Block",
+      },
+      "loc": Array [
+        18,
+        34,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          18,
+          31,
+        ],
+        "type": "SelectorLiteral",
+        "value": "      .classB",
+      },
+      "type": "Rule",
+    },
+  ],
+  "type": "Block",
+}
+`;
+
+exports[`parse rules only parses nested rules 1`] = `
+Object {
+  "declarations": Array [],
+  "loc": Array [
+    0,
+    45,
+  ],
+  "rules": Array [
+    Object {
+      "block": Object {
+        "declarations": Array [],
+        "loc": Array [
+          15,
+          40,
+        ],
+        "rules": Array [
+          Object {
+            "block": Object {
+              "declarations": Array [],
+              "loc": Array [
+                32,
+                32,
+              ],
+              "rules": Array [],
+              "type": "Block",
+            },
+            "loc": Array [
+              15,
+              33,
+            ],
+            "selector": Object {
+              "interpolations": Array [],
+              "loc": Array [
+                15,
+                30,
+              ],
+              "type": "SelectorLiteral",
+              "value": "
+        .inner",
+            },
+            "type": "Rule",
+          },
+        ],
+        "type": "Block",
+      },
+      "loc": Array [
+        0,
+        41,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          0,
+          13,
+        ],
+        "type": "SelectorLiteral",
+        "value": "
+      .outer",
+      },
+      "type": "Rule",
+    },
+  ],
+  "type": "Block",
+}
+`;
+
+exports[`parse rules only parses normal rules 1`] = `
+Object {
+  "declarations": Array [],
+  "loc": Array [
+    0,
+    27,
+  ],
+  "rules": Array [
+    Object {
+      "block": Object {
+        "declarations": Array [],
+        "loc": Array [
+          15,
+          22,
+        ],
+        "rules": Array [],
+        "type": "Block",
+      },
+      "loc": Array [
+        0,
+        23,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          0,
+          13,
+        ],
+        "type": "SelectorLiteral",
+        "value": "
+      .class",
+      },
+      "type": "Rule",
+    },
+  ],
+  "type": "Block",
+}
+`;
+
+exports[`parse rules only parses rules containing declarations 1`] = `
+Object {
+  "declarations": Array [],
+  "loc": Array [
+    0,
+    55,
+  ],
+  "rules": Array [
+    Object {
+      "block": Object {
+        "declarations": Array [
+          Object {
+            "loc": Array [
+              15,
+              42,
+            ],
+            "property": Object {
+              "loc": Array [
+                15,
+                34,
+              ],
+              "type": "PropertyLiteral",
+              "value": "
+        text-align",
+            },
+            "type": "Declaration",
+            "value": Object {
+              "interpolations": Array [],
+              "loc": Array [
+                35,
+                42,
+              ],
+              "type": "ValueLiteral",
+              "value": " center",
+            },
+          },
+        ],
+        "loc": Array [
+          15,
+          50,
+        ],
+        "rules": Array [],
+        "type": "Block",
+      },
+      "loc": Array [
+        0,
+        51,
+      ],
+      "selector": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          0,
+          13,
+        ],
+        "type": "SelectorLiteral",
+        "value": "
+      .class",
+      },
+      "type": "Rule",
+    },
+  ],
+  "type": "Block",
+}
+`;

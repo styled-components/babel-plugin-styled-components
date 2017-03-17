@@ -1,0 +1,62 @@
+exports[`parse declarations only parses normal declarations 1`] = `
+Object {
+  "declarations": Array [
+    Object {
+      "loc": Array [
+        0,
+        17,
+      ],
+      "property": Object {
+        "loc": Array [
+          0,
+          12,
+        ],
+        "type": "PropertyLiteral",
+        "value": "
+      color",
+      },
+      "type": "Declaration",
+      "value": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          13,
+          17,
+        ],
+        "type": "ValueLiteral",
+        "value": " red",
+      },
+    },
+    Object {
+      "loc": Array [
+        18,
+        43,
+      ],
+      "property": Object {
+        "loc": Array [
+          18,
+          35,
+        ],
+        "type": "PropertyLiteral",
+        "value": "
+      text-align",
+      },
+      "type": "Declaration",
+      "value": Object {
+        "interpolations": Array [],
+        "loc": Array [
+          36,
+          43,
+        ],
+        "type": "ValueLiteral",
+        "value": " center",
+      },
+    },
+  ],
+  "loc": Array [
+    0,
+    48,
+  ],
+  "rules": Array [],
+  "type": "Block",
+}
+`;

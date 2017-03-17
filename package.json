@@ -14,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.4.5",
+    "babel-jest": "^18.0.0",
     "babel-preset-env": "^1.1.8",
     "jest": "^17.0.3"
   },
@@ -31,5 +32,14 @@
     "server-side rendering",
     "ssr",
     "displayName"
-  ]
+  ],
+  "jest": {
+    "transform": {
+      ".js": "<rootDir>/node_modules/babel-jest"
+    },
+    "testEnvironment": "node",
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
 }
