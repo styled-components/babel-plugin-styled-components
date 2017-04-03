@@ -85,8 +85,7 @@ You can enable preprocessing with the `preprocess` option:
   ]
 }
 ```
-
-You can use the `no-parser.js` entry as an ES module by enabling the `module` option:
+If you use Rollup or webpack v2 you can take advantage of tree-shaking by setting the `module` option to true:
 
 ```JSON
 {
