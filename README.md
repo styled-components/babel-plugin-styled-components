@@ -86,6 +86,19 @@ You can enable preprocessing with the `preprocess` option:
 }
 ```
 
+You can use the `no-parser.js` entry as an ES module by enabling the `module` option:
+
+```JSON
+{
+  "plugins": [
+    ["styled-components", {
+      "preprocess": true,
+      "module": true
+    }]
+  ]
+}
+```
+
 ### Minification
 
 This plugin minifies your styles in the tagged template literals, giving you big bundle size savings. (note that you will not see the effect of minification in generated `<style>` tags, it solely affects the style strings inside your JS bundle)
