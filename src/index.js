@@ -13,10 +13,31 @@ import reduceMap from './utils/reduceMap'
 
 export default function({ types: t }) {
   return {
-    pre(state) {
-      this.styleSheet = new Map()
-    },
     visitor: {
+      Program: {
+        enter() {
+          this.styleSheet = new Map()
+        },
+        exit() {
+          const { extractStaticPath } = this
+
+          if (extractStaticPath) {
+            const bundleFile = path.join(process.cwd(), extractStaticPath)
+
+            const css = reduceMap(
+              this.styleSheet,
+              (acc, [ selector, rules ]) => {
+                const partial = `${selector} {${rules.join(';')}}\n`
+                return acc + partial
+              },
+              ''
+            )
+
+            mkdirpSync(path.dirname(bundleFile))
+            fs.writeFileSync(bundleFile, css, { encoding: 'utf8' })
+          }
+        }
+      },
       ImportDeclaration(path, state) {
         noParserImportDeclaration(path, state)
       },
@@ -37,25 +58,6 @@ export default function({ types: t }) {
         minify(path, state)
         displayNameAndId(path, state, componentId)
         templateLiterals(path, state, componentId, this.styleSheet)
-      }
-    },
-    post(state) {
-      const { extractStaticPath } = this
-
-      if (extractStaticPath) {
-        const bundleFile = path.join(process.cwd(), extractStaticPath)
-
-        const css = reduceMap(
-          this.styleSheet,
-          (acc, [ selector, rules ]) => {
-            const partial = `${selector} {${rules.join(';')}}\n`
-            return acc + partial
-          },
-          ''
-        )
-
-        mkdirpSync(path.dirname(bundleFile))
-        fs.writeFileSync(bundleFile, css, { encoding: 'utf8' })
       }
     }
   }

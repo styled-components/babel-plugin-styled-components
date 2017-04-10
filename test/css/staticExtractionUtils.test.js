@@ -34,8 +34,15 @@ describe('static extraction utilities', () => {
       ]
 
       expect(assembleStaticAndDynamic(input)).toEqual({
-        static: 'a: b;c: d;e: f',
-        dynamic: 'test: __PLACEHOLDER_1__;test2: __PLACEHOLDER_2__'
+        static: [
+          'a: b',
+          'c: d',
+          'e: f'
+        ],
+        dynamic: [
+          'test: __PLACEHOLDER_1__',
+          'test2: __PLACEHOLDER_2__'
+        ]
       })
     })
   })
