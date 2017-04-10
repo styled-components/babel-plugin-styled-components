@@ -1,10 +1,11 @@
 import * as t from 'babel-types'
 import { isStyled, isCSSHelper, isKeyframesHelper, isInjectGlobalHelper } from '../../utils/detectors'
-import preprocess from '../../css/preprocess'
+import preprocessStyled from '../../css/preprocessStyled'
+import preprocessCSS from '../../css/preprocessCSS'
 import preprocessKeyframes from '../../css/preprocessKeyframes'
 import preprocessInjectGlobal from '../../css/preprocessInjectGlobal'
 
-export default (path, state) => {
+export default (path, state, componentId) => {
   const _isStyled = isStyled(path.node.tag, state)
   const _isCSSHelper = isCSSHelper(path.node.tag, state)
   const _isKeyframesHelper = isKeyframesHelper(path.node.tag, state)
@@ -20,8 +21,10 @@ export default (path, state) => {
     const values = quasis.map(quasi => quasi.value.cooked)
 
     let result
-    if (_isStyled || _isCSSHelper) {
-      result = preprocess(values, expressions)
+    if (_isStyled) {
+      result = preprocessStyled(values, expressions, componentId)
+    } else if (_isCSSHelper) {
+      result = preprocessCSS(values, expressions)
     } else if (_isInjectGlobalHelper) {
       result = preprocessInjectGlobal(values, expressions)
     } else {

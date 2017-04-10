@@ -10,7 +10,7 @@ export default (cssArr, interpolationNodes) => (
       interpolationNodes,
       x => '{' + x + '}',
       '', // no namespace
-      true // fix globals
+      'global'
     )
   )
 )

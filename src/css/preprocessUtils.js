@@ -10,6 +10,8 @@ import {
   fixGlobalPlaceholders,
 } from './placeholderUtils'
 
+import makeExtractionMiddleware from './staticExtractionUtils'
+
 // Assembles CSS partials and replaces interpolations with placeholders
 export const assembleAndInterleavePlaceholders = cssArr => {
   let css = cssArr[0]
@@ -73,7 +75,8 @@ export const preprocessHelper = (
   interpolationNodes,
   transformFlattened = (x => x),
   stylisNamespace = '',
-  fixGlobals = false
+  type = '', // One of the template literal tags: styled, css, global, keyframes
+  componentId
 ) => {
   // Test whether the input is using reserved strings
   if (
@@ -92,9 +95,17 @@ export const preprocessHelper = (
   )
 
   // Flatten CSS using stylis
-  let flattenedCSS = stylis(stylisNamespace, css, false, false).trim()
+  let flattenedCSS = stylis(
+    stylisNamespace,
+    css,
+    false,
+    false,
+    type === 'styled' && componentId ?
+      makeExtractionMiddleware(componentId) :
+      undefined
+  ).trim()
 
-  if (fixGlobals && flattenedCSS.startsWith('{')) {
+  if (type === 'global' && flattenedCSS.startsWith('{')) {
     flattenedCSS = fixGlobalPlaceholders(flattenedCSS)
   }
 

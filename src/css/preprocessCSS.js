@@ -13,7 +13,8 @@ export default (cssArr, interpolationNodes) => (
       cssArr,
       interpolationNodes,
       x => x,
-      temporaryClassname
+      temporaryClassname,
+      'css'
     )
   )
 )
