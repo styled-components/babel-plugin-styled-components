@@ -44,7 +44,7 @@ const assembleStaticAndDynamic = rules => {
 
 export const staticStyleSheet = {}
 
-const makeExtractionMiddleware = componentId => (ctx, str, _, __, namespace) => {
+const makeExtractionMiddleware = (componentId, styleSheet) => (ctx, str, _, __, namespace) => {
   if (
     // NOTE: These two codes receive all compiled css blocks
     (ctx === 3 || ctx === 4) &&
@@ -62,12 +62,13 @@ const makeExtractionMiddleware = componentId => (ctx, str, _, __, namespace) => 
     const staticSelector = selector.replace(temporaryClassname, `.${componentId}`)
 
     // Save rules to global object
-    if (!staticStyleSheet[staticSelector]) {
-      staticStyleSheet[staticSelector] = groupedRules.static
-    } else {
-      staticStyleSheet[staticSelector] = staticStyleSheet[staticSelector]
-        .concat(groupedRules.static)
+    let _staticRules = []
+    if (styleSheet.has(staticSelector)) {
+      _staticRules = styleSheet.get(staticSelector)
     }
+
+    _staticRules = _staticRules.concat(groupedRules.static)
+    styleSheet.set(staticSelector, _staticRules)
 
     // Remove block if no dynamic rules are left
     if (!groupedRules.dynamic.length) {

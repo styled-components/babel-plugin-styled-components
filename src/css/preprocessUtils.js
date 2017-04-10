@@ -76,7 +76,7 @@ export const preprocessHelper = (
   transformFlattened = (x => x),
   stylisNamespace = '',
   type = '', // One of the template literal tags: styled, css, global, keyframes
-  componentId
+  middleware
 ) => {
   // Test whether the input is using reserved strings
   if (
@@ -100,9 +100,7 @@ export const preprocessHelper = (
     css,
     false,
     false,
-    type === 'styled' && componentId ?
-      makeExtractionMiddleware(componentId) :
-      undefined
+    type === 'styled' && middleware ? middleware : undefined
   ).trim()
 
   if (type === 'global' && flattenedCSS.startsWith('{')) {

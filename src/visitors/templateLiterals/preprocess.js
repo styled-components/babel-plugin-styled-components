@@ -5,8 +5,9 @@ import preprocessStyled from '../../css/preprocessStyled'
 import preprocessCSS from '../../css/preprocessCSS'
 import preprocessKeyframes from '../../css/preprocessKeyframes'
 import preprocessInjectGlobal from '../../css/preprocessInjectGlobal'
+import makeExtractionMiddleware from '../../css/staticExtractionUtils'
 
-export default (path, state, componentId) => {
+export default (path, state, componentId, styleSheet) => {
   const _useStaticExtraction = useStaticExtraction(state)
   const _isStyled = isStyled(path.node.tag, state)
   const _isCSSHelper = isCSSHelper(path.node.tag, state)
@@ -27,7 +28,7 @@ export default (path, state, componentId) => {
       result = preprocessStyled(
         values,
         expressions,
-        _useStaticExtraction && componentId
+        _useStaticExtraction && makeExtractionMiddleware(componentId, styleSheet)
       )
     } else if (_isCSSHelper) {
       result = preprocessCSS(values, expressions)

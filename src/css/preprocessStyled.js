@@ -7,7 +7,7 @@ import {
   preprocessHelper
 } from './preprocessUtils'
 
-export default (cssArr, interpolationNodes, componentId) => (
+export default (cssArr, interpolationNodes, middleware) => (
   convertOutputToBabelTypes(
     preprocessHelper(
       cssArr,
@@ -15,7 +15,7 @@ export default (cssArr, interpolationNodes, componentId) => (
       x => x,
       temporaryClassname,
       'styled',
-      componentId
+      middleware
     )
   )
 )
