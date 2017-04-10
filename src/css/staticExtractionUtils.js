@@ -11,7 +11,7 @@ export const parseSelector = str => (
 export const parseRules = str => {
   const start = str.indexOf('{')
   const end = str.indexOf('}')
-  const rawRules = str.slice(start + 1, end - 1)
+  const rawRules = str.slice(start + 1, end)
 
   return rawRules
     .split(';')
@@ -25,22 +25,15 @@ export const parseRules = str => {
     }, [])
 }
 
-export const assembleStaticAndDynamic = rules => {
-  const { s, d } = rules
-    .reduce((acc, rule) => {
-      const _containsPlaceholders = containsPlaceholders(rule)
-      acc[_containsPlaceholders ? 'd' : 's'].push(rule)
-      return acc
-    }, {
-      s: [], // static
-      d: []  // dynamic
-    })
-
-  return {
-    static: s.join(';'),
-    dynamic: d.join(';')
-  }
-}
+export const assembleStaticAndDynamic = rules => rules
+  .reduce((acc, rule) => {
+    const _containsPlaceholders = containsPlaceholders(rule)
+    acc[_containsPlaceholders ? 'dynamic' : 'static'].push(rule)
+    return acc
+  }, {
+    static: [],
+    dynamic: []
+  })
 
 const makeExtractionMiddleware = (componentId, styleSheet) => (ctx, str, _, __, namespace) => {
   if (
@@ -65,15 +58,17 @@ const makeExtractionMiddleware = (componentId, styleSheet) => (ctx, str, _, __, 
       _staticRules = styleSheet.get(staticSelector)
     }
 
-    _staticRules = _staticRules.concat(groupedRules.static)
-    styleSheet.set(staticSelector, _staticRules)
+    if (groupedRules.static.length) {
+      _staticRules = _staticRules.concat(groupedRules.static)
+      styleSheet.set(staticSelector, _staticRules)
+    }
 
     // Remove block if no dynamic rules are left
     if (!groupedRules.dynamic.length) {
       return ''
     }
 
-    return `${selector} {${groupedRules.dynamic}}`
+    return `${selector} {${groupedRules.dynamic.join(';')}}`
   }
 }
 
