@@ -4,11 +4,11 @@ import {
 } from './placeholderUtils'
 
 // Parses the selector from a stylis css partial
-const parseSelector = str => (
+export const parseSelector = str => (
   str.slice(0, str.indexOf('{')).trim()
 )
 
-const parseRules = str => {
+export const parseRules = str => {
   const start = str.indexOf('{')
   const end = str.indexOf('}')
   const rawRules = str.slice(start + 1, end - 1)
@@ -25,7 +25,7 @@ const parseRules = str => {
     }, [])
 }
 
-const assembleStaticAndDynamic = rules => {
+export const assembleStaticAndDynamic = rules => {
   const { s, d } = rules
     .reduce((acc, rule) => {
       const _containsPlaceholders = containsPlaceholders(rule)
