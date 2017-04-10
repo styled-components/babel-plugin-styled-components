@@ -42,8 +42,6 @@ const assembleStaticAndDynamic = rules => {
   }
 }
 
-export const staticStyleSheet = {}
-
 const makeExtractionMiddleware = (componentId, styleSheet) => (ctx, str, _, __, namespace) => {
   if (
     // NOTE: These two codes receive all compiled css blocks

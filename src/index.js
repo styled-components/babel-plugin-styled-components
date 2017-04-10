@@ -1,10 +1,15 @@
+import path from 'path'
+import fs from 'fs'
+import { sync as mkdirpSync } from 'mkdirp'
+
 import minify from './visitors/minify'
 import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
 import { noParserImportDeclaration, noParserRequireCallExpression } from './visitors/noParserImport'
 import { isStyled } from './utils/detectors'
 import getComponentId from './utils/componentId'
-import { staticStyleSheet } from './css/staticExtractionUtils'
+import { useStaticExtraction } from './utils/options'
+import reduceMap from './utils/reduceMap'
 
 export default function({ types: t }) {
   return {
@@ -19,6 +24,11 @@ export default function({ types: t }) {
         noParserRequireCallExpression(path, state)
       },
       TaggedTemplateExpression(path, state) {
+        const extractStaticPath = useStaticExtraction(state)
+        if (extractStaticPath) {
+          this.extractStaticPath = extractStaticPath
+        }
+
         let componentId = undefined
         if (isStyled(path.node.tag, state)) {
           componentId = getComponentId(state)
@@ -30,7 +40,23 @@ export default function({ types: t }) {
       }
     },
     post(state) {
-      console.log(this.styleSheet.entries())
+      const { extractStaticPath } = this
+
+      if (extractStaticPath) {
+        const bundleFile = path.join(process.cwd(), extractStaticPath)
+
+        const css = reduceMap(
+          this.styleSheet,
+          (acc, [ selector, rules ]) => {
+            const partial = `${selector} {${rules.join(';')}}\n`
+            return acc + partial
+          },
+          ''
+        )
+
+        mkdirpSync(path.dirname(bundleFile))
+        fs.writeFileSync(bundleFile, css, { encoding: 'utf8' })
+      }
     }
   }
 }
