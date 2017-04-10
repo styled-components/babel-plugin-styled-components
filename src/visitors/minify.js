@@ -1,7 +1,8 @@
 import * as t from 'babel-types'
 import {
   useMinify,
-  useCSSPreprocessor
+  useCSSPreprocessor,
+  useStaticExtraction
 } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'
 
@@ -19,6 +20,7 @@ export default (path, state) => {
   if (
     useMinify(state) &&
     !useCSSPreprocessor(state) &&
+    !useStaticExtraction(state) &&
     (
       isStyled(path.node.tag, state) ||
       isHelper(path.node.tag, state)

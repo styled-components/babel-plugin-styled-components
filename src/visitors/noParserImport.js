@@ -1,9 +1,12 @@
 import * as t from 'babel-types'
-import { useCSSPreprocessor } from '../utils/options'
+import { useCSSPreprocessor, useStaticExtraction } from '../utils/options'
 
 export const noParserImportDeclaration = (path, state) => {
   if (
-    useCSSPreprocessor(state) &&
+    (
+      useCSSPreprocessor(state) ||
+      useStaticExtraction(state)
+    ) &&
     path.node.source.value === 'styled-components'
   ) {
     path.node.source = t.stringLiteral('styled-components/no-parser')
@@ -12,7 +15,10 @@ export const noParserImportDeclaration = (path, state) => {
 
 export const noParserRequireCallExpression = (path, state) => {
   if (
-    useCSSPreprocessor(state) &&
+    (
+      useCSSPreprocessor(state) ||
+      useStaticExtraction(state)
+    ) &&
     path.node.callee.name === 'require' &&
     path.node.arguments &&
     path.node.arguments.length === 1 &&
