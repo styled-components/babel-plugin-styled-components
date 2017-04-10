@@ -1,5 +1,5 @@
 import * as t from 'babel-types'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import { useFileName, useDisplayName, useSSR, useStaticExtraction } from '../utils/options'
 import getName from '../utils/getName'
 import { isStyled } from '../utils/detectors'
 
@@ -41,10 +41,15 @@ const getDisplayName = (path, state) => {
 
 export default (path, state, componentId) => {
   if (isStyled(path.node.tag, state)) {
+    const _useDisplayName = useDisplayName(state)
+    const _useSSR = useSSR(state)
+    const _useStaticExtraction = useStaticExtraction(state)
+    const _useFileName = useFileName(state)
+
     addConfig(
       path,
-      useDisplayName(state) && getDisplayName(path, useFileName(state) && state),
-      useSSR(state) && componentId
+      _useDisplayName && getDisplayName(path, _useFileName && state),
+      (_useSSR || _useStaticExtraction) && componentId
     )
   }
 }
