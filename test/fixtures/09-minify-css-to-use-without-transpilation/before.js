@@ -32,3 +32,11 @@ const Parens = styled.div`
   }
   color: red;
 `;
+
+const HelloWorld = styled.div`
+  border-bottom: 2px solid blue;
+  /* this comment will be distributed */
+  border-top: 2px solid yellow;
+  /* with all the spaces as well                                                            */
+  border-bottom: 2px solid green;
+`;

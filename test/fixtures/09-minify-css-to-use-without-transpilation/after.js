@@ -12,3 +12,7 @@ const MultiComment = styled.div`width: 100%;
 color: red;`;
 
 const Parens = styled.div`&:hover {color: blue;}color: red;`;
+
+const HelloWorld = styled.div`border-bottom: 2px solid blue;
+border-top: 2px solid yellow;
+border-bottom: 2px solid green;`;
