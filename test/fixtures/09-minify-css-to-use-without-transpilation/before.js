@@ -18,6 +18,14 @@ const Comment = styled.div`
   color: red;
 `;
 
+const MultiComment = styled.div`
+  width: 100%; /*
+
+    long multi-line comment
+
+  */ color: red;
+`;
+
 const Parens = styled.div`
   &:hover {
     color: blue;

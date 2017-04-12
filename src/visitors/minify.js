@@ -5,11 +5,24 @@ import {
 } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'
 
+const commentRegex = /\s*\/\*([\s\S]*?)\*\/\s*/g
+const multiNewlineRegex = /\n\n+/g
+
 const minify = (linebreak) => {
   const regex = new RegExp(linebreak + '\\s*', 'g')
-  return (code) => code.split(regex).filter(line => line.length > 0).map((line) => {
-    return line.indexOf('//') === -1 ? line : line + '\n';
-  }).join('')
+
+  return code => code
+    .split(regex)
+    .map(line => {
+      const lineCommentStart = line.indexOf('//')
+      return lineCommentStart > -1 ?
+        line.slice(0, lineCommentStart) :
+        line
+    })
+    .filter(Boolean)
+    .join('')
+    .replace(commentRegex, '\n')
+    .replace(multiNewlineRegex, '\n')
 }
 
 const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')

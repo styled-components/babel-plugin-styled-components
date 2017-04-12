@@ -6,7 +6,9 @@ const Interpolation = styled.div`content: "  ${props => props.text}  ";`;
 
 const SpecialCharacters = styled.div`content: "  ${props => props.text}  ";color: red;`;
 
-const Comment = styled.div`width: 100%;// comment
+const Comment = styled.div`width: 100%;color: red;`;
+
+const MultiComment = styled.div`width: 100%;
 color: red;`;
 
 const Parens = styled.div`&:hover {color: blue;}color: red;`;
