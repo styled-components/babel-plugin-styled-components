@@ -7,14 +7,15 @@ import {
   preprocessHelper
 } from './preprocessUtils'
 
-export default (cssArr, interpolationNodes) => (
+export default (cssArr, interpolationNodes, middleware) => (
   convertOutputToBabelTypes(
     preprocessHelper(
       cssArr,
       interpolationNodes,
-      x => `@keyframes ${temporaryClassname} { ${x} }`,
-      '', // no namespace
-      'keyframes'
+      x => x,
+      temporaryClassname,
+      'styled',
+      middleware
     )
   )
 )
