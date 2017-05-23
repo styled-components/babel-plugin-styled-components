@@ -18,9 +18,25 @@ const Comment = styled.div`
   color: red;
 `;
 
+const MultiComment = styled.div`
+  width: 100%; /*
+
+    long multi-line comment
+
+  */ color: red;
+`;
+
 const Parens = styled.div`
   &:hover {
     color: blue;
   }
   color: red;
+`;
+
+const HelloWorld = styled.div`
+  border-bottom: 2px solid blue;
+  /* this comment will be distributed */
+  border-top: 2px solid yellow;
+  /* with all the spaces as well                                                            */
+  border-bottom: 2px solid green;
 `;
