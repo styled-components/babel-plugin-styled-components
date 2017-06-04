@@ -71,9 +71,9 @@ const getFileHash = (state) => {
   const moduleRoot = findModuleRoot(filename)
   const filePath = moduleRoot && path.relative(moduleRoot, filename).replace(path.sep, '/')
   const moduleName = moduleRoot && JSON.parse(fs.readFileSync(path.join(moduleRoot, 'package.json'))).name
-  const mtime = getMTime(filename)
+  const seed = useSSR(state) === 'use-content' ? file.code : getMTime(filename)
 
-  const fileHash = hash([moduleName, filePath, mtime].join(''))
+  const fileHash = hash([moduleName, filePath, seed].join(''))
   file.set(FILE_HASH, fileHash)
   return fileHash
 }
