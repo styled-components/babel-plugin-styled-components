@@ -44,6 +44,34 @@ If you want server-side rendering support you can enable it with the `ssr` optio
 }
 ```
 
+By default this will use the `use-content` option, which will use the input code of the plugin to generate a hash from.
+
+If, for whatever reason, your pipelines differ between server and client side compilation there’s the possibility this
+leads to different hashes. In this case you can use the `use-mtime` option, which will use the file’s modification time
+to generate a hash from. It is not recommended to use this option in your test environment, as file modification times
+are not persisted across e.g. git clones. Luckily, Babel allows you to specify different options
+[based on the env](https://babeljs.io/docs/usage/babelrc/#env-option), which means you can set it to `use-content` in
+tests. The `.babelrc` configuration for would look like:
+
+```JSON
+{
+  "plugins": [
+    ["styled-components", {
+      "ssr": "use-mtime"
+    }]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["styled-components", {
+          "ssr": "use-content"
+        }]
+      ]
+    }
+  }
+}
+```
+
 ### Better debugging
 
 This babel plugin adds the components' name to the class name attached to the DOM node. In your browsers DevTools you'll see `<button class="sc-Button-asdf123 asdf123" />` instead of just `<button class="asdf123" />`.

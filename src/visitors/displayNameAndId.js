@@ -1,5 +1,6 @@
 import * as t from 'babel-types'
 import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import getMTime from '../utils/getMTime'
 import getName from '../utils/getName'
 import path from 'path'
 import fs from 'fs'
@@ -70,9 +71,9 @@ const getFileHash = (state) => {
   const moduleRoot = findModuleRoot(filename)
   const filePath = moduleRoot && path.relative(moduleRoot, filename).replace(path.sep, '/')
   const moduleName = moduleRoot && JSON.parse(fs.readFileSync(path.join(moduleRoot, 'package.json'))).name
-  const code = file.code
+  const seed = useSSR(state) === 'use-content' ? file.code : getMTime(filename)
 
-  const fileHash = hash([moduleName, filePath, code].join(''))
+  const fileHash = hash([moduleName, filePath, seed].join(''))
   file.set(FILE_HASH, fileHash)
   return fileHash
 }
