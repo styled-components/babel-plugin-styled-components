@@ -5,7 +5,7 @@ const Simple = styled.div`
 `;
 
 const Interpolation = styled.div`
-  content: "  ${props => props.text}  ";
+  content: "https://test.com/${props => props.endpoint}";
 `;
 
 const SpecialCharacters = styled.div`
@@ -23,4 +23,14 @@ const Parens = styled.div`
     color: blue;
   }
   color: red;
+`;
+
+const UrlComments = styled.div`
+  color: red;
+  /* // */
+  background: red;
+  /* comment 1 */
+  /* comment 2 */
+  // comment 3
+  border: 1px solid green;
 `;

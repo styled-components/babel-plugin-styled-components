@@ -1,6 +1,9 @@
 // The capture group makes sure that the split contains the interpolation index
 const placeholderRegex = /__PLACEHOLDER_(\d+?)__/
 
+// Alternative regex that splits without a capture group
+const placeholderNonCapturingRegex = /__PLACEHOLDER_(?:\d+?)__/
+
 // This matches the global group w/o a selector
 const globalRulesetRegex = /^{([^}]*)}/
 
@@ -60,7 +63,8 @@ export const temporaryClassname = '__TEMPORARY_CLASSNAME__'
 export const containsPlaceholders = css => !!css.match(placeholderRegex)
 
 // Splits CSS by placeholders
-export const splitByPlaceholders = css => css.split(placeholderRegex)
+export const splitByPlaceholders = (css, capture = true) => css
+  .split(capture ? placeholderRegex : placeholderNonCapturingRegex)
 
 // Remove curly braces around global placeholders
 // We need to replace mixin-semicolons with newlines to not break browser CSS parsing
