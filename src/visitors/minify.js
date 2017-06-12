@@ -4,9 +4,7 @@ import { useMinify, useCSSPreprocessor } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'
 import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
 
-const newline = newline => new RegExp(newline + '\\s*', 'g')
-const multilineComment = newline => new RegExp('\\/\\*(.|' + newline + ')*?\\*\\/', 'g')
-
+const makeMultilineCommentRegex = newlinePattern => new RegExp('\\/\\*(.|' + newlinePattern + ')*?\\*\\/', 'g')
 const lineCommentStart = /\/\//g
 
 // Counts occurences of substr inside str
@@ -50,9 +48,9 @@ const isLineComment = line => line.trim().startsWith('//')
 const minifyCommonChars = line => line.replace(/\s*([:;{}])\s*/, (_, p1) => p1)
 
 // Creates a minifier with a certain linebreak pattern
-const minify = linebreak => {
-  const linebreakRegex = new RegExp(linebreak + '\\s*', 'g')
-  const multilineCommentRegex = multilineComment(linebreak)
+const minify = linebreakPattern => {
+  const linebreakRegex = new RegExp(linebreakPattern + '\\s*', 'g')
+  const multilineCommentRegex = makeMultilineCommentRegex(linebreakPattern)
 
   return code => {
     const lines = code
@@ -67,11 +65,8 @@ const minify = linebreak => {
   }
 }
 
-const _rawNewline = '(?:\\\\r|\\\\n|\\r|\\n)'
-const _cookedNewline = '[\\r\\n]'
-
-const minifyRaw = minify(_rawNewline)
-const minifyCooked = minify(_cookedNewline)
+const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
+const minifyCooked = minify('[\\r\\n]')
 
 export default (path, state) => {
   if (
