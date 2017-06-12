@@ -28,7 +28,7 @@ const reduceSubstr = (substrs, join, predicate) => {
 
 // Joins at comment starts when it's inside a string or parantheses
 // effectively removing line comments
-const stripLineComment = line => (
+export const stripLineComment = line => (
   reduceSubstr(line.split(lineCommentStart), '//', str => (
     !str.endsWith(':') && // NOTE: This is another guard against urls, if they're not inside strings or parantheses.
     countOccurences(str, '\'') % 2 === 0 &&
@@ -57,8 +57,8 @@ const minify = linebreakPattern => {
   }
 }
 
-const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
-const minifyCooked = minify('[\\r\\n]')
+export const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
+export const minifyCooked = minify('[\\r\\n]')
 
 export const minifyRawValues = rawValues => splitByPlaceholders(
   minifyRaw(
