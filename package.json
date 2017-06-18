@@ -33,6 +33,6 @@
     "displayName"
   ],
   "dependencies": {
-    "stylis": "2.0.0"
+    "stylis": "^3.0.19"
   }
 }
