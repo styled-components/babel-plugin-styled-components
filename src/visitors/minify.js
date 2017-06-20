@@ -1,19 +1,8 @@
 import * as t from 'babel-types'
-import {
-  useMinify,
-  useCSSPreprocessor
-} from '../utils/options'
+
+import { useMinify, useCSSPreprocessor } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'
-
-const minify = (linebreak) => {
-  const regex = new RegExp(linebreak + '\\s*', 'g')
-  return (code) => code.split(regex).filter(line => line.length > 0).map((line) => {
-    return line.indexOf('//') === -1 ? line : line + '\n';
-  }).join('')
-}
-
-const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
-const minifyCooked = minify('[\\r\\n]')
+import { minifyRawValues, minifyCookedValues } from '../minify'
 
 export default (path, state) => {
   if (
@@ -25,9 +14,16 @@ export default (path, state) => {
     )
   ) {
     const templateLiteral = path.node.quasi
-    for (let element of templateLiteral.quasis) {
-      element.value.raw = minifyRaw(element.value.raw)
-      element.value.cooked = minifyCooked(element.value.cooked)
+    const quasisLength = templateLiteral.quasis.length
+
+    const rawValuesMinified = minifyRawValues(templateLiteral.quasis.map(x => x.value.raw))
+    const cookedValuesMinfified = minifyCookedValues(templateLiteral.quasis.map(x => x.value.cooked))
+
+    for (let i = 0; i < quasisLength; i++) {
+      const element = templateLiteral.quasis[i]
+
+      element.value.raw = rawValuesMinified[i]
+      element.value.cooked = cookedValuesMinfified[i]
     }
   }
 }

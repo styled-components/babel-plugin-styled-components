@@ -88,6 +88,8 @@ You can enable preprocessing with the `preprocess` option:
 
 ### Minification
 
+**This option is turned on by default! If you experience mangled CSS results, turn it off and open an issue please.**
+
 This plugin minifies your styles in the tagged template literals, giving you big bundle size savings. (note that you will not see the effect of minification in generated `<style>` tags, it solely affects the style strings inside your JS bundle)
 
 > This operation may potentially break your styles in some rare cases, so we recommend to keep this option enabled in development if it's enabled in the production build.
