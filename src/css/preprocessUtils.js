@@ -10,6 +10,19 @@ import {
   fixGlobalPlaceholders,
 } from './placeholderUtils'
 
+// Reset stylis middleware
+stylis.use(null)
+
+// Set stylis options (matching SC options)
+stylis.set({
+  global: false,
+  cascade: true,
+  keyframe: false,
+  prefix: true,
+  compress: false,
+  semicolon: true,
+})
+
 // Assembles CSS partials and replaces interpolations with placeholders
 export const assembleAndInterleavePlaceholders = cssArr => {
   let css = cssArr[0]
