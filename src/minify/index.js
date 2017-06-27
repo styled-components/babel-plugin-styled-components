@@ -2,6 +2,7 @@ import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
 
 const makeMultilineCommentRegex = newlinePattern => new RegExp('\\/\\*(.|' + newlinePattern + ')*?\\*\\/', 'g')
 const lineCommentStart = /\/\//g
+const symbolRegex = /(\s*[;:{},]\s*)/g
 
 // Counts occurences of substr inside str
 const countOccurences = (str, substr) => str.split(substr).length - 1
@@ -37,6 +38,25 @@ export const stripLineComment = line => (
   ))
 )
 
+export const compressSymbols = code => code
+  .split(symbolRegex)
+  .reduce((str, fragment, index) => {
+    // Even-indices are non-symbol fragments
+    if (index % 2 === 0) {
+      return str + fragment
+    }
+
+    // Only manipulate symbols outside of strings
+    if (
+      countOccurences(str, '\'') % 2 === 0 &&
+      countOccurences(str, '\"') % 2 === 0
+    ) {
+      return str + fragment.trim()
+    }
+
+    return str + fragment
+  }, '')
+
 // Detects lines that are exclusively line comments
 const isLineComment = line => line.trim().startsWith('//')
 
@@ -46,14 +66,14 @@ const minify = linebreakPattern => {
   const multilineCommentRegex = makeMultilineCommentRegex(linebreakPattern)
 
   return code => {
-    const lines = code
+    const newCode = code
       .replace(multilineCommentRegex, '\n') // Remove multiline comments
       .split(linebreakRegex) // Split at newlines
+      .filter(line => line.length > 0 && !isLineComment(line)) // Removes lines containing only line comments
       .map(stripLineComment) // Remove line comments inside text
+      .join(' ') // Rejoin all lines
 
-    return lines
-      .filter(line => !isLineComment(line)) // Removes lines containing only line comments
-      .join('')
+    return compressSymbols(newCode)
   }
 }
 
