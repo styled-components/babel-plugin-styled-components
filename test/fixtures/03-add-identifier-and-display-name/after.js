@@ -1,7 +1,7 @@
 const Test = styled.div.withConfig({
   displayName: "Test",
   componentId: "s1j54k93-0"
-})`width: 100%;`;
+})`width:100%;`;
 const Test2 = true ? styled.div.withConfig({
   displayName: "Test2",
   componentId: "s1j54k93-1"

@@ -1,6 +1,6 @@
 const Test = styled.div.withConfig({
   displayName: 'Test'
-})`width: 100%;`;
+})`width:100%;`;
 const Test2 = styled('div').withConfig({
   displayName: 'Test2'
 })``;
