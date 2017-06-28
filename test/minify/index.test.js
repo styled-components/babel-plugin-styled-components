@@ -1,7 +1,8 @@
 import {
   stripLineComment,
   minifyRaw,
-  minifyCooked
+  minifyCooked,
+  compressSymbols
 } from '../../src/minify'
 
 describe('minify utils', () => {
@@ -27,7 +28,7 @@ describe('minify utils', () => {
   describe('minify(Raw|Cooked)', () => {
     it('Removes multi-line comments', () => {
       const input = 'this is a/* ignore me please */test'
-      const expected = 'this is atest' // NOTE: They're replaced with newlines, and newlines are joined
+      const expected = 'this is a test' // NOTE: They're replaced with newlines, and newlines are joined
       const actual = minifyRaw(input)
 
       expect(actual).toBe(expected)
@@ -36,7 +37,7 @@ describe('minify utils', () => {
 
     it('Joins all lines of code', () => {
       const input = 'this\nis\na/* ignore me \n please */\ntest'
-      const expected = 'thisisatest'
+      const expected = 'this is a test'
       const actual = minifyRaw(input)
 
       expect(actual).toBe(expected)
@@ -45,7 +46,7 @@ describe('minify utils', () => {
 
     it('Removes line comments filling an entire line', () => {
       const input = 'line one\n// remove this comment\nline two'
-      const expected = 'line oneline two'
+      const expected = 'line one line two'
       const actual = minifyRaw(input)
 
       expect(actual).toBe(expected)
@@ -54,7 +55,7 @@ describe('minify utils', () => {
 
     it('Removes line comments at the end of lines of code', () => {
       const input = 'valid line with // a comment\nout comments'
-      const expected = 'valid line with out comments'
+      const expected = 'valid line with  out comments'
       const actual = minifyRaw(input)
 
       expect(actual).toBe(expected)
@@ -65,13 +66,29 @@ describe('minify utils', () => {
   describe('minifyRaw', () => {
     it('works with raw escape codes', () => {
       const input = 'this\\nis\\na/* ignore me \\n please */\\ntest'
-      const expected = 'thisisatest'
+      const expected = 'this is a test'
       const actual = minifyRaw(input)
 
       expect(minifyRaw(input)).toBe(expected)
 
       // NOTE: This is just a sanity check
-      expect(minifyCooked(input)).toBe('this\\nis\\na\\ntest')
+      expect(minifyCooked(input)).toBe('this\\nis\\na \\ntest')
+    })
+  })
+
+  describe('compressSymbols', () => {
+    it('removes spaces around symbols', () => {
+      const input = ';  :  {  }  ,  ;  '
+      const expected = ';:{},;'
+
+      expect(compressSymbols(input)).toBe(expected)
+    })
+
+    it('ignores symbols inside strings', () => {
+      const input = ';   " : " \' : \' ;'
+      const expected = ';" : " \' : \';'
+
+      expect(compressSymbols(input)).toBe(expected)
     })
   })
 })

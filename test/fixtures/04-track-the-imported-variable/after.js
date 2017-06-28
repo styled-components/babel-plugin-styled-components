@@ -3,7 +3,7 @@ import s from "styled-components";
 const Test = s.div.withConfig({
   displayName: "Test",
   componentId: "syqrfc-0"
-})`width: 100%;`;
+})`width:100%;`;
 const Test2 = true ? s.div.withConfig({
   displayName: "Test2",
   componentId: "syqrfc-1"

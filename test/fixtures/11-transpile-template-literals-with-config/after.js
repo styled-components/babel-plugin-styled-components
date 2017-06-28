@@ -8,11 +8,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Named = _styledComponents2.default.div.withConfig({
   displayName: 'before__Named'
-})(['width: 100%;']);
+})(['\n  width: 100%;\n']);
 
 var NamedWithInterpolation = _styledComponents2.default.div.withConfig({
   displayName: 'before__NamedWithInterpolation'
-})(['color: ', ';'], function (color) {
+})(['\n  color: ', ';\n'], function (color) {
   return props.color;
 });
 

@@ -1,10 +1,10 @@
 'use strict';
 
-var _templateObject = _taggedTemplateLiteral(['width: 100%;'], ['width: 100%;']),
-    _templateObject2 = _taggedTemplateLiteral(['content: "  ', '  ";'], ['content: "  ', '  ";']),
-    _templateObject3 = _taggedTemplateLiteral(['content: "  ', '  ";color: red;'], ['content: "  ', '  ";color: red;']),
-    _templateObject4 = _taggedTemplateLiteral(['color: red;'], ['color: red;']),
-    _templateObject5 = _taggedTemplateLiteral(['&:hover {color: blue;}'], ['&:hover {color: blue;}']);
+var _templateObject = _taggedTemplateLiteral(['width:100%;'], ['width:100%;']),
+    _templateObject2 = _taggedTemplateLiteral(['content:"  ', '  ";'], ['content:"  ', '  ";']),
+    _templateObject3 = _taggedTemplateLiteral(['content:"  ', '  ";color:red;'], ['content:"  ', '  ";color:red;']),
+    _templateObject4 = _taggedTemplateLiteral(['color:red;'], ['color:red;']),
+    _templateObject5 = _taggedTemplateLiteral(['&:hover{color:blue;}'], ['&:hover{color:blue;}']);
 
 var _styledComponents = require('styled-components');
 
