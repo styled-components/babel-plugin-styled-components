@@ -1,5 +1,5 @@
 import * as t from 'babel-types'
-import stylis from 'stylis'
+import Stylis from 'stylis'
 
 import {
   makePlaceholder,
@@ -10,11 +10,7 @@ import {
   fixGlobalPlaceholders,
 } from './placeholderUtils'
 
-// Reset stylis middleware
-stylis.use(null)
-
-// Set stylis options (matching SC options)
-stylis.set({
+const stylis = new Stylis({
   global: false,
   cascade: true,
   keyframe: false,
