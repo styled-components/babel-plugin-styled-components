@@ -6,12 +6,6 @@ import fs from 'fs'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
 
-const blockName = (file) => {
-  return file.opts.basename !== 'index' ?
-    file.opts.basename :
-    path.basename(path.dirname(file.opts.filename))
-}
-
 const addConfig = (path, displayName, componentId) => {
   if (!displayName && !componentId) {
     return
@@ -32,11 +26,21 @@ const addConfig = (path, displayName, componentId) => {
   )
 }
 
+const getBlockName = (file) => {
+  return file.opts.basename !== 'index' ?
+    file.opts.basename :
+    path.basename(path.dirname(file.opts.filename))
+}
+
 const getDisplayName = (path, state) => {
   const { file } = state
   const componentName = getName(path)
   if (file) {
-    return componentName ? `${blockName(file)}__${componentName}` : blockName(file)
+    const blockName = getBlockName(file)
+    if (blockName === componentName) {
+      return blockName
+    }
+    return componentName ? `${blockName}__${componentName}` : blockName
   } else {
     return componentName
   }
