@@ -38,7 +38,7 @@ const getDisplayName = (path, state) => {
   if (file) {
     const blockName = getBlockName(file)
     if (blockName === componentName) {
-      return blockName
+      return componentName
     }
     return componentName ? `${blockName}__${componentName}` : blockName
   } else {
