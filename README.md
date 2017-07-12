@@ -70,7 +70,7 @@ This plugin preprocesses your styles with stylis and uses the `no-parser.js` ent
 
 This effectively removes stylis from your runtime bundle and should slightly improve runtime performance and shrink your bundle size.
 
-It automatically disables the `minify` option, since stylis already does some minifcation on your CSS.
+It automatically disables the `minify` option, since stylis already does some minification on your CSS.
 
 > This is experimental and we don't yet know of all limitations and bugs! Consider this non-production ready for now.
 
