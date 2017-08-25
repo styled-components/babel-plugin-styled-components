@@ -27,9 +27,8 @@ const addConfig = (path, displayName, componentId) => {
 }
 
 const getBlockName = (file) => {
-  return file.opts.basename !== 'index' ?
-    file.opts.basename :
-    path.basename(path.dirname(file.opts.filename))
+  const name = path.basename(file.opts.filename, path.extname(file.opts.filename))
+  return name !== 'index' ? name : path.basename(path.dirname(file.opts.filename))
 }
 
 const getDisplayName = (path, state) => {
