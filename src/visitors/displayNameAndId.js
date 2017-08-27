@@ -94,9 +94,11 @@ const getComponentId = (state) => {
 
 export default (path, state) => {
   if (isStyled(path.node.tag, state)) {
+    const displayName = useDisplayName(state) && getDisplayName(path, useFileName(state) && state);
+
     addConfig(
       path,
-      useDisplayName(state) && getDisplayName(path, useFileName(state) && state),
+      displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
       useSSR(state) && getComponentId(state)
     )
   }
