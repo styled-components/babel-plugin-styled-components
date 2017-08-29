@@ -17,6 +17,18 @@ Then add it to your babel configuration:
   "plugins": ["babel-plugin-styled-components"]
 }
 ```
+If you use Rollup or webpack v2 you can take advantage of tree-shaking by setting the `module` option to true:
+
+```JSON
+{
+  "plugins": [
+    ["styled-components", {
+      "preprocess": true,
+      "module": true
+    }]
+  ]
+}
+```
 
 ## [Documentation](https://www.styled-components.com/docs/tooling#babel-plugin)
 
