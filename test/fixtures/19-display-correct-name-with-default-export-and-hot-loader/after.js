@@ -16,9 +16,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(Component, 'Component', '{{fixturesDir}}/before.js');
+  __REACT_HOT_LOADER__.register(Component, 'Component', '{{fixtureDir}}/before.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '{{fixturesDir}}/before.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '{{fixtureDir}}/before.js');
 }();
 
 ;
