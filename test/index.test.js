@@ -18,7 +18,7 @@ describe('fixtures', () => {
 
       const after = fs.readFileSync(
           path.join(fixtureDir, 'after.js')
-      ).toString()
+      ).toString().replace(/{{\s*fixturesDir\s*}}/g, fixtureDir);
 
       expect(trim(before)).toEqual(trim(after))
     })
