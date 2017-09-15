@@ -39,7 +39,7 @@ export default str => {
   let current_expression = null
 
   return str.replace(/[\w$.:|{}?]+(?=[\s;])|;|\s\?\s/gm, token => {
-    console.log({ token, current_expression })
+    //console.log({ token, current_expression })
     if (current_expression === null) {
       if (token.startsWith('$')) {
         current_expression = new Start(token)
