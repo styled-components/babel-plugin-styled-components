@@ -1,14 +1,18 @@
 import parser from '../src/dank/parser'
 
+const parse = (input, expected) => {
+  expect(` ${parser(input)} `).toEqual(expected.replace(/[\n\s]+/g, ' '))
+}
+
 describe('dank parser', () => {
   it('should pass through unmatched tokens exactly', () => {
-    expect(parser(`
+    parse(`
       foo: bar;
       &:hover {
         color: black;
         + * { margin: 2rem; }
       }
-    `)).toEqual(`
+    `, `
       foo: bar;
       &:hover {
         color: black;
@@ -18,12 +22,16 @@ describe('dank parser', () => {
   })
 
   it.only('should replace a simple interpolation', () => {
-    expect(parser(`
+    parse(`
       foo: $bar;
-    `)).toEqual(`foo: \${bar};`)
-    expect(parser(`
+    `, `
+      foo: \${bar};
+    `)
+    parse(`
       foo: $bar.baz;
-    `)).toEqual(`foo: \${bar.baz};`)
+    `, `
+      foo: \${bar.baz};
+    `)
   })
 
   it('should reject more complex JS expressions', () => {
