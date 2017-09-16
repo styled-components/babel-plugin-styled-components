@@ -1,82 +1,47 @@
-class Or {
-  constructor(lhs) {
-    this.lhs = lhs
-    this.ended = false
-    this.contents = ''
-  }
+import Stylis from 'stylis'
+const stylis = new Stylis({
+  global: false,
+  cascade: true,
+  keyframe: false,
+  prefix: true,
+  compress: false,
+  semicolon: true,
+})
 
-  next(token) {
-    console.log(this.contents)
-    console.log(token)
-    if (this.contents === null && !token.startsWith(`'`) && !token.startsWith(`"`)) {
-      this.contents = `'${token}'`
-    } else {
-      this.contents = `${this.contents}${token}`
+stylis.use((context, content, selectors, parent, line, column, length) => {
+  console.log([context, content, selectors, parent, line, column, length])
+  if (context !== 1) return
+  const dollar_index = content.indexOf('$')
+
+  if (dollar_index === -1) {
+    return
+  } else if (dollar_index === 0) {
+    return `\${ ${content} }`
+  } else {
+    const before_dollar = content.substring(0, dollar_index)
+    const after_dollar = content.substring(dollar_index + 1, content.length)
+    const tokens = after_dollar.split(/\s+/)
+
+    const beginning =  after_dollar.startsWith('props') ? `\${props => `
+      : after_dollar.startsWith('theme') ? `\${props => props.`
+      : `\${`
+
+    let ended = false
+    let token
+    const expr_tokens = []
+    while (!ended && (token = tokens.shift())) {
+      if (expr_tokens.length === 0) {
+        expr_tokens.push(token)
+      } else {
+
+      }
     }
-    if (
-      (this.contents.startsWith(`'`) && !this.contents.endsWith(`'`))
-    ||
-      (this.contents.startsWith(`"`) && !this.contents.endsWith(`"`))
-    ) {
-      // keep consuming
-      return this
-    } else {
-      return new Start(`${this.lhs.token} || ${this.contents}`)
-    }
+    console.log([before_dollar, beginning, expr_tokens, tokens])
+    return `${before_dollar}${beginning}${expr_tokens.join(' ')}}${tokens.join(' ')}`
   }
-
-  toString() {
-    return this.lhs.toString(`|| ${this.contents}`)
-  }
-}
-
-class Start {
-  constructor(token) {
-    this.ended = false
-    this.token = token
-  }
-
-  next(token) {
-    if (token.match(/^\s+$/)) {}
-    else if (token === ';') this.ended = true
-    else if (token === '||') {
-      return new Or(this)
-    }
-    return this
-  }
-
-  toString() {
-    const no_dollar = this.token.substr(1, this.token.length - 1)
-    if (no_dollar.startsWith('props')) {
-      return `\${props => ${no_dollar}}`
-    } else if (no_dollar.startsWith('theme')) {
-      return `\${props => props.${no_dollar}}`
-    } else {
-      return `\${${no_dollar}}`
-    }
-  }
-}
+})
 
 export default str => {
-  let current_expression = null
-
-  return str.replace(/[\w$.:|{}?'"]+(?=[\s;])|;|\s+/gm, token => {
-    console.log({ token, current_expression })
-    if (current_expression === null) {
-      if (token.startsWith('$')) {
-        current_expression = new Start(token)
-      } else {
-        return token
-      }
-    } else {
-      current_expression = current_expression.next(token)
-
-      if (current_expression.ended) {
-        const output = current_expression.toString() + token
-        current_expression = null
-        return output
-      }
-    }
-    return ''
-  })
+  const parsed = stylis('',str)
+  return parsed.substring(1, parsed.length - 1)
 }

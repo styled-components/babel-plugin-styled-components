@@ -17,17 +17,13 @@ describe('dank parser', () => {
     `)
   })
 
-  it('should replace a simple interpolation', () => {
+  it.only('should replace a simple interpolation', () => {
     expect(parser(`
       foo: $bar;
-    `)).toEqual(`
-      foo: \${bar};
-    `)
+    `)).toEqual(`foo: \${bar};`)
     expect(parser(`
       foo: $bar.baz;
-    `)).toEqual(`
-      foo: \${bar.baz};
-    `)
+    `)).toEqual(`foo: \${bar.baz};`)
   })
 
   it('should reject more complex JS expressions', () => {
