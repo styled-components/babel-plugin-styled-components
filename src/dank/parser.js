@@ -65,8 +65,10 @@ export default str => {
   let offset = 0
   console.log(replacements)
   replacements.forEach(({ from, to, content }) => {
-    const diff = (to - from) - content.length
+    const diff = content.length - (to - from) + 1
     console.log(JSON.stringify(output))
+    console.log({ from, to, content, offset })
+    console.log(from + offset, to + offset)
     output = `${output.slice(0, from + offset)}${content}${output.slice(to + offset)}`
     console.log(JSON.stringify(output))
     offset += diff
