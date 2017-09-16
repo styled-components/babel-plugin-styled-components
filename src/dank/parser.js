@@ -1,4 +1,5 @@
 import Stylis from 'stylis'
+
 const stylis = new Stylis({
   global: false,
   cascade: true,
@@ -8,23 +9,26 @@ const stylis = new Stylis({
   semicolon: true,
 })
 
+let replacements
 stylis.use((context, content, selectors, parent, line, column, length) => {
   console.log([context, content, selectors, parent, line, column, length])
   if (context !== 1) return
   const dollar_index = content.indexOf('$')
+  let new_content
 
   if (dollar_index === -1) {
     return
   } else if (dollar_index === 0) {
-    return `\${ ${content} }`
+    new_content = `\${ ${content.slice(1) } }`
   } else {
-    const before_dollar = content.substring(0, dollar_index)
-    const after_dollar = content.substring(dollar_index + 1, content.length)
+    const before_dollar = content.slice(0, dollar_index)
+    const after_dollar = content.slice(dollar_index + 1)
+    console.log({before_dollar, after_dollar})
     const tokens = after_dollar.split(/\s+/)
 
-    const beginning =  after_dollar.startsWith('props') ? `\${props => `
+    const beginning = after_dollar.startsWith('props') ? `\${props => `
       : after_dollar.startsWith('theme') ? `\${props => props.`
-      : `\${`
+        : `\${`
 
     let ended = false
     let token
@@ -36,12 +40,32 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
 
       }
     }
-    console.log([before_dollar, beginning, expr_tokens, tokens])
-    return `${before_dollar}${beginning}${expr_tokens.join(' ')}}${tokens.join(' ')}`
+    new_content = `${before_dollar}${beginning}${expr_tokens.join(' ')}}${tokens.join(' ')}`
+  }
+
+  if (new_content) {
+    let eh = {
+      from: column - content.length - 1,
+      to: column - 1,
+      content: new_content
+    }
+    console.log(eh)
+    replacements.push(eh)
   }
 })
 
 export default str => {
-  const parsed = stylis('',str)
-  return parsed.substring(1, parsed.length - 1)
+  replacements = []
+  stylis('', str.replace(/\n/g, ' '))
+  let output = str
+  let offset = 0
+  console.log(replacements)
+  replacements.forEach(({ from, to, content }) => {
+    const diff = (to - from) - content.length
+    console.log(JSON.stringify(output))
+    output = `${output.slice(0, from + offset)}${content}${output.slice(to + offset)}`
+    console.log(JSON.stringify(output))
+    offset += diff
+  })
+  return output
 }
