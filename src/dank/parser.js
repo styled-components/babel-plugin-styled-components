@@ -22,22 +22,33 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
     if (match) {
       console.log(match)
       const before_dollar = content.slice(0, match.index + 1)
-      const after_dollar = content.slice(match.index + 2)
+      const after_dollar = content.slice(match.index + 1)
       console.log({ before_dollar, after_dollar })
       const tokens = after_dollar.split(/\s+/)
 
-      const beginning = after_dollar.startsWith('props') ? `\${props => `
-        : after_dollar.startsWith('theme') ? `\${props => props.`
+      const beginning = after_dollar.startsWith('$props') ? `\${props => `
+        : after_dollar.startsWith('$theme') ? `\${props => props.`
           : `\${`
 
       let ended = false
       let token
+      let mode = 'token'
       const expr_tokens = []
       while (!ended && (token = tokens.shift())) {
-        if (expr_tokens.length === 0) {
-          expr_tokens.push(token)
-        } else {
-
+        if (mode === 'token') {
+          if (token.startsWith('$')) {
+            expr_tokens.push(token.slice(1))
+          } else {
+            expr_tokens.push(`'${token}'`)
+          }
+          mode = 'operator'
+        } else if (mode === 'operator') {
+          if (token === '||') {
+            expr_tokens.push(token)
+            mode = 'token'
+          } else {
+            ended = true
+          }
         }
       }
       if (expr_tokens.length > 0) {
