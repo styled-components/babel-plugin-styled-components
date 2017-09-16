@@ -5,7 +5,7 @@ const parse = (input, expected) => {
 }
 
 describe('dank parser', () => {
-  it('should pass through unmatched tokens exactly', () => {
+  it.only('should pass through unmatched tokens exactly', () => {
     parse(`
       foo: bar;
       &:hover {
@@ -21,7 +21,7 @@ describe('dank parser', () => {
     `)
   })
 
-  it.only('should replace a simple interpolation', () => {
+  it('should replace a simple interpolation', () => {
     parse(`
       foo: $bar;
     `, `
@@ -35,34 +35,34 @@ describe('dank parser', () => {
   })
 
   it('should reject more complex JS expressions', () => {
-    expect(parser(`
+    parse(`
       foo: $bar.baz();
-    `)).toEqual(`
+    `, `
       foo: $bar.baz();
     `)
-    expect(parser(`
+    parse(`
       foo: $bar.baz($omg, $ffs);
-    `)).toEqual(`
+    `, `
       foo: $bar.baz($omg, $ffs);
     `)
   })
 
   it('should allow props and theme interpolations', () => {
-    expect(parser(`
+    parse(`
       foo: $props.x;
       bar: $theme.y;
-    `)).toEqual(`
+    `, `
       foo: \${props => props.x};
       bar: \${props => props.theme.y};
     `)
   })
 
   it('should allow fallbacks', () => {
-    expect(parser(`
+    parse(`
       foo: $x || 0.5;
       bar: $props.y || lol;
       baz: $theme.z || 'x y z';
-    `)).toEqual(`
+    `, `
       foo: \${x || '0.5'};
       bar: \${props => props.x || 'lol'};
       baz: \${props => props.theme.z || 'x y z'};
