@@ -73,4 +73,16 @@ describe('dank parser', () => {
       baz: \${props => props.theme.z || 'x y z'};
     `)
   })
+
+  it('should allow ternary', () => {
+    parse(`
+      foo: $x ? 0.5 : 1.0;
+      bar: $props.y ? lol : boats;
+      baz: $theme.z ? 'x y z' : 'a b c';
+    `, `
+      foo: \${x ? '0.5' : '1.0'};
+      bar: \${props => props.y ? 'lol' : 'boats'};
+      baz: \${props => props.theme.z ? 'x y z' : 'a b c'};
+    `)
+  })
 })

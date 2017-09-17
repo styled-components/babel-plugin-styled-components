@@ -11,7 +11,7 @@ const stylis = new Stylis({
 
 let replacements
 stylis.use((context, content, selectors, parent, line, column, length) => {
-  console.log([context, content, selectors, parent, line, column, length])
+  //console.log([context, content, selectors, parent, line, column, length])
   if (context !== 1) return
   let new_content
 
@@ -20,12 +20,11 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
   } else {
     const match = content.match(/\s\$[\w.]+(\s|$)/)
     if (match) {
-      console.log(match)
       const before_dollar = content.slice(0, match.index + 1)
       const after_dollar = content.slice(match.index + 1)
-      console.log({ before_dollar, after_dollar })
+      //console.log({ before_dollar, after_dollar })
       const tokens = after_dollar.split(/\s+/)
-      console.log(tokens)
+      //console.log(tokens)
 
       const beginning = after_dollar.startsWith('$props') ? `\${props => `
         : after_dollar.startsWith('$theme') ? `\${props => props.`
@@ -33,33 +32,32 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
 
       let ended = false
       let token
-      let mode = 'token'
+      let mode = 'TOKEN'
       const expr_tokens = []
       while (!ended && (token = tokens.shift())) {
-        console.log(mode, token)
-        if (mode === 'token') {
+        //console.log(mode, token)
+        if (mode === 'TOKEN') {
           if (token.startsWith('$')) {
             expr_tokens.push(token.slice(1))
-            mode = 'operator'
+            mode = 'OPERATOR'
           } else if (token.startsWith(`'`) || token.startsWith(`"`)) {
-            console.log("eh?")
             expr_tokens.push(token)
-            mode = 'quote'
+            mode = 'QUOTE'
           } else {
             expr_tokens.push(`'${token}'`)
-            mode = 'operator'
+            mode = 'OPERATOR'
           }
-        } else if (mode === 'operator') {
-          if (token === '||') {
+        } else if (mode === 'OPERATOR') {
+          if (token === '||' || token === '?' || token === ':') {
             expr_tokens.push(token)
-            mode = 'token'
+            mode = 'TOKEN'
           } else {
             ended = true
           }
-        } else if (mode === 'quote') {
+        } else if (mode === 'QUOTE') {
           expr_tokens.push(token)
           if (token.endsWith(`'`) || token.endsWith(`"`)) {
-            mode = 'operator'
+            mode = 'OPERATOR'
           }
         }
       }
@@ -71,13 +69,11 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
   }
 
   if (new_content) {
-    let eh = {
+    replacements.push({
       from: column - content.length - 1,
       to: column - 1,
       content: new_content
-    }
-    console.log(eh)
-    replacements.push(eh)
+    })
   }
 })
 
@@ -86,14 +82,9 @@ export default str => {
   stylis('', str.replace(/\n/g, ' '))
   let output = str
   let offset = 0
-  console.log(replacements)
   replacements.forEach(({ from, to, content }) => {
     const diff = content.length - (to - from) + 1
-    console.log(JSON.stringify(output))
-    console.log({ from, to, content, offset })
-    console.log(from + offset, to + offset)
     output = `${output.slice(0, from + offset)}${content}${output.slice(to + offset)}`
-    console.log(JSON.stringify(output))
     offset += diff
   })
   return output
