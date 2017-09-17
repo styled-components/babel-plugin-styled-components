@@ -52,6 +52,7 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
             expr_tokens.push(token)
             mode = 'TOKEN'
           } else {
+            tokens.unshift(token)
             ended = true
           }
         } else if (mode === 'QUOTE') {
@@ -62,7 +63,7 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
         }
       }
       if (expr_tokens.length > 0) {
-        new_content = `${before_dollar}${beginning}${expr_tokens.join(' ')}}${tokens.join(' ')}`
+        new_content = `${before_dollar}${beginning}${expr_tokens.join(' ')}}${tokens.length > 0 ? ' ' + tokens.join(' ') : ''}`
       }
     }
 

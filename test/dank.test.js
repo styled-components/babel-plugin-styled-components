@@ -85,4 +85,24 @@ describe('dank parser', () => {
       baz: \${props => props.theme.z ? 'x y z' : 'a b c'};
     `)
   })
+
+  it('should strip all $s', () => {
+    parse(`
+      foo: $x ? $y : $z;
+      bar: $props.x ? $props.y : $props.z;
+    `, `
+      foo: \${x ? y : z};
+      bar: \${props => props.x ? props.y : props.z};
+    `)
+  })
+
+  it('should replace within a line', () => {
+    parse(`
+      animation: $name 0.3s linear infinite;
+      transition: $props.name || backup 0.3s linear infinite;
+    `, `
+      animation: \${name} 0.3s linear infinite;
+      transition: \${props => props.name || 'backup'} 0.3s linear infinite;
+    `)
+  })
 })
