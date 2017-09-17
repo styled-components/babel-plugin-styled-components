@@ -65,8 +65,12 @@ describe('dank parser', () => {
   it('should allow fallbacks', () => {
     parse(`
       foo: $x || 0.5;
+      bar: $props.y || lol;
+      baz: $theme.z || 'x y z';
     `, `
       foo: \${x || '0.5'};
+      bar: \${props => props.y || 'lol'};
+      baz: \${props => props.theme.z || 'x y z'};
     `)
   })
 })
