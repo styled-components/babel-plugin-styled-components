@@ -105,4 +105,20 @@ describe('dank parser', () => {
       transition: \${props => props.name || 'backup'} 0.3s linear infinite;
     `)
   })
+
+  it('should allow optional blocks', () => {
+    parse(`
+      color: red;
+      $props.primary? {
+        color: blue;
+        something: else;
+      }
+    `, `
+      color: red;
+      \${props => props.primary && css\`
+        color: blue;
+        something: else;
+      \`}
+    `)
+  })
 })

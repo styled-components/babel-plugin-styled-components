@@ -10,8 +10,14 @@ const stylis = new Stylis({
 })
 
 let replacements
+
+const beginning = expr =>
+  expr.startsWith('$props') ? `\${props => ` :
+    expr.startsWith('$theme') ? `\${props => props.` :
+      `\${`
+
 stylis.use((context, content, selectors, parent, line, column, length) => {
-  //console.log([context, content, selectors, parent, line, column, length])
+  console.log([context, content, selectors, parent, line, column, length])
   if (context !== 1) return
   let new_content
 
@@ -22,13 +28,10 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
     if (match) {
       const before_dollar = content.slice(0, match.index + 1)
       const after_dollar = content.slice(match.index + 1)
-      //console.log({ before_dollar, after_dollar })
+      console.log({ before_dollar, after_dollar })
       const tokens = after_dollar.split(/\s+/)
-      //console.log(tokens)
-
-      const beginning = after_dollar.startsWith('$props') ? `\${props => `
-        : after_dollar.startsWith('$theme') ? `\${props => props.`
-          : `\${`
+      console.log(tokens)
+      const expr_start = beginning(after_dollar)
 
       let ended = false
       let token
@@ -63,7 +66,7 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
         }
       }
       if (expr_tokens.length > 0) {
-        new_content = `${before_dollar}${beginning}${expr_tokens.join(' ')}}${tokens.length > 0 ? ' ' + tokens.join(' ') : ''}`
+        new_content = `${before_dollar}${expr_start}${expr_tokens.join(' ')}}${tokens.length > 0 ? ' ' + tokens.join(' ') : ''}`
       }
     }
 
@@ -80,7 +83,33 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
 
 export default str => {
   replacements = []
-  stylis('', str.replace(/\n/g, ' '))
+  const flat_str = str.replace(/\n/g, ' ')
+  const brackets = []
+  flat_str.replace(/[{}]/g, (match, bracket_index) => {
+    if (match === '{') brackets.push(bracket_index)
+    else {
+      const matching_brace = brackets.pop()
+      if (!matching_brace) return // bad input ignore
+      const string_up_to_opening = flat_str.slice(0, matching_brace)
+      console.log(string_up_to_opening)
+      const one_of_ours = string_up_to_opening.match(/(\$[\w.]+)\?\s+$/)
+      if (one_of_ours) {
+        const { 1: expr, index } = one_of_ours
+        console.log({ expr, index })
+        replacements.push({
+          from: index,
+          to: matching_brace + 1,
+          content: `${beginning(expr)}${expr.slice(1)} && css\``
+        })
+        replacements.push({
+          from: bracket_index - 1,
+          to: bracket_index,
+          content: `\`}`
+        })
+      }
+    }
+  })
+  stylis('', flat_str)
   let output = str
   let offset = 0
   replacements.forEach(({ from, to, content }) => {
