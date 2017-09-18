@@ -1,4 +1,4 @@
-import parser from '../src/dank/parser'
+import parser, { replacer } from '../src/dank/parser'
 
 const parse = (input, expected) => {
   expect(parser(input)).toEqual(expected)
@@ -130,7 +130,7 @@ describe('dank parser', () => {
       $props.secondary? {
         color: blue;
       }
-    `,`
+    `, `
       color: red;
       \${props => props.primary && css\`
         color: blue;
@@ -147,7 +147,7 @@ describe('dank parser', () => {
       $props.primary? {
         red: green;
       }
-    `,`
+    `, `
       color: \${props => props.theme.x};
       \${props => props.primary && css\`
         red: green;
@@ -185,5 +185,34 @@ describe('dank parser', () => {
         something: \${props => props.dank};
       \`}
     `)
+  })
+})
+
+describe.only('replacer', () => {
+  it('should replace a single char', () => {
+    expect(replacer('abc', [
+      { start: 1, end: 2, content: 'd' },
+    ])).toEqual('adc')
+  })
+
+  it('should replace two single chars', () => {
+    expect(replacer('abcd', [
+      { start: 1, end: 2, content: 'e' },
+      { start: 2, end: 3, content: 'f' },
+    ])).toEqual('aefd')
+  })
+
+  it('should replace chars with strings', () => {
+    expect(replacer('abcd', [
+      { start: 1, end: 2, content: ' e ' },
+      { start: 2, end: 3, content: ' f ' },
+    ])).toEqual('a e  f d')
+  })
+
+  it('should accept input in any order', () => {
+    expect(replacer('abcd', [
+      { start: 2, end: 3, content: ' f ' },
+      { start: 1, end: 2, content: ' e ' },
+    ])).toEqual('a e  f d')
   })
 })

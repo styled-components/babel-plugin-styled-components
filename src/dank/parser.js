@@ -86,6 +86,20 @@ const report = str => {
   console.log(str.split(/\n/g).map((l, i) => `${sum++}—${(sum += l.length) - 1}: ${JSON.stringify(l)}`).join('\n'))
 }
 
+export const replacer = (str, replacements) => {
+  let output = str
+  let offset = 0
+
+  replacements
+    .sort((a, b) => a.start > b.start)
+    .forEach(({ start, end, content }) => {
+      const length = end - start
+      output = `${output.slice(0,start + offset)}${content}${output.slice(end + offset)}`
+      offset += content.length - length
+    })
+  return output
+}
+
 export default str => {
   replacements = []
   const flat_str = str.replace(/\n/g, ' ')
