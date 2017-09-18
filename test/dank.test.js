@@ -56,9 +56,11 @@ describe('dank parser', () => {
     parse(`
       foo: $props.x;
       bar: $theme.y;
+      baz: $theme.z;
     `, `
       foo: \${props => props.x};
       bar: \${props => props.theme.y};
+      baz: \${props => props.theme.z};
     `)
   })
 
@@ -118,6 +120,69 @@ describe('dank parser', () => {
       \${props => props.primary && css\`
         color: blue;
         something: else;
+      \`}
+    `)
+    parse(`
+      color: red;
+      $props.primary? {
+        color: blue;
+      }
+      $props.secondary? {
+        color: blue;
+      }
+    `,`
+      color: red;
+      \${props => props.primary && css\`
+        color: blue;
+      \`}
+      \${props => props.secondary && css\`
+        color: blue;
+      \`}
+    `)
+  })
+
+  it('should replace before an optional block', () => {
+    parse(`
+      color: $theme.x;
+      $props.primary? {
+        red: green;
+      }
+    `,`
+      color: \${props => props.theme.x};
+      \${props => props.primary && css\`
+        red: green;
+      \`}
+    `)
+  })
+
+  it('should replace within optional blocks like normal', () => {
+    parse(`
+      color: red;
+      $props.primary? {
+        color: $external;
+        something: $props.dank;
+      }
+    `, `
+      color: red;
+      \${props => props.primary && css\`
+        color: \${external};
+        something: \${props => props.dank};
+      \`}
+    `)
+  })
+
+  it('should replace around optional blocks like normal', () => {
+    parse(`
+      color: $theme.x;
+      $props.primary? {
+        color: $external;
+        something: $props.dank;
+      }
+    `, `
+      color: \${props => props.theme.x};
+      \${props => props.primary && css\`
+        color: \${external};
+        something: \${props => props.dank};
       \`}
     `)
   })

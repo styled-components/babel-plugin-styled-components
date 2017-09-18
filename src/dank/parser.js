@@ -17,7 +17,7 @@ const beginning = expr =>
       `\${`
 
 stylis.use((context, content, selectors, parent, line, column, length) => {
-  console.log([context, content, selectors, parent, line, column, length])
+  //console.log([context, content, selectors, parent, line, column, length])
   if (context !== 1) return
   let new_content
 
@@ -28,9 +28,9 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
     if (match) {
       const before_dollar = content.slice(0, match.index + 1)
       const after_dollar = content.slice(match.index + 1)
-      console.log({ before_dollar, after_dollar })
+      //console.log({ before_dollar, after_dollar })
       const tokens = after_dollar.split(/\s+/)
-      console.log(tokens)
+      //console.log(tokens)
       const expr_start = beginning(after_dollar)
 
       let ended = false
@@ -81,6 +81,11 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
   }
 })
 
+const report = str => {
+  let sum = 0
+  console.log(str.split(/\n/g).map((l, i) => `${sum++}—${(sum += l.length) - 1}: ${JSON.stringify(l)}`).join('\n'))
+}
+
 export default str => {
   replacements = []
   const flat_str = str.replace(/\n/g, ' ')
@@ -102,20 +107,30 @@ export default str => {
           content: `${beginning(expr)}${expr.slice(1)} && css\``
         })
         replacements.push({
-          from: bracket_index - 1,
-          to: bracket_index,
+          from: bracket_index,
+          to: bracket_index + 1,
           content: `\`}`
         })
       }
     }
+    return match
   })
   stylis('', flat_str)
   let output = str
   let offset = 0
-  replacements.forEach(({ from, to, content }) => {
-    const diff = content.length - (to - from) + 1
-    output = `${output.slice(0, from + offset)}${content}${output.slice(to + offset)}`
-    offset += diff
-  })
+  console.log(replacements.sort((a, b) => a.from > b.from))
+  replacements
+    .sort((a, b) => a.from > b.from)
+    .forEach(({ from, to, content }) => {
+      report(output)
+      const diff = content.length - (to - from)
+      console.log({ from, to, content, content_length: content.length, offset, diff })
+      const a = output.slice(0, from + offset)
+      const b = output.slice(to + offset)
+      console.log([a, content, b])
+      output = `${a}${content}${b}`
+      offset += diff
+    })
+  report(output)
   return output
 }
