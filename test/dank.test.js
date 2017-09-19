@@ -25,7 +25,7 @@ describe('dank parser', () => {
     parse(`
       $bar;
     `, `
-      \${ bar };
+      \${bar};
     `)
     parse(`
       foo: $bar;
@@ -61,6 +61,26 @@ describe('dank parser', () => {
       foo: \${props => props.x};
       bar: \${props => props.theme.y};
       baz: \${props => props.theme.z};
+    `)
+  })
+
+  it('should intersperse interpolations and normal values', () => {
+    parse(`
+      color: red;
+      foo: $props.x;
+      display: block;
+      bar: $theme.y;
+      margin: 0;
+      $baz;
+      padding: 0;
+    `, `
+      color: red;
+      foo: \${props => props.x};
+      display: block;
+      bar: \${props => props.theme.y};
+      margin: 0;
+      \${baz};
+      padding: 0;
     `)
   })
 
@@ -155,6 +175,20 @@ describe('dank parser', () => {
     `)
   })
 
+  it('should replace after an optional block', () => {
+    parse(`
+      $props.primary? {
+        red: green;
+      }
+      color: $theme.x;
+    `, `
+      \${props => props.primary && css\`
+        red: green;
+      \`}
+      color: \${props => props.theme.x};
+    `)
+  })
+
   it('should replace within optional blocks like normal', () => {
     parse(`
       color: red;
@@ -188,7 +222,7 @@ describe('dank parser', () => {
   })
 })
 
-describe.only('replacer', () => {
+describe('replacer', () => {
   it('should replace a single char', () => {
     expect(replacer('abc', [
       { start: 1, end: 2, content: 'd' },
@@ -214,5 +248,22 @@ describe.only('replacer', () => {
       { start: 2, end: 3, content: ' f ' },
       { start: 1, end: 2, content: ' e ' },
     ])).toEqual('a e  f d')
+  })
+
+  it('should work dammit', () => {
+    expect(replacer(`
+      foo: $props.x;
+      bar: $theme.y;
+      baz: $theme.z;
+    `, [
+        { start: 7, end: 20, content: 'foo: ${props => props.x}' },
+        { start: 28, end: 41, content: 'bar: ${props => props.theme.y}' },
+        { start: 49, end: 62, content: 'baz: ${props => props.theme.z}' }
+      ]
+    )).toEqual(`
+      foo: \${props => props.x};
+      bar: \${props => props.theme.y};
+      baz: \${props => props.theme.z};
+    `)
   })
 })

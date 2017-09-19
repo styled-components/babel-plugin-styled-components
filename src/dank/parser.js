@@ -10,19 +10,30 @@ const stylis = new Stylis({
 })
 
 let replacements
+let dumb_stylis_column_offset
 
 const beginning = expr =>
   expr.startsWith('$props') ? `\${props => ` :
     expr.startsWith('$theme') ? `\${props => props.` :
       `\${`
 
-stylis.use((context, content, selectors, parent, line, column, length) => {
-  //console.log([context, content, selectors, parent, line, column, length])
+let last_parent
+stylis.use((context, content, selectors, parent, line, _column, length) => {
+
+  console.log([context, content, selectors, last_parent, parent, line, _column, length])
   if (context !== 1) return
+  if (JSON.stringify(last_parent) !== JSON.stringify(parent)) dumb_stylis_column_offset++
+  last_parent = parent
+  const column = _column + dumb_stylis_column_offset++
   let new_content
 
   if (content.startsWith('$')) {
-    new_content = `\${ ${content.slice(1) } }`
+    new_content = `\${${content.slice(1) }}`
+    replacements.push({
+      start: column - content.length - 1,
+      end: column - 1,
+      content: new_content
+    })
   } else {
     const match = content.match(/\s\$[\w.]+(\s|$)/)
     if (match) {
@@ -67,17 +78,13 @@ stylis.use((context, content, selectors, parent, line, column, length) => {
       }
       if (expr_tokens.length > 0) {
         new_content = `${before_dollar}${expr_start}${expr_tokens.join(' ')}}${tokens.length > 0 ? ' ' + tokens.join(' ') : ''}`
+        replacements.push({
+          start: column - content.length - 1,
+          end: column - 1,
+          content: new_content
+        })
       }
     }
-
-  }
-
-  if (new_content) {
-    replacements.push({
-      from: column - content.length - 1,
-      to: column - 1,
-      content: new_content
-    })
   }
 })
 
@@ -87,6 +94,7 @@ const report = str => {
 }
 
 export const replacer = (str, replacements) => {
+  //console.log({str, replacements})
   let output = str
   let offset = 0
 
@@ -102,6 +110,8 @@ export const replacer = (str, replacements) => {
 
 export default str => {
   replacements = []
+  dumb_stylis_column_offset = 0
+  last_parent = []
   const flat_str = str.replace(/\n/g, ' ')
   const brackets = []
   flat_str.replace(/[{}]/g, (match, bracket_index) => {
@@ -116,13 +126,13 @@ export default str => {
         const { 1: expr, index } = one_of_ours
         console.log({ expr, index })
         replacements.push({
-          from: index,
-          to: matching_brace + 1,
+          start: index,
+          end: matching_brace + 1,
           content: `${beginning(expr)}${expr.slice(1)} && css\``
         })
         replacements.push({
-          from: bracket_index,
-          to: bracket_index + 1,
+          start: bracket_index,
+          end: bracket_index + 1,
           content: `\`}`
         })
       }
@@ -130,21 +140,5 @@ export default str => {
     return match
   })
   stylis('', flat_str)
-  let output = str
-  let offset = 0
-  console.log(replacements.sort((a, b) => a.from > b.from))
-  replacements
-    .sort((a, b) => a.from > b.from)
-    .forEach(({ from, to, content }) => {
-      report(output)
-      const diff = content.length - (to - from)
-      console.log({ from, to, content, content_length: content.length, offset, diff })
-      const a = output.slice(0, from + offset)
-      const b = output.slice(to + offset)
-      console.log([a, content, b])
-      output = `${a}${content}${b}`
-      offset += diff
-    })
-  report(output)
-  return output
+  return replacer(str, replacements)
 }
