@@ -33,6 +33,7 @@
     "displayName"
   ],
   "dependencies": {
+    "babel-types": "^6.26.0",
     "stylis": "^3.2.1"
   }
 }
