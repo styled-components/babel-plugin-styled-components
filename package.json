@@ -15,10 +15,11 @@
   "devDependencies": {
     "babel-cli": "^6.24.0",
     "babel-preset-env": "^1.2.2",
-    "jest": "^17.0.3"
+    "jest": "^17.0.3",
+    "rimraf": "^2.6.2"
   },
   "scripts": {
-    "clean": "rm -rf lib",
+    "clean": "rimraf lib",
     "build": "babel src -d lib",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
