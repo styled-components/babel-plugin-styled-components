@@ -25,5 +25,7 @@ export default (path, state) => {
       element.value.raw = rawValuesMinified[i]
       element.value.cooked = cookedValuesMinfified[i]
     }
+  } else {
+    console.log(path)
   }
 }

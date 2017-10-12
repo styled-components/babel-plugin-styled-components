@@ -5,5 +5,5 @@ const TestNormal = styled.div.withConfig({
 
 const Test = styled_default.default.div.withConfig({
   displayName: "before__Test",
-  componentId: "s1tsr9xx-1"
+  componentId: "s1uqoi26-1"
 })([["{width: 100%;}"]]);
