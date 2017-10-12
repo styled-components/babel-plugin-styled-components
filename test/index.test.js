@@ -11,7 +11,6 @@ describe('fixtures', () => {
   const fixturesDir = path.join(__dirname, 'fixtures')
   fs.readdirSync(fixturesDir).sort().map((caseName) => {
     if (caseName === '.DS_Store') return
-    if (!/19/.test(caseName)) return
     it(`should ${caseName.replace(/^\d*-/, '').split('-').join(' ')}`, () => {
       const fixtureDir = path.join(fixturesDir, caseName)
       const beforePath = path.join(fixtureDir, 'before.js');
