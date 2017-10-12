@@ -45,10 +45,3 @@ export const isHelper = (tag, state) => (
   isCSSHelper(tag, state) ||
   isKeyframesHelper(tag, state)
 )
-
-
-
-
-{
-  type: "Call"
-}
