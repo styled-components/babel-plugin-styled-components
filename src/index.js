@@ -11,7 +11,6 @@ export default function({ types: t }) {
         noParserImportDeclaration(path, state)
       },
       CallExpression(path, state) {
-        
         noParserRequireCallExpression(path, state)
       },
       TaggedTemplateExpression(path, state) {
