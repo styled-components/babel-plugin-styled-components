@@ -1,4 +1,5 @@
-const styled_default = require('styled-components')
+const styled_default = require("styled-components");
+
 const TestNormal = styled.div`
   width: 100%;
 `
