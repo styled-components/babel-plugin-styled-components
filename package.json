@@ -35,6 +35,6 @@
   ],
   "dependencies": {
     "babel-types": "^6.26.0",
-    "stylis": "^3.2.1"
+    "stylis": "3.x"
   }
 }
