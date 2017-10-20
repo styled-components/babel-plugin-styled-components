@@ -1,12 +1,12 @@
 import * as t from 'babel-types'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import { useFileName, useDisplayName, useSSR, useNamespaceClasses } from '../utils/options'
 import getName from '../utils/getName'
 import path from 'path'
 import fs from 'fs'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
 
-const addConfig = (path, displayName, componentId) => {
+const addConfig = (path, displayName, componentId, namespaceClasses) => {
   if (!displayName && !componentId) {
     return
   }
@@ -18,11 +18,17 @@ const addConfig = (path, displayName, componentId) => {
   if (componentId) {
     withConfigProps.push(t.objectProperty(t.identifier('componentId'), t.stringLiteral(componentId)))
   }
+  if (namespaceClasses) {
+    const namespaceClassOption = Array.isArray(namespaceClasses) ?
+      t.arrayExpression(namespaceClasses.map(value => t.stringLiteral(value)))
+      : t.stringLiteral(namespaceClasses);
+    withConfigProps.push(t.objectProperty(t.identifier('namespaceClasses'), namespaceClassOption))
+  }
 
   // Replace x`...` with x.withConfig({ })`...`
   path.node.tag = t.callExpression(
     t.memberExpression(path.node.tag, t.identifier('withConfig')),
-    [ t.objectExpression(withConfigProps) ]
+    [t.objectExpression(withConfigProps)]
   )
 }
 
@@ -99,7 +105,8 @@ export default (path, state) => {
     addConfig(
       path,
       displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
-      useSSR(state) && getComponentId(state)
+      useSSR(state) && getComponentId(state),
+      useNamespaceClasses(state)
     )
   }
 }
