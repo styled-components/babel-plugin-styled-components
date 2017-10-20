@@ -1,12 +1,12 @@
 import * as t from 'babel-types'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import { useFileName, useDisplayName, useSSR, useIncreaseSpecificityClass } from '../utils/options'
 import getName from '../utils/getName'
 import path from 'path'
 import fs from 'fs'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
 
-const addConfig = (path, displayName, componentId) => {
+const addConfig = (path, displayName, componentId, specificityClass) => {
   if (!displayName && !componentId) {
     return
   }
@@ -18,11 +18,14 @@ const addConfig = (path, displayName, componentId) => {
   if (componentId) {
     withConfigProps.push(t.objectProperty(t.identifier('componentId'), t.stringLiteral(componentId)))
   }
+  if (specificityClass) {
+    withConfigProps.push(t.objectProperty(t.identifier('specificityClass'), t.stringLiteral(specificityClass)))
+  }
 
   // Replace x`...` with x.withConfig({ })`...`
   path.node.tag = t.callExpression(
     t.memberExpression(path.node.tag, t.identifier('withConfig')),
-    [ t.objectExpression(withConfigProps) ]
+    [t.objectExpression(withConfigProps)]
   )
 }
 
@@ -99,7 +102,8 @@ export default (path, state) => {
     addConfig(
       path,
       displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
-      useSSR(state) && getComponentId(state)
+      useSSR(state) && getComponentId(state),
+      useIncreaseSpecificityClass(state)
     )
   }
 }
