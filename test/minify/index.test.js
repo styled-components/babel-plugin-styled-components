@@ -61,6 +61,15 @@ describe('minify utils', () => {
       expect(actual).toBe(expected)
       expect(actual).toBe(minifyCooked(input))
     })
+
+    it('Preserves multi-line comments starting with /*!', () => {
+      const input = 'this is a /*! dont ignore me please */ test/* but you can ignore me */'
+      const expected = 'this is a /*! dont ignore me please */ test'
+      const actual = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(actual).toBe(minifyCooked(input))
+    })
   })
 
   describe('minifyRaw', () => {

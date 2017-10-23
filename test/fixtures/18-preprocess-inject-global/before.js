@@ -1,6 +1,10 @@
 injectGlobal`
   ${glob}
 
+  // comment
+  /* comment */
+  /*! preserve comment */
+
   html, body {
     margin: 100000px;
     padding: ${test};
