@@ -1,16 +1,33 @@
 import * as t from 'babel-types'
 
 const importLocalName = (name, state) => {
-  const imports = state.file.metadata.modules.imports
-  const styledImports = imports.find(x => x.source === 'styled-components')
-  if (styledImports) {
-    const specifier = styledImports.specifiers.find(x => x.imported === name)
-    if (specifier) {
-      return specifier.local
+  let localName = name === 'default' ? 'styled' : name
+
+  state.file.path.traverse({
+    ImportDeclaration: {
+      exit(path) {
+        const { node } = path
+
+        if (node.source.value === 'styled-components') {
+          for (const specifier of path.get('specifiers')) {
+            if (specifier.isImportDefaultSpecifier()) {
+              localName = specifier.node.local.name
+            }
+
+            if (specifier.isImportSpecifier() && specifier.node.imported.name === name) {
+              localName = specifier.node.local.name
+            }
+
+            if (specifier.isImportNamespaceSpecifier()) {
+              localName = specifier.node.local.name
+            }
+          }
+        }
+      }
     }
-  }
-  // import not found - return default name
-  return name === 'default' ? 'styled' : name
+  })
+
+  return localName
 }
 
 export const isStyled = (tag, state) => {
