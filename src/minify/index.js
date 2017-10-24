@@ -1,6 +1,6 @@
 import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
 
-const makeMultilineCommentRegex = newlinePattern => new RegExp('\\/\\*(.|' + newlinePattern + ')*?\\*\\/', 'g')
+const makeMultilineCommentRegex = newlinePattern => new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
 const lineCommentStart = /\/\//g
 const symbolRegex = /(\s*[;:{},]\s*)/g
 
