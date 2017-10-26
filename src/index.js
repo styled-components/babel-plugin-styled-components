@@ -1,5 +1,5 @@
 import minify from './visitors/minify'
-import displayNameAndId from './visitors/displayNameAndId'
+import displayNameIdAndNamespace from './visitors/displayNameIdAndNamespace'
 import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import { noParserImportDeclaration, noParserRequireCallExpression } from './visitors/noParserImport'
@@ -15,7 +15,7 @@ export default function({ types: t }) {
       },
       TaggedTemplateExpression(path, state) {
         minify(path, state)
-        displayNameAndId(path, state)
+        displayNameIdAndNamespace(path, state)
         templateLiterals(path, state)
       },
       VariableDeclarator(path, state) {
