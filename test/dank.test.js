@@ -1,7 +1,7 @@
 import parser, { replacer } from '../src/dank/parser'
 
 const parse = (input, expected) => {
-  expect(parser(input)).toEqual(expected)
+  expect(parser(input).replace(/\s+/g,' ')).toEqual(expected.replace(/:\s/g,':').replace(/\s+/g,' '))
 }
 
 describe('dank parser', () => {
@@ -96,7 +96,8 @@ describe('dank parser', () => {
     `)
   })
 
-  it('should allow ternary', () => {
+  it.only('should allow ternary', () => {
+
     parse(`
       foo: $x ? 0.5 : 1.0;
       bar: $props.y ? lol : boats;

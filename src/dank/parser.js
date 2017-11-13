@@ -19,8 +19,8 @@ const beginning = expr =>
 
 let last_parent
 stylis.use((context, content, selectors, parent, line, _column, length) => {
-  //console.log([context, content, selectors, last_parent, parent, line, _column, length])
   if (context !== 1) return
+  console.log([context, content, selectors, last_parent, parent, line, _column, length])
   if (JSON.stringify(last_parent) !== JSON.stringify(parent)) dumb_stylis_column_offset++
   last_parent = parent
   const column = _column + dumb_stylis_column_offset++
@@ -34,13 +34,13 @@ stylis.use((context, content, selectors, parent, line, _column, length) => {
       content: new_content
     })
   } else {
-    const match = content.match(/\s\$[\w.]+(\s|$)/)
+    const match = content.match(/[\s:]\$[\w.]+(\s|$)/)
     if (match) {
       const before_dollar = content.slice(0, match.index + 1)
       const after_dollar = content.slice(match.index + 1)
-      //console.log({ before_dollar, after_dollar })
+      console.log({ before_dollar, after_dollar })
       const tokens = after_dollar.split(/\s+/)
-      //console.log(tokens)
+      console.log(tokens)
       const expr_start = beginning(after_dollar)
 
       let ended = false
@@ -78,7 +78,7 @@ stylis.use((context, content, selectors, parent, line, _column, length) => {
       if (expr_tokens.length > 0) {
         new_content = `${before_dollar}${expr_start}${expr_tokens.join(' ')}}${tokens.length > 0 ? ' ' + tokens.join(' ') : ''}`
         replacements.push({
-          start: column - content.length - 1,
+          start: column - content.length - 2,
           end: column - 1,
           content: new_content
         })
@@ -93,7 +93,7 @@ const report = str => {
 }
 
 export const replacer = (str, replacements) => {
-  //console.log({str, replacements})
+  console.log({str, replacements})
   let output = str
   let offset = 0
 
