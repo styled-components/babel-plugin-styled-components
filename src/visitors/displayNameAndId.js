@@ -61,6 +61,7 @@ const findModuleRoot = (filename) => {
 
 const FILE_HASH = 'styled-components-file-hash'
 const COMPONENT_POSITION = 'styled-components-component-position'
+const separatorRegExp = new RegExp(`\\${path.sep}`, 'g');
 
 const getFileHash = (state) => {
   const { file } = state
@@ -71,7 +72,7 @@ const getFileHash = (state) => {
   const filename = file.opts.filename
   // find module root directory
   const moduleRoot = findModuleRoot(filename)
-  const filePath = moduleRoot && path.relative(moduleRoot, filename).replace(path.sep, '/')
+  const filePath = moduleRoot && path.relative(moduleRoot, filename).replace(separatorRegExp, '/')
   const moduleName = moduleRoot && JSON.parse(fs.readFileSync(path.join(moduleRoot, 'package.json'))).name
   const code = file.code
 
