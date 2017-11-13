@@ -19,8 +19,7 @@ const beginning = expr =>
 
 let last_parent
 stylis.use((context, content, selectors, parent, line, _column, length) => {
-
-  console.log([context, content, selectors, last_parent, parent, line, _column, length])
+  //console.log([context, content, selectors, last_parent, parent, line, _column, length])
   if (context !== 1) return
   if (JSON.stringify(last_parent) !== JSON.stringify(parent)) dumb_stylis_column_offset++
   last_parent = parent
@@ -120,11 +119,11 @@ export default str => {
       const matching_brace = brackets.pop()
       if (!matching_brace) return // bad input ignore
       const string_up_to_opening = flat_str.slice(0, matching_brace)
-      console.log(string_up_to_opening)
+      //console.log(string_up_to_opening)
       const one_of_ours = string_up_to_opening.match(/(\$[\w.]+)\?\s+$/)
       if (one_of_ours) {
         const { 1: expr, index } = one_of_ours
-        console.log({ expr, index })
+        //console.log({ expr, index })
         replacements.push({
           start: index,
           end: matching_brace + 1,

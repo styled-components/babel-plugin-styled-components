@@ -220,6 +220,54 @@ describe('dank parser', () => {
       \`}
     `)
   })
+
+  it('should handle interpolations within a normal block', () => {
+    parse(`
+      color: $theme.x;
+      &:hover {
+        color: $external;
+        something: $props.dank;
+      }
+    `, `
+      color: \${props => props.theme.x};
+      &:hover {
+        color: \${external};
+        something: \${props => props.dank};
+      }
+    `)
+  })
+
+  it('should handle interpolations within a media query block', () => {
+    parse(`
+      color: $theme.x;
+      @media (min-width: 600px) {
+        color: $external;
+        something: $props.dank;
+      }
+    `, `
+      color: \${props => props.theme.x};
+      @media (min-width: 600px) {
+        color: \${external};
+        something: \${props => props.dank};
+      }
+    `)
+  })
+
+  it('should handle a pathological test case', () => {
+    parse(`
+      color: $theme.x;
+      @media (min-width: 600px) {
+        color: $external;
+        &:hover { something: $props.dank; }
+      }
+    `, `
+      color: \${props => props.theme.x};
+      @media (min-width: 600px) {
+        color: \${external};
+        &:hover { something: \${props => props.dank}; }
+      }
+    `)
+  })
 })
 
 describe('replacer', () => {
