@@ -76,7 +76,15 @@ const getFileHash = (state) => {
   const moduleName = moduleRoot && JSON.parse(fs.readFileSync(path.join(moduleRoot, 'package.json'))).name
   const code = file.code
 
-  const fileHash = hash([moduleName, filePath, code].join(''))
+  const stuffToHash = [moduleName]
+
+  if (filePath) {
+    stuffToHash.push(filePath)
+  } else {
+    stuffToHash.push(code)
+  }
+
+  const fileHash = hash(stuffToHash.join(''))
   file.set(FILE_HASH, fileHash)
   return fileHash
 }
