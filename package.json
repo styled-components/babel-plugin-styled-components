@@ -36,5 +36,10 @@
   "dependencies": {
     "babel-types": "^6.26.0",
     "stylis": "^3.0.0"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "<rootDir>/test/whitespaceTrimmingSerializer.js"
+    ]
   }
 }
