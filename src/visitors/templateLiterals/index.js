@@ -19,6 +19,7 @@ export default (path, state) => {
 
   // add uglify pure (/*#__PURE__*/) comment before function calls
   if(useUglifyPure(state)){
+    path.node.leadingComments = path.node.leadingComments || []
     annotateAsPure(path)
   }
 }
