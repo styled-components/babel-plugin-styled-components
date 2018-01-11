@@ -1,8 +1,9 @@
 import {
   useCSSPreprocessor,
-  useTranspileTemplateLiterals
+  useTranspileTemplateLiterals,
+  useUglifyPure
 } from '../../utils/options'
-import annotateAsPure from "babel-helper-annotate-as-pure";
+import annotateAsPure from "@babel/helper-annotate-as-pure";
 
 import preprocess from './preprocess'
 import transpile from './transpile'
