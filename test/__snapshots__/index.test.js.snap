@@ -79,6 +79,34 @@ const WithAttrsWrapped = styled(Inner).attrs({ some: \'value\' }).withConfig({
 })\`\`;"
 `;
 
+exports[`fixtures should annotate keyframes with uglify pure comments 1`] = `"const Animation = /*#__PURE__*/keyframes([[\"@-webkit-keyframes \"], [\"{0%{opacity:0;}100%{opacity:1;}}@keyframes \"], [\"{0%{opacity:0;}100%{opacity:1;}}\"]]);"`;
+
+exports[`fixtures should annotate styled calls with uglify pure comments 1`] = `
+"const Test = /*#__PURE__*/styled.div.withConfig({
+  displayName: \'Test\'
+})\`width:100%;\`;
+const Test2 = /*#__PURE__*/styled(\'div\').withConfig({
+  displayName: \'Test2\'
+})\`\`;
+const Test3 = true ? /*#__PURE__*/styled.div.withConfig({
+  displayName: \'Test3\'
+})\`\` : /*#__PURE__*/styled.div.withConfig({
+  displayName: \'Test3\'
+})\`\`;
+const styles = { One: /*#__PURE__*/styled.div.withConfig({
+    displayName: \'One\'
+  })\`\` };
+let Component;
+Component = /*#__PURE__*/styled.div.withConfig({
+  displayName: \'Component\'
+})\`\`;
+const WrappedComponent = /*#__PURE__*/styled(Inner).withConfig({
+  displayName: \'WrappedComponent\'
+})\`\`;
+const notStyled = /*#__PURE__*/styled.div(\'\'); // not transpiled by styled components but should add pure comment
+const normalFunc = add(5, 3);"
+`;
+
 exports[`fixtures should minify css in helpers 1`] = `
 "import { css, keyframes } from \'styled-components\';
 

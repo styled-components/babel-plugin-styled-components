@@ -8,7 +8,8 @@
       "displayName": true,
       "transpileTemplateLiterals": true,
       "preprocess": false,
-      "minify": false
+      "minify": false,
+      "uglifyPure":false
     }]
   ]
 }
