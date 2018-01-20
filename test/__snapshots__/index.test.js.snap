@@ -117,8 +117,6 @@ const DoubleInterpolation = /*#__PURE__*/styled.div.withConfig({
 })([[\"{margin:\", props => props.vert, \" \", props => props.hori, \";}\"]]);"
 `;
 
-exports[`fixtures should annotate inject global with uglify pure comments 1`] = `"/*#__PURE__*/injectGlobal([[\"\", glob, \"\\n/*! preserve comment */html,body{margin:100000px;padding:\", test, \";}@media (max-width:999px){html,body{margin:0;}}.root{width:100%;}\"]]);"`;
-
 exports[`fixtures should annotate keyframes with uglify pure comments 1`] = `"const Animation = /*#__PURE__*/keyframes([[\"@-webkit-keyframes \"], [\"{0%{opacity:0;}100%{opacity:1;}}@keyframes \"], [\"{0%{opacity:0;}100%{opacity:1;}}\"]]);"`;
 
 exports[`fixtures should annotate styled calls with uglify pure comments 1`] = `
