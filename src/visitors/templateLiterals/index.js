@@ -1,6 +1,7 @@
 import {
   useCSSPreprocessor,
-  useTranspileTemplateLiterals
+  useTranspileTemplateLiterals,
+  useUglifyPure
 } from '../../utils/options'
 
 import preprocess from './preprocess'
