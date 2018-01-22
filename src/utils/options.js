@@ -8,4 +8,5 @@ export const useFileName = (state) =>getOption(state, 'fileName')
 export const useMinify = (state) => getOption(state, 'minify')
 export const useCSSPreprocessor = (state) => getOption(state, 'preprocess', false) // EXPERIMENTAL
 export const useTranspileTemplateLiterals = (state) => getOption(state, 'transpileTemplateLiterals')
+export const useUglifyPure = (state) => getOption(state, 'uglifyPure')
 export const getModuleName = (state) => getOption(state, 'moduleName', [ 'styled-components' ])

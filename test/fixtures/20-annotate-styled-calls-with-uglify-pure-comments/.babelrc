@@ -1,10 +1,10 @@
 {
   "plugins": [
     ["../../../src", {
+      "ssr": false,
       "fileName": false,
       "transpileTemplateLiterals": false,
-      "ssr": true,
-      "uglifyPure":false
+      "preprocess": false,
     }]
   ]
 }

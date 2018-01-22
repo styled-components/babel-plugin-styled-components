@@ -3,7 +3,7 @@
     ["../../../src", {
       "preprocess": true,
       "ssr": false,
-      "uglifyPure":false
+      "uglifyPure":true
     }]
   ]
 }
