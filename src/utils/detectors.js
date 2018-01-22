@@ -1,14 +1,17 @@
 import * as t from 'babel-types'
+import { getModuleName } from "./options"
 
 const importLocalName = (name, state) => {
   let localName = name === 'default' ? 'styled' : name
+  let moduleNames = getModuleName(state)
+  if(typeof moduleNames === "string") moduleNames  = [ moduleNames ]
 
   state.file.path.traverse({
     ImportDeclaration: {
       exit(path) {
         const { node } = path
 
-        if (node.source.value === 'styled-components') {
+        if (moduleNames.includes(node.source.value)) {
           for (const specifier of path.get('specifiers')) {
             if (specifier.isImportDefaultSpecifier()) {
               localName = specifier.node.local.name
