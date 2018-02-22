@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import Stylis from 'stylis'
 
 import {
@@ -92,7 +92,7 @@ export const preprocessHelper = (
     ))
   ) {
     throw new TypeError(
-      `CSS Input can't contain Styled Components placeholders of the format: __PLACEHOLDER_1__ or __TEMPORARY_CLASSNAME__.`
+      'CSS Input can\'t contain Styled Components placeholders of the format: __PLACEHOLDER_1__ or __TEMPORARY_CLASSNAME__.'
     )
   }
 

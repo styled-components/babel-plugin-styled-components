@@ -13,9 +13,12 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.24.0",
-    "babel-preset-env": "^1.2.2",
-    "jest": "^17.0.3",
+    "@babel/cli": "7.0.0-beta.40",
+    "@babel/core": "7.0.0-beta.40",
+    "@babel/preset-env": "7.0.0-beta.40",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^22.4.0",
+    "jest": "^22.4.0",
     "rimraf": "^2.6.2"
   },
   "scripts": {
@@ -34,11 +37,14 @@
     "displayName"
   ],
   "dependencies": {
-    "@babel/helper-annotate-as-pure": "^7.0.0-beta.37",
-    "babel-types": "^6.26.0",
+    "@babel/helper-annotate-as-pure": "7.0.0-beta.40",
+    "@babel/types": "7.0.0-beta.40",
     "stylis": "^3.0.0"
   },
   "jest": {
+    "transform": {
+      ".(js|jsx)": "babel-jest"
+    },
     "snapshotSerializers": [
       "<rootDir>/test/whitespaceTrimmingSerializer.js"
     ]

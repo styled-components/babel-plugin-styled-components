@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 
 export default (path, state) => {
   if (t.isCallExpression(path.node.init) &&

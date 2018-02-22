@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 
 import { useMinify, useCSSPreprocessor } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'

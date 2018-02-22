@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import { isStyled, isCSSHelper, isKeyframesHelper, isInjectGlobalHelper } from '../../utils/detectors'
 import preprocess from '../../css/preprocess'
 import preprocessKeyframes from '../../css/preprocessKeyframes'
