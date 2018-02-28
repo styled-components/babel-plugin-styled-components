@@ -5,6 +5,7 @@
       "fileName": false,
       "transpileTemplateLiterals": false,
       "preprocess": false,
+      "uglifyPure": true
     }]
   ]
 }
