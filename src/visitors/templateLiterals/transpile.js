@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import { isStyled, isHelper } from '../../utils/detectors'
 
 export default (path, state) => {

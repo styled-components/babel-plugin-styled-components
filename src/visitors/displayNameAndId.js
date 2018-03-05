@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import { useFileName, useDisplayName, useSSR } from '../utils/options'
 import getName from '../utils/getName'
 import path from 'path'
@@ -61,7 +61,7 @@ const findModuleRoot = (filename) => {
 
 const FILE_HASH = 'styled-components-file-hash'
 const COMPONENT_POSITION = 'styled-components-component-position'
-const separatorRegExp = new RegExp(`\\${path.sep}`, 'g');
+const separatorRegExp = new RegExp(`\\${path.sep}`, 'g')
 
 const getFileHash = (state) => {
   const { file } = state
@@ -102,7 +102,7 @@ const getComponentId = (state) => {
 
 export default (path, state) => {
   if (isStyled(path.node.tag, state)) {
-    const displayName = useDisplayName(state) && getDisplayName(path, useFileName(state) && state);
+    const displayName = useDisplayName(state) && getDisplayName(path, useFileName(state) && state)
 
     addConfig(
       path,

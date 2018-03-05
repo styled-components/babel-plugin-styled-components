@@ -1,4 +1,4 @@
-import * as t from 'babel-types'
+import * as t from '@babel/types'
 import { useCSSPreprocessor } from '../utils/options'
 
 export const noParserImportDeclaration = (path, state) => {
