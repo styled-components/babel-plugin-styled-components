@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    ["../../../src", {
+      "displayName": false,
+      "ssr": false,
+      "fileName": false,
+      "minify": false,
+      "preprocess": false,
+      "transpileTemplateLiterals": false,
+      "cssTemplate": {
+        "styled": "#id {{css}}",
+        "css": "#id && {{css}}",
+        "injectGlobal": "* {{css}}"
+      }
+    }]
+  ]
+}
