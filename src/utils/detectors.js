@@ -71,3 +71,8 @@ export const isHelper = (tag, state) => (
   isCSSHelper(tag, state) ||
   isKeyframesHelper(tag, state)
 )
+
+export const isExtend = (tag, state) => (
+  t.isMemberExpression(tag) &&
+  tag.property.name === 'extend'
+)

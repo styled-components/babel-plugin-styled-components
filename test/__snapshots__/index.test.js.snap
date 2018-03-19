@@ -259,6 +259,136 @@ exports[`fixtures should preprocess inject global 1`] = `"injectGlobal([[\"\", g
 
 exports[`fixtures should preprocess keyframes 1`] = `"const Animation = keyframes([[\"@-webkit-keyframes \"], [\"{0%{opacity:0;}100%{opacity:1;}}@keyframes \"], [\"{0%{opacity:0;}100%{opacity:1;}}\"]]);"`;
 
+exports[`fixtures should template css helper 1`] = `
+"const Simple = css\`#id {width: 100%; } \`;
+
+const Nested = css\`#id {
+  width: 100%;
+
+  &:hover {
+    color: papayawhip;
+  }
+
+  > div {
+    background: white;
+  }
+ } \`;
+
+const Interpolations = css\`#id {
+  width: \${props => props.width};
+ } \`;
+
+const NestedAndInterpolations = css\`#id {
+  width: \${props => props.width};
+
+  &:hover {
+    color: \${props => props.color};
+  }
+ } \`;
+
+const SelectorInterpolation = css\`#id {
+  width: \${props => props.width};
+
+  \${props => props.selector} {
+    color: papayawhip;
+  }
+ } \`;
+
+const Styled = styled.div\`width: 100%\`;"
+`;
+
+exports[`fixtures should template inject global 1`] = `
+"injectGlobal\`#id > {
+  \${glob}
+
+  // comment
+  /* comment */
+  /*! preserve comment */
+
+  html, body {
+    margin: 100000px;
+    padding: \${test};
+
+    @media (max-width: 999px) {
+      margin: 0;
+    }
+  }
+
+  .root {
+    width: 100%;
+  }
+}\`;
+
+const Simple = css\`width: 100%;\`;
+
+const Styled = styled.div\`width: 100%\`;"
+`;
+
+exports[`fixtures should template styled 1`] = `
+"const Simple = styled.div\`#id && {width: 100%;}\`;
+
+const Nested = styled.div\`#id && {
+  width: 100%;
+
+  &:hover {
+    color: papayawhip;
+  }
+
+  > div {
+    background: white;
+  }
+}\`;
+
+const Interpolations = styled.div\`#id && {
+  width: \${props => props.width};
+}\`;
+
+const NestedAndInterpolations = styled.div\`#id && {
+  width: \${props => props.width};
+
+  &:hover {
+    color: \${props => props.color};
+  }
+}\`;
+
+const SelectorInterpolation = styled.div\`#id && {
+  width: \${props => props.width};
+
+  \${props => props.selector} {
+    color: papayawhip;
+  }
+}\`;
+
+const CssHelper = css\`width: 100%\`;"
+`;
+
+exports[`fixtures should template styled css inject global 1`] = `
+"injectGlobal\`* {
+  \${glob}
+
+  // comment
+  /* comment */
+  /*! preserve comment */
+
+  html, body {
+    margin: 100000px;
+    padding: \${test};
+
+    @media (max-width: 999px) {
+      margin: 0;
+    }
+  }
+
+  .root {
+    width: 100%;
+  }
+}\`;
+
+const Simple = css\`#id && {width: 100%;}\`;
+
+const Styled = styled.div\`#id {width: 100%}\`;"
+`;
+
 exports[`fixtures should track the imported variable 1`] = `
 "import s from \"styled-components\";
 
