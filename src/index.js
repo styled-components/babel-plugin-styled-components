@@ -5,24 +5,26 @@ import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import { noParserImportDeclaration, noParserRequireCallExpression } from './visitors/noParserImport'
 
+// Our visitors are factories that accept `types` and output a visitor function
+// with the usual `path, state` signature.
 
-export default function({ types: t }) {
+export default function({ types }) {
   return {
     visitor: {
       ImportDeclaration(path, state) {
-        noParserImportDeclaration(path, state)
+        noParserImportDeclaration(types)(path, state)
       },
       CallExpression(path, state) {
-        uglifyPure(path, state)
-        noParserRequireCallExpression(path, state)
+        uglifyPure(types)(path, state)
+        noParserRequireCallExpression(types)(path, state)
       },
       TaggedTemplateExpression(path, state) {
-        minify(path, state)
-        displayNameAndId(path, state)
-        templateLiterals(path, state)
+        minify(types)(path, state)
+        displayNameAndId(types)(path, state)
+        templateLiterals(types)(path, state)
       },
       VariableDeclarator(path, state) {
-        assignStyledRequired(path, state)
+        assignStyledRequired(types)(path, state)
       }
     }
   }

@@ -7,8 +7,9 @@ import {
   preprocessHelper
 } from './preprocessUtils'
 
-export default (cssArr, interpolationNodes) => (
+export default (types, cssArr, interpolationNodes) => (
   convertOutputToBabelTypes(
+    types,
     preprocessHelper(
       cssArr,
       interpolationNodes,

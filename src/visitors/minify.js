@@ -1,10 +1,8 @@
-import * as t from 'babel-types'
-
 import { useMinify, useCSSPreprocessor } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'
 import { minifyRawValues, minifyCookedValues } from '../minify'
 
-export default (path, state) => {
+export default t => (path, state) => {
   if (
     useMinify(state) &&
     !useCSSPreprocessor(state) &&

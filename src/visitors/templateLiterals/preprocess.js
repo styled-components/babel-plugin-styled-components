@@ -1,10 +1,9 @@
-import * as t from 'babel-types'
 import { isStyled, isCSSHelper, isKeyframesHelper, isInjectGlobalHelper } from '../../utils/detectors'
 import preprocess from '../../css/preprocess'
 import preprocessKeyframes from '../../css/preprocessKeyframes'
 import preprocessInjectGlobal from '../../css/preprocessInjectGlobal'
 
-export default (path, state) => {
+export default t => (path, state) => {
   const _isStyled = isStyled(path.node.tag, state)
   const _isCSSHelper = isCSSHelper(path.node.tag, state)
   const _isKeyframesHelper = isKeyframesHelper(path.node.tag, state)
@@ -21,12 +20,12 @@ export default (path, state) => {
 
     let result
     if (_isStyled || _isCSSHelper) {
-      result = preprocess(values, expressions)
+      result = preprocess(t, values, expressions)
     } else if (_isInjectGlobalHelper) {
-      result = preprocessInjectGlobal(values, expressions)
+      result = preprocessInjectGlobal(t, values, expressions)
     } else {
       // _isKeyframesHelper
-      result = preprocessKeyframes(values, expressions)
+      result = preprocessKeyframes(t, values, expressions)
     }
 
     path.replaceWith(t.callExpression(callee, [ result ]))

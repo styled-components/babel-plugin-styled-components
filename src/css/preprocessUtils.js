@@ -1,4 +1,3 @@
-import * as t from 'babel-types'
 import Stylis from 'stylis'
 
 import {
@@ -59,7 +58,7 @@ export const cssWithPlaceholdersToArr = (css, interpolationNodes) => {
 
 // Convert CSS strings back to babel string literals
 // and turn arrays back into babel array expressions
-export const convertOutputToBabelTypes = arrOfCSSArr => t.arrayExpression(
+export const convertOutputToBabelTypes = (t, arrOfCSSArr) => t.arrayExpression(
   arrOfCSSArr.map(cssArr => t.arrayExpression(
     cssArr.map(x => (
       typeof x === 'string' ?

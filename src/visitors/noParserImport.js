@@ -1,7 +1,6 @@
-import * as t from 'babel-types'
 import { useCSSPreprocessor } from '../utils/options'
 
-export const noParserImportDeclaration = (path, state) => {
+export const noParserImportDeclaration = t => (path, state) => {
   if (
     useCSSPreprocessor(state) &&
     path.node.source.value === 'styled-components'
@@ -10,7 +9,7 @@ export const noParserImportDeclaration = (path, state) => {
   }
 }
 
-export const noParserRequireCallExpression = (path, state) => {
+export const noParserRequireCallExpression = t => (path, state) => {
   if (
     useCSSPreprocessor(state) &&
     path.node.callee.name === 'require' &&

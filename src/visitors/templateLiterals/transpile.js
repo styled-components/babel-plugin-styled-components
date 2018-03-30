@@ -1,7 +1,6 @@
-import * as t from 'babel-types'
 import { isStyled, isHelper } from '../../utils/detectors'
 
-export default (path, state) => {
+export default t => (path, state) => {
   if (
     isStyled(path.node.tag, state) ||
     isHelper(path.node.tag, state)

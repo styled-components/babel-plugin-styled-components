@@ -1,30 +1,10 @@
-import * as t from 'babel-types'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
-import getName from '../utils/getName'
 import path from 'path'
 import fs from 'fs'
+
+import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import getName from '../utils/getName'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
-
-const addConfig = (path, displayName, componentId) => {
-  if (!displayName && !componentId) {
-    return
-  }
-
-  const withConfigProps = []
-  if (displayName) {
-    withConfigProps.push(t.objectProperty(t.identifier('displayName'), t.stringLiteral(displayName)))
-  }
-  if (componentId) {
-    withConfigProps.push(t.objectProperty(t.identifier('componentId'), t.stringLiteral(componentId)))
-  }
-
-  // Replace x`...` with x.withConfig({ })`...`
-  path.node.tag = t.callExpression(
-    t.memberExpression(path.node.tag, t.identifier('withConfig')),
-    [ t.objectExpression(withConfigProps) ]
-  )
-}
 
 const getBlockName = (file) => {
   const name = path.basename(file.opts.filename, path.extname(file.opts.filename))
@@ -100,12 +80,31 @@ const getComponentId = (state) => {
   return `${getFileHash(state).replace(/^(\d)/, 's$1')}-${getNextId(state)}`
 }
 
-export default (path, state) => {
+const addConfig = (t, path) => (displayName, componentId) => {
+  if (!displayName && !componentId) {
+    return
+  }
+
+  const withConfigProps = []
+  if (displayName) {
+    withConfigProps.push(t.objectProperty(t.identifier('displayName'), t.stringLiteral(displayName)))
+  }
+  if (componentId) {
+    withConfigProps.push(t.objectProperty(t.identifier('componentId'), t.stringLiteral(componentId)))
+  }
+
+  // Replace x`...` with x.withConfig({ })`...`
+  path.node.tag = t.callExpression(
+    t.memberExpression(path.node.tag, t.identifier('withConfig')),
+    [ t.objectExpression(withConfigProps) ]
+  )
+}
+
+export default t => (path, state) => {
   if (isStyled(path.node.tag, state)) {
     const displayName = useDisplayName(state) && getDisplayName(path, useFileName(state) && state);
 
-    addConfig(
-      path,
+    addConfig(t, path)(
       displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
       useSSR(state) && getComponentId(state)
     )
