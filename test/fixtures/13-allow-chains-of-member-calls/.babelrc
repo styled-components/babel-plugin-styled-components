@@ -4,7 +4,6 @@
       "ssr": false,
       "fileName": false,
       "transpileTemplateLiterals": false,
-      "preprocess": false,
       "uglifyPure":false
     }]
   ]
