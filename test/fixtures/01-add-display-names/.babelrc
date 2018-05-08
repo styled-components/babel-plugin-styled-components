@@ -6,6 +6,8 @@
       "transpileTemplateLiterals": false,
       "preprocess": false,
       "uglifyPure":false
-    }]
+    }],
+    "transform-class-properties"
+
   ]
 }

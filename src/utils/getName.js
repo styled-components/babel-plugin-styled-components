@@ -18,6 +18,9 @@ export default path => {
       // const X = { Y: styled }
     } else if (path.isObjectProperty()) {
       namedNode = path.node.key
+      // class Y { (static) X = styled }
+    } else if (path.isClassProperty()) {
+      namedNode = path.node.key
       // let X; X = styled
     } else if (path.isVariableDeclarator()) {
       namedNode = path.node.id
