@@ -1,13 +1,8 @@
-import {
-  temporaryClassname
-} from './placeholderUtils'
+import { temporaryClassname } from './placeholderUtils'
 
-import {
-  convertOutputToBabelTypes,
-  preprocessHelper
-} from './preprocessUtils'
+import { convertOutputToBabelTypes, preprocessHelper } from './preprocessUtils'
 
-export default (cssArr, interpolationNodes) => (
+export default (cssArr, interpolationNodes) =>
   convertOutputToBabelTypes(
     preprocessHelper(
       cssArr,
@@ -16,4 +11,3 @@ export default (cssArr, interpolationNodes) => (
       '' // no namespace
     )
   )
-)
