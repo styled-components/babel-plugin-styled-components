@@ -24,49 +24,49 @@ const WrappedComponent = styled(Inner).withConfig({
 
 exports[`fixtures should add identifier 1`] = `
 "const Test = styled.div.withConfig({
-  componentId: \"iiazu4-0\"
+  componentId: \"sc-1eqzdxw-0\"
 })\`width:100%;\`;
 const Test2 = true ? styled.div.withConfig({
-  componentId: \"iiazu4-1\"
+  componentId: \"sc-1eqzdxw-1\"
 })\`\` : styled.div.withConfig({
-  componentId: \"iiazu4-2\"
+  componentId: \"sc-1eqzdxw-2\"
 })\`\`;
 const styles = { One: styled.div.withConfig({
-    componentId: \"iiazu4-3\"
+    componentId: \"sc-1eqzdxw-3\"
   })\`\` };
 let Component;
 Component = styled.div.withConfig({
-  componentId: \"iiazu4-4\"
+  componentId: \"sc-1eqzdxw-4\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
-  componentId: \"iiazu4-5\"
+  componentId: \"sc-1eqzdxw-5\"
 })\`\`;"
 `;
 
 exports[`fixtures should add identifier and display name 1`] = `
 "const Test = styled.div.withConfig({
   displayName: \"Test\",
-  componentId: \"s1vkcy8r-0\"
+  componentId: \"f7i0wp-0\"
 })\`width:100%;\`;
 const Test2 = true ? styled.div.withConfig({
   displayName: \"Test2\",
-  componentId: \"s1vkcy8r-1\"
+  componentId: \"f7i0wp-1\"
 })\`\` : styled.div.withConfig({
   displayName: \"Test2\",
-  componentId: \"s1vkcy8r-2\"
+  componentId: \"f7i0wp-2\"
 })\`\`;
 const styles = { One: styled.div.withConfig({
     displayName: \"One\",
-    componentId: \"s1vkcy8r-3\"
+    componentId: \"f7i0wp-3\"
   })\`\` };
 let Component;
 Component = styled.div.withConfig({
   displayName: \"Component\",
-  componentId: \"s1vkcy8r-4\"
+  componentId: \"f7i0wp-4\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
   displayName: \"WrappedComponent\",
-  componentId: \"s1vkcy8r-5\"
+  componentId: \"f7i0wp-5\"
 })\`\`;"
 `;
 
@@ -81,39 +81,39 @@ const WithAttrsWrapped = styled(Inner).attrs({ some: \'value\' }).withConfig({
 
 exports[`fixtures should annotate css with uglify pure comments 1`] = `
 "const Simple = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__Simple\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__Simple\"
 })([[\"{width:100%;}\"]]);
 
 const Nested = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__Nested\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__Nested\"
 })([[\"{width:100%;}\"], [\":hover{color:papayawhip;}\"], [\" > div{background:white;}\"]]);
 
 const Interpolations = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__Interpolations\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__Interpolations\"
 })([[\"{width:\", props => props.width, \";}\"]]);
 
 const NestedAndInterpolations = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__NestedAndInterpolations\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__NestedAndInterpolations\"
 })([[\"{width:\", props => props.width, \";}\"], [\":hover{color:\", props => props.color, \";}\"]]);
 
 const SelectorInterpolation = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__SelectorInterpolation\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__SelectorInterpolation\"
 })([[\"{width:\", props => props.width, \";}\"], [\" \", props => props.selector, \"{color:papayawhip;}\"]]);
 
 const RulesetInterpolationA = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__RulesetInterpolationA\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__RulesetInterpolationA\"
 })([[\"{width:\", props => props.width, \";\", props => props.ruleset, \";}\"], [\":hover{color:papayawhip;}\"]]);
 
 const RulesetInterpolationB = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__RulesetInterpolationB\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__RulesetInterpolationB\"
 })([[\"{\", props => props.ruleset, \";width:\", props => props.width, \";}\"], [\":hover{color:papayawhip;}\"]]);
 
 const Prefixes = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__Prefixes\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__Prefixes\"
 })([[\"{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}\"]]);
 
 const DoubleInterpolation = /*#__PURE__*/styled.div.withConfig({
-  displayName: \"before__DoubleInterpolation\"
+  displayName: \"sc-22-annotate-css-with-uglify-pure-comments__DoubleInterpolation\"
 })([[\"{margin:\", props => props.vert, \" \", props => props.hori, \";}\"]]);"
 `;
 
@@ -214,39 +214,39 @@ const Test = styled.div\`width:100%;\`;"
 
 exports[`fixtures should preprocess css 1`] = `
 "const Simple = styled.div.withConfig({
-  displayName: \"before__Simple\"
+  displayName: \"sc-14-preprocess-css__Simple\"
 })([[\"{width:100%;}\"]]);
 
 const Nested = styled.div.withConfig({
-  displayName: \"before__Nested\"
+  displayName: \"sc-14-preprocess-css__Nested\"
 })([[\"{width:100%;}\"], [\":hover{color:papayawhip;}\"], [\" > div{background:white;}\"]]);
 
 const Interpolations = styled.div.withConfig({
-  displayName: \"before__Interpolations\"
+  displayName: \"sc-14-preprocess-css__Interpolations\"
 })([[\"{width:\", props => props.width, \";}\"]]);
 
 const NestedAndInterpolations = styled.div.withConfig({
-  displayName: \"before__NestedAndInterpolations\"
+  displayName: \"sc-14-preprocess-css__NestedAndInterpolations\"
 })([[\"{width:\", props => props.width, \";}\"], [\":hover{color:\", props => props.color, \";}\"]]);
 
 const SelectorInterpolation = styled.div.withConfig({
-  displayName: \"before__SelectorInterpolation\"
+  displayName: \"sc-14-preprocess-css__SelectorInterpolation\"
 })([[\"{width:\", props => props.width, \";}\"], [\" \", props => props.selector, \"{color:papayawhip;}\"]]);
 
 const RulesetInterpolationA = styled.div.withConfig({
-  displayName: \"before__RulesetInterpolationA\"
+  displayName: \"sc-14-preprocess-css__RulesetInterpolationA\"
 })([[\"{width:\", props => props.width, \";\", props => props.ruleset, \";}\"], [\":hover{color:papayawhip;}\"]]);
 
 const RulesetInterpolationB = styled.div.withConfig({
-  displayName: \"before__RulesetInterpolationB\"
+  displayName: \"sc-14-preprocess-css__RulesetInterpolationB\"
 })([[\"{\", props => props.ruleset, \";width:\", props => props.width, \";}\"], [\":hover{color:papayawhip;}\"]]);
 
 const Prefixes = styled.div.withConfig({
-  displayName: \"before__Prefixes\"
+  displayName: \"sc-14-preprocess-css__Prefixes\"
 })([[\"{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}\"]]);
 
 const DoubleInterpolation = styled.div.withConfig({
-  displayName: \"before__DoubleInterpolation\"
+  displayName: \"sc-14-preprocess-css__DoubleInterpolation\"
 })([[\"{margin:\", props => props.vert, \" \", props => props.hori, \";}\"]]);"
 `;
 
@@ -264,27 +264,27 @@ exports[`fixtures should track the imported variable 1`] = `
 
 const Test = s.div.withConfig({
   displayName: \"Test\",
-  componentId: \"s13i891w-0\"
+  componentId: \"tethjc-0\"
 })\`width:100%;\`;
 const Test2 = true ? s.div.withConfig({
   displayName: \"Test2\",
-  componentId: \"s13i891w-1\"
+  componentId: \"tethjc-1\"
 })\`\` : s.div.withConfig({
   displayName: \"Test2\",
-  componentId: \"s13i891w-2\"
+  componentId: \"tethjc-2\"
 })\`\`;
 const styles = { One: s.div.withConfig({
     displayName: \"One\",
-    componentId: \"s13i891w-3\"
+    componentId: \"tethjc-3\"
   })\`\` };
 let Component;
 Component = s.div.withConfig({
   displayName: \"Component\",
-  componentId: \"s13i891w-4\"
+  componentId: \"tethjc-4\"
 })\`\`;
 const WrappedComponent = s(Inner).withConfig({
   displayName: \"WrappedComponent\",
-  componentId: \"s13i891w-5\"
+  componentId: \"tethjc-5\"
 })\`\`;"
 `;
 
@@ -292,18 +292,18 @@ exports[`fixtures should transpile require default 1`] = `
 "const styled_default = require(\"styled-components/no-parser\");
 
 const TestNormal = styled.div.withConfig({
-  displayName: \"before__TestNormal\",
-  componentId: \"iqyhdm-0\"
+  displayName: \"sc-19-transpile-require-default__TestNormal\",
+  componentId: \"ydirwv-0\"
 })([[\"{width:100%;}\"]]);
 
 const Test = styled_default.default.div.withConfig({
-  displayName: \"before__Test\",
-  componentId: \"iqyhdm-1\"
+  displayName: \"sc-19-transpile-require-default__Test\",
+  componentId: \"ydirwv-1\"
 })([[\"{width:100%;}\"]]);
 
 const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \"before__TestCallExpression\",
-  componentId: \"iqyhdm-2\"
+  displayName: \"sc-19-transpile-require-default__TestCallExpression\",
+  componentId: \"ydirwv-2\"
 })([[\"{height:20px;}\"]]);"
 `;
 
@@ -317,17 +317,17 @@ var _styledComponents2 = _interopRequireDefault(_styledComponents);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Named = _styledComponents2.default.div.withConfig({
-  displayName: \'before__Named\'
+  displayName: \'sc-11-transpile-template-literals-with-config__Named\'
 })([\'\\n  width: 100%;\\n\']);
 
 var NamedWithInterpolation = _styledComponents2.default.div.withConfig({
-  displayName: \'before__NamedWithInterpolation\'
+  displayName: \'sc-11-transpile-template-literals-with-config__NamedWithInterpolation\'
 })([\'\\n  color: \', \';\\n\'], function (color) {
   return props.color;
 });
 
 var Wrapped = (0, _styledComponents2.default)(Inner).withConfig({
-  displayName: \'before__Wrapped\'
+  displayName: \'sc-11-transpile-template-literals-with-config__Wrapped\'
 })([\'color: red;\']);"
 `;
 
@@ -353,27 +353,27 @@ exports[`fixtures should use file name 1`] = `
 "import styled from \"styled-components\";
 
 const Test = styled.div.withConfig({
-  displayName: \"before__Test\",
-  componentId: \"s1tyeg9p-0\"
+  displayName: \"sc-05-use-file-name__Test\",
+  componentId: \"sng6m2-0\"
 })\`color:red;\`;
 const before = styled.div.withConfig({
-  displayName: \"before\",
-  componentId: \"s1tyeg9p-1\"
+  displayName: \"sc-05-use-file-name__before\",
+  componentId: \"sng6m2-1\"
 })\`color:blue;\`;
 styled.div.withConfig({
-  displayName: \"before\",
-  componentId: \"s1tyeg9p-2\"
+  displayName: \"sc-05-use-file-name\",
+  componentId: \"sng6m2-2\"
 })\`\`;
 export default styled.button.withConfig({
-  displayName: \"before\",
-  componentId: \"s1tyeg9p-3\"
+  displayName: \"sc-05-use-file-name\",
+  componentId: \"sng6m2-3\"
 })\`\`;"
 `;
 
 exports[`fixtures should work with hoisted default as import 1`] = `
 "const Test = s.div.withConfig({
-  displayName: \'before__Test\',
-  componentId: \'s1vk20b3-0\'
+  displayName: \'sc-06-work-with-hoisted-default-as-import__Test\',
+  componentId: \'iq9xqu-0\'
 })\`width:100%;\`;
 import { default as s, css } from \'styled-components\';"
 `;

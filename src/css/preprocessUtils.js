@@ -59,15 +59,14 @@ export const cssWithPlaceholdersToArr = (css, interpolationNodes) => {
 
 // Convert CSS strings back to babel string literals
 // and turn arrays back into babel array expressions
-export const convertOutputToBabelTypes = arrOfCSSArr => t.arrayExpression(
-  arrOfCSSArr.map(cssArr => t.arrayExpression(
-    cssArr.map(x => (
-      typeof x === 'string' ?
-        t.stringLiteral(x) :
-        x
-    ))
-  ))
-)
+export const convertOutputToBabelTypes = arrOfCSSArr =>
+  t.arrayExpression(
+    arrOfCSSArr.map(cssArr =>
+      t.arrayExpression(
+        cssArr.map(x => (typeof x === 'string' ? t.stringLiteral(x) : x))
+      )
+    )
+  )
 
 /*
  * Flattens and splits CSS into an array where classname should be injected, and maps these
@@ -80,25 +79,20 @@ export const convertOutputToBabelTypes = arrOfCSSArr => t.arrayExpression(
 export const preprocessHelper = (
   cssArr,
   interpolationNodes,
-  transformFlattened = (x => x),
+  transformFlattened = x => x,
   stylisNamespace = '',
   fixGlobals = false
 ) => {
   // Test whether the input is using reserved strings
   if (
-    cssArr.some(x => (
-      containsPlaceholders(x) ||
-      x.includes(temporaryClassname)
-    ))
+    cssArr.some(x => containsPlaceholders(x) || x.includes(temporaryClassname))
   ) {
     throw new TypeError(
       `CSS Input can't contain Styled Components placeholders of the format: __PLACEHOLDER_1__ or __TEMPORARY_CLASSNAME__.`
     )
   }
 
-  const css = transformFlattened(
-    assembleAndInterleavePlaceholders(cssArr)
-  )
+  const css = transformFlattened(assembleAndInterleavePlaceholders(cssArr))
 
   // Flatten CSS using stylis
   let flattenedCSS = stylis(stylisNamespace, css, false, false).trim()

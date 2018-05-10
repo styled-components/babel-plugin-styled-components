@@ -23,16 +23,16 @@ export const isUnendedMixin = css => {
   const openParensPos = findIndex(css, '{')
   const closingParensPos = findIndex(css, '}')
 
-  const isNewlineFirst = (
+  const isNewlineFirst =
     isFinite(newlinePos) &&
-    newlinePos === Math.min(
-      newlinePos,
-      semicolonPos,
-      colonPos,
-      openParensPos,
-      closingParensPos
-    )
-  )
+    newlinePos ===
+      Math.min(
+        newlinePos,
+        semicolonPos,
+        colonPos,
+        openParensPos,
+        closingParensPos
+      )
 
   // If newline isn't first, prefixed interpolation can't be a mixin
   if (!isNewlineFirst) {
@@ -47,10 +47,7 @@ export const isUnendedMixin = css => {
   )
 
   // If this is followed by a semicolon or colon, then we don't want to add a semicolon
-  return (
-    isFinite(minCharPos) &&
-    minCharPos !== semicolonPos
-  )
+  return isFinite(minCharPos) && minCharPos !== semicolonPos
 }
 
 // Generates a placeholder from an index
@@ -63,13 +60,10 @@ export const temporaryClassname = '__TEMPORARY_CLASSNAME__'
 export const containsPlaceholders = css => !!css.match(placeholderRegex)
 
 // Splits CSS by placeholders
-export const splitByPlaceholders = (css, capture = true) => css
-  .split(capture ? placeholderRegex : placeholderNonCapturingRegex)
+export const splitByPlaceholders = (css, capture = true) =>
+  css.split(capture ? placeholderRegex : placeholderNonCapturingRegex)
 
 // Remove curly braces around global placeholders
 // We need to replace mixin-semicolons with newlines to not break browser CSS parsing
-export const fixGlobalPlaceholders = css => css.replace(globalRulesetRegex, (_, p1) => (
-  p1 ?
-    p1.replace(';', '\n') :
-    ''
-))
+export const fixGlobalPlaceholders = css =>
+  css.replace(globalRulesetRegex, (_, p1) => (p1 ? p1.replace(';', '\n') : ''))

@@ -3,8 +3,10 @@ import minify from './visitors/minify'
 import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
-import { noParserImportDeclaration, noParserRequireCallExpression } from './visitors/noParserImport'
-
+import {
+  noParserImportDeclaration,
+  noParserRequireCallExpression,
+} from './visitors/noParserImport'
 
 export default function({ types: t }) {
   return {
@@ -23,7 +25,7 @@ export default function({ types: t }) {
       },
       VariableDeclarator(path, state) {
         assignStyledRequired(path, state)
-      }
-    }
+      },
+    },
   }
 }

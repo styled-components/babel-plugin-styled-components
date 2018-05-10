@@ -8,17 +8,17 @@ import * as t from 'babel-types'
  * @return {String}   The target
  */
 
-export default (path) => {
+export default path => {
   let namedNode
 
-  path.find((path) => {
+  path.find(path => {
     // const X = styled
     if (path.isAssignmentExpression()) {
       namedNode = path.node.left
-    // const X = { Y: styled }
+      // const X = { Y: styled }
     } else if (path.isObjectProperty()) {
       namedNode = path.node.key
-    // let X; X = styled
+      // let X; X = styled
     } else if (path.isVariableDeclarator()) {
       namedNode = path.node.id
     } else if (path.isStatement()) {
