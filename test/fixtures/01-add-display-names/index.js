@@ -5,3 +5,4 @@ const styles = { One: styled.div`` }
 let Component;
 Component = styled.div``;
 const WrappedComponent = styled(Inner)``;
+class ClassComponent { static Child = styled.div`` }
