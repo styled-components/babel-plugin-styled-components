@@ -1,15 +1,16 @@
 {
   "version": "1.5.1",
   "name": "babel-plugin-styled-components",
-  "description":
-    "Improve the debugging experience and add server-side rendering support to styled-components",
+  "description": "Improve the debugging experience and add server-side rendering support to styled-components",
   "repository": "styled-components/babel-plugin-styled-components",
   "contributors": [
     "Vladimir Danchenkov <vladimir.danchenkov@gmail.com>",
     "Max Stoiber <contact@mxstbr.com>"
   ],
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.0",
@@ -38,9 +39,12 @@
   "dependencies": {
     "@babel/helper-annotate-as-pure": "^7.0.0-beta.37",
     "babel-types": "^6.26.0",
+    "lodash": "^4.17.10",
     "stylis": "^3.0.0"
   },
   "jest": {
-    "snapshotSerializers": ["<rootDir>/test/whitespaceTrimmingSerializer.js"]
+    "snapshotSerializers": [
+      "<rootDir>/test/whitespaceTrimmingSerializer.js"
+    ]
   }
 }
