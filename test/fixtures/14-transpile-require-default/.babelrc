@@ -1,7 +1,6 @@
 {
   "plugins": [
     ["../../../src", {
-      "preprocess": false,
       "ssr": true,
       "uglifyPure":false
     }]

@@ -7,7 +7,6 @@
       "ssr": false,
       "displayName": false,
       "transpileTemplateLiterals": true,
-      "preprocess": false,
       "minify": false,
       "uglifyPure":false
     }]
