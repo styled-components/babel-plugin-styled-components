@@ -7,10 +7,7 @@ import { minifyRawValues, minifyCookedValues } from '../minify'
 export default (path, state) => {
   if (
     useMinify(state) &&
-    (
-      isStyled(path.node.tag, state) ||
-      isHelper(path.node.tag, state)
-    )
+    (isStyled(path.node.tag, state) || isHelper(path.node.tag, state))
   ) {
     const templateLiteral = path.node.quasi
     const quasisLength = templateLiteral.quasis.length

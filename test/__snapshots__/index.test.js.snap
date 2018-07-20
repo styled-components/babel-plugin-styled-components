@@ -74,6 +74,34 @@ const WrappedComponent = styled(Inner).withConfig({
 })\`\`;"
 `;
 
+exports[`fixtures should add root class 1`] = `
+"import styled from \'styled-components\';
+
+const Simple = styled(\'div\').withConfig({
+  displayName: \'Simple\'
+})([\'.mount & { width:100%; }\']);
+
+const Interpolation = styled(\'div\').withConfig({
+  displayName: \'Interpolation\'
+})([\'.mount & { content:\"https://test.com/\', \'\"; }\'], props => props.endpoint);
+
+const SpecialCharacters = styled(\'div\').withConfig({
+  displayName: \'SpecialCharacters\'
+})([\'.mount & { content:\"  \', \'  \";color:red; }\'], props => props.text);
+
+const Comment = styled(\'div\').withConfig({
+  displayName: \'Comment\'
+})([\'.mount & { width:100%;color:red; }\']);
+
+const Parens = styled(\'div\').withConfig({
+  displayName: \'Parens\'
+})([\'.mount & { &:hover{color:blue;}color:red; }\']);
+
+const UrlComments = styled(\'div\').withConfig({
+  displayName: \'UrlComments\'
+})([\'.mount & { color:red;background:red;border:1px solid green; }\']);"
+`;
+
 exports[`fixtures should allow chains of member calls 1`] = `
 "const WithAttrs = styled(\'div\').attrs({ some: \'value\' }).withConfig({
   displayName: \'WithAttrs\'
@@ -238,25 +266,6 @@ const WrappedComponent = s(Inner).withConfig({
   displayName: \"WrappedComponent\",
   componentId: \"tethjc-5\"
 })\`\`;"
-`;
-
-exports[`fixtures should transpile require default 1`] = `
-"const styled_default = require(\"styled-components\");
-
-const TestNormal = styled(\"div\").withConfig({
-  displayName: \"sc-14-transpile-require-default__TestNormal\",
-  componentId: \"xuxkf8-0\"
-})([\"width:100%;\"]);
-
-const Test = styled_default.default(\"div\").withConfig({
-  displayName: \"sc-14-transpile-require-default__Test\",
-  componentId: \"xuxkf8-1\"
-})([\"width:100%;\"]);
-
-const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \"sc-14-transpile-require-default__TestCallExpression\",
-  componentId: \"xuxkf8-2\"
-})([\"height:20px;\"]);"
 `;
 
 exports[`fixtures should transpile template literals with config 1`] = `
