@@ -3,10 +3,8 @@ import { isStyled, isHelper } from '../../utils/detectors'
 import { useRootNode } from '../../utils/options'
 
 function addRoot(quasis, state) {
-  console.log(useRootNode(state), state.opts)
   if (useRootNode(state)){
-    console.log('useRootNode', state);
-    quasis[0].value.cooked = `${useRootNode(state)} & { ${quasis[0].value.cooked}`
+    quasis[0].value.cooked = `${useRootNode(state)}& { ${quasis[0].value.cooked}`
     quasis[quasis.length - 1].value.cooked = `${quasis[quasis.length - 1].value.cooked} }`
     return quasis.map(quasi => t.stringLiteral(quasi.value.cooked))
   } else {

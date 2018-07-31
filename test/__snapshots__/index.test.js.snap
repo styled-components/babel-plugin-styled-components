@@ -28,49 +28,49 @@ ClassComponent.Child = styled(\'div\').withConfig({
 
 exports[`fixtures should add identifier 1`] = `
 "const Test = styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-0\"
+  componentId: \"t1mlhm-0\"
 })\`width:100%;\`;
 const Test2 = true ? styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-1\"
+  componentId: \"t1mlhm-1\"
 })\`\` : styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-2\"
+  componentId: \"t1mlhm-2\"
 })\`\`;
 const styles = { One: styled(\"div\").withConfig({
-    componentId: \"sc-1eqzdxw-3\"
+    componentId: \"t1mlhm-3\"
   })\`\` };
 let Component;
 Component = styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-4\"
+  componentId: \"t1mlhm-4\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
-  componentId: \"sc-1eqzdxw-5\"
+  componentId: \"t1mlhm-5\"
 })\`\`;"
 `;
 
 exports[`fixtures should add identifier and display name 1`] = `
 "const Test = styled(\"div\").withConfig({
   displayName: \"Test\",
-  componentId: \"f7i0wp-0\"
+  componentId: \"sc-8ph81-0\"
 })\`width:100%;\`;
 const Test2 = true ? styled(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"f7i0wp-1\"
+  componentId: \"sc-8ph81-1\"
 })\`\` : styled(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"f7i0wp-2\"
+  componentId: \"sc-8ph81-2\"
 })\`\`;
 const styles = { One: styled(\"div\").withConfig({
     displayName: \"One\",
-    componentId: \"f7i0wp-3\"
+    componentId: \"sc-8ph81-3\"
   })\`\` };
 let Component;
 Component = styled(\"div\").withConfig({
   displayName: \"Component\",
-  componentId: \"f7i0wp-4\"
+  componentId: \"sc-8ph81-4\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
   displayName: \"WrappedComponent\",
-  componentId: \"f7i0wp-5\"
+  componentId: \"sc-8ph81-5\"
 })\`\`;"
 `;
 
@@ -244,27 +244,27 @@ exports[`fixtures should track the imported variable 1`] = `
 
 const Test = s(\"div\").withConfig({
   displayName: \"Test\",
-  componentId: \"tethjc-0\"
+  componentId: \"sc-1du5060-0\"
 })\`width:100%;\`;
 const Test2 = true ? s(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"tethjc-1\"
+  componentId: \"sc-1du5060-1\"
 })\`\` : s(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"tethjc-2\"
+  componentId: \"sc-1du5060-2\"
 })\`\`;
 const styles = { One: s(\"div\").withConfig({
     displayName: \"One\",
-    componentId: \"tethjc-3\"
+    componentId: \"sc-1du5060-3\"
   })\`\` };
 let Component;
 Component = s(\"div\").withConfig({
   displayName: \"Component\",
-  componentId: \"tethjc-4\"
+  componentId: \"sc-1du5060-4\"
 })\`\`;
 const WrappedComponent = s(Inner).withConfig({
   displayName: \"WrappedComponent\",
-  componentId: \"tethjc-5\"
+  componentId: \"sc-1du5060-5\"
 })\`\`;"
 `;
 
@@ -315,26 +315,26 @@ exports[`fixtures should use file name 1`] = `
 
 const Test = styled(\"div\").withConfig({
   displayName: \"sc-05-use-file-name__Test\",
-  componentId: \"sng6m2-0\"
+  componentId: \"sc-10fu78w-0\"
 })\`color:red;\`;
 const before = styled(\"div\").withConfig({
   displayName: \"sc-05-use-file-name__before\",
-  componentId: \"sng6m2-1\"
+  componentId: \"sc-10fu78w-1\"
 })\`color:blue;\`;
 styled(\"div\").withConfig({
   displayName: \"sc-05-use-file-name\",
-  componentId: \"sng6m2-2\"
+  componentId: \"sc-10fu78w-2\"
 })\`\`;
 export default styled(\"button\").withConfig({
   displayName: \"sc-05-use-file-name\",
-  componentId: \"sng6m2-3\"
+  componentId: \"sc-10fu78w-3\"
 })\`\`;"
 `;
 
 exports[`fixtures should work with hoisted default as import 1`] = `
 "const Test = s(\'div\').withConfig({
   displayName: \'sc-06-work-with-hoisted-default-as-import__Test\',
-  componentId: \'iq9xqu-0\'
+  componentId: \'xqfnte-0\'
 })\`width:100%;\`;
 import { default as s, css } from \'styled-components\';"
 `;
