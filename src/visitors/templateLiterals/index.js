@@ -1,12 +1,11 @@
 import {
-  useTranspileTemplateLiterals,
-  useUglifyPure
+  useRootNode,
 } from '../../utils/options'
 
 import transpile from './transpile'
 
 export default (path, state) => {
-  if (useTranspileTemplateLiterals(state)) {
+  if (useRootNode(state)) {
     transpile(path, state)
   }
 }
