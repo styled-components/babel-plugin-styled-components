@@ -6,9 +6,9 @@ function addRoot(quasis, state) {
   if (useRootNode(state)){
     quasis[0].value.cooked = `${useRootNode(state)}& { ${quasis[0].value.cooked}`
     quasis[quasis.length - 1].value.cooked = `${quasis[quasis.length - 1].value.cooked} }`
-    return quasis.map(quasi => t.templateElement(quasi.value.cooked, quasi.tail))
+    return quasis
   } else {
-    return quasis.map(quasi => t.templateElement(quasi.value.cooked, quasi.tail))
+    return quasis
   }
 }
 
@@ -18,8 +18,7 @@ export default (path, state) => {
     isHelper(path.node.tag, state)
   ) {
     const { tag: callee, quasi: { quasis, expressions } } = path.node
-    const values = t.templateElement(addRoot(quasis, state))
 
-    path.replaceWith(t.templateLiteral(values, expressions))
+    path.replaceWith( t.taggedTemplateExpression(callee, addRoot(quasis, state)))
   }
 }
