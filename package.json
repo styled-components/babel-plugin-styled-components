@@ -42,6 +42,9 @@
     "lodash": "^4.17.10",
     "stylis": "^3.0.0"
   },
+  "peerDependencies": {
+    "styled-components": ">= 4.0"
+  },
   "jest": {
     "snapshotSerializers": [
       "<rootDir>/test/whitespaceTrimmingSerializer.js"

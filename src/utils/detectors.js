@@ -8,7 +8,7 @@ const importLocalName = (name, state) => {
       exit(path) {
         const { node } = path
 
-        if (node.source.value === 'styled-components') {
+        if (node.source.value.startsWith('styled-components')) {
           for (const specifier of path.get('specifiers')) {
             if (specifier.isImportDefaultSpecifier()) {
               localName = specifier.node.local.name

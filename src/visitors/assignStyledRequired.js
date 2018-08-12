@@ -8,7 +8,7 @@ export default (path, state) => {
     path.node.init.arguments &&
     path.node.init.arguments[0] &&
     t.isLiteral(path.node.init.arguments[0]) &&
-    path.node.init.arguments[0].value === 'styled-components'
+    path.node.init.arguments[0].value.startsWith('styled-components')
   ) {
     state.styledRequired = path.node.id.name
   }
