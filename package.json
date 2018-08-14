@@ -1,6 +1,6 @@
 {
-  "version": "1.5.1",
-  "name": "babel-plugin-styled-components",
+  "version": "0.0.1",
+  "name": "root-babel-plugin-styled-components",
   "description": "Improve the debugging experience and add server-side rendering support to styled-components",
   "repository": "styled-components/babel-plugin-styled-components",
   "contributors": [
