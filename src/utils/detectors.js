@@ -1,5 +1,15 @@
 import * as t from 'babel-types'
 
+const VALID_TOP_LEVEL_IMPORT_PATHS = [
+  'styled-components',
+  'styled-components/no-tags',
+  'styled-components/native',
+  'styled-components/primitives',
+]
+
+export const isValidTopLevelImport = x =>
+  VALID_TOP_LEVEL_IMPORT_PATHS.includes(x)
+
 const importLocalName = (name, state) => {
   let localName = name === 'default' ? 'styled' : name
 
@@ -8,7 +18,7 @@ const importLocalName = (name, state) => {
       exit(path) {
         const { node } = path
 
-        if (node.source.value.startsWith('styled-components')) {
+        if (isValidTopLevelImport(node.source.value)) {
           for (const specifier of path.get('specifiers')) {
             if (specifier.isImportDefaultSpecifier()) {
               localName = specifier.node.local.name
