@@ -149,6 +149,22 @@ const notStyled = /*#__PURE__*/styled(\'div\')(\'\'); // not transpiled by style
 const normalFunc = add(5, 3);"
 `;
 
+exports[`fixtures should does not replace native with no tags 1`] = `
+"const styled_default = require(\'styled-components/native\');
+
+const TestNormal = styled(\'div\').withConfig({
+  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestNormal\'
+})([\'width:100%;\']);
+
+const Test = styled_default.default(\'div\').withConfig({
+  displayName: \'sc-18-does-not-replace-native-with-no-tags__Test\'
+})([\'width:100%;\']);
+
+const TestCallExpression = styled_default.default(Test).withConfig({
+  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestCallExpression\'
+})([\'height:20px;\']);"
+`;
+
 exports[`fixtures should minify css in helpers 1`] = `
 "import { css, keyframes } from \'styled-components/no-tags\';
 
