@@ -5,7 +5,9 @@
   "repository": "styled-components/babel-plugin-styled-components",
   "contributors": [
     "Vladimir Danchenkov <vladimir.danchenkov@gmail.com>",
-    "Max Stoiber <contact@mxstbr.com>"
+    "Max Stoiber <contact@mxstbr.com>",
+    "Phil Pluckthun <phil@kitten.sh>",
+    "Evan Scott <probablyup@gmail.com>"
   ],
   "main": "lib/index.js",
   "files": [
@@ -19,6 +21,14 @@
     "jest": "^17.0.3",
     "prettier": "^1.12.1",
     "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "@babel/helper-annotate-as-pure": "^7.0.0-beta.37",
+    "babel-types": "^6.26.0",
+    "lodash": "^4.17.10"
+  },
+  "peerDependencies": {
+    "styled-components": ">= 4.0"
   },
   "scripts": {
     "clean": "rimraf lib",
@@ -36,15 +46,6 @@
     "ssr",
     "displayName"
   ],
-  "dependencies": {
-    "@babel/helper-annotate-as-pure": "^7.0.0-beta.37",
-    "babel-types": "^6.26.0",
-    "lodash": "^4.17.10",
-    "stylis": "^3.0.0"
-  },
-  "peerDependencies": {
-    "styled-components": ">= 4.0"
-  },
   "jest": {
     "snapshotSerializers": [
       "<rootDir>/test/whitespaceTrimmingSerializer.js"
