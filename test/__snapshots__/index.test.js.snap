@@ -28,49 +28,49 @@ ClassComponent.Child = styled(\'div\').withConfig({
 
 exports[`fixtures should add identifier 1`] = `
 "const Test = styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-0\"
+  componentId: \"wkc8iz-0\"
 })\`width:100%;\`;
 const Test2 = true ? styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-1\"
+  componentId: \"wkc8iz-1\"
 })\`\` : styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-2\"
+  componentId: \"wkc8iz-2\"
 })\`\`;
 const styles = { One: styled(\"div\").withConfig({
-    componentId: \"sc-1eqzdxw-3\"
+    componentId: \"wkc8iz-3\"
   })\`\` };
 let Component;
 Component = styled(\"div\").withConfig({
-  componentId: \"sc-1eqzdxw-4\"
+  componentId: \"wkc8iz-4\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
-  componentId: \"sc-1eqzdxw-5\"
+  componentId: \"wkc8iz-5\"
 })\`\`;"
 `;
 
 exports[`fixtures should add identifier and display name 1`] = `
 "const Test = styled(\"div\").withConfig({
   displayName: \"Test\",
-  componentId: \"f7i0wp-0\"
+  componentId: \"sc-1n5umup-0\"
 })\`width:100%;\`;
 const Test2 = true ? styled(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"f7i0wp-1\"
+  componentId: \"sc-1n5umup-1\"
 })\`\` : styled(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"f7i0wp-2\"
+  componentId: \"sc-1n5umup-2\"
 })\`\`;
 const styles = { One: styled(\"div\").withConfig({
     displayName: \"One\",
-    componentId: \"f7i0wp-3\"
+    componentId: \"sc-1n5umup-3\"
   })\`\` };
 let Component;
 Component = styled(\"div\").withConfig({
   displayName: \"Component\",
-  componentId: \"f7i0wp-4\"
+  componentId: \"sc-1n5umup-4\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
   displayName: \"WrappedComponent\",
-  componentId: \"f7i0wp-5\"
+  componentId: \"sc-1n5umup-5\"
 })\`\`;"
 `;
 
@@ -87,18 +87,18 @@ exports[`fixtures should does not replace native with no tags 1`] = `
 "const styled_default = require(\'styled-components/native\');
 
 const TestNormal = styled(\'div\').withConfig({
-  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestNormal\',
-  componentId: \'mwcvdg-0\'
+  displayName: \'does-not-replace-native-with-no-tags__TestNormal\',
+  componentId: \'sc-1vnscvm-0\'
 })([\'width:100%;\']);
 
 const Test = styled_default.default(\'div\').withConfig({
-  displayName: \'sc-18-does-not-replace-native-with-no-tags__Test\',
-  componentId: \'mwcvdg-1\'
+  displayName: \'does-not-replace-native-with-no-tags__Test\',
+  componentId: \'sc-1vnscvm-1\'
 })([\'width:100%;\']);
 
 const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestCallExpression\',
-  componentId: \'mwcvdg-2\'
+  displayName: \'does-not-replace-native-with-no-tags__TestCallExpression\',
+  componentId: \'sc-1vnscvm-2\'
 })([\'height:20px;\']);"
 `;
 
@@ -169,27 +169,27 @@ exports[`fixtures should track the imported variable 1`] = `
 
 const Test = s(\"div\").withConfig({
   displayName: \"Test\",
-  componentId: \"tethjc-0\"
+  componentId: \"g2kfnj-0\"
 })\`width:100%;\`;
 const Test2 = true ? s(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"tethjc-1\"
+  componentId: \"g2kfnj-1\"
 })\`\` : s(\"div\").withConfig({
   displayName: \"Test2\",
-  componentId: \"tethjc-2\"
+  componentId: \"g2kfnj-2\"
 })\`\`;
 const styles = { One: s(\"div\").withConfig({
     displayName: \"One\",
-    componentId: \"tethjc-3\"
+    componentId: \"g2kfnj-3\"
   })\`\` };
 let Component;
 Component = s(\"div\").withConfig({
   displayName: \"Component\",
-  componentId: \"tethjc-4\"
+  componentId: \"g2kfnj-4\"
 })\`\`;
 const WrappedComponent = s(Inner).withConfig({
   displayName: \"WrappedComponent\",
-  componentId: \"tethjc-5\"
+  componentId: \"g2kfnj-5\"
 })\`\`;"
 `;
 
@@ -197,18 +197,18 @@ exports[`fixtures should transpile require default 1`] = `
 "const styled_default = require(\"styled-components\");
 
 const TestNormal = styled(\"div\").withConfig({
-  displayName: \"sc-14-transpile-require-default__TestNormal\",
-  componentId: \"xuxkf8-0\"
+  displayName: \"transpile-require-default__TestNormal\",
+  componentId: \"stn6f-0\"
 })([\"width:100%;\"]);
 
 const Test = styled_default.default(\"div\").withConfig({
-  displayName: \"sc-14-transpile-require-default__Test\",
-  componentId: \"xuxkf8-1\"
+  displayName: \"transpile-require-default__Test\",
+  componentId: \"stn6f-1\"
 })([\"width:100%;\"]);
 
 const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \"sc-14-transpile-require-default__TestCallExpression\",
-  componentId: \"xuxkf8-2\"
+  displayName: \"transpile-require-default__TestCallExpression\",
+  componentId: \"stn6f-2\"
 })([\"height:20px;\"]);"
 `;
 
@@ -222,17 +222,17 @@ var _noTags2 = _interopRequireDefault(_noTags);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Named = (0, _noTags2.default)(\'div\').withConfig({
-  displayName: \'sc-11-transpile-template-literals-with-config__Named\'
+  displayName: \'transpile-template-literals-with-config__Named\'
 })([\'\\n  width: 100%;\\n\']);
 
 var NamedWithInterpolation = (0, _noTags2.default)(\'div\').withConfig({
-  displayName: \'sc-11-transpile-template-literals-with-config__NamedWithInterpolation\'
+  displayName: \'transpile-template-literals-with-config__NamedWithInterpolation\'
 })([\'\\n  color: \', \';\\n\'], function (color) {
   return props.color;
 });
 
 var Wrapped = (0, _noTags2.default)(Inner).withConfig({
-  displayName: \'sc-11-transpile-template-literals-with-config__Wrapped\'
+  displayName: \'transpile-template-literals-with-config__Wrapped\'
 })([\'color: red;\']);"
 `;
 
@@ -258,27 +258,27 @@ exports[`fixtures should use file name 1`] = `
 "import styled from \"styled-components/no-tags\";
 
 const Test = styled(\"div\").withConfig({
-  displayName: \"sc-05-use-file-name__Test\",
-  componentId: \"sng6m2-0\"
+  displayName: \"use-file-name__Test\",
+  componentId: \"sc-15riiwx-0\"
 })\`color:red;\`;
 const before = styled(\"div\").withConfig({
-  displayName: \"sc-05-use-file-name__before\",
-  componentId: \"sng6m2-1\"
+  displayName: \"use-file-name__before\",
+  componentId: \"sc-15riiwx-1\"
 })\`color:blue;\`;
 styled(\"div\").withConfig({
-  displayName: \"sc-05-use-file-name\",
-  componentId: \"sng6m2-2\"
+  displayName: \"use-file-name\",
+  componentId: \"sc-15riiwx-2\"
 })\`\`;
 export default styled(\"button\").withConfig({
-  displayName: \"sc-05-use-file-name\",
-  componentId: \"sng6m2-3\"
+  displayName: \"use-file-name\",
+  componentId: \"sc-15riiwx-3\"
 })\`\`;"
 `;
 
 exports[`fixtures should work with hoisted default as import 1`] = `
 "const Test = s(\'div\').withConfig({
-  displayName: \'sc-06-work-with-hoisted-default-as-import__Test\',
-  componentId: \'iq9xqu-0\'
+  displayName: \'work-with-hoisted-default-as-import__Test\',
+  componentId: \'sc-1te5tgi-0\'
 })\`width:100%;\`;
 import { default as s, css } from \'styled-components/no-tags\';"
 `;
