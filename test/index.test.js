@@ -1,7 +1,6 @@
 import path from 'path'
 import fs from 'fs'
 import { transformFileSync } from 'babel-core'
-import plugin from '../src'
 
 describe('fixtures', () => {
   const fixturesDir = path.join(__dirname, 'fixtures')
