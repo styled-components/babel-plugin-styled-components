@@ -1,9 +1,11 @@
 {
   "plugins": [
-    ["../../../src", {
-      "transpileTemplateLiterals": false,
-      "ssr": true,
-      "uglifyPure":false
-    }]
+    [
+      "../../../src",
+      {
+        "transpileTemplateLiterals": false,
+        "ssr": true
+      }
+    ]
   ]
 }

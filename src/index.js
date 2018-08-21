@@ -1,4 +1,3 @@
-import uglifyPure from './visitors/uglifyPure'
 import minify from './visitors/minify'
 import desugarStyled from './visitors/desugarStyled'
 import displayNameAndId from './visitors/displayNameAndId'
@@ -14,9 +13,6 @@ export default function({ types: t }) {
       },
       MemberExpression(path, state) {
         desugarStyled(path, state)
-      },
-      CallExpression(path, state) {
-        uglifyPure(path, state)
       },
       TaggedTemplateExpression(path, state) {
         minify(path, state)

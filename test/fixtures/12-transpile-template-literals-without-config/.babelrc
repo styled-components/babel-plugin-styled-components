@@ -3,12 +3,14 @@
     "env"
   ],
   "plugins": [
-    ["../../../src", {
-      "ssr": false,
-      "displayName": false,
-      "transpileTemplateLiterals": true,
-      "minify": false,
-      "uglifyPure":false
-    }]
+    [
+      "../../../src",
+      {
+        "ssr": false,
+        "displayName": false,
+        "transpileTemplateLiterals": true,
+        "minify": false
+      }
+    ]
   ]
 }

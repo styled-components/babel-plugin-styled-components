@@ -1,8 +1,7 @@
 {
   "plugins": [
-    ["../../../src", {
-      "ssr": true,
-      "uglifyPure":false
-    }]
+    [
+      "../../../src"
+    ]
   ]
 }

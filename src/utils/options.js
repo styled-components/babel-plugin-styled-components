@@ -10,4 +10,3 @@ export const useFileName = state => getOption(state, 'fileName')
 export const useMinify = state => getOption(state, 'minify')
 export const useTranspileTemplateLiterals = state =>
   getOption(state, 'transpileTemplateLiterals')
-export const useUglifyPure = state => getOption(state, 'uglifyPure', false)
