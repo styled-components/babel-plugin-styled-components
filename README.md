@@ -12,7 +12,7 @@ This plugin is a highly recommended supplement to the base styled-components lib
 Install the plugin first:
 
 ```
-npm install --save-dev babel-plugin-styled-components
+npm i -D babel-plugin-styled-components
 ```
 
 Then add it to your babel configuration:
@@ -22,6 +22,16 @@ Then add it to your babel configuration:
   "plugins": ["babel-plugin-styled-components"]
 }
 ```
+
+## styled-components v4 beta
+
+If you are using the styled-components v4 beta, you'll also need to use the beta version of this plugin:
+
+```
+npm i -D babel-plugin-styled-components@beta
+```
+
+Older versions should technically work, but some of the bundle size reduction benefits are only realized with the newer code!
 
 ## Documentation
 
