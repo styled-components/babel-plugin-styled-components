@@ -1,9 +1,0 @@
-{
-  "plugins": [
-    ["../../../src", {
-      "transpileTemplateLiterals": false,
-      "ssr": true,
-      "uglifyPure":false
-    }]
-  ]
-}

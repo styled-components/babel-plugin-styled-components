@@ -1,7 +1,4 @@
-import {
-  useTranspileTemplateLiterals,
-  useUglifyPure
-} from '../../utils/options'
+import { useTranspileTemplateLiterals } from '../../utils/options'
 
 import transpile from './transpile'
 

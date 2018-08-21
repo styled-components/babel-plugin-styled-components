@@ -9,10 +9,7 @@ describe('fixtures', () => {
     .sort()
     .map(caseName => {
       if (caseName === '.DS_Store') return
-      it(`should ${caseName
-        .replace(/^\d*-/, '')
-        .split('-')
-        .join(' ')}`, () => {
+      it(`should ${caseName.split('-').join(' ')}`, () => {
         const fixtureDir = path.join(fixturesDir, caseName)
         const fixturePath = path.join(fixtureDir, 'index.js')
         const fixture = transformFileSync(fixturePath).code
