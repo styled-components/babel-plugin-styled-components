@@ -153,15 +153,18 @@ exports[`fixtures should does not replace native with no tags 1`] = `
 "const styled_default = require(\'styled-components/native\');
 
 const TestNormal = styled(\'div\').withConfig({
-  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestNormal\'
+  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestNormal\',
+  componentId: \'mwcvdg-0\'
 })([\'width:100%;\']);
 
 const Test = styled_default.default(\'div\').withConfig({
-  displayName: \'sc-18-does-not-replace-native-with-no-tags__Test\'
+  displayName: \'sc-18-does-not-replace-native-with-no-tags__Test\',
+  componentId: \'mwcvdg-1\'
 })([\'width:100%;\']);
 
 const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestCallExpression\'
+  displayName: \'sc-18-does-not-replace-native-with-no-tags__TestCallExpression\',
+  componentId: \'mwcvdg-2\'
 })([\'height:20px;\']);"
 `;
 
