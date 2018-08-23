@@ -6,7 +6,7 @@ import prefixLeadingDigit from '../utils/prefixDigit'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
 
-const addConfig = types => (path, displayName, componentId) => {
+const addConfig = t => (path, displayName, componentId) => {
   if (!displayName && !componentId) {
     return
   }
@@ -14,25 +14,25 @@ const addConfig = types => (path, displayName, componentId) => {
   const withConfigProps = []
   if (displayName) {
     withConfigProps.push(
-      types.objectProperty(
-        types.identifier('displayName'),
-        types.stringLiteral(displayName)
+      t.objectProperty(
+        t.identifier('displayName'),
+        t.stringLiteral(displayName)
       )
     )
   }
   if (componentId) {
     withConfigProps.push(
-      types.objectProperty(
-        types.identifier('componentId'),
-        types.stringLiteral(componentId)
+      t.objectProperty(
+        t.identifier('componentId'),
+        t.stringLiteral(componentId)
       )
     )
   }
 
   // Replace x`...` with x.withConfig({ })`...`
-  path.node.tag = types.callExpression(
-    types.memberExpression(path.node.tag, types.identifier('withConfig')),
-    [types.objectExpression(withConfigProps)]
+  path.node.tag = t.callExpression(
+    t.memberExpression(path.node.tag, t.identifier('withConfig')),
+    [t.objectExpression(withConfigProps)]
   )
 }
 
@@ -46,9 +46,9 @@ const getBlockName = file => {
     : path.basename(path.dirname(file.opts.filename))
 }
 
-const getDisplayName = types => (path, state) => {
+const getDisplayName = t => (path, state) => {
   const { file } = state
-  const componentName = getName(types)(path)
+  const componentName = getName(t)(path)
   if (file) {
     const blockName = getBlockName(file)
     if (blockName === componentName) {
@@ -121,13 +121,13 @@ const getComponentId = state => {
   return `${prefixLeadingDigit(getFileHash(state))}-${getNextId(state)}`
 }
 
-export default types => (path, state) => {
-  if (isStyled(types)(path.node.tag, state)) {
+export default t => (path, state) => {
+  if (isStyled(t)(path.node.tag, state)) {
     const displayName =
       useDisplayName(state) &&
-      getDisplayName(types)(path, useFileName(state) && state)
+      getDisplayName(t)(path, useFileName(state) && state)
 
-    addConfig(types)(
+    addConfig(t)(
       path,
       displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
       useSSR(state) && getComponentId(state)

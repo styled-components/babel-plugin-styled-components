@@ -41,19 +41,19 @@ const importLocalName = (name, state) => {
   return localName
 }
 
-export const isStyled = types => (tag, state) => {
+export const isStyled = t => (tag, state) => {
   if (
-    types.isCallExpression(tag) &&
-    types.isMemberExpression(tag.callee) &&
+    t.isCallExpression(tag) &&
+    t.isMemberExpression(tag.callee) &&
     tag.callee.property.name !== 'default' /** ignore default for #93 below */
   ) {
     // styled.something()
-    return isStyled(types)(tag.callee.object, state)
+    return isStyled(t)(tag.callee.object, state)
   } else {
     return (
-      (types.isMemberExpression(tag) &&
+      (t.isMemberExpression(tag) &&
         tag.object.name === importLocalName('default', state)) ||
-      (types.isCallExpression(tag) &&
+      (t.isCallExpression(tag) &&
         tag.callee.name === importLocalName('default', state)) ||
       /**
        * #93 Support require()
@@ -63,31 +63,31 @@ export const isStyled = types => (tag, state) => {
        * - styled.default.something()
        */
       (state.styledRequired &&
-        types.isMemberExpression(tag) &&
-        types.isMemberExpression(tag.object) &&
+        t.isMemberExpression(tag) &&
+        t.isMemberExpression(tag.object) &&
         tag.object.property.name === 'default' &&
         tag.object.object.name === state.styledRequired) ||
       (state.styledRequired &&
-        types.isCallExpression(tag) &&
-        types.isMemberExpression(tag.callee) &&
+        t.isCallExpression(tag) &&
+        t.isMemberExpression(tag.callee) &&
         tag.callee.property.name === 'default' &&
         tag.callee.object.name === state.styledRequired)
     )
   }
 }
 
-export const isCSSHelper = types => (tag, state) =>
-  types.isIdentifier(tag) && tag.name === importLocalName('css', state)
+export const isCSSHelper = t => (tag, state) =>
+  t.isIdentifier(tag) && tag.name === importLocalName('css', state)
 
-export const isCreateGlobalStyleHelper = types => (tag, state) =>
-  types.isIdentifier(tag) &&
+export const isCreateGlobalStyleHelper = t => (tag, state) =>
+  t.isIdentifier(tag) &&
   tag.name === importLocalName('createGlobalStyle', state)
 
-export const isInjectGlobalHelper = types => (tag, state) =>
-  types.isIdentifier(tag) && tag.name === importLocalName('injectGlobal', state)
+export const isInjectGlobalHelper = t => (tag, state) =>
+  t.isIdentifier(tag) && tag.name === importLocalName('injectGlobal', state)
 
-export const isKeyframesHelper = types => (tag, state) =>
-  types.isIdentifier(tag) && tag.name === importLocalName('keyframes', state)
+export const isKeyframesHelper = t => (tag, state) =>
+  t.isIdentifier(tag) && tag.name === importLocalName('keyframes', state)
 
-export const isHelper = types => (tag, state) =>
-  isCSSHelper(types)(tag, state) || isKeyframesHelper(types)(tag, state)
+export const isHelper = t => (tag, state) =>
+  isCSSHelper(t)(tag, state) || isKeyframesHelper(t)(tag, state)

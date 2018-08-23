@@ -1,8 +1,8 @@
 import { useTranspileTemplateLiterals } from '../../utils/options'
 import transpile from './transpile'
 
-export default types => (path, state) => {
+export default t => (path, state) => {
   if (useTranspileTemplateLiterals(state)) {
-    transpile(types)(path, state)
+    transpile(t)(path, state)
   }
 }

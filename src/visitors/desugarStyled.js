@@ -1,11 +1,11 @@
 import get from 'lodash/get'
 import { isStyled } from '../utils/detectors'
 
-export default types => (path, state) => {
+export default t => (path, state) => {
   /**
    * Handles both "styled.div" and "styled_default.default.div" (transpiled output)
    */
-  if (isStyled(types)(path.node, state)) {
+  if (isStyled(t)(path.node, state)) {
     /**
      * e.g. "div"
      */
@@ -16,17 +16,15 @@ export default types => (path, state) => {
      * "styled_default.default.div", we want to preserve the "styled_default.default"
      * part and just reuse that AST object.
      */
-    const leftSide = types.isMemberExpression(path.node.object)
+    const leftSide = t.isMemberExpression(path.node.object)
       ? path.node.object
-      : types.identifier(path.node.object.name)
+      : t.identifier(path.node.object.name)
 
     if (sugar) {
       /**
        * "styled.div" -> "styled('div')"
        */
-      path.replaceWith(
-        types.callExpression(leftSide, [types.stringLiteral(sugar)])
-      )
+      path.replaceWith(t.callExpression(leftSide, [t.stringLiteral(sugar)]))
     }
   }
 }

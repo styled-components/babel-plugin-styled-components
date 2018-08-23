@@ -6,7 +6,7 @@
  * @return {String}   The target
  */
 
-export default types => path => {
+export default t => path => {
   let namedNode
 
   path.find(path => {
@@ -32,10 +32,10 @@ export default types => path => {
   })
 
   // foo.bar -> bar
-  if (types.isMemberExpression(namedNode)) {
+  if (t.isMemberExpression(namedNode)) {
     namedNode = namedNode.property
   }
 
   // identifiers are the only thing we can reliably get a name from
-  return types.isIdentifier(namedNode) ? namedNode.name : undefined
+  return t.isIdentifier(namedNode) ? namedNode.name : undefined
 }

@@ -5,22 +5,22 @@ import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import rewriteStyledImport from './visitors/rewriteStyledImport'
 
-export default function({ types }) {
+export default function({ types: t }) {
   return {
     visitor: {
       ImportDeclaration(path, state) {
-        rewriteStyledImport(types)(path, state)
+        rewriteStyledImport(t)(path, state)
       },
       MemberExpression(path, state) {
-        desugarStyled(types)(path, state)
+        desugarStyled(t)(path, state)
       },
       TaggedTemplateExpression(path, state) {
-        minify(types)(path, state)
-        displayNameAndId(types)(path, state)
-        templateLiterals(types)(path, state)
+        minify(t)(path, state)
+        displayNameAndId(t)(path, state)
+        templateLiterals(t)(path, state)
       },
       VariableDeclarator(path, state) {
-        assignStyledRequired(types)(path, state)
+        assignStyledRequired(t)(path, state)
       },
     },
   }
