@@ -1,5 +1,3 @@
-import * as t from 'babel-types'
-
 const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components',
   'styled-components/no-tags',
@@ -43,14 +41,14 @@ const importLocalName = (name, state) => {
   return localName
 }
 
-export const isStyled = (tag, state) => {
+export const isStyled = t => (tag, state) => {
   if (
     t.isCallExpression(tag) &&
     t.isMemberExpression(tag.callee) &&
     tag.callee.property.name !== 'default' /** ignore default for #93 below */
   ) {
     // styled.something()
-    return isStyled(tag.callee.object, state)
+    return isStyled(t)(tag.callee.object, state)
   } else {
     return (
       (t.isMemberExpression(tag) &&
@@ -78,18 +76,18 @@ export const isStyled = (tag, state) => {
   }
 }
 
-export const isCSSHelper = (tag, state) =>
+export const isCSSHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('css', state)
 
-export const isCreateGlobalStyleHelper = (tag, state) =>
+export const isCreateGlobalStyleHelper = t => (tag, state) =>
   t.isIdentifier(tag) &&
   tag.name === importLocalName('createGlobalStyle', state)
 
-export const isInjectGlobalHelper = (tag, state) =>
+export const isInjectGlobalHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('injectGlobal', state)
 
-export const isKeyframesHelper = (tag, state) =>
+export const isKeyframesHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('keyframes', state)
 
-export const isHelper = (tag, state) =>
-  isCSSHelper(tag, state) || isKeyframesHelper(tag, state)
+export const isHelper = t => (tag, state) =>
+  isCSSHelper(t)(tag, state) || isKeyframesHelper(t)(tag, state)

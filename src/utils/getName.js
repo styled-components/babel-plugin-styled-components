@@ -1,5 +1,3 @@
-import * as t from 'babel-types'
-
 /**
  * Get the name of variable that contains node
  *
@@ -8,7 +6,7 @@ import * as t from 'babel-types'
  * @return {String}   The target
  */
 
-export default path => {
+export default t => path => {
   let namedNode
 
   path.find(path => {

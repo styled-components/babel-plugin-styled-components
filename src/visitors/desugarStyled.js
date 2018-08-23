@@ -1,12 +1,11 @@
-import * as t from 'babel-types'
 import get from 'lodash/get'
 import { isStyled } from '../utils/detectors'
 
-export default (path, state) => {
+export default t => (path, state) => {
   /**
    * Handles both "styled.div" and "styled_default.default.div" (transpiled output)
    */
-  if (isStyled(path.node, state)) {
+  if (isStyled(t)(path.node, state)) {
     /**
      * e.g. "div"
      */

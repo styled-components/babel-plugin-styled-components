@@ -1,13 +1,12 @@
-import * as t from 'babel-types'
+import path from 'path'
+import fs from 'fs'
 import { useFileName, useDisplayName, useSSR } from '../utils/options'
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
-import path from 'path'
-import fs from 'fs'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
 
-const addConfig = (path, displayName, componentId) => {
+const addConfig = t => (path, displayName, componentId) => {
   if (!displayName && !componentId) {
     return
   }
@@ -47,9 +46,9 @@ const getBlockName = file => {
     : path.basename(path.dirname(file.opts.filename))
 }
 
-const getDisplayName = (path, state) => {
+const getDisplayName = t => (path, state) => {
   const { file } = state
-  const componentName = getName(path)
+  const componentName = getName(t)(path)
   if (file) {
     const blockName = getBlockName(file)
     if (blockName === componentName) {
@@ -122,12 +121,13 @@ const getComponentId = state => {
   return `${prefixLeadingDigit(getFileHash(state))}-${getNextId(state)}`
 }
 
-export default (path, state) => {
-  if (isStyled(path.node.tag, state)) {
+export default t => (path, state) => {
+  if (isStyled(t)(path.node.tag, state)) {
     const displayName =
-      useDisplayName(state) && getDisplayName(path, useFileName(state) && state)
+      useDisplayName(state) &&
+      getDisplayName(t)(path, useFileName(state) && state)
 
-    addConfig(
+    addConfig(t)(
       path,
       displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
       useSSR(state) && getComponentId(state)

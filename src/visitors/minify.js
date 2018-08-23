@@ -1,16 +1,11 @@
-import * as t from 'babel-types'
-
 import { useMinify } from '../utils/options'
 import { isStyled, isHelper } from '../utils/detectors'
 import { minifyRawValues, minifyCookedValues } from '../minify'
 
-export default (path, state) => {
+export default t => (path, state) => {
   if (
     useMinify(state) &&
-    (
-      isStyled(path.node.tag, state) ||
-      isHelper(path.node.tag, state)
-    )
+    (isStyled(t)(path.node.tag, state) || isHelper(t)(path.node.tag, state))
   ) {
     const templateLiteral = path.node.quasi
     const quasisLength = templateLiteral.quasis.length
