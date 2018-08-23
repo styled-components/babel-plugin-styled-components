@@ -1,12 +1,19 @@
 import { isStyled, isHelper } from '../../utils/detectors'
 
-export default t => (path, state) => {
+export default types => (path, state) => {
   if (
-    isStyled(path.node.tag, state) ||
-    isHelper(path.node.tag, state)
+    isStyled(types)(path.node.tag, state) ||
+    isHelper(types)(path.node.tag, state)
   ) {
-    const { tag: callee, quasi: { quasis, expressions }} = path.node
-    const values = t.arrayExpression(quasis.map(quasi => t.stringLiteral(quasi.value.cooked)))
-    path.replaceWith(t.callExpression(callee, [ values, ...expressions ]))
+    const {
+      tag: callee,
+      quasi: { quasis, expressions },
+    } = path.node
+
+    const values = types.arrayExpression(
+      quasis.map(quasi => types.stringLiteral(quasi.value.cooked))
+    )
+
+    path.replaceWith(types.callExpression(callee, [values, ...expressions]))
   }
 }

@@ -1,5 +1,3 @@
-import * as t from 'babel-types'
-
 /**
  * Get the name of variable that contains node
  *
@@ -8,17 +6,20 @@ import * as t from 'babel-types'
  * @return {String}   The target
  */
 
-export default (path) => {
+export default types => path => {
   let namedNode
 
-  path.find((path) => {
+  path.find(path => {
     // const X = styled
     if (path.isAssignmentExpression()) {
       namedNode = path.node.left
-    // const X = { Y: styled }
+      // const X = { Y: styled }
     } else if (path.isObjectProperty()) {
       namedNode = path.node.key
-    // let X; X = styled
+      // class Y { (static) X = styled }
+    } else if (path.isClassProperty()) {
+      namedNode = path.node.key
+      // let X; X = styled
     } else if (path.isVariableDeclarator()) {
       namedNode = path.node.id
     } else if (path.isStatement()) {
@@ -31,10 +32,10 @@ export default (path) => {
   })
 
   // foo.bar -> bar
-  if (t.isMemberExpression(namedNode)) {
+  if (types.isMemberExpression(namedNode)) {
     namedNode = namedNode.property
   }
 
   // identifiers are the only thing we can reliably get a name from
-  return t.isIdentifier(namedNode) ? namedNode.name : undefined
+  return types.isIdentifier(namedNode) ? namedNode.name : undefined
 }

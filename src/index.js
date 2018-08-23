@@ -1,22 +1,18 @@
-import uglifyPure from './visitors/uglifyPure'
 import minify from './visitors/minify'
+import desugarStyled from './visitors/desugarStyled'
 import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
-import { noParserImportDeclaration, noParserRequireCallExpression } from './visitors/noParserImport'
-
-// Our visitors are factories that accept `types` and output a visitor function
-// with the usual `path, state` signature.
+import rewriteStyledImport from './visitors/rewriteStyledImport'
 
 export default function({ types }) {
   return {
     visitor: {
       ImportDeclaration(path, state) {
-        noParserImportDeclaration(types)(path, state)
+        rewriteStyledImport(types)(path, state)
       },
-      CallExpression(path, state) {
-        uglifyPure(types)(path, state)
-        noParserRequireCallExpression(types)(path, state)
+      MemberExpression(path, state) {
+        desugarStyled(types)(path, state)
       },
       TaggedTemplateExpression(path, state) {
         minify(types)(path, state)
@@ -25,7 +21,7 @@ export default function({ types }) {
       },
       VariableDeclarator(path, state) {
         assignStyledRequired(types)(path, state)
-      }
-    }
+      },
+    },
   }
 }

@@ -6,7 +6,7 @@ Wait, transpiling tagged template literals? Doesn't Babel do this natively?
 
 ## Transpiling tagged template literals
 
-You're currently using Babel to transpile your ES2015 JavaScript to ES5-compliant code. one of your presets (`es2015`/`env`/`latest`) includes the  `babel-plugin-transform-es2015-template-literals` transform to make tagged template literals work in older browsers, but there is a caveat. Output of that plugin is quite wordy. It's done this way to meet specification requirements:
+You're currently using Babel to transpile your ES2015 JavaScript to ES5-compliant code. one of your presets (`es2015`/`env`/`latest`) includes the `babel-plugin-transform-es2015-template-literals` transform to make tagged template literals work in older browsers, but there is a caveat. Output of that plugin is quite wordy. It's done this way to meet specification requirements:
 
 ```JS
 // processed with babel-preset-latest
@@ -14,7 +14,7 @@ You're currently using Babel to transpile your ES2015 JavaScript to ES5-complian
 var _templateObject = _taggedTemplateLiteral(['width: 100%;'], ['width: 100%;']);
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 var Simple = _styledComponents2.default.div(_templateObject);
-```   
+```
 
 `styled-components` styling code does not require full spec compatibility. This plugin will transpile template literals attached to styled-component to a slightly different form which still works in older browsers but has a much smaller footprint.
 
@@ -34,11 +34,13 @@ keyframe``
 css``
 
 // But this will not be converted
-`some text`
+'some text'
 
 // In next example outer template literal will be converted because it's attached to component factory,
 // but inner template literals will not be touched
-styled.div`color: ${ light ? `white` : `black`};`
+styled.div`
+  color: ${ light ? 'white' : 'black'};
+;`
 ```
 
 You can disable this feature with `transpileTemplateLiterals` option:
@@ -46,7 +48,7 @@ You can disable this feature with `transpileTemplateLiterals` option:
 ```JSON
 {
   "plugins": [
-    ["styled-components", {
+    ["babel-plugin-styled-components", {
       "transpileTemplateLiterals": false
     }]
   ]

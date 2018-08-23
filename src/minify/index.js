@@ -1,6 +1,7 @@
 import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
 
-const makeMultilineCommentRegex = newlinePattern => new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
+const makeMultilineCommentRegex = newlinePattern =>
+  new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
 const lineCommentStart = /\/\//g
 const symbolRegex = /(\s*[;:{},]\s*)/g
 
@@ -29,18 +30,19 @@ const reduceSubstr = (substrs, join, predicate) => {
 
 // Joins at comment starts when it's inside a string or parantheses
 // effectively removing line comments
-export const stripLineComment = line => (
-  reduceSubstr(line.split(lineCommentStart), '//', str => (
-    !str.endsWith(':') && // NOTE: This is another guard against urls, if they're not inside strings or parantheses.
-    countOccurences(str, '\'') % 2 === 0 &&
-    countOccurences(str, '\"') % 2 === 0 &&
-    countOccurences(str, '(') === countOccurences(str, ')')
-  ))
-)
+export const stripLineComment = line =>
+  reduceSubstr(
+    line.split(lineCommentStart),
+    '//',
+    str =>
+      !str.endsWith(':') && // NOTE: This is another guard against urls, if they're not inside strings or parantheses.
+      countOccurences(str, "'") % 2 === 0 &&
+      countOccurences(str, '"') % 2 === 0 &&
+      countOccurences(str, '(') === countOccurences(str, ')')
+  )
 
-export const compressSymbols = code => code
-  .split(symbolRegex)
-  .reduce((str, fragment, index) => {
+export const compressSymbols = code =>
+  code.split(symbolRegex).reduce((str, fragment, index) => {
     // Even-indices are non-symbol fragments
     if (index % 2 === 0) {
       return str + fragment
@@ -48,8 +50,8 @@ export const compressSymbols = code => code
 
     // Only manipulate symbols outside of strings
     if (
-      countOccurences(str, '\'') % 2 === 0 &&
-      countOccurences(str, '\"') % 2 === 0
+      countOccurences(str, "'") % 2 === 0 &&
+      countOccurences(str, '"') % 2 === 0
     ) {
       return str + fragment.trim()
     }
@@ -80,16 +82,11 @@ const minify = linebreakPattern => {
 export const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
 export const minifyCooked = minify('[\\r\\n]')
 
-export const minifyRawValues = rawValues => splitByPlaceholders(
-  minifyRaw(
-    rawValues.join(makePlaceholder(123))
-  ),
-  false
-)
+export const minifyRawValues = rawValues =>
+  splitByPlaceholders(minifyRaw(rawValues.join(makePlaceholder(123))), false)
 
-export const minifyCookedValues = cookedValues => splitByPlaceholders(
-  minifyCooked(
-    cookedValues.join(makePlaceholder(123))
-  ),
-  false
-)
+export const minifyCookedValues = cookedValues =>
+  splitByPlaceholders(
+    minifyCooked(cookedValues.join(makePlaceholder(123))),
+    false
+  )

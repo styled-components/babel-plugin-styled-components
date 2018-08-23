@@ -1,9 +1,11 @@
-const trailingWhitespaceRegex = /^\s+|\s+$/;
+const trailingWhitespaceRegex = /^\s+|\s+$/
 
 module.exports = {
-    print(val, serialize, indent) {
-      return serialize(val.replace(trailingWhitespaceRegex, ''));
-    },
+  print(val, serialize) {
+    return serialize(val.replace(trailingWhitespaceRegex, ''))
+  },
 
-    test(val) { return trailingWhitespaceRegex.test(val); },
-};
+  test(val) {
+    return trailingWhitespaceRegex.test(val)
+  },
+}
