@@ -1,5 +1,12 @@
 import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
 
+let i = 0
+
+const injectUniquePlaceholders = strArr =>
+  strArr.reduce((str, val, index, arr) => {
+    return str + val + (index < arr.length - 1 ? makePlaceholder(i++) : '')
+  }, '')
+
 const makeMultilineCommentRegex = newlinePattern =>
   new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
 const lineCommentStart = /\/\//g
@@ -83,10 +90,10 @@ export const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
 export const minifyCooked = minify('[\\r\\n]')
 
 export const minifyRawValues = rawValues =>
-  splitByPlaceholders(minifyRaw(rawValues.join(makePlaceholder(123))), false)
+  splitByPlaceholders(minifyRaw(injectUniquePlaceholders(rawValues)), false)
 
 export const minifyCookedValues = cookedValues =>
   splitByPlaceholders(
-    minifyCooked(cookedValues.join(makePlaceholder(123))),
+    minifyCooked(injectUniquePlaceholders(cookedValues)),
     false
   )
