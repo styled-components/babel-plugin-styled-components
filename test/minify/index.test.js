@@ -5,6 +5,8 @@ import {
   compressSymbols,
 } from '../../src/minify'
 
+import { makePlaceholder } from '../../src/css/placeholderUtils'
+
 describe('minify utils', () => {
   describe('stripLineComment', () => {
     it('splits a line by potential comment starts and joins until one is an actual comment', () => {
@@ -74,6 +76,18 @@ describe('minify utils', () => {
 
       expect(actual).toBe(expected)
       expect(actual).toBe(minifyCooked(input)[0])
+    })
+
+    it('Returns the indices of removed placeholders (expressions)', () => {
+      const placeholder1 = makePlaceholder(0)
+      const placeholder2 = makePlaceholder(1)
+      const input = `this is some\ninput with ${placeholder1} and // ignored ${placeholder2}`
+      const expected = `this is some input with ${placeholder1} and `
+      const [actual, indices] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(indices).toEqual([1])
+      expect(minifyCooked(input)).toEqual([actual, [1]])
     })
   })
 
