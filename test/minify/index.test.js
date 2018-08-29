@@ -2,7 +2,7 @@ import {
   stripLineComment,
   minifyRaw,
   minifyCooked,
-  compressSymbols
+  compressSymbols,
 } from '../../src/minify'
 
 describe('minify utils', () => {
@@ -12,7 +12,9 @@ describe('minify utils', () => {
     })
 
     it('ignores comment markers that are inside strings', () => {
-      expect(stripLineComment('abc def"//"ghi\'//\'jkl//the end')).toBe('abc def"//"ghi\'//\'jkl')
+      expect(stripLineComment('abc def"//"ghi\'//\'jkl//the end')).toBe(
+        'abc def"//"ghi\'//\'jkl'
+      )
       expect(stripLineComment('abc def"//"')).toBe('abc def"//"')
     })
 
@@ -21,7 +23,9 @@ describe('minify utils', () => {
     })
 
     it('ignores even unescaped URLs', () => {
-      expect(stripLineComment('https://test.com// comment//')).toBe('https://test.com')
+      expect(stripLineComment('https://test.com// comment//')).toBe(
+        'https://test.com'
+      )
     })
   })
 
@@ -29,46 +33,47 @@ describe('minify utils', () => {
     it('Removes multi-line comments', () => {
       const input = 'this is a/* ignore me please */test'
       const expected = 'this is a test' // NOTE: They're replaced with newlines, and newlines are joined
-      const actual = minifyRaw(input)
+      const [actual] = minifyRaw(input)
 
       expect(actual).toBe(expected)
-      expect(actual).toBe(minifyCooked(input))
+      expect(actual).toBe(minifyCooked(input)[0])
     })
 
     it('Joins all lines of code', () => {
       const input = 'this\nis\na/* ignore me \n please */\ntest'
       const expected = 'this is a test'
-      const actual = minifyRaw(input)
+      const [actual] = minifyRaw(input)
 
       expect(actual).toBe(expected)
-      expect(actual).toBe(minifyCooked(input))
+      expect(actual).toBe(minifyCooked(input)[0])
     })
 
     it('Removes line comments filling an entire line', () => {
       const input = 'line one\n// remove this comment\nline two'
       const expected = 'line one line two'
-      const actual = minifyRaw(input)
+      const [actual] = minifyRaw(input)
 
       expect(actual).toBe(expected)
-      expect(actual).toBe(minifyCooked(input))
+      expect(actual).toBe(minifyCooked(input)[0])
     })
 
     it('Removes line comments at the end of lines of code', () => {
       const input = 'valid line with // a comment\nout comments'
       const expected = 'valid line with  out comments'
-      const actual = minifyRaw(input)
+      const [actual] = minifyRaw(input)
 
       expect(actual).toBe(expected)
-      expect(actual).toBe(minifyCooked(input))
+      expect(actual).toBe(minifyCooked(input)[0])
     })
 
     it('Preserves multi-line comments starting with /*!', () => {
-      const input = 'this is a /*! dont ignore me please */ test/* but you can ignore me */'
+      const input =
+        'this is a /*! dont ignore me please */ test/* but you can ignore me */'
       const expected = 'this is a /*! dont ignore me please */ test'
-      const actual = minifyRaw(input)
+      const [actual] = minifyRaw(input)
 
       expect(actual).toBe(expected)
-      expect(actual).toBe(minifyCooked(input))
+      expect(actual).toBe(minifyCooked(input)[0])
     })
   })
 
@@ -76,12 +81,19 @@ describe('minify utils', () => {
     it('works with raw escape codes', () => {
       const input = 'this\\nis\\na/* ignore me \\n please */\\ntest'
       const expected = 'this is a test'
-      const actual = minifyRaw(input)
+      const [actual] = minifyRaw(input)
 
-      expect(minifyRaw(input)).toBe(expected)
+      expect(actual).toBe(expected)
+    })
+  })
 
-      // NOTE: This is just a sanity check
-      expect(minifyCooked(input)).toBe('this\\nis\\na \\ntest')
+  describe('minifyCooked', () => {
+    it('works with raw escape codes', () => {
+      const input = 'this\\nis\\na/* ignore me \\n please */\\ntest'
+      const expected = 'this\\nis\\na \\ntest'
+      const [actual] = minifyCooked(input)
+
+      expect(actual).toBe(expected)
     })
   })
 
