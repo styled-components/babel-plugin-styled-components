@@ -1,11 +1,18 @@
-import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
+import difference from 'lodash/difference'
 
-let i = 0
+import {
+  makePlaceholder,
+  placeholderRegex,
+  splitByPlaceholders,
+} from '../css/placeholderUtils'
 
-const injectUniquePlaceholders = strArr =>
-  strArr.reduce((str, val, index, arr) => {
+const injectUniquePlaceholders = strArr => {
+  let i = 0
+
+  return strArr.reduce((str, val, index, arr) => {
     return str + val + (index < arr.length - 1 ? makePlaceholder(i++) : '')
   }, '')
+}
 
 const makeMultilineCommentRegex = newlinePattern =>
   new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
@@ -82,7 +89,12 @@ const minify = linebreakPattern => {
       .map(stripLineComment) // Remove line comments inside text
       .join(' ') // Rejoin all lines
 
-    return compressSymbols(newCode)
+    const eliminatedExpressionIndices = difference(
+      code.match(placeholderRegex),
+      newCode.match(placeholderRegex)
+    ).map(x => parseInt(x.match(/\d+/)[0], 10))
+
+    return [compressSymbols(newCode), eliminatedExpressionIndices]
   }
 }
 
