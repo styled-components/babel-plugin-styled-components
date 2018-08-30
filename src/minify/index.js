@@ -1,4 +1,18 @@
-import { makePlaceholder, splitByPlaceholders } from '../css/placeholderUtils'
+import difference from 'lodash/difference'
+
+import {
+  makePlaceholder,
+  placeholderRegex,
+  splitByPlaceholders,
+} from '../css/placeholderUtils'
+
+const injectUniquePlaceholders = strArr => {
+  let i = 0
+
+  return strArr.reduce((str, val, index, arr) => {
+    return str + val + (index < arr.length - 1 ? makePlaceholder(i++) : '')
+  }, '')
+}
 
 const makeMultilineCommentRegex = newlinePattern =>
   new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
@@ -75,7 +89,12 @@ const minify = linebreakPattern => {
       .map(stripLineComment) // Remove line comments inside text
       .join(' ') // Rejoin all lines
 
-    return compressSymbols(newCode)
+    const eliminatedExpressionIndices = difference(
+      code.match(placeholderRegex),
+      newCode.match(placeholderRegex)
+    ).map(x => parseInt(x.match(/\d+/)[0], 10))
+
+    return [compressSymbols(newCode), eliminatedExpressionIndices]
   }
 }
 
@@ -83,10 +102,10 @@ export const minifyRaw = minify('(?:\\\\r|\\\\n|\\r|\\n)')
 export const minifyCooked = minify('[\\r\\n]')
 
 export const minifyRawValues = rawValues =>
-  splitByPlaceholders(minifyRaw(rawValues.join(makePlaceholder(123))), false)
+  splitByPlaceholders(minifyRaw(injectUniquePlaceholders(rawValues)), false)
 
 export const minifyCookedValues = cookedValues =>
   splitByPlaceholders(
-    minifyCooked(cookedValues.join(makePlaceholder(123))),
+    minifyCooked(injectUniquePlaceholders(cookedValues)),
     false
   )

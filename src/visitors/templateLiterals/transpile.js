@@ -8,7 +8,9 @@ export default t => (path, state) => {
     } = path.node
 
     const values = t.arrayExpression(
-      quasis.map(quasi => t.stringLiteral(quasi.value.cooked))
+      quasis
+        .filter(quasi => quasi.value.cooked !== undefined)
+        .map(quasi => t.stringLiteral(quasi.value.cooked))
     )
 
     path.replaceWith(t.callExpression(callee, [values, ...expressions]))

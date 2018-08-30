@@ -10,12 +10,18 @@ export default t => (path, state) => {
     const templateLiteral = path.node.quasi
     const quasisLength = templateLiteral.quasis.length
 
-    const rawValuesMinified = minifyRawValues(
+    const [rawValuesMinified] = minifyRawValues(
       templateLiteral.quasis.map(x => x.value.raw)
     )
-    const cookedValuesMinfified = minifyCookedValues(
-      templateLiteral.quasis.map(x => x.value.cooked)
-    )
+
+    const [
+      cookedValuesMinfified,
+      eliminatedExpressionIndices,
+    ] = minifyCookedValues(templateLiteral.quasis.map(x => x.value.cooked))
+
+    eliminatedExpressionIndices.forEach((expressionIndex, iteration) => {
+      templateLiteral.expressions.splice(expressionIndex - iteration, 1)
+    })
 
     for (let i = 0; i < quasisLength; i++) {
       const element = templateLiteral.quasis[i]
