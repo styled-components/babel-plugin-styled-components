@@ -20,14 +20,15 @@
     "babel-preset-env": "^1.2.2",
     "jest": "^17.0.3",
     "prettier": "^1.12.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "styled-components": "^3.4.5"
   },
   "dependencies": {
-    "@babel/helper-annotate-as-pure": "^7.0.0-beta.37",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.10",
+    "semver": "^5.5.1"
   },
   "peerDependencies": {
-    "styled-components": ">= 4.0"
+    "styled-components": ">= 2"
   },
   "scripts": {
     "clean": "rimraf lib",

@@ -23,16 +23,6 @@ Then add it to your babel configuration:
 }
 ```
 
-## styled-components v4 beta
-
-If you are using the styled-components v4 beta, you'll also need to use the beta version of this plugin:
-
-```
-npm install --save-dev babel-plugin-styled-components@beta
-```
-
-Older versions should technically work, but some of the bundle size reduction benefits are only realized with the newer code!
-
 ## Documentation
 
 **The documentation for this plugin lives on [the styled-components website](https://www.styled-components.com/docs/tooling#babel-plugin)!**
