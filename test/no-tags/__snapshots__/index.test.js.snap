@@ -9,7 +9,7 @@ const Named = styled(\'div\').withConfig({
 const NamedWithInterpolation = styled(\'div\').withConfig({
   displayName: \'unknown__NamedWithInterpolation\',
   componentId: \'sc-2vipsm-1\'
-})([\'color:\', \';\'], color => props.color);
+})([\'color:\', \';\'], props => props.color);
 
 const Wrapped = styled(Inner).withConfig({
   displayName: \'unknown__Wrapped\',
