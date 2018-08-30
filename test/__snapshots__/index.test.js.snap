@@ -103,7 +103,7 @@ const TestCallExpression = styled_default.default(Test).withConfig({
 `;
 
 exports[`fixtures should minify css in helpers 1`] = `
-"import { css, keyframes } from \'styled-components/no-tags\';
+"import { css, keyframes } from \'styled-components\';
 
 const key = keyframes\`to{transform:rotate(360deg);}\`;
 
@@ -119,31 +119,31 @@ var _templateObject = _taggedTemplateLiteral([\'width:100%;\'], [\'width:100%;\'
     _templateObject4 = _taggedTemplateLiteral([\'color:red;\'], [\'color:red;\']),
     _templateObject5 = _taggedTemplateLiteral([\'&:hover{color:blue;}\'], [\'&:hover{color:blue;}\']);
 
-var _noTags = require(\'styled-components/no-tags\');
+var _styledComponents = require(\'styled-components\');
 
-var _noTags2 = _interopRequireDefault(_noTags);
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Simple = (0, _noTags2.default)(\'div\')(_templateObject);
+var Simple = (0, _styledComponents2.default)(\'div\')(_templateObject);
 
-var Interpolation = (0, _noTags2.default)(\'div\')(_templateObject2, function (props) {
+var Interpolation = (0, _styledComponents2.default)(\'div\')(_templateObject2, function (props) {
   return props.text;
 });
 
-var SpecialCharacters = (0, _noTags2.default)(\'div\')(_templateObject3, function (props) {
+var SpecialCharacters = (0, _styledComponents2.default)(\'div\')(_templateObject3, function (props) {
   return props.text;
 });
 
-var Comment = (0, _noTags2.default)(\'div\')(_templateObject4);
+var Comment = (0, _styledComponents2.default)(\'div\')(_templateObject4);
 
-var Parens = (0, _noTags2.default)(\'div\')(_templateObject5);"
+var Parens = (0, _styledComponents2.default)(\'div\')(_templateObject5);"
 `;
 
 exports[`fixtures should minify css to use without transpilation 1`] = `
-"import styled from \'styled-components/no-tags\';
+"import styled from \'styled-components\';
 
 const Simple = styled(\'div\')\`width:100%;\`;
 
@@ -159,13 +159,13 @@ const UrlComments = styled(\'div\')\`color:red;background:red;border:1px solid g
 `;
 
 exports[`fixtures should not use private api if not required 1`] = `
-"import styled from \'styled-components/no-tags\';
+"import styled from \'styled-components\';
 
 const Test = styled(\'div\')\`width:100%;\`;"
 `;
 
 exports[`fixtures should track the imported variable 1`] = `
-"import s from \"styled-components/no-tags\";
+"import s from \"styled-components\";
 
 const Test = s(\"div\").withConfig({
   displayName: \"Test\",
@@ -215,23 +215,23 @@ const TestCallExpression = styled_default.default(Test).withConfig({
 exports[`fixtures should transpile template literals with config 1`] = `
 "\'use strict\';
 
-var _noTags = require(\'styled-components/no-tags\');
+var _styledComponents = require(\'styled-components\');
 
-var _noTags2 = _interopRequireDefault(_noTags);
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Named = (0, _noTags2.default)(\'div\').withConfig({
+var Named = (0, _styledComponents2.default)(\'div\').withConfig({
   displayName: \'transpile-template-literals-with-config__Named\'
 })([\'\\n  width: 100%;\\n\']);
 
-var NamedWithInterpolation = (0, _noTags2.default)(\'div\').withConfig({
+var NamedWithInterpolation = (0, _styledComponents2.default)(\'div\').withConfig({
   displayName: \'transpile-template-literals-with-config__NamedWithInterpolation\'
 })([\'\\n  color: \', \';\\n\'], function (color) {
   return props.color;
 });
 
-var Wrapped = (0, _noTags2.default)(Inner).withConfig({
+var Wrapped = (0, _styledComponents2.default)(Inner).withConfig({
   displayName: \'transpile-template-literals-with-config__Wrapped\'
 })([\'color: red;\']);"
 `;
@@ -239,23 +239,23 @@ var Wrapped = (0, _noTags2.default)(Inner).withConfig({
 exports[`fixtures should transpile template literals without config 1`] = `
 "\'use strict\';
 
-var _noTags = require(\'styled-components/no-tags\');
+var _styledComponents = require(\'styled-components\');
 
-var _noTags2 = _interopRequireDefault(_noTags);
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Named = (0, _noTags2.default)(\'div\')([\'\\n  width: 100%;\\n\']);
+var Named = (0, _styledComponents2.default)(\'div\')([\'\\n  width: 100%;\\n\']);
 
-var NamedWithInterpolation = (0, _noTags2.default)(\'div\')([\'\\n  color: \', \';\\n\'], function (color) {
+var NamedWithInterpolation = (0, _styledComponents2.default)(\'div\')([\'\\n  color: \', \';\\n\'], function (color) {
   return props.color;
 });
 
-var Wrapped = (0, _noTags2.default)(Inner)([\'color: red;\']);"
+var Wrapped = (0, _styledComponents2.default)(Inner)([\'color: red;\']);"
 `;
 
 exports[`fixtures should use file name 1`] = `
-"import styled from \"styled-components/no-tags\";
+"import styled from \"styled-components\";
 
 const Test = styled(\"div\").withConfig({
   displayName: \"use-file-name__Test\",
@@ -280,5 +280,5 @@ exports[`fixtures should work with hoisted default as import 1`] = `
   displayName: \'work-with-hoisted-default-as-import__Test\',
   componentId: \'sc-1te5tgi-0\'
 })\`width:100%;\`;
-import { default as s, css } from \'styled-components/no-tags\';"
+import { default as s, css } from \'styled-components\';"
 `;
