@@ -1,18 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`test should swap out the import if styled-components v4+ is detected 1`] = `
-"import styled from \'styled-components/no-tags\';
+"import styled from 'styled-components/no-tags';
 
-const Named = styled(\'div\').withConfig({
-  displayName: \'unknown__Named\',
-  componentId: \'sc-2vipsm-0\'
-})([\'width:100%;\']);
+const Named = styled('div').withConfig({
+  displayName: 'unknown__Named',
+  componentId: 'sc-2vipsm-0'
+})(['width:100%;']);
 
-const NamedWithInterpolation = styled(\'div\').withConfig({
-  displayName: \'unknown__NamedWithInterpolation\',
-  componentId: \'sc-2vipsm-1\'
-})([\'color:\', \';\'], props => props.color);
+const NamedWithInterpolation = styled('div').withConfig({
+  displayName: 'unknown__NamedWithInterpolation',
+  componentId: 'sc-2vipsm-1'
+})(['color:', ';'], props => props.color);
 
 const Wrapped = styled(Inner).withConfig({
-  displayName: \'unknown__Wrapped\',
-  componentId: \'sc-2vipsm-2\'
-})([\'color:red;\']);"
+  displayName: 'unknown__Wrapped',
+  componentId: 'sc-2vipsm-2'
+})(['color:red;']);"
 `;

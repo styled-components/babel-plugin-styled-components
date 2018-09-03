@@ -1,4 +1,4 @@
-import { transform } from 'babel-core'
+import { transform } from '@babel/core'
 import * as fs from 'fs'
 
 jest.mock('styled-components/package.json', () => ({ version: '4.0.0' }))
