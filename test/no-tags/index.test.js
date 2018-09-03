@@ -1,12 +1,11 @@
-import { transform } from '@babel/core'
-import * as fs from 'fs'
+import { transformFileSync } from '@babel/core'
+import * as path from 'path'
 
 jest.mock('styled-components/package.json', () => ({ version: '4.0.0' }))
 
 it('should swap out the import if styled-components v4+ is detected', () => {
-  const fixture = transform(
-    fs.readFileSync(__dirname + '/example.js', 'utf8'),
-    { plugins: ['./src'] }
-  ).code
+  const fixturePath = path.join(__dirname + '/example.js')
+  const fixture = transformFileSync(fixturePath).code
+
   expect(fixture).toMatchSnapshot()
 })
