@@ -97,6 +97,17 @@ const WithAttrsWrapped = styled(Inner).attrs({
 })\`\`;"
 `;
 
+exports[`fixtures should does not desugar styled assignment 1`] = `
+"const domElements = ['div'];
+
+const styled = () => {};
+
+// Shorthands for all valid HTML Elements
+domElements.forEach(domElement => {
+  styled[domElement] = styled(domElement);
+});"
+`;
+
 exports[`fixtures should does not replace native with no tags 1`] = `
 "const styled_default = require('styled-components/native');
 
