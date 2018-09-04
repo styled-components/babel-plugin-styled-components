@@ -1,323 +1,357 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`fixtures should add display names 1`] = `
-"const Test = styled(\'div\').withConfig({
-  displayName: \'Test\'
+"const Test = styled(\\"div\\").withConfig({
+  displayName: \\"Test\\"
 })\`width:100%;\`;
-const Test2 = styled(\'div\').withConfig({
-  displayName: \'Test2\'
+const Test2 = styled('div').withConfig({
+  displayName: \\"Test2\\"
 })\`\`;
-const Test3 = true ? styled(\'div\').withConfig({
-  displayName: \'Test3\'
-})\`\` : styled(\'div\').withConfig({
-  displayName: \'Test3\'
+const Test3 = true ? styled(\\"div\\").withConfig({
+  displayName: \\"Test3\\"
+})\`\` : styled(\\"div\\").withConfig({
+  displayName: \\"Test3\\"
 })\`\`;
-const styles = { One: styled(\'div\').withConfig({
-    displayName: \'One\'
-  })\`\` };
+const styles = {
+  One: styled(\\"div\\").withConfig({
+    displayName: \\"One\\"
+  })\`\`
+};
 let Component;
-Component = styled(\'div\').withConfig({
-  displayName: \'Component\'
+Component = styled(\\"div\\").withConfig({
+  displayName: \\"Component\\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
-  displayName: \'WrappedComponent\'
+  displayName: \\"WrappedComponent\\"
 })\`\`;
+
 class ClassComponent {}
-ClassComponent.Child = styled(\'div\').withConfig({
-  displayName: \'Child\'
+
+ClassComponent.Child = styled(\\"div\\").withConfig({
+  displayName: \\"Child\\"
 })\`\`;"
 `;
 
 exports[`fixtures should add identifier 1`] = `
-"const Test = styled(\"div\").withConfig({
-  componentId: \"wkc8iz-0\"
+"const Test = styled(\\"div\\").withConfig({
+  componentId: \\"wkc8iz-0\\"
 })\`width:100%;\`;
-const Test2 = true ? styled(\"div\").withConfig({
-  componentId: \"wkc8iz-1\"
-})\`\` : styled(\"div\").withConfig({
-  componentId: \"wkc8iz-2\"
+const Test2 = true ? styled(\\"div\\").withConfig({
+  componentId: \\"wkc8iz-1\\"
+})\`\` : styled(\\"div\\").withConfig({
+  componentId: \\"wkc8iz-2\\"
 })\`\`;
-const styles = { One: styled(\"div\").withConfig({
-    componentId: \"wkc8iz-3\"
-  })\`\` };
+const styles = {
+  One: styled(\\"div\\").withConfig({
+    componentId: \\"wkc8iz-3\\"
+  })\`\`
+};
 let Component;
-Component = styled(\"div\").withConfig({
-  componentId: \"wkc8iz-4\"
+Component = styled(\\"div\\").withConfig({
+  componentId: \\"wkc8iz-4\\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
-  componentId: \"wkc8iz-5\"
+  componentId: \\"wkc8iz-5\\"
 })\`\`;"
 `;
 
 exports[`fixtures should add identifier and display name 1`] = `
-"const Test = styled(\"div\").withConfig({
-  displayName: \"Test\",
-  componentId: \"sc-1n5umup-0\"
+"const Test = styled(\\"div\\").withConfig({
+  displayName: \\"Test\\",
+  componentId: \\"sc-1n5umup-0\\"
 })\`width:100%;\`;
-const Test2 = true ? styled(\"div\").withConfig({
-  displayName: \"Test2\",
-  componentId: \"sc-1n5umup-1\"
-})\`\` : styled(\"div\").withConfig({
-  displayName: \"Test2\",
-  componentId: \"sc-1n5umup-2\"
+const Test2 = true ? styled(\\"div\\").withConfig({
+  displayName: \\"Test2\\",
+  componentId: \\"sc-1n5umup-1\\"
+})\`\` : styled(\\"div\\").withConfig({
+  displayName: \\"Test2\\",
+  componentId: \\"sc-1n5umup-2\\"
 })\`\`;
-const styles = { One: styled(\"div\").withConfig({
-    displayName: \"One\",
-    componentId: \"sc-1n5umup-3\"
-  })\`\` };
+const styles = {
+  One: styled(\\"div\\").withConfig({
+    displayName: \\"One\\",
+    componentId: \\"sc-1n5umup-3\\"
+  })\`\`
+};
 let Component;
-Component = styled(\"div\").withConfig({
-  displayName: \"Component\",
-  componentId: \"sc-1n5umup-4\"
+Component = styled(\\"div\\").withConfig({
+  displayName: \\"Component\\",
+  componentId: \\"sc-1n5umup-4\\"
 })\`\`;
 const WrappedComponent = styled(Inner).withConfig({
-  displayName: \"WrappedComponent\",
-  componentId: \"sc-1n5umup-5\"
+  displayName: \\"WrappedComponent\\",
+  componentId: \\"sc-1n5umup-5\\"
 })\`\`;"
 `;
 
 exports[`fixtures should allow chains of member calls 1`] = `
-"const WithAttrs = styled(\'div\').attrs({ some: \'value\' }).withConfig({
-  displayName: \'WithAttrs\'
+"const WithAttrs = styled(\\"div\\").attrs({
+  some: 'value'
+}).withConfig({
+  displayName: \\"WithAttrs\\"
 })\`\`;
-const WithAttrsWrapped = styled(Inner).attrs({ some: \'value\' }).withConfig({
-  displayName: \'WithAttrsWrapped\'
+const WithAttrsWrapped = styled(Inner).attrs({
+  some: 'value'
+}).withConfig({
+  displayName: \\"WithAttrsWrapped\\"
 })\`\`;"
 `;
 
+exports[`fixtures should does not desugar styled assignment 1`] = `
+"const domElements = ['div'];
+
+const styled = () => {};
+
+domElements.forEach(domElement => {
+  styled[domElement] = styled(domElement);
+});"
+`;
+
 exports[`fixtures should does not replace native with no tags 1`] = `
-"const styled_default = require(\'styled-components/native\');
+"const styled_default = require('styled-components/native');
 
-const TestNormal = styled(\'div\').withConfig({
-  displayName: \'does-not-replace-native-with-no-tags__TestNormal\',
-  componentId: \'sc-1vnscvm-0\'
-})([\'width:100%;\']);
-
-const Test = styled_default.default(\'div\').withConfig({
-  displayName: \'does-not-replace-native-with-no-tags__Test\',
-  componentId: \'sc-1vnscvm-1\'
-})([\'width:100%;\']);
-
+const TestNormal = styled(\\"div\\").withConfig({
+  displayName: \\"does-not-replace-native-with-no-tags__TestNormal\\",
+  componentId: \\"sc-1vnscvm-0\\"
+})([\\"width:100%;\\"]);
+const Test = styled_default.default(\\"div\\").withConfig({
+  displayName: \\"does-not-replace-native-with-no-tags__Test\\",
+  componentId: \\"sc-1vnscvm-1\\"
+})([\\"width:100%;\\"]);
 const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \'does-not-replace-native-with-no-tags__TestCallExpression\',
-  componentId: \'sc-1vnscvm-2\'
-})([\'height:20px;\']);"
+  displayName: \\"does-not-replace-native-with-no-tags__TestCallExpression\\",
+  componentId: \\"sc-1vnscvm-2\\"
+})([\\"height:20px;\\"]);"
 `;
 
 exports[`fixtures should minify css in helpers 1`] = `
-"import { css, keyframes } from \'styled-components\';
-
+"import { css, keyframes } from 'styled-components';
 const key = keyframes\`to{transform:rotate(360deg);}\`;
-
 const color = css\`color:\${theColor};\`;"
 `;
 
 exports[`fixtures should minify css to use with transpilation 1`] = `
-"\'use strict\';
+"\\"use strict\\";
 
-var _templateObject = _taggedTemplateLiteral([\'width:100%;\'], [\'width:100%;\']),
-    _templateObject2 = _taggedTemplateLiteral([\'content:\"  \', \'  \";\'], [\'content:\"  \', \'  \";\']),
-    _templateObject3 = _taggedTemplateLiteral([\'content:\"  \', \'  \";color:red;\'], [\'content:\"  \', \'  \";color:red;\']),
-    _templateObject4 = _taggedTemplateLiteral([\'color:red;\'], [\'color:red;\']),
-    _templateObject5 = _taggedTemplateLiteral([\'&:hover{color:blue;}\'], [\'&:hover{color:blue;}\']);
-
-var _styledComponents = require(\'styled-components\');
-
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+function _templateObject5() {
+  var data = _taggedTemplateLiteral([\\"&:hover{color:blue;}\\"]);
 
-var Simple = (0, _styledComponents2.default)(\'div\')(_templateObject);
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
 
-var Interpolation = (0, _styledComponents2.default)(\'div\')(_templateObject2, function (props) {
+  return data;
+}
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral([\\"color:red;\\"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral([\\"content:\\\\\\"  \\", \\"  \\\\\\";color:red;\\"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral([\\"content:\\\\\\"  \\", \\"  \\\\\\";\\"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral([\\"width:100%;\\"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Simple = (0, _styledComponents.default)(\\"div\\")(_templateObject());
+var Interpolation = (0, _styledComponents.default)(\\"div\\")(_templateObject2(), function (props) {
   return props.text;
 });
-
-var SpecialCharacters = (0, _styledComponents2.default)(\'div\')(_templateObject3, function (props) {
+var SpecialCharacters = (0, _styledComponents.default)(\\"div\\")(_templateObject3(), function (props) {
   return props.text;
 });
-
-var Comment = (0, _styledComponents2.default)(\'div\')(_templateObject4);
-
-var Parens = (0, _styledComponents2.default)(\'div\')(_templateObject5);"
+var Comment = (0, _styledComponents.default)(\\"div\\")(_templateObject4());
+var Parens = (0, _styledComponents.default)(\\"div\\")(_templateObject5());"
 `;
 
 exports[`fixtures should minify css to use without transpilation 1`] = `
-"import styled from \'styled-components\';
-
-const Simple = styled(\'div\')\`width:100%;\`;
-
-const Interpolation = styled(\'div\')\`content:\"https://test.com/\${props => props.endpoint}\";\`;
-
-const SpecialCharacters = styled(\'div\')\`content:\"  \${props => props.text}  \";color:red;\`;
-
-const Comment = styled(\'div\')\`width:100%;color:red;\`;
-
-const Parens = styled(\'div\')\`&:hover{color:blue;}color:red;\`;
-
-const UrlComments = styled(\'div\')\`color:red;background:red;border:1px solid green;\`;"
+"import styled from 'styled-components';
+const Simple = styled(\\"div\\")\`width:100%;\`;
+const Interpolation = styled(\\"div\\")\`content:\\"https://test.com/\${props => props.endpoint}\\";\`;
+const SpecialCharacters = styled(\\"div\\")\`content:\\"  \${props => props.text}  \\";color:red;\`;
+const Comment = styled(\\"div\\")\`width:100%;color:red;\`;
+const Parens = styled(\\"div\\")\`&:hover{color:blue;}color:red;\`;
+const UrlComments = styled(\\"div\\")\`color:red;background:red;border:1px solid green;\`;"
 `;
 
 exports[`fixtures should minify single line comments with interpolations 1`] = `
-"import styled from \'styled-components/no-tags\';
-
-const Test1 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test1\',
-  componentId: \'sc-1p41dy5-0\'
-})([\'width:100%;\']);
-
-const Test2 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test2\',
-  componentId: \'sc-1p41dy5-1\'
-})([\'width:100%;\']);
-
-const Test3 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test3\',
-  componentId: \'sc-1p41dy5-2\'
-})([\'width:100%;\', \';\'], \'red\');
-
-const Test4 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test4\',
-  componentId: \'sc-1p41dy5-3\'
-})([\'width:100%;\']);
-
-const Test5 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test5\',
-  componentId: \'sc-1p41dy5-4\'
-})([\'width:100%;\']);
-
-const Test6 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test6\',
-  componentId: \'sc-1p41dy5-5\'
-})([\'background:url(\"https://google.com\");width:100%;\', \' \'], \'green\');
-
-const Test7 = styled(\'div\').withConfig({
-  displayName: \'minify-single-line-comments-with-interpolations__Test7\',
-  componentId: \'sc-1p41dy5-6\'
-})([\'background:url(\"https://google.com\");width:\', \';\', \'  height:\', \';\'], p => p.props.width, \'green\', p => p.props.height);"
+"import styled from 'styled-components';
+const Test1 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test1\\",
+  componentId: \\"sc-1p41dy5-0\\"
+})([\\"width:100%;\\"]);
+const Test2 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test2\\",
+  componentId: \\"sc-1p41dy5-1\\"
+})([\\"width:100%;\\"]);
+const Test3 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test3\\",
+  componentId: \\"sc-1p41dy5-2\\"
+})([\\"width:100%;\\", \\";\\"], 'red');
+const Test4 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test4\\",
+  componentId: \\"sc-1p41dy5-3\\"
+})([\\"width:100%;\\"]);
+const Test5 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test5\\",
+  componentId: \\"sc-1p41dy5-4\\"
+})([\\"width:100%;\\"]);
+const Test6 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test6\\",
+  componentId: \\"sc-1p41dy5-5\\"
+})([\\"background:url(\\\\\\"https://google.com\\\\\\");width:100%;\\", \\" \\"], 'green');
+const Test7 = styled(\\"div\\").withConfig({
+  displayName: \\"minify-single-line-comments-with-interpolations__Test7\\",
+  componentId: \\"sc-1p41dy5-6\\"
+})([\\"background:url(\\\\\\"https://google.com\\\\\\");width:\\", \\";\\", \\"  height:\\", \\";\\"], p => p.props.width, 'green', p => p.props.height);"
 `;
 
 exports[`fixtures should not use private api if not required 1`] = `
-"import styled from \'styled-components\';
-
-const Test = styled(\'div\')\`width:100%;\`;"
+"import styled from 'styled-components';
+const Test = styled(\\"div\\")\`width:100%;\`;"
 `;
 
 exports[`fixtures should track the imported variable 1`] = `
-"import s from \"styled-components\";
-
-const Test = s(\"div\").withConfig({
-  displayName: \"Test\",
-  componentId: \"g2kfnj-0\"
+"import s from \\"styled-components\\";
+const Test = s(\\"div\\").withConfig({
+  displayName: \\"Test\\",
+  componentId: \\"g2kfnj-0\\"
 })\`width:100%;\`;
-const Test2 = true ? s(\"div\").withConfig({
-  displayName: \"Test2\",
-  componentId: \"g2kfnj-1\"
-})\`\` : s(\"div\").withConfig({
-  displayName: \"Test2\",
-  componentId: \"g2kfnj-2\"
+const Test2 = true ? s(\\"div\\").withConfig({
+  displayName: \\"Test2\\",
+  componentId: \\"g2kfnj-1\\"
+})\`\` : s(\\"div\\").withConfig({
+  displayName: \\"Test2\\",
+  componentId: \\"g2kfnj-2\\"
 })\`\`;
-const styles = { One: s(\"div\").withConfig({
-    displayName: \"One\",
-    componentId: \"g2kfnj-3\"
-  })\`\` };
+const styles = {
+  One: s(\\"div\\").withConfig({
+    displayName: \\"One\\",
+    componentId: \\"g2kfnj-3\\"
+  })\`\`
+};
 let Component;
-Component = s(\"div\").withConfig({
-  displayName: \"Component\",
-  componentId: \"g2kfnj-4\"
+Component = s(\\"div\\").withConfig({
+  displayName: \\"Component\\",
+  componentId: \\"g2kfnj-4\\"
 })\`\`;
 const WrappedComponent = s(Inner).withConfig({
-  displayName: \"WrappedComponent\",
-  componentId: \"g2kfnj-5\"
+  displayName: \\"WrappedComponent\\",
+  componentId: \\"g2kfnj-5\\"
 })\`\`;"
 `;
 
 exports[`fixtures should transpile require default 1`] = `
-"const styled_default = require(\"styled-components\");
+"const styled_default = require(\\"styled-components\\");
 
-const TestNormal = styled(\"div\").withConfig({
-  displayName: \"transpile-require-default__TestNormal\",
-  componentId: \"stn6f-0\"
-})([\"width:100%;\"]);
-
-const Test = styled_default.default(\"div\").withConfig({
-  displayName: \"transpile-require-default__Test\",
-  componentId: \"stn6f-1\"
-})([\"width:100%;\"]);
-
+const TestNormal = styled(\\"div\\").withConfig({
+  displayName: \\"transpile-require-default__TestNormal\\",
+  componentId: \\"stn6f-0\\"
+})([\\"width:100%;\\"]);
+const Test = styled_default.default(\\"div\\").withConfig({
+  displayName: \\"transpile-require-default__Test\\",
+  componentId: \\"stn6f-1\\"
+})([\\"width:100%;\\"]);
 const TestCallExpression = styled_default.default(Test).withConfig({
-  displayName: \"transpile-require-default__TestCallExpression\",
-  componentId: \"stn6f-2\"
-})([\"height:20px;\"]);"
+  displayName: \\"transpile-require-default__TestCallExpression\\",
+  componentId: \\"stn6f-2\\"
+})([\\"height:20px;\\"]);"
 `;
 
 exports[`fixtures should transpile template literals with config 1`] = `
-"\'use strict\';
+"\\"use strict\\";
 
-var _styledComponents = require(\'styled-components\');
-
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Named = (0, _styledComponents2.default)(\'div\').withConfig({
-  displayName: \'transpile-template-literals-with-config__Named\'
-})([\'\\n  width: 100%;\\n\']);
-
-var NamedWithInterpolation = (0, _styledComponents2.default)(\'div\').withConfig({
-  displayName: \'transpile-template-literals-with-config__NamedWithInterpolation\'
-})([\'\\n  color: \', \';\\n\'], function (color) {
+var Named = (0, _styledComponents.default)(\\"div\\").withConfig({
+  displayName: \\"transpile-template-literals-with-config__Named\\"
+})([\\"\\\\n  width: 100%;\\\\n\\"]);
+var NamedWithInterpolation = (0, _styledComponents.default)(\\"div\\").withConfig({
+  displayName: \\"transpile-template-literals-with-config__NamedWithInterpolation\\"
+})([\\"\\\\n  color: \\", \\";\\\\n\\"], function (color) {
   return props.color;
 });
-
-var Wrapped = (0, _styledComponents2.default)(Inner).withConfig({
-  displayName: \'transpile-template-literals-with-config__Wrapped\'
-})([\'color: red;\']);"
+var Wrapped = (0, _styledComponents.default)(Inner).withConfig({
+  displayName: \\"transpile-template-literals-with-config__Wrapped\\"
+})([\\"\\\\n  color: red;\\\\n\\"]);"
 `;
 
 exports[`fixtures should transpile template literals without config 1`] = `
-"\'use strict\';
+"\\"use strict\\";
 
-var _styledComponents = require(\'styled-components\');
-
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Named = (0, _styledComponents2.default)(\'div\')([\'\\n  width: 100%;\\n\']);
-
-var NamedWithInterpolation = (0, _styledComponents2.default)(\'div\')([\'\\n  color: \', \';\\n\'], function (color) {
+var Named = (0, _styledComponents.default)(\\"div\\")([\\"\\\\n  width: 100%;\\\\n\\"]);
+var NamedWithInterpolation = (0, _styledComponents.default)(\\"div\\")([\\"\\\\n  color: \\", \\";\\\\n\\"], function (color) {
   return props.color;
 });
-
-var Wrapped = (0, _styledComponents2.default)(Inner)([\'color: red;\']);"
+var Wrapped = (0, _styledComponents.default)(Inner)([\\"color: red;\\"]);"
 `;
 
 exports[`fixtures should use file name 1`] = `
-"import styled from \"styled-components\";
-
-const Test = styled(\"div\").withConfig({
-  displayName: \"use-file-name__Test\",
-  componentId: \"sc-15riiwx-0\"
+"import styled from \\"styled-components\\";
+const Test = styled(\\"div\\").withConfig({
+  displayName: \\"use-file-name__Test\\",
+  componentId: \\"sc-15riiwx-0\\"
 })\`color:red;\`;
-const before = styled(\"div\").withConfig({
-  displayName: \"use-file-name__before\",
-  componentId: \"sc-15riiwx-1\"
+const before = styled(\\"div\\").withConfig({
+  displayName: \\"use-file-name__before\\",
+  componentId: \\"sc-15riiwx-1\\"
 })\`color:blue;\`;
-styled(\"div\").withConfig({
-  displayName: \"use-file-name\",
-  componentId: \"sc-15riiwx-2\"
+styled(\\"div\\").withConfig({
+  displayName: \\"use-file-name\\",
+  componentId: \\"sc-15riiwx-2\\"
 })\`\`;
-export default styled(\"button\").withConfig({
-  displayName: \"use-file-name\",
-  componentId: \"sc-15riiwx-3\"
+export default styled(\\"button\\").withConfig({
+  displayName: \\"use-file-name\\",
+  componentId: \\"sc-15riiwx-3\\"
 })\`\`;"
 `;
 
 exports[`fixtures should work with hoisted default as import 1`] = `
-"const Test = s(\'div\').withConfig({
-  displayName: \'work-with-hoisted-default-as-import__Test\',
-  componentId: \'sc-1te5tgi-0\'
+"const Test = s(\\"div\\").withConfig({
+  displayName: \\"work-with-hoisted-default-as-import__Test\\",
+  componentId: \\"sc-1te5tgi-0\\"
 })\`width:100%;\`;
-import { default as s, css } from \'styled-components\';"
+import { default as s, css } from 'styled-components';"
 `;

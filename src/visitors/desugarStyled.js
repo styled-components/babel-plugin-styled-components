@@ -10,17 +10,18 @@ export default t => (path, state) => {
      * e.g. "div"
      */
     const sugar = get(path, 'node.property.name')
+    const isAssignment = t.isAssignmentExpression(path.parent)
 
-    /**
-     * If the left side of the function is a complex path, e.g.
-     * "styled_default.default.div", we want to preserve the "styled_default.default"
-     * part and just reuse that AST object.
-     */
-    const leftSide = t.isMemberExpression(path.node.object)
-      ? path.node.object
-      : t.identifier(path.node.object.name)
+    if (sugar && !isAssignment) {
+      /**
+       * If the left side of the function is a complex path, e.g.
+       * "styled_default.default.div", we want to preserve the "styled_default.default"
+       * part and just reuse that AST object.
+       */
+      const leftSide = t.isMemberExpression(path.node.object)
+        ? path.node.object
+        : t.identifier(path.node.object.name)
 
-    if (sugar) {
       /**
        * "styled.div" -> "styled('div')"
        */
