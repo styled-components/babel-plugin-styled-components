@@ -8,7 +8,16 @@ const VALID_TOP_LEVEL_IMPORT_PATHS = [
 export const isValidTopLevelImport = x =>
   VALID_TOP_LEVEL_IMPORT_PATHS.includes(x)
 
+
+const localNameCache = {};
+
 const importLocalName = (name, state) => {
+  const cacheKey = name + state.file.opts.filename;
+
+  if (localNameCache[cacheKey]) {
+    return localNameCache[cacheKey]
+  }
+
   let localName = name === 'default' ? 'styled' : name
 
   state.file.path.traverse({
@@ -37,7 +46,7 @@ const importLocalName = (name, state) => {
       },
     },
   })
-
+  localNameCache[cacheKey] = localName
   return localName
 }
 
