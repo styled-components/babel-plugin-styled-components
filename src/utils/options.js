@@ -1,4 +1,3 @@
-import semver from 'semver'
 import styledPkg from 'styled-components/package.json'
 
 function getOption({ opts }, name, defaultValue = true) {
@@ -19,4 +18,5 @@ export const useTranspileTemplateLiterals = state =>
  * then use a lighter-weight version of s-c (v4+) since those element names don't need to be kept around
  * ahead of time.
  */
-export const useNoTags = () => semver.satisfies(styledPkg.version, '>= 4')
+export const useNoTags = () =>
+  parseInt(styledPkg.version.split('.')[0], 10) >= 4
