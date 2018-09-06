@@ -1,5 +1,3 @@
-import styledPkg from 'styled-components/package.json'
-
 function getOption({ opts }, name, defaultValue = true) {
   return opts[name] === undefined || opts[name] === null
     ? defaultValue
@@ -19,4 +17,7 @@ export const useTranspileTemplateLiterals = state =>
  * ahead of time.
  */
 export const useNoTags = () =>
-  parseInt(styledPkg.version.split('.')[0], 10) >= 4
+  parseInt(
+    require('styled-components/package.json').version.split('.')[0],
+    10
+  ) >= 4
