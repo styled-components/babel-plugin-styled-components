@@ -3,7 +3,6 @@
     [
       "../../../src",
       {
-        "ssr": true,
         "pure": true
       }
     ]

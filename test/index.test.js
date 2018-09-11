@@ -4,8 +4,7 @@ import { transformFileSync } from '@babel/core'
 
 describe('fixtures', () => {
   const fixturesDir = path.join(__dirname, 'fixtures')
-  fs
-    .readdirSync(fixturesDir)
+  fs.readdirSync(fixturesDir)
     .sort()
     .map(caseName => {
       if (caseName === '.DS_Store') return

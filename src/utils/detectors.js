@@ -8,11 +8,10 @@ const VALID_TOP_LEVEL_IMPORT_PATHS = [
 export const isValidTopLevelImport = x =>
   VALID_TOP_LEVEL_IMPORT_PATHS.includes(x)
 
-
-const localNameCache = {};
+const localNameCache = {}
 
 const importLocalName = (name, state) => {
-  const cacheKey = name + state.file.opts.filename;
+  const cacheKey = name + state.file.opts.filename
 
   if (localNameCache[cacheKey]) {
     return localNameCache[cacheKey]
@@ -100,3 +99,8 @@ export const isKeyframesHelper = t => (tag, state) =>
 
 export const isHelper = t => (tag, state) =>
   isCSSHelper(t)(tag, state) || isKeyframesHelper(t)(tag, state)
+
+export const isPureHelper = t => (tag, state) =>
+  isCSSHelper(t)(tag, state) ||
+  isKeyframesHelper(t)(tag, state) ||
+  isCreateGlobalStyleHelper(t)(tag, state)

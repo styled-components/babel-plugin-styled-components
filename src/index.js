@@ -7,13 +7,11 @@ import assignStyledRequired from './visitors/assignStyledRequired'
 export default function({ types: t }) {
   return {
     visitor: {
-      CallExpression(path, state) {
-        pureAnnotation(t)(path, state)
-      },
       TaggedTemplateExpression(path, state) {
         minify(t)(path, state)
         displayNameAndId(t)(path, state)
         templateLiterals(t)(path, state)
+        pureAnnotation(t)(path, state)
       },
       VariableDeclarator(path, state) {
         assignStyledRequired(t)(path, state)
