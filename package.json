@@ -20,10 +20,10 @@
     "@babel/preset-env": "^7.0.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "jest": "^23.5.0",
+    "jest": "^23.6.0",
     "prettier": "^1.14.2",
     "rimraf": "^2.6.2",
-    "styled-components": "^3.4.5"
+    "styled-components": "^3.4.6"
   },
   "dependencies": {
     "lodash": "^4.17.10"
