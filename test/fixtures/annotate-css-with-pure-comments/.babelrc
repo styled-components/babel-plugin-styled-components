@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "ssr": false,
+        "pure": true
+      }
+    ]
+  ]
+}
