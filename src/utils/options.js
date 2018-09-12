@@ -11,13 +11,4 @@ export const useMinify = state => getOption(state, 'minify')
 export const useTranspileTemplateLiterals = state =>
   getOption(state, 'transpileTemplateLiterals')
 
-/**
- * When using the babel plugin, we desugar styled.div to styled('div'), which means we can
- * then use a lighter-weight version of s-c (v4+) since those element names don't need to be kept around
- * ahead of time.
- */
-export const useNoTags = () =>
-  parseInt(
-    require('styled-components/package.json').version.split('.')[0],
-    10
-  ) >= 4
+export const usePureAnnotation = state => getOption(state, 'pure', false)

@@ -97,6 +97,78 @@ const WithAttrsWrapped = styled(Inner).attrs({
 })\`\`;"
 `;
 
+exports[`fixtures should annotate create global style with pure comments 1`] = `
+"const GlobalStyle =
+/*#__PURE__*/
+createGlobalStyle\`
+  body {
+    color: red;
+  }
+\`;"
+`;
+
+exports[`fixtures should annotate css with pure comments 1`] = `
+"const partial =
+/*#__PURE__*/
+css([\\"color:red;\\"]);
+const Component =
+/*#__PURE__*/
+styled.div.withConfig({
+  displayName: \\"annotate-css-with-pure-comments__Component\\",
+  componentId: \\"sc-17hq72a-0\\"
+})([\\"\\", \\";background:blue;\\"], partial);"
+`;
+
+exports[`fixtures should annotate keyframes with pure comments 1`] = `
+"const Animation =
+/*#__PURE__*/
+keyframes([\\"0%{opacity:0;}100%{opacity:1;}\\"]);"
+`;
+
+exports[`fixtures should annotate styled calls with pure comments 1`] = `
+"const Test =
+/*#__PURE__*/
+styled.div.withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__Test\\",
+  componentId: \\"sc-6tnjs3-0\\"
+})([\\"width:100%;\\"]);
+const Test2 =
+/*#__PURE__*/
+styled('div').withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__Test2\\",
+  componentId: \\"sc-6tnjs3-1\\"
+})([\\"\\"]);
+const Test3 = true ? styled.div.withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__Test3\\",
+  componentId: \\"sc-6tnjs3-2\\"
+})([\\"\\"]) : styled.div.withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__Test3\\",
+  componentId: \\"sc-6tnjs3-3\\"
+})([\\"\\"]);
+const styles = {
+  One: styled.div.withConfig({
+    displayName: \\"annotate-styled-calls-with-pure-comments__One\\",
+    componentId: \\"sc-6tnjs3-4\\"
+  })([\\"\\"])
+};
+let Component;
+Component = styled.div.withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__Component\\",
+  componentId: \\"sc-6tnjs3-5\\"
+})([\\"\\"]);
+const WrappedComponent =
+/*#__PURE__*/
+styled(Inner).withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__WrappedComponent\\",
+  componentId: \\"sc-6tnjs3-6\\"
+})([\\"\\"]);
+const notStyled =
+/*#__PURE__*/
+styled.div('')\`\`; // not transpiled by styled components but should add pure comment
+
+const normalFunc = add(5, 3);"
+`;
+
 exports[`fixtures should does not desugar styled assignment 1`] = `
 "const domElements = ['div'];
 

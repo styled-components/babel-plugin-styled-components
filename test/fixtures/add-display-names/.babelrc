@@ -8,6 +8,6 @@
         "transpileTemplateLiterals": false
       }
     ],
-    "transform-class-properties"
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
   ]
 }

@@ -1,3 +1,4 @@
+import pureAnnotation from './visitors/pure'
 import minify from './visitors/minify'
 import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
@@ -10,6 +11,7 @@ export default function({ types: t }) {
         minify(t)(path, state)
         displayNameAndId(t)(path, state)
         templateLiterals(t)(path, state)
+        pureAnnotation(t)(path, state)
       },
       VariableDeclarator(path, state) {
         assignStyledRequired(t)(path, state)
