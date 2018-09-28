@@ -162,6 +162,14 @@ styled(Inner).withConfig({
   displayName: \\"annotate-styled-calls-with-pure-comments__WrappedComponent\\",
   componentId: \\"sc-6tnjs3-6\\"
 })([\\"\\"]);
+const StyledObjectForm =
+/*#__PURE__*/
+styled.div.withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__StyledObjectForm\\",
+  componentId: \\"sc-6tnjs3-7\\"
+})({
+  color: red
+});
 const notStyled =
 /*#__PURE__*/
 styled.div('')\`\`; // not transpiled by styled components but should add pure comment

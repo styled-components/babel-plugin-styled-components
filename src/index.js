@@ -9,6 +9,7 @@ export default function({ types: t }) {
     visitor: {
       CallExpression(path, state) {
         displayNameAndId(t)(path, state)
+        pureAnnotation(t)(path, state)
       },
       TaggedTemplateExpression(path, state) {
         minify(t)(path, state)
