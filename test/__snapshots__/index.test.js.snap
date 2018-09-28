@@ -389,7 +389,13 @@ var NamedWithInterpolation = _styledComponents.default.div.withConfig({
 
 var Wrapped = (0, _styledComponents.default)(Inner).withConfig({
   displayName: \\"transpile-template-literals-with-config__Wrapped\\"
-})([\\"\\\\n  color: red;\\\\n\\"]);"
+})([\\"\\\\n  color: red;\\\\n\\"]);
+
+var Foo = _styledComponents.default.div.withConfig({
+  displayName: \\"transpile-template-literals-with-config__Foo\\"
+})({
+  color: 'green'
+});"
 `;
 
 exports[`fixtures should transpile template literals without config 1`] = `

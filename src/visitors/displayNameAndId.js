@@ -29,11 +29,23 @@ const addConfig = t => (path, displayName, componentId) => {
     )
   }
 
-  // Replace x`...` with x.withConfig({ })`...`
-  path.node.tag = t.callExpression(
-    t.memberExpression(path.node.tag, t.identifier('withConfig')),
-    [t.objectExpression(withConfigProps)]
-  )
+  if (path.node.tag) {
+    // Replace x`...` with x.withConfig({ })`...`
+    path.node.tag = t.callExpression(
+      t.memberExpression(path.node.tag, t.identifier('withConfig')),
+      [t.objectExpression(withConfigProps)]
+    )
+  } else {
+    path.replaceWith(
+      t.callExpression(
+        t.callExpression(
+          t.memberExpression(path.node.callee, t.identifier('withConfig')),
+          [t.objectExpression(withConfigProps)]
+        ),
+        path.node.arguments
+      )
+    )
+  }
 }
 
 const getBlockName = file => {
@@ -122,7 +134,14 @@ const getComponentId = state => {
 }
 
 export default t => (path, state) => {
-  if (isStyled(t)(path.node.tag, state)) {
+  if (
+    path.node.tag
+      ? isStyled(t)(path.node.tag, state)
+      : isStyled(t)(path.node.callee, state) &&
+        path.node.callee.property &&
+        path.node.callee.property.name !== 'withConfig' &&
+        t.isObjectExpression(path.node.arguments[0])
+  ) {
     const displayName =
       useDisplayName(state) &&
       getDisplayName(t)(path, useFileName(state) && state)

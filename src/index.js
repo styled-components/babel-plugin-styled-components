@@ -7,6 +7,9 @@ import assignStyledRequired from './visitors/assignStyledRequired'
 export default function({ types: t }) {
   return {
     visitor: {
+      CallExpression(path, state) {
+        displayNameAndId(t)(path, state)
+      },
       TaggedTemplateExpression(path, state) {
         minify(t)(path, state)
         displayNameAndId(t)(path, state)
