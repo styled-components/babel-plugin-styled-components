@@ -170,10 +170,14 @@ styled.div.withConfig({
 })({
   color: red
 });
-const notStyled =
+const StyledFunctionForm =
 /*#__PURE__*/
-styled.div('')\`\`; // not transpiled by styled components but should add pure comment
-
+styled.div.withConfig({
+  displayName: \\"annotate-styled-calls-with-pure-comments__StyledFunctionForm\\",
+  componentId: \\"sc-6tnjs3-8\\"
+})(p => ({
+  color: p.color || 'red'
+}));
 const normalFunc = add(5, 3);"
 `;
 

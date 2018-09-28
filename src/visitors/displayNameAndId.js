@@ -139,8 +139,7 @@ export default t => (path, state) => {
       ? isStyled(t)(path.node.tag, state)
       : isStyled(t)(path.node.callee, state) &&
         path.node.callee.property &&
-        path.node.callee.property.name !== 'withConfig' &&
-        t.isObjectExpression(path.node.arguments[0])
+        path.node.callee.property.name !== 'withConfig'
   ) {
     const displayName =
       useDisplayName(state) &&
