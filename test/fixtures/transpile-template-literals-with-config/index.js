@@ -11,3 +11,7 @@ const NamedWithInterpolation = styled.div`
 const Wrapped = styled(Inner)`
   color: red;
 `
+
+const Foo = styled.div({
+  color: 'green',
+})

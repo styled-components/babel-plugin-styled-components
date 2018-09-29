@@ -7,5 +7,6 @@ const styles = { One: styled.div`` }
 let Component
 Component = styled.div``
 const WrappedComponent = styled(Inner)``
-const notStyled = styled.div('')`` // not transpiled by styled components but should add pure comment
+const StyledObjectForm = styled.div({ color: red })
+const StyledFunctionForm = styled.div(p => ({ color: p.color || 'red' }))
 const normalFunc = add(5, 3)
