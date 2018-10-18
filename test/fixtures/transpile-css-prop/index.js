@@ -14,6 +14,8 @@ const StaticTemplate = p => (
   </p>
 )
 
+const ObjectProp = p => <p css={{ color: 'blue' }}>A</p>
+
 const NoChildren = p => <p css="flex: 1;" />
 
 /*

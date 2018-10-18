@@ -381,8 +381,14 @@ var StaticTemplate = function StaticTemplate(p) {
   </_CSSP2>;
 };
 
+var ObjectProp = function ObjectProp(p) {
+  return <_CSSP3 _$p_={{
+    color: 'blue'
+  }}>A</_CSSP3>;
+};
+
 var NoChildren = function NoChildren(p) {
-  return <_CSSP3 />;
+  return <_CSSP4 />;
 };
 /*
  * Dynamic prop
@@ -394,27 +400,27 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_CSSP4 _$p_={props.cssText}>H</_CSSP4>;
+  return <_CSSP5 _$p_2={props.cssText}>H</_CSSP5>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_CSSP5 _$p_2={props.bg}>
+  return <_CSSP6 _$p_3={props.bg}>
     H
-  </_CSSP5>;
+  </_CSSP6>;
 };
 
 var FuncInterpolation = function FuncInterpolation(p) {
-  return <_CSSP6>
+  return <_CSSP7>
     H
-  </_CSSP6>;
+  </_CSSP7>;
 };
 
 var radius = 10;
 
 var GlobalInterpolation = function GlobalInterpolation(p) {
-  return <_CSSP7>
+  return <_CSSP8>
     H
-  </_CSSP7>;
+  </_CSSP8>;
 };
 
 var styled = require(\\"styled-components\\");
@@ -425,25 +431,27 @@ var _CSSP2 = styled(\\"p\\")\`
       flex: 1;
     \`;
 
-var _CSSP3 = styled(\\"p\\")\`flex: 1;\`;
+var _CSSP3 = styled(\\"p\\")\`\${p => p._$p_}\`;
+
+var _CSSP4 = styled(\\"p\\")\`flex: 1;\`;
 
 var _CSSParagraph = styled(Paragraph)\`flex: 1\`;
 
-var _CSSP4 = styled(\\"p\\")\`\${p => p._$p_}\`;
+var _CSSP5 = styled(\\"p\\")\`\${p => p._$p_2}\`;
 
-var _CSSP5 = styled(\\"p\\")\`
+var _CSSP6 = styled(\\"p\\")\`
       background: \${function (p) {
-  return p._$p_2;
+  return p._$p_3;
 }};
     \`;
 
-var _CSSP6 = styled(\\"p\\")\`
+var _CSSP7 = styled(\\"p\\")\`
       color: \${function (p) {
   return p.theme.a;
 }};
     \`;
 
-var _CSSP7 = styled(\\"p\\")\`
+var _CSSP8 = styled(\\"p\\")\`
       border-radius: \${radius}px;
     \`;"
 `;
