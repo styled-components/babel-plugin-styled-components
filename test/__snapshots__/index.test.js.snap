@@ -371,9 +371,81 @@ exports[`fixtures should transpile css prop 1`] = `
 /*
  * Basic fixtures
  */
+var StaticString = function StaticString(p) {
+  return <_CSSP>A</_CSSP>;
+};
+
+var StaticTemplate = function StaticTemplate(p) {
+  return <_CSSP2>
+    A
+  </_CSSP2>;
+};
+
+var NoChildren = function NoChildren(p) {
+  return <_CSSP3 />;
+};
 /*
  * Dynamic prop
  */
+
+
+var CustomComp = function CustomComp(p) {
+  return <_CSSParagraph>H</_CSSParagraph>;
+};
+
+var DynamicProp = function DynamicProp(p) {
+  return <_CSSP4 _$p_={props.cssText}>H</_CSSP4>;
+};
+
+var LocalInterpolation = function LocalInterpolation(p) {
+  return <_CSSP5 _$p_2={props.bg}>
+    H
+  </_CSSP5>;
+};
+
+var FuncInterpolation = function FuncInterpolation(p) {
+  return <_CSSP6>
+    H
+  </_CSSP6>;
+};
+
+var radius = 10;
+
+var GlobalInterpolation = function GlobalInterpolation(p) {
+  return <_CSSP7>
+    H
+  </_CSSP7>;
+};
+
+var styled = require(\\"styled-components\\");
+
+var _CSSP = styled(\\"p\\")\`flex: 1;\`;
+
+var _CSSP2 = styled(\\"p\\")\`
+      flex: 1;
+    \`;
+
+var _CSSP3 = styled(\\"p\\")\`flex: 1;\`;
+
+var _CSSParagraph = styled(Paragraph)\`flex: 1\`;
+
+var _CSSP4 = styled(\\"p\\")\`\${p => p._$p_}\`;
+
+var _CSSP5 = styled(\\"p\\")\`
+      background: \${function (p) {
+  return p._$p_2;
+}};
+    \`;
+
+var _CSSP6 = styled(\\"p\\")\`
+      color: \${function (p) {
+  return p.theme.a;
+}};
+    \`;
+
+var _CSSP7 = styled(\\"p\\")\`
+      border-radius: \${radius}px;
+    \`;"
 `;
 
 exports[`fixtures should transpile require default 1`] = `
