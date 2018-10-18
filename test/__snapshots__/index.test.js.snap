@@ -365,6 +365,17 @@ const WrappedComponent = s(Inner).withConfig({
 })\`\`;"
 `;
 
+exports[`fixtures should transpile css prop 1`] = `
+"\\"use strict\\";
+
+/*
+ * Basic fixtures
+ */
+/*
+ * Dynamic prop
+ */
+`;
+
 exports[`fixtures should transpile require default 1`] = `
 "const styled_default = require(\\"styled-components\\");
 
