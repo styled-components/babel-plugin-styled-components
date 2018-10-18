@@ -49,7 +49,7 @@ const LocalInterpolation = p => (
 const FuncInterpolation = p => (
   <p
     css={`
-      color: ${p => p.theme.a};
+      color: ${props => props.theme.a};
     `}
   >
     H
@@ -64,5 +64,25 @@ const GlobalInterpolation = p => (
     `}
   >
     H
+  </p>
+)
+
+const LocalCssHelperProp = p => (
+  <p
+    css={css`
+      color: ${p.color};
+    `}
+  >
+    A
+  </p>
+)
+
+const DynamicCssHelperProp = p => (
+  <p
+    css={css`
+      color: ${props => props.theme.color};
+    `}
+  >
+    A
   </p>
 )

@@ -368,6 +368,26 @@ const WrappedComponent = s(Inner).withConfig({
 exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
   var data = _taggedTemplateLiteral([\\"\\\\n      color: blue;\\\\n    \\"]);
 
@@ -404,9 +424,7 @@ var NoChildren = function NoChildren(p) {
 };
 
 var CssHelperProp = function CssHelperProp(p) {
-  return <_CSSP5 _$p_2={css\`
-      color: blue;
-    \`}>
+  return <_CSSP5>
     A
   </_CSSP5>;
 };
@@ -420,11 +438,11 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_CSSP6 _$p_3={props.cssText}>H</_CSSP6>;
+  return <_CSSP6 _$p_2={props.cssText}>H</_CSSP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_CSSP7 _$p_4={props.bg}>
+  return <_CSSP7 _$p_3={props.bg}>
     H
   </_CSSP7>;
 };
@@ -443,6 +461,18 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
   </_CSSP9>;
 };
 
+var LocalCssHelperProp = function LocalCssHelperProp(p) {
+  return <_CSSP10 _$p_4={p.color}>
+    A
+  </_CSSP10>;
+};
+
+var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
+  return <_CSSP11>
+    A
+  </_CSSP11>;
+};
+
 var styled = require(\\"styled-components\\");
 
 var _CSSP = styled(\\"p\\")\`flex: 1;\`;
@@ -455,26 +485,40 @@ var _CSSP3 = styled(\\"p\\")\`\${p => p._$p_}\`;
 
 var _CSSP4 = styled(\\"p\\")\`flex: 1;\`;
 
-var _CSSP5 = styled(\\"p\\")\`\${p => p._$p_2}\`;
+var _CSSP5 = styled(\\"p\\")\`
+      color: blue;
+    \`;
 
 var _CSSParagraph = styled(Paragraph)\`flex: 1\`;
 
-var _CSSP6 = styled(\\"p\\")\`\${p => p._$p_3}\`;
+var _CSSP6 = styled(\\"p\\")\`\${p => p._$p_2}\`;
 
 var _CSSP7 = styled(\\"p\\")\`
       background: \${function (p) {
-  return p._$p_4;
+  return p._$p_3;
 }};
     \`;
 
 var _CSSP8 = styled(\\"p\\")\`
-      color: \${function (p) {
-  return p.theme.a;
+      color: \${function (props) {
+  return props.theme.a;
 }};
     \`;
 
 var _CSSP9 = styled(\\"p\\")\`
       border-radius: \${radius}px;
+    \`;
+
+var _CSSP10 = styled(\\"p\\")\`
+      color: \${function (p) {
+  return p._$p_4;
+}};
+    \`;
+
+var _CSSP11 = styled(\\"p\\")\`
+      color: \${function (props) {
+  return props.theme.color;
+}};
     \`;"
 `;
 

@@ -43,6 +43,11 @@ export default t => (path, state) => {
   } else if (t.isJSXExpressionContainer(path.node.value)) {
     if (t.isTemplateLiteral(path.node.value.expression)) {
       css = path.node.value.expression
+    } else if (
+      t.isTaggedTemplateExpression(path.node.value.expression) &&
+      path.node.value.expression.tag.name === 'css'
+    ) {
+      css = path.node.value.expression.quasi
     } else {
       css = t.templateLiteral(
         [
