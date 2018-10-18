@@ -1,3 +1,5 @@
+// Most of this code was taken from @satya164's babel-plugin-css-prop
+// @see https://github.com/satya164/babel-plugin-css-prop
 import { useCssProp } from '../utils/options'
 
 export default t => (path, state) => {
