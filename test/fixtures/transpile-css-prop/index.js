@@ -18,6 +18,16 @@ const ObjectProp = p => <p css={{ color: 'blue' }}>A</p>
 
 const NoChildren = p => <p css="flex: 1;" />
 
+const CssHelperProp = p => (
+  <p
+    css={css`
+      color: blue;
+    `}
+  >
+    A
+  </p>
+)
+
 /*
  * Dynamic prop
  */

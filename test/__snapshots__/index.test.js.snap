@@ -368,6 +368,18 @@ const WrappedComponent = s(Inner).withConfig({
 exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: blue;\\\\n    \\"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 /*
  * Basic fixtures
  */
@@ -390,6 +402,14 @@ var ObjectProp = function ObjectProp(p) {
 var NoChildren = function NoChildren(p) {
   return <_CSSP4 />;
 };
+
+var CssHelperProp = function CssHelperProp(p) {
+  return <_CSSP5 _$p_2={css\`
+      color: blue;
+    \`}>
+    A
+  </_CSSP5>;
+};
 /*
  * Dynamic prop
  */
@@ -400,27 +420,27 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_CSSP5 _$p_2={props.cssText}>H</_CSSP5>;
+  return <_CSSP6 _$p_3={props.cssText}>H</_CSSP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_CSSP6 _$p_3={props.bg}>
+  return <_CSSP7 _$p_4={props.bg}>
     H
-  </_CSSP6>;
+  </_CSSP7>;
 };
 
 var FuncInterpolation = function FuncInterpolation(p) {
-  return <_CSSP7>
+  return <_CSSP8>
     H
-  </_CSSP7>;
+  </_CSSP8>;
 };
 
 var radius = 10;
 
 var GlobalInterpolation = function GlobalInterpolation(p) {
-  return <_CSSP8>
+  return <_CSSP9>
     H
-  </_CSSP8>;
+  </_CSSP9>;
 };
 
 var styled = require(\\"styled-components\\");
@@ -435,23 +455,25 @@ var _CSSP3 = styled(\\"p\\")\`\${p => p._$p_}\`;
 
 var _CSSP4 = styled(\\"p\\")\`flex: 1;\`;
 
-var _CSSParagraph = styled(Paragraph)\`flex: 1\`;
-
 var _CSSP5 = styled(\\"p\\")\`\${p => p._$p_2}\`;
 
-var _CSSP6 = styled(\\"p\\")\`
+var _CSSParagraph = styled(Paragraph)\`flex: 1\`;
+
+var _CSSP6 = styled(\\"p\\")\`\${p => p._$p_3}\`;
+
+var _CSSP7 = styled(\\"p\\")\`
       background: \${function (p) {
-  return p._$p_3;
+  return p._$p_4;
 }};
     \`;
 
-var _CSSP7 = styled(\\"p\\")\`
+var _CSSP8 = styled(\\"p\\")\`
       color: \${function (p) {
   return p.theme.a;
 }};
     \`;
 
-var _CSSP8 = styled(\\"p\\")\`
+var _CSSP9 = styled(\\"p\\")\`
       border-radius: \${radius}px;
     \`;"
 `;
