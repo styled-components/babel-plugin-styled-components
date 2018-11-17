@@ -6,9 +6,9 @@ import prefixLeadingDigit from '../utils/prefixDigit'
 import hash from '../utils/hash'
 import { isStyled } from '../utils/detectors'
 
-const addConfig = t => (path, displayName, componentId) => {
+const getConfig = t => (path, displayName, componentId, sourceMap) => {
   if (!displayName && !componentId) {
-    return
+    return []
   }
 
   const withConfigProps = []
@@ -29,23 +29,7 @@ const addConfig = t => (path, displayName, componentId) => {
     )
   }
 
-  if (path.node.tag) {
-    // Replace x`...` with x.withConfig({ })`...`
-    path.node.tag = t.callExpression(
-      t.memberExpression(path.node.tag, t.identifier('withConfig')),
-      [t.objectExpression(withConfigProps)]
-    )
-  } else {
-    path.replaceWith(
-      t.callExpression(
-        t.callExpression(
-          t.memberExpression(path.node.callee, t.identifier('withConfig')),
-          [t.objectExpression(withConfigProps)]
-        ),
-        path.node.arguments
-      )
-    )
-  }
+  return withConfigProps
 }
 
 const getBlockName = file => {
@@ -132,23 +116,24 @@ const getComponentId = state => {
   // Prefix the identifier with a character because CSS classes cannot start with a number
   return `${prefixLeadingDigit(getFileHash(state))}-${getNextId(state)}`
 }
+export const isUnconfiguredStyled = t => (path, state) =>
+  path.node.tag
+    ? isStyled(t)(path.node.tag, state)
+    : isStyled(t)(path.node.callee, state) &&
+      path.node.callee.property &&
+      path.node.callee.property.name !== 'withConfig'
 
 export default t => (path, state) => {
-  if (
-    path.node.tag
-      ? isStyled(t)(path.node.tag, state)
-      : isStyled(t)(path.node.callee, state) &&
-        path.node.callee.property &&
-        path.node.callee.property.name !== 'withConfig'
-  ) {
+  if (isUnconfiguredStyled(t)(path, state)) {
     const displayName =
       useDisplayName(state) &&
       getDisplayName(t)(path, useFileName(state) && state)
 
-    addConfig(t)(
+    return getConfig(t)(
       path,
       displayName && displayName.replace(/[^_a-zA-Z0-9-]/g, ''),
       useSSR(state) && getComponentId(state)
     )
   }
+  return []
 }

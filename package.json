@@ -27,7 +27,9 @@
   },
   "dependencies": {
     "@babel/helper-annotate-as-pure": "^7.0.0",
-    "lodash": "^4.17.10"
+    "convert-source-map": "^1.6.0",
+    "lodash": "^4.17.10",
+    "source-map": "^0.7.3"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
