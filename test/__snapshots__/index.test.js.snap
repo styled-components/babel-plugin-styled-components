@@ -473,6 +473,14 @@ var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
   </_CSSP11>;
 };
 
+var CustomCompWithDot = function CustomCompWithDot(p) {
+  return <_CSSButtonGhost>H</_CSSButtonGhost>;
+};
+
+var NestedCompWithDot = function NestedCompWithDot(p) {
+  return <_CSSButtonGhostNew>H</_CSSButtonGhostNew>;
+};
+
 var styled = require(\\"styled-components\\");
 
 var _CSSP = styled(\\"p\\")\`flex: 1;\`;
@@ -519,7 +527,11 @@ var _CSSP11 = styled(\\"p\\")\`
       color: \${function (props) {
   return props.theme.color;
 }};
-    \`;"
+    \`;
+
+var _CSSButtonGhost = styled(Button.Ghost)\`flex: 1\`;
+
+var _CSSButtonGhostNew = styled(Button.Ghost.New)\`flex: 1\`;"
 `;
 
 exports[`fixtures should transpile require default 1`] = `

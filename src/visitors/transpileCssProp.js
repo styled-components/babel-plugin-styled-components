@@ -2,6 +2,14 @@
 // @see https://github.com/satya164/babel-plugin-css-prop
 import { useCssProp } from '../utils/options'
 
+const getTag = node => {
+  if (typeof node.name === 'string') return node.name
+  if (node.type === 'JSXMemberExpression') {
+    return `${getTag(node.object)}.${node.property.name}`
+  }
+  return undefined
+}
+
 export default t => (path, state) => {
   if (!useCssProp(state)) return
   if (path.node.name.name !== 'css') return
@@ -25,14 +33,13 @@ export default t => (path, state) => {
   }
 
   const elem = path.parentPath
+  const name = getTag(elem.node.name)
   const id = path.scope.generateUidIdentifier(
-    'CSS' +
-      elem.node.name.name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
+    'CSS' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
 
-  const tag = elem.node.name.name
   const styled = t.callExpression(t.identifier('styled'), [
-    /^[a-z]/.test(tag) ? t.stringLiteral(tag) : t.identifier(tag),
+    /^[a-z]/.test(name) ? t.stringLiteral(name) : t.identifier(name),
   ])
 
   let css
@@ -64,10 +71,10 @@ export default t => (path, state) => {
   if (!css) return
 
   elem.node.attributes = elem.node.attributes.filter(attr => attr !== path.node)
-  elem.node.name.name = id.name
+  elem.node.name = t.jSXIdentifier(id.name)
 
   if (elem.parentPath.node.closingElement) {
-    elem.parentPath.node.closingElement.name.name = id.name
+    elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
   }
 
   css.expressions = css.expressions.reduce((acc, ex) => {
