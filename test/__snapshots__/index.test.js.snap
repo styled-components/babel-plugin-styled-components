@@ -408,29 +408,29 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
  * Basic fixtures
  */
 var StaticString = function StaticString(p) {
-  return <_CSSP>A</_CSSP>;
+  return <_StyledP>A</_StyledP>;
 };
 
 var StaticTemplate = function StaticTemplate(p) {
-  return <_CSSP2>
+  return <_StyledP2>
     A
-  </_CSSP2>;
+  </_StyledP2>;
 };
 
 var ObjectProp = function ObjectProp(p) {
-  return <_CSSP3 _$p_={{
+  return <_StyledP3 _$p_={{
     color: 'blue'
-  }}>A</_CSSP3>;
+  }}>A</_StyledP3>;
 };
 
 var NoChildren = function NoChildren(p) {
-  return <_CSSP4 />;
+  return <_StyledP4 />;
 };
 
 var CssHelperProp = function CssHelperProp(p) {
-  return <_CSSP5>
+  return <_StyledP5>
     A
-  </_CSSP5>;
+  </_StyledP5>;
 };
 /*
  * Dynamic prop
@@ -438,102 +438,102 @@ var CssHelperProp = function CssHelperProp(p) {
 
 
 var CustomComp = function CustomComp(p) {
-  return <_CSSParagraph>H</_CSSParagraph>;
+  return <_StyledParagraph>H</_StyledParagraph>;
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_CSSP6 _$p_2={props.cssText}>H</_CSSP6>;
+  return <_StyledP6 _$p_2={props.cssText}>H</_StyledP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_CSSP7 _$p_3={props.bg}>
+  return <_StyledP7 _$p_3={props.bg}>
     H
-  </_CSSP7>;
+  </_StyledP7>;
 };
 
 var FuncInterpolation = function FuncInterpolation(p) {
-  return <_CSSP8>
+  return <_StyledP8>
     H
-  </_CSSP8>;
+  </_StyledP8>;
 };
 
 var radius = 10;
 
 var GlobalInterpolation = function GlobalInterpolation(p) {
-  return <_CSSP9>
+  return <_StyledP9>
     H
-  </_CSSP9>;
+  </_StyledP9>;
 };
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_CSSP10 _$p_4={p.color}>
+  return <_StyledP10 _$p_4={p.color}>
     A
-  </_CSSP10>;
+  </_StyledP10>;
 };
 
 var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
-  return <_CSSP11>
+  return <_StyledP11>
     A
-  </_CSSP11>;
+  </_StyledP11>;
 };
 
 var CustomCompWithDot = function CustomCompWithDot(p) {
-  return <_CSSButtonGhost>H</_CSSButtonGhost>;
+  return <_StyledButtonGhost>H</_StyledButtonGhost>;
 };
 
 var NestedCompWithDot = function NestedCompWithDot(p) {
-  return <_CSSButtonGhostNew>H</_CSSButtonGhostNew>;
+  return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
-var _CSSP = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
+var _StyledP = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
 
-var _CSSP2 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP2 = (0, _styledComponents.default)(\\"p\\")\`
       flex: 1;
     \`;
 
-var _CSSP3 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_}\`;
+var _StyledP3 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_}\`;
 
-var _CSSP4 = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
+var _StyledP4 = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
 
-var _CSSP5 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP5 = (0, _styledComponents.default)(\\"p\\")\`
       color: blue;
     \`;
 
-var _CSSParagraph = (0, _styledComponents.default)(Paragraph)\`flex: 1\`;
+var _StyledParagraph = (0, _styledComponents.default)(Paragraph)\`flex: 1\`;
 
-var _CSSP6 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_2}\`;
+var _StyledP6 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_2}\`;
 
-var _CSSP7 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP7 = (0, _styledComponents.default)(\\"p\\")\`
       background: \${function (p) {
   return p._$p_3;
 }};
     \`;
 
-var _CSSP8 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP8 = (0, _styledComponents.default)(\\"p\\")\`
       color: \${function (props) {
   return props.theme.a;
 }};
     \`;
 
-var _CSSP9 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP9 = (0, _styledComponents.default)(\\"p\\")\`
       border-radius: \${radius}px;
     \`;
 
-var _CSSP10 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP10 = (0, _styledComponents.default)(\\"p\\")\`
       color: \${function (p) {
   return p._$p_4;
 }};
     \`;
 
-var _CSSP11 = (0, _styledComponents.default)(\\"p\\")\`
+var _StyledP11 = (0, _styledComponents.default)(\\"p\\")\`
       color: \${function (props) {
   return props.theme.color;
 }};
     \`;
 
-var _CSSButtonGhost = (0, _styledComponents.default)(Button.Ghost)\`flex: 1\`;
+var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)\`flex: 1\`;
 
-var _CSSButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)\`flex: 1\`;"
+var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)\`flex: 1\`;"
 `;
 
 exports[`fixtures should transpile css prop add import 1`] = `
@@ -556,7 +556,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 // @flow
 var _default = function _default() {
-  return <_CSSDiv>
+  return <_StyledDiv>
     <_Card.default>
       <h1>Login or Sign Up</h1>
       <p>
@@ -565,12 +565,12 @@ var _default = function _default() {
         </a>
       </p>
     </_Card.default>
-  </_CSSDiv>;
+  </_StyledDiv>;
 };
 
 exports.default = _default;
 
-var _CSSDiv = (0, _styledComponents.default)(\\"div\\")\`
+var _StyledDiv = (0, _styledComponents.default)(\\"div\\")\`
       width: 35em;
     \`;"
 `;

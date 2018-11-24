@@ -31,7 +31,7 @@ export default t => (path, state) => {
   const elem = path.parentPath
   const name = getTag(elem.node.name)
   const id = path.scope.generateUidIdentifier(
-    'CSS' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
+    'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
 
   const styled = t.callExpression(t.identifier('styled'), [
