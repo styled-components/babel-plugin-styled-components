@@ -19,14 +19,10 @@ export default t => (path, state) => {
   if (!state.required) {
     if (!bindings.styled) {
       state.items.push(
-        t.variableDeclaration('var', [
-          t.variableDeclarator(
-            t.identifier('styled'),
-            t.callExpression(t.identifier('require'), [
-              t.stringLiteral('styled-components'),
-            ])
-          ),
-        ])
+        t.importDeclaration(
+          [t.importDefaultSpecifier(t.identifier('styled'))],
+          t.stringLiteral('styled-components')
+        )
       )
     }
     state.required = true

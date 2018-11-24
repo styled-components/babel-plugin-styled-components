@@ -368,6 +368,10 @@ const WrappedComponent = s(Inner).withConfig({
 exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _templateObject3() {
   var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
 
@@ -481,57 +485,94 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_CSSButtonGhostNew>H</_CSSButtonGhostNew>;
 };
 
-var styled = require(\\"styled-components\\");
+var _CSSP = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
 
-var _CSSP = styled(\\"p\\")\`flex: 1;\`;
-
-var _CSSP2 = styled(\\"p\\")\`
+var _CSSP2 = (0, _styledComponents.default)(\\"p\\")\`
       flex: 1;
     \`;
 
-var _CSSP3 = styled(\\"p\\")\`\${p => p._$p_}\`;
+var _CSSP3 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_}\`;
 
-var _CSSP4 = styled(\\"p\\")\`flex: 1;\`;
+var _CSSP4 = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
 
-var _CSSP5 = styled(\\"p\\")\`
+var _CSSP5 = (0, _styledComponents.default)(\\"p\\")\`
       color: blue;
     \`;
 
-var _CSSParagraph = styled(Paragraph)\`flex: 1\`;
+var _CSSParagraph = (0, _styledComponents.default)(Paragraph)\`flex: 1\`;
 
-var _CSSP6 = styled(\\"p\\")\`\${p => p._$p_2}\`;
+var _CSSP6 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_2}\`;
 
-var _CSSP7 = styled(\\"p\\")\`
+var _CSSP7 = (0, _styledComponents.default)(\\"p\\")\`
       background: \${function (p) {
   return p._$p_3;
 }};
     \`;
 
-var _CSSP8 = styled(\\"p\\")\`
+var _CSSP8 = (0, _styledComponents.default)(\\"p\\")\`
       color: \${function (props) {
   return props.theme.a;
 }};
     \`;
 
-var _CSSP9 = styled(\\"p\\")\`
+var _CSSP9 = (0, _styledComponents.default)(\\"p\\")\`
       border-radius: \${radius}px;
     \`;
 
-var _CSSP10 = styled(\\"p\\")\`
+var _CSSP10 = (0, _styledComponents.default)(\\"p\\")\`
       color: \${function (p) {
   return p._$p_4;
 }};
     \`;
 
-var _CSSP11 = styled(\\"p\\")\`
+var _CSSP11 = (0, _styledComponents.default)(\\"p\\")\`
       color: \${function (props) {
   return props.theme.color;
 }};
     \`;
 
-var _CSSButtonGhost = styled(Button.Ghost)\`flex: 1\`;
+var _CSSButtonGhost = (0, _styledComponents.default)(Button.Ghost)\`flex: 1\`;
 
-var _CSSButtonGhostNew = styled(Button.Ghost.New)\`flex: 1\`;"
+var _CSSButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)\`flex: 1\`;"
+`;
+
+exports[`fixtures should transpile css prop add import 1`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+var _Card = _interopRequireDefault(require(\\"../../shared/components/Card\\"));
+
+var _config = _interopRequireDefault(require(\\"../../../config\\"));
+
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @flow
+var _default = function _default() {
+  return <_CSSDiv>
+    <_Card.default>
+      <h1>Login or Sign Up</h1>
+      <p>
+        <a href={_config.default.API_URI + '/auth/google'}>
+          Sign up or login with Google
+        </a>
+      </p>
+    </_Card.default>
+  </_CSSDiv>;
+};
+
+exports.default = _default;
+
+var _CSSDiv = (0, _styledComponents.default)(\\"div\\")\`
+      width: 35em;
+    \`;"
 `;
 
 exports[`fixtures should transpile require default 1`] = `
