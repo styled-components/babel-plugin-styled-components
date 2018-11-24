@@ -7,7 +7,7 @@ const getTag = node => {
   if (node.type === 'JSXMemberExpression') {
     return `${getTag(node.object)}.${node.property.name}`
   }
-  return undefined
+  throw path.buildCodeFrameError('Failed to get the name');
 }
 
 export default t => (path, state) => {
