@@ -2,12 +2,12 @@
 // @see https://github.com/satya164/babel-plugin-css-prop
 import { useCssProp } from '../utils/options'
 
-const getTag = node => {
+const getTag = (node, t) => {
   if (typeof node.name === 'string') return node.name
   if (t.isJSXMemberExpression(node)) {
-    return `${getTag(node.object)}.${node.property.name}`
+    return `${getTag(node.object, t)}.${node.property.name}`
   }
-  throw path.buildCodeFrameError('Failed to get the name');
+  throw path.buildCodeFrameError('Failed to get the name')
 }
 
 export default t => (path, state) => {
@@ -29,7 +29,7 @@ export default t => (path, state) => {
   }
 
   const elem = path.parentPath
-  const name = getTag(elem.node.name)
+  const name = getTag(elem.node.name, t)
   const id = path.scope.generateUidIdentifier(
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
