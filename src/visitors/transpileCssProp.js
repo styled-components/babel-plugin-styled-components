@@ -4,7 +4,7 @@ import { useCssProp } from '../utils/options'
 
 const getTag = node => {
   if (typeof node.name === 'string') return node.name
-  if (node.type === 'JSXMemberExpression') {
+  if (t.isJSXMemberExpression(node)) {
     return `${getTag(node.object)}.${node.property.name}`
   }
   throw path.buildCodeFrameError('Failed to get the name');
