@@ -87,9 +87,20 @@ export const isStyled = t => (tag, state) => {
 export const isCSSHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('css', state)
 
-export const isCreateGlobalStyleHelper = t => (tag, state) =>
-  t.isIdentifier(tag) &&
-  tag.name === importLocalName('createGlobalStyle', state)
+export const isCreateGlobalStyleHelper = t => (tag, state) => {
+  const tagName = (() => {
+    // handle createGlobalStyle``
+    if (t.isIdentifier(tag)) {
+      return tag.name
+    }
+    // handle createGlobalStyle.withConfig({})``
+    if (t.isCallExpression(tag) && t.isMemberExpression(tag.callee)) {
+      return tag.callee.object.name
+    }
+  })()
+
+  return tagName && tagName === importLocalName('createGlobalStyle', state)
+}
 
 export const isInjectGlobalHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('injectGlobal', state)
