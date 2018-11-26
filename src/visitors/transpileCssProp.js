@@ -2,12 +2,16 @@
 // @see https://github.com/satya164/babel-plugin-css-prop
 import { useCssProp } from '../utils/options'
 
-const getTag = (node, t) => {
+const getName = (node, t) => {
   if (typeof node.name === 'string') return node.name
   if (t.isJSXMemberExpression(node)) {
-    return `${getTag(node.object, t)}.${node.property.name}`
+    return `${getName(node.object, t)}.${node.property.name}`
   }
-  throw path.buildCodeFrameError('Failed to get the name')
+  throw path.buildCodeFrameError(
+    `Cannot infer name from node with type "${
+      node.type
+    }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
+  )
 }
 
 export default t => (path, state) => {
@@ -29,7 +33,7 @@ export default t => (path, state) => {
   }
 
   const elem = path.parentPath
-  const name = getTag(elem.node.name, t)
+  const name = getName(elem.node.name, t)
   const id = path.scope.generateUidIdentifier(
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
