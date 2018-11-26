@@ -19,14 +19,15 @@ export default t => (path, state) => {
   if (path.node.name.name !== 'css') return
 
   const program = path.findParent(p => t.isProgram(p))
-
+  const importName =
+    state.customImportName || program.scope.generateUidIdentifier('styled')
   // Insert require('styled-components') if it doesn't exist yet
   const { bindings } = path.findParent(p => p.type === 'Program').scope
   if (!state.required) {
-    if (!bindings.styled) {
+    if (!bindings[importName]) {
       program.node.body.push(
         t.importDeclaration(
-          [t.importDefaultSpecifier(t.identifier('styled'))],
+          [t.importDefaultSpecifier(importName)],
           t.stringLiteral('styled-components')
         )
       )
@@ -40,7 +41,7 @@ export default t => (path, state) => {
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
 
-  const styled = t.callExpression(t.identifier('styled'), [
+  const styled = t.callExpression(importName, [
     /^[a-z]/.test(name) ? t.stringLiteral(name) : t.identifier(name),
   ])
 
