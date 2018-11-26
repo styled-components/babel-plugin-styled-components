@@ -14,10 +14,6 @@ export default function({ types: t }) {
       Program: {
         enter(path, state) {
           state.required = false
-          state.items = []
-        },
-        exit(path, state) {
-          path.node.body.push(...state.items)
         },
       },
       JSXAttribute(path, state) {
