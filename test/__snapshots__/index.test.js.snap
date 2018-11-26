@@ -368,7 +368,7 @@ const WrappedComponent = s(Inner).withConfig({
 exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
-var _styled = _interopRequireDefault(require(\\"styled-components\\"));
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
