@@ -18,11 +18,13 @@ export default t => (path, state) => {
   if (!useCssProp(state)) return
   if (path.node.name.name !== 'css') return
 
+  const program = path.findParent(p => t.isProgram(p))
+
   // Insert require('styled-components') if it doesn't exist yet
   const { bindings } = path.findParent(p => p.type === 'Program').scope
   if (!state.required) {
     if (!bindings.styled) {
-      state.items.push(
+      program.node.body.push(
         t.importDeclaration(
           [t.importDefaultSpecifier(t.identifier('styled'))],
           t.stringLiteral('styled-components')
@@ -100,7 +102,7 @@ export default t => (path, state) => {
     return acc
   }, [])
 
-  state.items.push(
+  program.node.body.push(
     t.variableDeclaration('var', [
       t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
     ])
