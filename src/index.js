@@ -10,12 +10,6 @@ export default function({ types: t }) {
   return {
     inherits: syntax,
     visitor: {
-      // These visitors insert newly generated code and missing import/require statements
-      Program: {
-        enter(path, state) {
-          state.required = false
-        },
-      },
       JSXAttribute(path, state) {
         transpileCssProp(t)(path, state)
       },
