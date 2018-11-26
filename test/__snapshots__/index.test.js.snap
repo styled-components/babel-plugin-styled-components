@@ -365,6 +365,216 @@ const WrappedComponent = s(Inner).withConfig({
 })\`\`;"
 `;
 
+exports[`fixtures should transpile css prop 1`] = `
+"\\"use strict\\";
+
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: blue;\\\\n    \\"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+/*
+ * Basic fixtures
+ */
+var StaticString = function StaticString(p) {
+  return <_StyledP>A</_StyledP>;
+};
+
+var StaticTemplate = function StaticTemplate(p) {
+  return <_StyledP2>
+    A
+  </_StyledP2>;
+};
+
+var ObjectProp = function ObjectProp(p) {
+  return <_StyledP3 _$p_={{
+    color: 'blue'
+  }}>A</_StyledP3>;
+};
+
+var NoChildren = function NoChildren(p) {
+  return <_StyledP4 />;
+};
+
+var CssHelperProp = function CssHelperProp(p) {
+  return <_StyledP5>
+    A
+  </_StyledP5>;
+};
+/*
+ * Dynamic prop
+ */
+
+
+var CustomComp = function CustomComp(p) {
+  return <_StyledParagraph>H</_StyledParagraph>;
+};
+
+var DynamicProp = function DynamicProp(p) {
+  return <_StyledP6 _$p_2={props.cssText}>H</_StyledP6>;
+};
+
+var LocalInterpolation = function LocalInterpolation(p) {
+  return <_StyledP7 _$p_3={props.bg}>
+    H
+  </_StyledP7>;
+};
+
+var FuncInterpolation = function FuncInterpolation(p) {
+  return <_StyledP8>
+    H
+  </_StyledP8>;
+};
+
+var radius = 10;
+
+var GlobalInterpolation = function GlobalInterpolation(p) {
+  return <_StyledP9>
+    H
+  </_StyledP9>;
+};
+
+var LocalCssHelperProp = function LocalCssHelperProp(p) {
+  return <_StyledP10 _$p_4={p.color}>
+    A
+  </_StyledP10>;
+};
+
+var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
+  return <_StyledP11>
+    A
+  </_StyledP11>;
+};
+
+var CustomCompWithDot = function CustomCompWithDot(p) {
+  return <_StyledButtonGhost>H</_StyledButtonGhost>;
+};
+
+var NestedCompWithDot = function NestedCompWithDot(p) {
+  return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
+};
+
+var _StyledP = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
+
+var _StyledP2 = (0, _styledComponents.default)(\\"p\\")\`
+      flex: 1;
+    \`;
+
+var _StyledP3 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_}\`;
+
+var _StyledP4 = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
+
+var _StyledP5 = (0, _styledComponents.default)(\\"p\\")\`
+      color: blue;
+    \`;
+
+var _StyledParagraph = (0, _styledComponents.default)(Paragraph)\`flex: 1\`;
+
+var _StyledP6 = (0, _styledComponents.default)(\\"p\\")\`\${p => p._$p_2}\`;
+
+var _StyledP7 = (0, _styledComponents.default)(\\"p\\")\`
+      background: \${function (p) {
+  return p._$p_3;
+}};
+    \`;
+
+var _StyledP8 = (0, _styledComponents.default)(\\"p\\")\`
+      color: \${function (props) {
+  return props.theme.a;
+}};
+    \`;
+
+var _StyledP9 = (0, _styledComponents.default)(\\"p\\")\`
+      border-radius: \${radius}px;
+    \`;
+
+var _StyledP10 = (0, _styledComponents.default)(\\"p\\")\`
+      color: \${function (p) {
+  return p._$p_4;
+}};
+    \`;
+
+var _StyledP11 = (0, _styledComponents.default)(\\"p\\")\`
+      color: \${function (props) {
+  return props.theme.color;
+}};
+    \`;
+
+var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)\`flex: 1\`;
+
+var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)\`flex: 1\`;"
+`;
+
+exports[`fixtures should transpile css prop add import 1`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+var _Card = _interopRequireDefault(require(\\"../../shared/components/Card\\"));
+
+var _config = _interopRequireDefault(require(\\"../../../config\\"));
+
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @flow
+var _default = function _default() {
+  return <_StyledDiv>
+    <_Card.default>
+      <h1>Login or Sign Up</h1>
+      <p>
+        <a href={_config.default.API_URI + '/auth/google'}>
+          Sign up or login with Google
+        </a>
+      </p>
+    </_Card.default>
+  </_StyledDiv>;
+};
+
+exports.default = _default;
+
+var _StyledDiv = (0, _styledComponents.default)(\\"div\\")\`
+      width: 35em;
+    \`;"
+`;
+
 exports[`fixtures should transpile require default 1`] = `
 "const styled_default = require(\\"styled-components\\");
 
