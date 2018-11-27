@@ -904,6 +904,11 @@ babel-plugin-jest-hoist@^23.2.0:
     "@babel/helper-annotate-as-pure" "^7.0.0"
     lodash "^4.17.10"
 
+babel-plugin-syntax-jsx@^6.18.0:
+  version "6.18.0"
+  resolved "http://registry.npmjs.org/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
+  integrity sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=
+
 babel-plugin-syntax-object-rest-spread@^6.13.0:
   version "6.13.0"
   resolved "http://registry.npmjs.org/babel-plugin-syntax-object-rest-spread/-/babel-plugin-syntax-object-rest-spread-6.13.0.tgz#fd6536f2bce13836ffa3a5458c4903a597bb3bf5"
