@@ -23,7 +23,7 @@ export default t => (path, state) => {
     state.customImportName || program.scope.generateUidIdentifier('styled')
   if (!state.customImportName) state.customImportName = importName
   // Insert require('styled-components') if it doesn't exist yet
-  const { bindings } = path.findParent(p => p.type === 'Program').scope
+   const { bindings } = program.scope
   if (!state.required) {
     if (!bindings[importName]) {
       program.node.body.push(
