@@ -17,7 +17,16 @@ export default function({ types: t }) {
           state.items = []
         },
         exit(path, state) {
+          const oldLength = path.node.body.length
+
           path.node.body.push(...state.items)
+
+          const newLength = path.node.body.length
+
+          for (let i = 0; i < newLength - oldLength; i++) {
+            // Queue all inserted items for revisiting so that tagged templates are transpiled
+            path.requeue(path.get('body')[oldLength + i]);
+          }
         },
       },
       JSXAttribute(path, state) {
