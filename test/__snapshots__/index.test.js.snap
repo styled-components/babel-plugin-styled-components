@@ -368,16 +368,6 @@ const WrappedComponent = s(Inner).withConfig({
 exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
-function _templateObject17() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
-
-  _templateObject17 = function _templateObject17() {
-    return data;
-  };
-
-  return data;
-}
-
 function _templateObject16() {
   var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
 
@@ -389,7 +379,7 @@ function _templateObject16() {
 }
 
 function _templateObject15() {
-  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
 
   _templateObject15 = function _templateObject15() {
     return data;
@@ -409,7 +399,7 @@ function _templateObject14() {
 }
 
 function _templateObject13() {
-  var data = _taggedTemplateLiteral([\\"\\\\n      border-radius: \\", \\"px;\\\\n    \\"]);
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
 
   _templateObject13 = function _templateObject13() {
     return data;
@@ -419,7 +409,7 @@ function _templateObject13() {
 }
 
 function _templateObject12() {
-  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+  var data = _taggedTemplateLiteral([\\"\\\\n      border-radius: \\", \\"px;\\\\n    \\"]);
 
   _templateObject12 = function _templateObject12() {
     return data;
@@ -429,7 +419,7 @@ function _templateObject12() {
 }
 
 function _templateObject11() {
-  var data = _taggedTemplateLiteral([\\"\\\\n      background: \\", \\";\\\\n    \\"]);
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
 
   _templateObject11 = function _templateObject11() {
     return data;
@@ -439,7 +429,7 @@ function _templateObject11() {
 }
 
 function _templateObject10() {
-  var data = _taggedTemplateLiteral([void 0, void 0], [\\"\\", \\"\\"]);
+  var data = _taggedTemplateLiteral([\\"\\\\n      background: \\", \\";\\\\n    \\"]);
 
   _templateObject10 = function _templateObject10() {
     return data;
@@ -449,7 +439,7 @@ function _templateObject10() {
 }
 
 function _templateObject9() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+  var data = _taggedTemplateLiteral([void 0, void 0], [\\"\\", \\"\\"]);
 
   _templateObject9 = function _templateObject9() {
     return data;
@@ -459,7 +449,7 @@ function _templateObject9() {
 }
 
 function _templateObject8() {
-  var data = _taggedTemplateLiteral([\\"\\\\n      color: blue;\\\\n    \\"]);
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
 
   _templateObject8 = function _templateObject8() {
     return data;
@@ -469,7 +459,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1;\\"]);
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: blue;\\\\n    \\"]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -479,7 +469,7 @@ function _templateObject7() {
 }
 
 function _templateObject6() {
-  var data = _taggedTemplateLiteral([void 0, void 0], [\\"\\", \\"\\"]);
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1;\\"]);
 
   _templateObject6 = function _templateObject6() {
     return data;
@@ -558,9 +548,7 @@ var StaticTemplate = function StaticTemplate(p) {
 };
 
 var ObjectProp = function ObjectProp(p) {
-  return <_StyledP3 _$p_={{
-    color: 'blue'
-  }}>A</_StyledP3>;
+  return <_StyledP3>A</_StyledP3>;
 };
 
 var NoChildren = function NoChildren(p) {
@@ -582,11 +570,11 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_StyledP6 _$p_2={props.cssText}>H</_StyledP6>;
+  return <_StyledP6 _$p_={props.cssText}>H</_StyledP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_StyledP7 _$p_3={props.bg}>
+  return <_StyledP7 _$p_2={props.bg}>
     H
   </_StyledP7>;
 };
@@ -606,7 +594,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
 };
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 _$p_4={p.color}>
+  return <_StyledP10 _$p_3={p.color}>
     A
   </_StyledP10>;
 };
@@ -629,41 +617,41 @@ var _StyledP = (0, _styledComponents.default)(\\"p\\")(_templateObject4());
 
 var _StyledP2 = (0, _styledComponents.default)(\\"p\\")(_templateObject5());
 
-var _StyledP3 = (0, _styledComponents.default)(\\"p\\")(_templateObject6(), function (p) {
+var _StyledP3 = (0, _styledComponents.default)(\\"p\\")({
+  color: 'blue'
+});
+
+var _StyledP4 = (0, _styledComponents.default)(\\"p\\")(_templateObject6());
+
+var _StyledP5 = (0, _styledComponents.default)(\\"p\\")(_templateObject7());
+
+var _StyledParagraph = (0, _styledComponents.default)(Paragraph)(_templateObject8());
+
+var _StyledP6 = (0, _styledComponents.default)(\\"p\\")(_templateObject9(), function (p) {
   return p._$p_;
 });
 
-var _StyledP4 = (0, _styledComponents.default)(\\"p\\")(_templateObject7());
-
-var _StyledP5 = (0, _styledComponents.default)(\\"p\\")(_templateObject8());
-
-var _StyledParagraph = (0, _styledComponents.default)(Paragraph)(_templateObject9());
-
-var _StyledP6 = (0, _styledComponents.default)(\\"p\\")(_templateObject10(), function (p) {
+var _StyledP7 = (0, _styledComponents.default)(\\"p\\")(_templateObject10(), function (p) {
   return p._$p_2;
 });
 
-var _StyledP7 = (0, _styledComponents.default)(\\"p\\")(_templateObject11(), function (p) {
-  return p._$p_3;
-});
-
-var _StyledP8 = (0, _styledComponents.default)(\\"p\\")(_templateObject12(), function (props) {
+var _StyledP8 = (0, _styledComponents.default)(\\"p\\")(_templateObject11(), function (props) {
   return props.theme.a;
 });
 
-var _StyledP9 = (0, _styledComponents.default)(\\"p\\")(_templateObject13(), radius);
+var _StyledP9 = (0, _styledComponents.default)(\\"p\\")(_templateObject12(), radius);
 
-var _StyledP10 = (0, _styledComponents.default)(\\"p\\")(_templateObject14(), function (p) {
-  return p._$p_4;
+var _StyledP10 = (0, _styledComponents.default)(\\"p\\")(_templateObject13(), function (p) {
+  return p._$p_3;
 });
 
-var _StyledP11 = (0, _styledComponents.default)(\\"p\\")(_templateObject15(), function (props) {
+var _StyledP11 = (0, _styledComponents.default)(\\"p\\")(_templateObject14(), function (props) {
   return props.theme.color;
 });
 
-var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)(_templateObject16());
+var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)(_templateObject15());
 
-var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)(_templateObject17());"
+var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)(_templateObject16());"
 `;
 
 exports[`fixtures should transpile css prop add import 1`] = `

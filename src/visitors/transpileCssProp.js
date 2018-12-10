@@ -50,7 +50,10 @@ export default t => (path, state) => {
       []
     )
   } else if (t.isJSXExpressionContainer(path.node.value)) {
-    if (t.isTemplateLiteral(path.node.value.expression)) {
+    if (
+      t.isTemplateLiteral(path.node.value.expression) ||
+      t.isObjectExpression(path.node.value.expression)
+    ) {
       css = path.node.value.expression
     } else if (
       t.isTaggedTemplateExpression(path.node.value.expression) &&
@@ -75,6 +78,15 @@ export default t => (path, state) => {
 
   if (elem.parentPath.node.closingElement) {
     elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
+  }
+
+  if (t.isObjectExpression(css)) {
+    state.items.push(
+      t.variableDeclaration('var', [
+        t.variableDeclarator(id, t.callExpression(styled, [css])),
+      ])
+    )
+    return
   }
 
   css.expressions = css.expressions.reduce((acc, ex) => {
