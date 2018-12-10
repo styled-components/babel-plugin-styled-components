@@ -60,8 +60,8 @@ export default t => (path, state) => {
     } else {
       css = t.templateLiteral(
         [
-          t.templateElement({ raw: '' }, false),
-          t.templateElement({ raw: '' }, true),
+          t.templateElement({ raw: '', cooked: '' }, false),
+          t.templateElement({ raw: '', cooked: '' }, true),
         ],
         [path.node.value.expression]
       )
