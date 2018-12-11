@@ -91,7 +91,7 @@ export default t => (path, state) => {
     ) {
       acc.push(ex)
     } else {
-      const name = path.scope.generateUidIdentifier(`_$p_`)
+      const name = path.scope.generateUidIdentifier('css')
       const p = t.identifier('p')
 
       elem.node.attributes.push(
