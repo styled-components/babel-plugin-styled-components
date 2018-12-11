@@ -368,6 +368,146 @@ const WrappedComponent = s(Inner).withConfig({
 exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
+function _templateObject17() {
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+
+  _templateObject17 = function _templateObject17() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject16() {
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+
+  _templateObject16 = function _templateObject16() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject15() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject15 = function _templateObject15() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject14() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject14 = function _templateObject14() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject13() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      border-radius: \\", \\"px;\\\\n    \\"]);
+
+  _templateObject13 = function _templateObject13() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject12() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: \\", \\";\\\\n    \\"]);
+
+  _templateObject12 = function _templateObject12() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject11() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      background: \\", \\";\\\\n    \\"]);
+
+  _templateObject11 = function _templateObject11() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject10() {
+  var data = _taggedTemplateLiteral([\\"\\", \\"\\"]);
+
+  _templateObject10 = function _templateObject10() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject9() {
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+
+  _templateObject9 = function _templateObject9() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject8() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      color: blue;\\\\n    \\"]);
+
+  _templateObject8 = function _templateObject8() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject7() {
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1;\\"]);
+
+  _templateObject7 = function _templateObject7() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject6() {
+  var data = _taggedTemplateLiteral([\\"\\", \\"\\"]);
+
+  _templateObject6 = function _templateObject6() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject5() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      flex: 1;\\\\n    \\"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1;\\"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
 var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -485,59 +625,61 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
-var _StyledP = (0, _styledComponents.default)(\\"p\\")\`flex: 1;\`;
+var _StyledP = (0, _styledComponents.default)(\\"p\\")(_templateObject4());
 
-var _StyledP2 = _styled(\\"p\\")\`
-      flex: 1;
-    \`;
+var _StyledP2 = _styled(\\"p\\")(_templateObject5());
 
-var _StyledP3 = _styled(\\"p\\")\`\${p => p._$p_}\`;
+var _StyledP3 = _styled(\\"p\\")(_templateObject6(), function (p) {
+  return p._$p_;
+});
 
-var _StyledP4 = _styled(\\"p\\")\`flex: 1;\`;
+var _StyledP4 = _styled(\\"p\\")(_templateObject7());
 
-var _StyledP5 = _styled(\\"p\\")\`
-      color: blue;
-    \`;
+var _StyledP5 = _styled(\\"p\\")(_templateObject8());
 
-var _StyledParagraph = _styled(Paragraph)\`flex: 1\`;
+var _StyledParagraph = _styled(Paragraph)(_templateObject9());
 
-var _StyledP6 = _styled(\\"p\\")\`\${p => p._$p_2}\`;
+var _StyledP6 = _styled(\\"p\\")(_templateObject10(), function (p) {
+  return p._$p_2;
+});
 
-var _StyledP7 = _styled(\\"p\\")\`
-      background: \${function (p) {
+var _StyledP7 = _styled(\\"p\\")(_templateObject11(), function (p) {
   return p._$p_3;
-}};
-    \`;
+});
 
-var _StyledP8 = _styled(\\"p\\")\`
-      color: \${function (props) {
+var _StyledP8 = _styled(\\"p\\")(_templateObject12(), function (props) {
   return props.theme.a;
-}};
-    \`;
+});
 
-var _StyledP9 = _styled(\\"p\\")\`
-      border-radius: \${radius}px;
-    \`;
+var _StyledP9 = _styled(\\"p\\")(_templateObject13(), radius);
 
-var _StyledP10 = _styled(\\"p\\")\`
-      color: \${function (p) {
+var _StyledP10 = _styled(\\"p\\")(_templateObject14(), function (p) {
   return p._$p_4;
-}};
-    \`;
+});
 
-var _StyledP11 = _styled(\\"p\\")\`
-      color: \${function (props) {
+var _StyledP11 = _styled(\\"p\\")(_templateObject15(), function (props) {
   return props.theme.color;
-}};
-    \`;
+});
 
-var _StyledButtonGhost = _styled(Button.Ghost)\`flex: 1\`;
+var _StyledButtonGhost = _styled(Button.Ghost)(_templateObject16());
 
-var _StyledButtonGhostNew = _styled(Button.Ghost.New)\`flex: 1\`;"
+var _StyledButtonGhostNew = _styled(Button.Ghost.New)(_templateObject17());"
 `;
 
 exports[`fixtures should transpile css prop add import 1`] = `
 "\\"use strict\\";
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral([\\"\\\\n      width: 35em;\\\\n    \\"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 Object.defineProperty(exports, \\"__esModule\\", {
   value: true
@@ -570,9 +712,7 @@ var _default = function _default() {
 
 exports.default = _default;
 
-var _StyledDiv = (0, _styledComponents.default)(\\"div\\")\`
-      width: 35em;
-    \`;"
+var _StyledDiv = (0, _styledComponents.default)(\\"div\\")(_templateObject());"
 `;
 
 exports[`fixtures should transpile require default 1`] = `

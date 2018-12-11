@@ -23,7 +23,7 @@ export default t => (path, state) => {
     state.customImportName || program.scope.generateUidIdentifier('styled')
   if (!state.customImportName) state.customImportName = importName
   // Insert require('styled-components') if it doesn't exist yet
-   const { bindings } = program.scope
+  const { bindings } = program.scope
   if (!state.required) {
     if (!bindings[importName]) {
       program.node.body.push(
@@ -64,8 +64,8 @@ export default t => (path, state) => {
     } else {
       css = t.templateLiteral(
         [
-          t.templateElement({ raw: '' }, false),
-          t.templateElement({ raw: '' }, true),
+          t.templateElement({ raw: '', cooked: '' }, false),
+          t.templateElement({ raw: '', cooked: '' }, true),
         ],
         [path.node.value.expression]
       )
@@ -104,9 +104,12 @@ export default t => (path, state) => {
     return acc
   }, [])
 
+  // Add the tagged template expression and then requeue the newly added node
+  // so Babel runs over it again
   program.node.body.push(
     t.variableDeclaration('var', [
       t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
     ])
   )
+  program.requeue(program.get('body')[program.get('body').length - 1])
 }

@@ -1,4 +1,4 @@
-import syntax from '@babel/plugin-syntax-jsx'
+import syntax from 'babel-plugin-syntax-jsx'
 import pureAnnotation from './visitors/pure'
 import minify from './visitors/minify'
 import displayNameAndId from './visitors/displayNameAndId'

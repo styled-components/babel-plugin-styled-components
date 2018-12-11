@@ -1,5 +1,5 @@
 {
-  "version": "1.9.0",
+  "version": "1.9.3",
   "name": "babel-plugin-styled-components",
   "description": "Improve the debugging experience and add server-side rendering support to styled-components",
   "repository": "styled-components/babel-plugin-styled-components",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@babel/helper-annotate-as-pure": "^7.0.0",
-    "@babel/plugin-syntax-jsx": "^7.0.0",
+    "babel-plugin-syntax-jsx": "^6.18.0",
     "lodash": "^4.17.10"
   },
   "resolutions": {
