@@ -558,7 +558,7 @@ var StaticTemplate = function StaticTemplate(p) {
 };
 
 var ObjectProp = function ObjectProp(p) {
-  return <_StyledP3 _$p_={{
+  return <_StyledP3 _css={{
     color: 'blue'
   }}>A</_StyledP3>;
 };
@@ -582,11 +582,11 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_StyledP6 _$p_2={props.cssText}>H</_StyledP6>;
+  return <_StyledP6 _css2={props.cssText}>H</_StyledP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_StyledP7 _$p_3={props.bg}>
+  return <_StyledP7 _css3={props.bg}>
     H
   </_StyledP7>;
 };
@@ -606,7 +606,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
 };
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 _$p_4={p.color}>
+  return <_StyledP10 _css4={p.color}>
     A
   </_StyledP10>;
 };
@@ -630,7 +630,7 @@ var _StyledP = (0, _styledComponents.default)(\\"p\\")(_templateObject4());
 var _StyledP2 = (0, _styledComponents.default)(\\"p\\")(_templateObject5());
 
 var _StyledP3 = (0, _styledComponents.default)(\\"p\\")(_templateObject6(), function (p) {
-  return p._$p_;
+  return p._css;
 });
 
 var _StyledP4 = (0, _styledComponents.default)(\\"p\\")(_templateObject7());
@@ -640,11 +640,11 @@ var _StyledP5 = (0, _styledComponents.default)(\\"p\\")(_templateObject8());
 var _StyledParagraph = (0, _styledComponents.default)(Paragraph)(_templateObject9());
 
 var _StyledP6 = (0, _styledComponents.default)(\\"p\\")(_templateObject10(), function (p) {
-  return p._$p_2;
+  return p._css2;
 });
 
 var _StyledP7 = (0, _styledComponents.default)(\\"p\\")(_templateObject11(), function (p) {
-  return p._$p_3;
+  return p._css3;
 });
 
 var _StyledP8 = (0, _styledComponents.default)(\\"p\\")(_templateObject12(), function (props) {
@@ -654,7 +654,7 @@ var _StyledP8 = (0, _styledComponents.default)(\\"p\\")(_templateObject12(), fun
 var _StyledP9 = (0, _styledComponents.default)(\\"p\\")(_templateObject13(), radius);
 
 var _StyledP10 = (0, _styledComponents.default)(\\"p\\")(_templateObject14(), function (p) {
-  return p._$p_4;
+  return p._css4;
 });
 
 var _StyledP11 = (0, _styledComponents.default)(\\"p\\")(_templateObject15(), function (props) {
