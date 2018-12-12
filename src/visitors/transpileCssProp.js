@@ -118,10 +118,11 @@ export default t => (path, state) => {
 
   // Add the tagged template expression and then requeue the newly added node
   // so Babel runs over it again
-  program.node.body.push(
+  const length = program.node.body.push(
     t.variableDeclaration('var', [
       t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
     ])
   )
-  program.requeue(program.get('body')[program.get('body').length - 1])
+
+  program.requeue(program.get('body')[length - 1])
 }
