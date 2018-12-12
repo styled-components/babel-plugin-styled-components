@@ -369,7 +369,7 @@ exports[`fixtures should transpile css prop 1`] = `
 "\\"use strict\\";
 
 function _templateObject17() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+  var data = _taggedTemplateLiteral([\\"flex: 1\\"]);
 
   _templateObject17 = function _templateObject17() {
     return data;
@@ -379,7 +379,7 @@ function _templateObject17() {
 }
 
 function _templateObject16() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+  var data = _taggedTemplateLiteral([\\"flex: 1\\"]);
 
   _templateObject16 = function _templateObject16() {
     return data;
@@ -449,7 +449,7 @@ function _templateObject10() {
 }
 
 function _templateObject9() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1\\"]);
+  var data = _taggedTemplateLiteral([\\"flex: 1\\"]);
 
   _templateObject9 = function _templateObject9() {
     return data;
@@ -469,7 +469,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1;\\"]);
+  var data = _taggedTemplateLiteral([\\"flex: 1;\\"]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -499,7 +499,7 @@ function _templateObject5() {
 }
 
 function _templateObject4() {
-  var data = _taggedTemplateLiteral([void 0], [\\"flex: 1;\\"]);
+  var data = _taggedTemplateLiteral([\\"flex: 1;\\"]);
 
   _templateObject4 = function _templateObject4() {
     return data;

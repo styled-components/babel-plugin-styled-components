@@ -50,7 +50,12 @@ export default t => (path, state) => {
 
   if (t.isStringLiteral(path.node.value)) {
     css = t.templateLiteral(
-      [t.templateElement({ raw: path.node.value.value }, true)],
+      [
+        t.templateElement(
+          { raw: path.node.value.value, cooked: path.node.value.value },
+          true
+        ),
+      ],
       []
     )
   } else if (t.isJSXExpressionContainer(path.node.value)) {
