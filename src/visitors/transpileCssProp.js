@@ -18,7 +18,7 @@ export default t => (path, state) => {
   if (!useCssProp(state)) return
   if (path.node.name.name !== 'css') return
 
-  const program = state.file.path
+  const program = state.file.path.get('program')
   const importName =
     state.customImportName || program.scope.generateUidIdentifier('styled')
   if (!state.customImportName) state.customImportName = importName
