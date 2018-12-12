@@ -27,10 +27,17 @@ export default t => (path, state) => {
   if (!state.required) {
     if (!bindings[importName]) {
       program.node.body.push(
-        t.importDeclaration(
-          [t.importDefaultSpecifier(importName)],
-          t.stringLiteral('styled-components')
-        )
+        t.variableDeclaration('var', [
+          t.variableDeclarator(
+            importName,
+            t.memberExpression(
+              t.callExpression(t.identifier('require'), [
+                t.stringLiteral('styled-components'),
+              ]),
+              t.identifier('default')
+            )
+          ),
+        ])
       )
     }
     state.required = true
