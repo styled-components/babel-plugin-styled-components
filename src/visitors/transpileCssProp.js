@@ -1,5 +1,6 @@
 // Most of this code was taken from @satya164's babel-plugin-css-prop
 // @see https://github.com/satya164/babel-plugin-css-prop
+import { addDefault } from '@babel/helper-module-imports'
 import { useCssProp } from '../utils/options'
 
 const getName = (node, t) => {
@@ -19,29 +20,17 @@ export default t => (path, state) => {
   if (path.node.name.name !== 'css') return
 
   const program = state.file.path
-  const importName =
-    state.customImportName || program.scope.generateUidIdentifier('styled')
-  if (!state.customImportName) state.customImportName = importName
-  // Insert require('styled-components') if it doesn't exist yet
+  // state.customImportName is passed through from styled-components/macro if it's used
+  // since the macro also inserts the import
+  let importName = state.customImportName
+  // Insert import if it doesn't exist yet
   const { bindings } = program.scope
-  if (!state.required) {
-    if (!bindings[importName]) {
-      program.node.body.push(
-        t.variableDeclaration('var', [
-          t.variableDeclarator(
-            importName,
-            t.memberExpression(
-              t.callExpression(t.identifier('require'), [
-                t.stringLiteral('styled-components'),
-              ]),
-              t.identifier('default')
-            )
-          ),
-        ])
-      )
-    }
-    state.required = true
+  if (!importName || !bindings[importName.name]) {
+    importName = addDefault(path, 'styled-components', {
+      nameHint: importName ? importName.name : 'styled',
+    })
   }
+  if (!state.customImportName) state.customImportName = importName
 
   const elem = path.parentPath
   const name = getName(elem.node.name, t)
