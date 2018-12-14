@@ -1,0 +1,15 @@
+{
+  "plugins": [
+    "transform-es2015-modules-commonjs",
+    [
+      "../../../src",
+      {
+        "ssr": false,
+        "displayName": false,
+        "transpileTemplateLiterals": false,
+        "minify": false,
+        "cssProp": true
+      }
+    ]
+  ]
+}
