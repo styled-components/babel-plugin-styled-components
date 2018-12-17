@@ -686,13 +686,13 @@ Object.defineProperty(exports, \\"__esModule\\", {
 });
 exports.default = void 0;
 
+var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
+
 var _react = _interopRequireDefault(require(\\"react\\"));
 
 var _Card = _interopRequireDefault(require(\\"../../shared/components/Card\\"));
 
 var _config = _interopRequireDefault(require(\\"../../../config\\"));
-
-var _styledComponents = _interopRequireDefault(require(\\"styled-components\\"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -713,6 +713,31 @@ var _default = function _default() {
 exports.default = _default;
 
 var _StyledDiv = (0, _styledComponents.default)(\\"div\\")(_templateObject());"
+`;
+
+exports[`fixtures should transpile css prop add require 1`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+
+var _styledComponents = require(\\"styled-components\\");
+
+var _styledComponents2 = _interopRequireDefault(_styledComponents);
+
+var _react = require(\\"react\\");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// @flow
+exports.default = () => <_StyledDiv />;
+
+var _StyledDiv = (0, _styledComponents2.default)(\\"div\\")\`
+      width: 35em;
+    \`;"
 `;
 
 exports[`fixtures should transpile require default 1`] = `

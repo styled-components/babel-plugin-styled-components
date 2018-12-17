@@ -1,5 +1,6 @@
 // Most of this code was taken from @satya164's babel-plugin-css-prop
 // @see https://github.com/satya164/babel-plugin-css-prop
+import { addDefault } from '@babel/helper-module-imports'
 import { useCssProp } from '../utils/options'
 
 const getName = (node, t) => {
@@ -18,19 +19,18 @@ export default t => (path, state) => {
   if (!useCssProp(state)) return
   if (path.node.name.name !== 'css') return
 
-  // Insert require('styled-components') if it doesn't exist yet
-  const { bindings } = path.findParent(p => p.type === 'Program').scope
-  if (!state.required) {
-    if (!bindings.styled) {
-      state.items.push(
-        t.importDeclaration(
-          [t.importDefaultSpecifier(t.identifier('styled'))],
-          t.stringLiteral('styled-components')
-        )
-      )
-    }
-    state.required = true
+  const program = state.file.path
+  // state.customImportName is passed through from styled-components/macro if it's used
+  // since the macro also inserts the import
+  let importName = state.customImportName
+  // Insert import if it doesn't exist yet
+  const { bindings } = program.scope
+  if (!importName || !bindings[importName.name]) {
+    importName = addDefault(path, 'styled-components', {
+      nameHint: importName ? importName.name : 'styled',
+    })
   }
+  if (!state.customImportName) state.customImportName = importName
 
   const elem = path.parentPath
   const name = getName(elem.node.name, t)
@@ -38,7 +38,7 @@ export default t => (path, state) => {
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
 
-  const styled = t.callExpression(t.identifier('styled'), [
+  const styled = t.callExpression(importName, [
     /^[a-z]/.test(name) ? t.stringLiteral(name) : t.identifier(name),
   ])
 
@@ -105,9 +105,13 @@ export default t => (path, state) => {
     return acc
   }, [])
 
-  state.items.push(
+  // Add the tagged template expression and then requeue the newly added node
+  // so Babel runs over it again
+  const length = program.node.body.push(
     t.variableDeclaration('var', [
       t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
     ])
   )
+
+  program.requeue(program.get('body')[length - 1])
 }
