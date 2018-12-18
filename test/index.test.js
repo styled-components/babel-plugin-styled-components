@@ -1,19 +1,10 @@
 import path from 'path'
 import fs from 'fs'
-import { transformFileSync } from '@babel/core'
+import { create } from 'babel-test'
+import { toMatchFile } from 'jest-file-snapshot'
 
-describe('fixtures', () => {
-  const fixturesDir = path.join(__dirname, 'fixtures')
-  fs.readdirSync(fixturesDir)
-    .sort()
-    .map(caseName => {
-      if (caseName === '.DS_Store') return
-      it(`should ${caseName.split('-').join(' ')}`, () => {
-        const fixtureDir = path.join(fixturesDir, caseName)
-        const fixturePath = path.join(fixtureDir, 'index.js')
-        const fixture = transformFileSync(fixturePath).code
+expect.extend({ toMatchFile })
 
-        expect(fixture).toMatchSnapshot()
-      })
-    })
-})
+const { fixtures } = create({ babelrc: true })
+
+fixtures('babel-plugin-styled-components', path.join(__dirname, 'fixtures'))
