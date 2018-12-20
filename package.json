@@ -37,9 +37,6 @@
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
   },
-  "peerDependencies": {
-    "styled-components": ">= 2"
-  },
   "scripts": {
     "clean": "rimraf lib",
     "style": "prettier --write src/**/*.js",
