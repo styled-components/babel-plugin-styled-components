@@ -19,7 +19,7 @@ const getIdentifier = (node, t, p) => {
   if (typeof node.name === 'string') return node
   if (t.isJSXMemberExpression(node)) return getIdentifier(node.object, t, p)
   throw p.buildCodeFrameError(
-    `Cannot infer name from node with type "${
+    `Cannot get identifier from node with type "${
       node.type
     }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
   )
@@ -58,9 +58,11 @@ export default t => (path, state) => {
   if (!state.customImportName) state.customImportName = importName
 
   const elem = path.parentPath
-  const name = getName(elem.node.name, t, path)
   const id = path.scope.generateUidIdentifier(
-    'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
+    'Styled' +
+      getName(elem.node.name, t, path).replace(/^([a-z])/, (match, p1) =>
+        p1.toUpperCase()
+      )
   )
 
   let css
@@ -98,31 +100,21 @@ export default t => (path, state) => {
 
   const identifier = getIdentifier(elem.node.name, t, path)
 
-  // If the identifier is not in the program scope, pass it in the 'as' prop
-  const isIdentifierInProgramScope =
-    typeof elem.node.name.name === 'string' &&
-    /^[a-z]/.test(elem.node.name.name)
-      ? true // tags starting with lowercase such as 'div' are handled by react-dom
-      : bindings[identifier.name] &&
-        bindings[identifier.name].referencePaths.some(
-          p => p.node === identifier
-        )
-
-  const shouldUseAsProp =
-    identifier.name &&
-    !isIdentifierInProgramScope &&
-    // If we don't already have an as prop, pass the component
-    !elem.node.attributes.some(attr => attr.name.name === 'as')
+  // If the identifier is not primitive, we pass it in the 'as' prop
+  const isPrimitive = t.isJSXIdentifier(elem.node.name)
+    ? /^[a-z]/.test(elem.node.name.name)
+    : false
 
   const styled = t.callExpression(importName, [
-    shouldUseAsProp
-      ? t.identifier('undefined')
-      : /^[a-z]/.test(name)
-        ? t.stringLiteral(name)
-        : t.identifier(name),
+    isPrimitive
+      ? t.stringLiteral(elem.node.name.name)
+      : t.identifier('undefined'),
   ])
 
-  if (shouldUseAsProp) {
+  if (
+    !isPrimitive &&
+    !elem.node.attributes.some(attr => attr.name.name === 'as')
+  ) {
     // Add it to the beginning so that it can be overriden {...spread} attributes etc.
     elem.node.attributes.unshift(
       t.jSXAttribute(

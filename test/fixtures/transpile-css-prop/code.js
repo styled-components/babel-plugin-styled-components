@@ -32,8 +32,6 @@ const CssHelperProp = p => (
  * Dynamic prop
  */
 
-let Paragraph;
-
 const CustomComp = p => <Paragraph css="flex: 1">H</Paragraph>
 
 const DynamicProp = p => <p css={props.cssText}>H</p>
@@ -88,8 +86,6 @@ const DynamicCssHelperProp = p => (
     A
   </p>
 )
-
-let Button;
 
 const CustomCompWithDot = p => <Button.Ghost css="flex: 1">H</Button.Ghost>
 

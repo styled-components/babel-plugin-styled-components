@@ -239,10 +239,8 @@ var CssHelperProp = function CssHelperProp(p) {
  */
 
 
-var Paragraph;
-
 var CustomComp = function CustomComp(p) {
-  return <_StyledParagraph>H</_StyledParagraph>;
+  return <_StyledParagraph as={Paragraph}>H</_StyledParagraph>;
 };
 
 var DynamicProp = function DynamicProp(p) {
@@ -281,14 +279,12 @@ var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
   </_StyledP11>;
 };
 
-var Button;
-
 var CustomCompWithDot = function CustomCompWithDot(p) {
-  return <_StyledButtonGhost>H</_StyledButtonGhost>;
+  return <_StyledButtonGhost as={Button.Ghost}>H</_StyledButtonGhost>;
 };
 
 var NestedCompWithDot = function NestedCompWithDot(p) {
-  return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
+  return <_StyledButtonGhostNew as={Button.Ghost.New}>H</_StyledButtonGhostNew>;
 };
 
 var DynamicComp = function DynamicComp(p) {
@@ -319,7 +315,7 @@ var _StyledP4 = (0, _styledComponents.default)("p")(_templateObject7());
 
 var _StyledP5 = (0, _styledComponents.default)("p")(_templateObject8());
 
-var _StyledParagraph = (0, _styledComponents.default)(Paragraph)(_templateObject9());
+var _StyledParagraph = (0, _styledComponents.default)(undefined)(_templateObject9());
 
 var _StyledP6 = (0, _styledComponents.default)("p")(_templateObject10(), function (p) {
   return p._css2;
@@ -343,12 +339,12 @@ var _StyledP11 = (0, _styledComponents.default)("p")(_templateObject15(), functi
   return props.theme.color;
 });
 
-var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)(_templateObject16());
+var _StyledButtonGhost = (0, _styledComponents.default)(undefined)(_templateObject16());
 
-var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)(_templateObject17());
+var _StyledButtonGhostNew = (0, _styledComponents.default)(undefined)(_templateObject17());
 
 var _StyledBox = (0, _styledComponents.default)(undefined)(_templateObject18());
 
 var _StyledPComponentsBox = (0, _styledComponents.default)(undefined)(_templateObject19());
 
-var _StyledBox2 = (0, _styledComponents.default)(Box)(_templateObject20());
+var _StyledBox2 = (0, _styledComponents.default)(undefined)(_templateObject20());
