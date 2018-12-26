@@ -1,5 +1,35 @@
 "use strict";
 
+function _templateObject20() {
+  var data = _taggedTemplateLiteral(["color: blue"]);
+
+  _templateObject20 = function _templateObject20() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject19() {
+  var data = _taggedTemplateLiteral(["color: blue"]);
+
+  _templateObject19 = function _templateObject19() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject18() {
+  var data = _taggedTemplateLiteral(["color: blue"]);
+
+  _templateObject18 = function _templateObject18() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject17() {
   var data = _taggedTemplateLiteral(["flex: 1"]);
 
@@ -209,6 +239,8 @@ var CssHelperProp = function CssHelperProp(p) {
  */
 
 
+var Paragraph;
+
 var CustomComp = function CustomComp(p) {
   return <_StyledParagraph>H</_StyledParagraph>;
 };
@@ -249,12 +281,30 @@ var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
   </_StyledP11>;
 };
 
+var Button;
+
 var CustomCompWithDot = function CustomCompWithDot(p) {
   return <_StyledButtonGhost>H</_StyledButtonGhost>;
 };
 
 var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
+};
+
+var DynamicComp = function DynamicComp(p) {
+  var Box = p.components.Box;
+  <_StyledBox as={Box} title="Hello">X</_StyledBox>;
+};
+
+var DynamicCompWithDot = function DynamicCompWithDot(p) {
+  <_StyledPComponentsBox as={p.components.Box} title="Hello">Y</_StyledPComponentsBox>;
+};
+
+var DynamicCompWithAs = function DynamicCompWithAs(p) {
+  var _p$components = p.components,
+      Box = _p$components.Box,
+      Pyramid = _p$components.Pyramid;
+  <_StyledBox2 as={Pyramid}>Z</_StyledBox2>;
 };
 
 var _StyledP = (0, _styledComponents.default)("p")(_templateObject4());
@@ -296,3 +346,9 @@ var _StyledP11 = (0, _styledComponents.default)("p")(_templateObject15(), functi
 var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)(_templateObject16());
 
 var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)(_templateObject17());
+
+var _StyledBox = (0, _styledComponents.default)(undefined)(_templateObject18());
+
+var _StyledPComponentsBox = (0, _styledComponents.default)(undefined)(_templateObject19());
+
+var _StyledBox2 = (0, _styledComponents.default)(Box)(_templateObject20());

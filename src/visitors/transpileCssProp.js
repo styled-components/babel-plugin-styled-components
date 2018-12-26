@@ -3,13 +3,38 @@
 import { addDefault } from '@babel/helper-module-imports'
 import { useCssProp } from '../utils/options'
 
-const getName = (node, t) => {
+const getName = (node, t, p) => {
   if (typeof node.name === 'string') return node.name
   if (t.isJSXMemberExpression(node)) {
-    return `${getName(node.object, t)}.${node.property.name}`
+    return `${getName(node.object, t, p)}.${node.property.name}`
   }
-  throw path.buildCodeFrameError(
+  throw p.buildCodeFrameError(
     `Cannot infer name from node with type "${
+      node.type
+    }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
+  )
+}
+
+const getIdentifier = (node, t, p) => {
+  if (typeof node.name === 'string') return node
+  if (t.isJSXMemberExpression(node)) return getIdentifier(node.object, t, p)
+  throw p.buildCodeFrameError(
+    `Cannot infer name from node with type "${
+      node.type
+    }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
+  )
+}
+
+const convertJSXExpressionToExpression = (node, t, p) => {
+  if (t.isJSXIdentifier(node)) return t.identifier(node.name)
+  if (t.isJSXMemberExpression(node)) {
+    return t.memberExpression(
+      convertJSXExpressionToExpression(node.object, t, p),
+      convertJSXExpressionToExpression(node.property, t, p)
+    )
+  }
+  throw p.buildCodeFrameError(
+    `Cannot convert from node with type "${
       node.type
     }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
   )
@@ -33,14 +58,10 @@ export default t => (path, state) => {
   if (!state.customImportName) state.customImportName = importName
 
   const elem = path.parentPath
-  const name = getName(elem.node.name, t)
+  const name = getName(elem.node.name, t, path)
   const id = path.scope.generateUidIdentifier(
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
-
-  const styled = t.callExpression(importName, [
-    /^[a-z]/.test(name) ? t.stringLiteral(name) : t.identifier(name),
-  ])
 
   let css
 
@@ -74,6 +95,44 @@ export default t => (path, state) => {
   }
 
   if (!css) return
+
+  const identifier = getIdentifier(elem.node.name, t, path)
+
+  // If the identifier is not in the program scope, pass it in the 'as' prop
+  const isIdentifierInProgramScope =
+    typeof elem.node.name.name === 'string' &&
+    /^[a-z]/.test(elem.node.name.name)
+      ? true // tags starting with lowercase such as 'div' are handled by react-dom
+      : bindings[identifier.name] &&
+        bindings[identifier.name].referencePaths.some(
+          p => p.node === identifier
+        )
+
+  const shouldUseAsProp =
+    identifier.name &&
+    !isIdentifierInProgramScope &&
+    // If we don't already have an as prop, pass the component
+    !elem.node.attributes.some(attr => attr.name.name === 'as')
+
+  const styled = t.callExpression(importName, [
+    shouldUseAsProp
+      ? t.identifier('undefined')
+      : /^[a-z]/.test(name)
+        ? t.stringLiteral(name)
+        : t.identifier(name),
+  ])
+
+  if (shouldUseAsProp) {
+    // Add it to the beginning so that it can be overriden {...spread} attributes etc.
+    elem.node.attributes.unshift(
+      t.jSXAttribute(
+        t.jSXIdentifier('as'),
+        t.jSXExpressionContainer(
+          convertJSXExpressionToExpression(elem.node.name, t, path)
+        )
+      )
+    )
+  }
 
   elem.node.attributes = elem.node.attributes.filter(attr => attr !== path.node)
   elem.node.name = t.jSXIdentifier(id.name)
