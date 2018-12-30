@@ -315,7 +315,7 @@ var _StyledP4 = (0, _styledComponents.default)("p")(_templateObject7());
 
 var _StyledP5 = (0, _styledComponents.default)("p")(_templateObject8());
 
-var _StyledParagraph = (0, _styledComponents.default)(undefined)(_templateObject9());
+var _StyledParagraph = (0, _styledComponents.default)("-")(_templateObject9());
 
 var _StyledP6 = (0, _styledComponents.default)("p")(_templateObject10(), function (p) {
   return p._css2;
@@ -339,12 +339,12 @@ var _StyledP11 = (0, _styledComponents.default)("p")(_templateObject15(), functi
   return props.theme.color;
 });
 
-var _StyledButtonGhost = (0, _styledComponents.default)(undefined)(_templateObject16());
+var _StyledButtonGhost = (0, _styledComponents.default)("-")(_templateObject16());
 
-var _StyledButtonGhostNew = (0, _styledComponents.default)(undefined)(_templateObject17());
+var _StyledButtonGhostNew = (0, _styledComponents.default)("-")(_templateObject17());
 
-var _StyledBox = (0, _styledComponents.default)(undefined)(_templateObject18());
+var _StyledBox = (0, _styledComponents.default)("-")(_templateObject18());
 
-var _StyledPComponentsBox = (0, _styledComponents.default)(undefined)(_templateObject19());
+var _StyledPComponentsBox = (0, _styledComponents.default)("-")(_templateObject19());
 
-var _StyledBox2 = (0, _styledComponents.default)(undefined)(_templateObject20());
+var _StyledBox2 = (0, _styledComponents.default)("-")(_templateObject20());

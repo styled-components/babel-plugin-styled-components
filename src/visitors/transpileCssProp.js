@@ -15,16 +15,6 @@ const getName = (node, t, p) => {
   )
 }
 
-const getIdentifier = (node, t, p) => {
-  if (typeof node.name === 'string') return node
-  if (t.isJSXMemberExpression(node)) return getIdentifier(node.object, t, p)
-  throw p.buildCodeFrameError(
-    `Cannot get identifier from node with type "${
-      node.type
-    }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
-  )
-}
-
 const convertJSXExpressionToExpression = (node, t, p) => {
   if (t.isJSXIdentifier(node)) return t.identifier(node.name)
   if (t.isJSXMemberExpression(node)) {
@@ -98,8 +88,6 @@ export default t => (path, state) => {
 
   if (!css) return
 
-  const identifier = getIdentifier(elem.node.name, t, path)
-
   // If the identifier is not primitive, we pass it in the 'as' prop
   const isPrimitive = t.isJSXIdentifier(elem.node.name)
     ? /^[a-z]/.test(elem.node.name.name)
@@ -108,7 +96,9 @@ export default t => (path, state) => {
   const styled = t.callExpression(importName, [
     isPrimitive
       ? t.stringLiteral(elem.node.name.name)
-      : t.identifier('undefined'),
+      // Use a arbitrary string for the tag name so styled-component doesn't throw error
+      // I used hyphen since it'll never be a valid html tag
+      : t.stringLiteral('-'),
   ])
 
   if (
