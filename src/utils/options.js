@@ -1,7 +1,9 @@
 function getOption({ opts }, name, defaultValue = true) {
-  return opts[name] === undefined || opts[name] === null
+  const envOrDefault = opts.env ? opts.env[process.env.NODE_ENV] || opts : opts
+
+  return envOrDefault[name] === undefined || envOrDefault[name] === null
     ? defaultValue
-    : opts[name]
+    : envOrDefault[name]
 }
 
 export const useDisplayName = state => getOption(state, 'displayName')
