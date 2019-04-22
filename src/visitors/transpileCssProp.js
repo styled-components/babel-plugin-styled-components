@@ -39,7 +39,7 @@ export default t => (path, state) => {
   )
 
   const styled = t.callExpression(importName, [
-    /^[a-z]/.test(name) ? t.stringLiteral(name) : t.identifier(name),
+    /^[a-z][a-z0-9]*$/.test(name) ? t.stringLiteral(name) : t.identifier(name),
   ])
 
   let css
