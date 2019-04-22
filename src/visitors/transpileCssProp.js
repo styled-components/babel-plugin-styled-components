@@ -44,7 +44,7 @@ export default t => (path, state) => {
 
   let styled
 
-  if (/^[a-z]/.test(name)) {
+  if (/^[a-z][a-z0-9]*$/.test(name)) {
     styled = t.memberExpression(importName, t.identifier(name))
   } else {
     styled = t.callExpression(importName, [t.identifier(name)])

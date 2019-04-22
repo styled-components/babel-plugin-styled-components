@@ -96,6 +96,10 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
+var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
+  return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
+};
+
 var _StyledP = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-2"
@@ -176,4 +180,9 @@ var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost).withCon
 var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New).withConfig({
   displayName: "code___StyledButtonGhostNew",
   componentId: "sc-7evkve-15"
+})(["flex:1"]);
+
+var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost).withConfig({
+  displayName: "code___StyledButtonGhost2",
+  componentId: "sc-7evkve-16"
 })(["flex:1"]);

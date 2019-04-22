@@ -4,6 +4,16 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _templateObject14() {
+  var data = _taggedTemplateLiteral(["flex: 1"]);
+
+  _templateObject14 = function _templateObject14() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject13() {
   var data = _taggedTemplateLiteral(["flex: 1"]);
 
@@ -215,6 +225,10 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
+var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
+  return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
+};
+
 var _StyledP = _styledComponents["default"].p(_templateObject());
 
 var _StyledP2 = _styledComponents["default"].p(_templateObject2());
@@ -254,3 +268,5 @@ var _StyledP11 = _styledComponents["default"].p(_templateObject11(), function (p
 var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject12());
 
 var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject13());
+
+var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost)(_templateObject14());

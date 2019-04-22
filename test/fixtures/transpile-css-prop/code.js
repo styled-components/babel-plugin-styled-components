@@ -92,3 +92,7 @@ const CustomCompWithDot = p => <Button.Ghost css="flex: 1">H</Button.Ghost>
 const NestedCompWithDot = p => (
   <Button.Ghost.New css="flex: 1">H</Button.Ghost.New>
 )
+
+const CustomCompWithDotLowerCase = p => (
+  <button.ghost css="flex: 1">H</button.ghost>
+)
