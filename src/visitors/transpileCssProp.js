@@ -3,6 +3,8 @@
 import { addDefault } from '@babel/helper-module-imports'
 import { useCssProp } from '../utils/options'
 
+const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
+
 const getName = (node, t) => {
   if (typeof node.name === 'string') return node.name
   if (t.isJSXMemberExpression(node)) {
@@ -39,7 +41,7 @@ export default t => (path, state) => {
   )
 
   const styled = t.callExpression(importName, [
-    /^[a-z][a-z0-9]*$/.test(name) ? t.stringLiteral(name) : t.identifier(name),
+    TAG_NAME_REGEXP.test(name) ? t.stringLiteral(name) : t.identifier(name),
   ])
 
   let css

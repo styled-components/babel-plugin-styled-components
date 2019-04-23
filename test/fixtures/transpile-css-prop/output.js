@@ -1,5 +1,15 @@
 "use strict";
 
+function _templateObject19() {
+  var data = _taggedTemplateLiteral(["flex: 1"]);
+
+  _templateObject19 = function _templateObject19() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject18() {
   var data = _taggedTemplateLiteral(["flex: 1"]);
 
@@ -271,6 +281,10 @@ var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
+var CustomElement = function CustomElement(p) {
+  return <_StyledButtonGhost3>H</_StyledButtonGhost3>;
+};
+
 var _StyledP = (0, _styledComponents.default)("p")(_templateObject4());
 
 var _StyledP2 = (0, _styledComponents.default)("p")(_templateObject5());
@@ -312,3 +326,5 @@ var _StyledButtonGhost = (0, _styledComponents.default)(Button.Ghost)(_templateO
 var _StyledButtonGhostNew = (0, _styledComponents.default)(Button.Ghost.New)(_templateObject17());
 
 var _StyledButtonGhost2 = (0, _styledComponents.default)(button.ghost)(_templateObject18());
+
+var _StyledButtonGhost3 = (0, _styledComponents.default)("button-ghost")(_templateObject19());
