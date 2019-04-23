@@ -4,6 +4,16 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _templateObject15() {
+  var data = _taggedTemplateLiteral(["flex: 1"]);
+
+  _templateObject15 = function _templateObject15() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject14() {
   var data = _taggedTemplateLiteral(["flex: 1"]);
 
@@ -229,6 +239,10 @@ var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
+var CustomElement = function CustomElement(p) {
+  return <_StyledButtonGhost3>H</_StyledButtonGhost3>;
+};
+
 var _StyledP = _styledComponents["default"].p(_templateObject());
 
 var _StyledP2 = _styledComponents["default"].p(_templateObject2());
@@ -270,3 +284,5 @@ var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templa
 var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject13());
 
 var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost)(_templateObject14());
+
+var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"](_templateObject15());

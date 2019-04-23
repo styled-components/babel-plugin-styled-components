@@ -4,6 +4,8 @@ import { addDefault } from '@babel/helper-module-imports'
 import { importLocalName } from '../utils/detectors'
 import { useCssProp } from '../utils/options'
 
+const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
+
 const getName = (node, t) => {
   if (typeof node.name === 'string') return node.name
   if (t.isJSXMemberExpression(node)) {
@@ -44,7 +46,7 @@ export default t => (path, state) => {
 
   let styled
 
-  if (/^[a-z][a-z0-9]*$/.test(name)) {
+  if (TAG_NAME_REGEXP.test(name)) {
     styled = t.memberExpression(importName, t.identifier(name))
   } else {
     styled = t.callExpression(importName, [t.identifier(name)])

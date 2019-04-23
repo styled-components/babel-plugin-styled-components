@@ -96,3 +96,5 @@ const NestedCompWithDot = p => (
 const CustomCompWithDotLowerCase = p => (
   <button.ghost css="flex: 1">H</button.ghost>
 )
+
+const CustomElement = p => <button-ghost css="flex: 1">H</button-ghost>

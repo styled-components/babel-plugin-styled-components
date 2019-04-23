@@ -100,6 +100,10 @@ var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
+var CustomElement = function CustomElement(p) {
+  return <_StyledButtonGhost3>H</_StyledButtonGhost3>;
+};
+
 var _StyledP = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-2"
@@ -185,4 +189,9 @@ var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New).
 var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost).withConfig({
   displayName: "code___StyledButtonGhost2",
   componentId: "sc-7evkve-16"
+})(["flex:1"]);
+
+var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"].withConfig({
+  displayName: "code___StyledButtonGhost3",
+  componentId: "sc-7evkve-17"
 })(["flex:1"]);
