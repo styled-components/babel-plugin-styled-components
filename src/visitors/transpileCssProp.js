@@ -84,8 +84,8 @@ export default t => (path, state) => {
 
   css.expressions = css.expressions.reduce((acc, ex) => {
     if (
-      Object.entries(bindings).some(([, b] /*: any */) =>
-        b.referencePaths.find(p => p.node === ex)
+      Object.keys(bindings).some(key =>
+        bindings[key].referencePaths.find(p => p.node === ex)
       ) ||
       t.isFunctionExpression(ex) ||
       t.isArrowFunctionExpression(ex)
