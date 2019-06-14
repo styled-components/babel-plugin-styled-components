@@ -15,7 +15,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
@@ -25,7 +25,7 @@ var _Card = _interopRequireDefault(require("../../shared/components/Card"));
 
 var _config = _interopRequireDefault(require("../../../config"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // @flow
 var _default = function _default() {
@@ -33,7 +33,7 @@ var _default = function _default() {
     <_Card.default>
       <h1>Login or Sign Up</h1>
       <p>
-        <a href={_config.default.API_URI + '/auth/google'}>
+        <a href={_config["default"].API_URI + '/auth/google'}>
           Sign up or login with Google
         </a>
       </p>
@@ -41,6 +41,6 @@ var _default = function _default() {
   </_StyledDiv>;
 };
 
-exports.default = _default;
+exports["default"] = _default;
 
-var _StyledDiv = (0, _styledComponents.default)("div")(_templateObject());
+var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject());

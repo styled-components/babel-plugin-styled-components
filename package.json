@@ -15,24 +15,24 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-class-properties": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "babel-test": "^0.1.2",
-    "jest": "^23.6.0",
-    "jest-file-snapshot": "^0.3.2",
-    "prettier": "^1.14.2",
-    "rimraf": "^2.6.2",
-    "styled-components": "^4.0.0"
+    "babel-test": "^0.2.1",
+    "jest": "^24.8.0",
+    "jest-file-snapshot": "^0.3.6",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "styled-components": "^4.3.1"
   },
   "dependencies": {
     "@babel/helper-annotate-as-pure": "^7.0.0",
     "@babel/helper-module-imports": "^7.0.0",
     "babel-plugin-syntax-jsx": "^6.18.0",
-    "lodash": "^4.17.10"
+    "lodash": "^4.17.11"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
