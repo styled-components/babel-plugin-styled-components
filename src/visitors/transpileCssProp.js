@@ -9,9 +9,7 @@ const getName = (node, t) => {
     return `${getName(node.object, t)}.${node.property.name}`
   }
   throw path.buildCodeFrameError(
-    `Cannot infer name from node with type "${
-      node.type
-    }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
+    `Cannot infer name from node with type "${node.type}". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
   )
 }
 
@@ -107,11 +105,9 @@ export default t => (path, state) => {
 
   // Add the tagged template expression and then requeue the newly added node
   // so Babel runs over it again
-  const length = program.node.body.push(
+  program.node.body.push(
     t.variableDeclaration('var', [
       t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
     ])
   )
-
-  program.requeue(program.get('body')[length - 1])
 }

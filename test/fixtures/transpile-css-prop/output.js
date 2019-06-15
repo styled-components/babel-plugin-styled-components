@@ -1,37 +1,11 @@
 "use strict";
 
-function _templateObject17() {
-  var data = _taggedTemplateLiteral(["flex: 1"]);
+var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-  _templateObject17 = function _templateObject17() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject16() {
-  var data = _taggedTemplateLiteral(["flex: 1"]);
-
-  _templateObject16 = function _templateObject16() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject15() {
-  var data = _taggedTemplateLiteral(["\n      color: ", ";\n    "]);
-
-  _templateObject15 = function _templateObject15() {
-    return data;
-  };
-
-  return data;
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _templateObject14() {
-  var data = _taggedTemplateLiteral(["\n      color: ", ";\n    "]);
+  var data = _taggedTemplateLiteral(["flex: 1"]);
 
   _templateObject14 = function _templateObject14() {
     return data;
@@ -41,7 +15,7 @@ function _templateObject14() {
 }
 
 function _templateObject13() {
-  var data = _taggedTemplateLiteral(["\n      border-radius: ", "px;\n    "]);
+  var data = _taggedTemplateLiteral(["flex: 1"]);
 
   _templateObject13 = function _templateObject13() {
     return data;
@@ -61,7 +35,7 @@ function _templateObject12() {
 }
 
 function _templateObject11() {
-  var data = _taggedTemplateLiteral(["\n      background: ", ";\n    "]);
+  var data = _taggedTemplateLiteral(["\n      color: ", ";\n    "]);
 
   _templateObject11 = function _templateObject11() {
     return data;
@@ -71,7 +45,7 @@ function _templateObject11() {
 }
 
 function _templateObject10() {
-  var data = _taggedTemplateLiteral(["", ""]);
+  var data = _taggedTemplateLiteral(["\n      border-radius: ", "px;\n    "]);
 
   _templateObject10 = function _templateObject10() {
     return data;
@@ -81,7 +55,7 @@ function _templateObject10() {
 }
 
 function _templateObject9() {
-  var data = _taggedTemplateLiteral(["flex: 1"]);
+  var data = _taggedTemplateLiteral(["\n      color: ", ";\n    "]);
 
   _templateObject9 = function _templateObject9() {
     return data;
@@ -91,7 +65,7 @@ function _templateObject9() {
 }
 
 function _templateObject8() {
-  var data = _taggedTemplateLiteral(["\n      color: blue;\n    "]);
+  var data = _taggedTemplateLiteral(["\n      background: ", ";\n    "]);
 
   _templateObject8 = function _templateObject8() {
     return data;
@@ -101,7 +75,7 @@ function _templateObject8() {
 }
 
 function _templateObject7() {
-  var data = _taggedTemplateLiteral(["flex: 1;"]);
+  var data = _taggedTemplateLiteral(["", ""]);
 
   _templateObject7 = function _templateObject7() {
     return data;
@@ -111,7 +85,7 @@ function _templateObject7() {
 }
 
 function _templateObject6() {
-  var data = _taggedTemplateLiteral(["", ""]);
+  var data = _taggedTemplateLiteral(["flex: 1"]);
 
   _templateObject6 = function _templateObject6() {
     return data;
@@ -121,7 +95,7 @@ function _templateObject6() {
 }
 
 function _templateObject5() {
-  var data = _taggedTemplateLiteral(["\n      flex: 1;\n    "]);
+  var data = _taggedTemplateLiteral(["\n      color: blue;\n    "]);
 
   _templateObject5 = function _templateObject5() {
     return data;
@@ -140,12 +114,8 @@ function _templateObject4() {
   return data;
 }
 
-var _styledComponents = _interopRequireDefault(require("styled-components"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n      color: ", ";\n    "]);
+  var data = _taggedTemplateLiteral(["", ""]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -155,7 +125,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n      color: ", ";\n    "]);
+  var data = _taggedTemplateLiteral(["\n      flex: 1;\n    "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -165,7 +135,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n      color: blue;\n    "]);
+  var data = _taggedTemplateLiteral(["flex: 1;"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -257,42 +227,42 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
-var _StyledP = (0, _styledComponents["default"])("p")(_templateObject4());
+var _StyledP = (0, _styledComponents["default"])("p")(_templateObject());
 
-var _StyledP2 = (0, _styledComponents["default"])("p")(_templateObject5());
+var _StyledP2 = (0, _styledComponents["default"])("p")(_templateObject2());
 
-var _StyledP3 = (0, _styledComponents["default"])("p")(_templateObject6(), function (p) {
+var _StyledP3 = (0, _styledComponents["default"])("p")(_templateObject3(), function (p) {
   return p._css;
 });
 
-var _StyledP4 = (0, _styledComponents["default"])("p")(_templateObject7());
+var _StyledP4 = (0, _styledComponents["default"])("p")(_templateObject4());
 
-var _StyledP5 = (0, _styledComponents["default"])("p")(_templateObject8());
+var _StyledP5 = (0, _styledComponents["default"])("p")(_templateObject5());
 
-var _StyledParagraph = (0, _styledComponents["default"])(Paragraph)(_templateObject9());
+var _StyledParagraph = (0, _styledComponents["default"])(Paragraph)(_templateObject6());
 
-var _StyledP6 = (0, _styledComponents["default"])("p")(_templateObject10(), function (p) {
+var _StyledP6 = (0, _styledComponents["default"])("p")(_templateObject7(), function (p) {
   return p._css2;
 });
 
-var _StyledP7 = (0, _styledComponents["default"])("p")(_templateObject11(), function (p) {
+var _StyledP7 = (0, _styledComponents["default"])("p")(_templateObject8(), function (p) {
   return p._css3;
 });
 
-var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject12(), function (props) {
+var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject9(), function (props) {
   return props.theme.a;
 });
 
-var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject13(), radius);
+var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject10(), radius);
 
-var _StyledP10 = (0, _styledComponents["default"])("p")(_templateObject14(), function (p) {
+var _StyledP10 = (0, _styledComponents["default"])("p")(_templateObject11(), function (p) {
   return p._css4;
 });
 
-var _StyledP11 = (0, _styledComponents["default"])("p")(_templateObject15(), function (props) {
+var _StyledP11 = (0, _styledComponents["default"])("p")(_templateObject12(), function (props) {
   return props.theme.color;
 });
 
-var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject16());
+var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject13());
 
-var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject17());
+var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject14());
