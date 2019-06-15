@@ -1,6 +1,7 @@
 // Most of this code was taken from @satya164's babel-plugin-css-prop
 // @see https://github.com/satya164/babel-plugin-css-prop
 import { addDefault } from '@babel/helper-module-imports'
+import { importLocalName } from '../utils/detectors'
 import { useCssProp } from '../utils/options'
 
 const getName = (node, t) => {
@@ -9,9 +10,7 @@ const getName = (node, t) => {
     return `${getName(node.object, t)}.${node.property.name}`
   }
   throw path.buildCodeFrameError(
-    `Cannot infer name from node with type "${
-      node.type
-    }". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
+    `Cannot infer name from node with type "${node.type}". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
   )
 }
 
@@ -20,17 +19,22 @@ export default t => (path, state) => {
   if (path.node.name.name !== 'css') return
 
   const program = state.file.path
+
   // state.customImportName is passed through from styled-components/macro if it's used
   // since the macro also inserts the import
-  let importName = state.customImportName
-  // Insert import if it doesn't exist yet
+  let importName =
+    state.customImportName || t.identifier(importLocalName('default', state))
+
   const { bindings } = program.scope
-  if (!importName || !bindings[importName.name]) {
-    importName = addDefault(path, 'styled-components', {
-      nameHint: importName ? importName.name : 'styled',
+
+  // Insert import if it doesn't exist yet
+  if (!bindings[importName.name]) {
+    addDefault(path, 'styled-components', {
+      nameHint: 'styled',
     })
+
+    importName = t.identifier(importLocalName('default', state, true))
   }
-  if (!state.customImportName) state.customImportName = importName
 
   const elem = path.parentPath
   const name = getName(elem.node.name, t)
@@ -38,9 +42,13 @@ export default t => (path, state) => {
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
 
-  const styled = t.callExpression(importName, [
-    /^[a-z]/.test(name) ? t.stringLiteral(name) : t.identifier(name),
-  ])
+  let styled
+
+  if (/^[a-z]/.test(name)) {
+    styled = t.memberExpression(importName, t.identifier(name))
+  } else {
+    styled = t.callExpression(importName, [t.identifier(name)])
+  }
 
   let css
 

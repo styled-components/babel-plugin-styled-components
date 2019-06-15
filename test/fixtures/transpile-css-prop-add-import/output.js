@@ -1,17 +1,5 @@
 "use strict";
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n      width: 35em;\n    "]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -27,7 +15,18 @@ var _config = _interopRequireDefault(require("../../../config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// @flow
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n      width: 35em;\n    "]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 var _default = function _default() {
   return <_StyledDiv>
     <_Card.default>
@@ -43,4 +42,4 @@ var _default = function _default() {
 
 exports["default"] = _default;
 
-var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject());
+var _StyledDiv = _styledComponents["default"].div(_templateObject());
