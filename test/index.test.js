@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs'
 import { create } from 'babel-test'
 import { toMatchFile } from 'jest-file-snapshot'
 

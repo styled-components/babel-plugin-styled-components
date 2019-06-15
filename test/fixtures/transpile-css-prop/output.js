@@ -227,39 +227,39 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
-var _StyledP = (0, _styledComponents["default"])("p")(_templateObject());
+var _StyledP = _styledComponents["default"].p(_templateObject());
 
-var _StyledP2 = (0, _styledComponents["default"])("p")(_templateObject2());
+var _StyledP2 = _styledComponents["default"].p(_templateObject2());
 
-var _StyledP3 = (0, _styledComponents["default"])("p")(_templateObject3(), function (p) {
+var _StyledP3 = _styledComponents["default"].p(_templateObject3(), function (p) {
   return p._css;
 });
 
-var _StyledP4 = (0, _styledComponents["default"])("p")(_templateObject4());
+var _StyledP4 = _styledComponents["default"].p(_templateObject4());
 
-var _StyledP5 = (0, _styledComponents["default"])("p")(_templateObject5());
+var _StyledP5 = _styledComponents["default"].p(_templateObject5());
 
 var _StyledParagraph = (0, _styledComponents["default"])(Paragraph)(_templateObject6());
 
-var _StyledP6 = (0, _styledComponents["default"])("p")(_templateObject7(), function (p) {
+var _StyledP6 = _styledComponents["default"].p(_templateObject7(), function (p) {
   return p._css2;
 });
 
-var _StyledP7 = (0, _styledComponents["default"])("p")(_templateObject8(), function (p) {
+var _StyledP7 = _styledComponents["default"].p(_templateObject8(), function (p) {
   return p._css3;
 });
 
-var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject9(), function (props) {
+var _StyledP8 = _styledComponents["default"].p(_templateObject9(), function (props) {
   return props.theme.a;
 });
 
-var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject10(), radius);
+var _StyledP9 = _styledComponents["default"].p(_templateObject10(), radius);
 
-var _StyledP10 = (0, _styledComponents["default"])("p")(_templateObject11(), function (p) {
+var _StyledP10 = _styledComponents["default"].p(_templateObject11(), function (p) {
   return p._css4;
 });
 
-var _StyledP11 = (0, _styledComponents["default"])("p")(_templateObject12(), function (props) {
+var _StyledP11 = _styledComponents["default"].p(_templateObject12(), function (props) {
   return props.theme.color;
 });
 

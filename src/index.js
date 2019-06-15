@@ -10,8 +10,8 @@ export default function({ types: t }) {
   return {
     inherits: syntax,
     visitor: {
-      Program(programPath, state) {
-        programPath.traverse(
+      Program(path, state) {
+        path.traverse(
           {
             JSXAttribute(path, state) {
               transpileCssProp(t)(path, state)

@@ -42,4 +42,4 @@ var _default = function _default() {
 
 exports["default"] = _default;
 
-var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject());
+var _StyledDiv = _styledComponents["default"].div(_templateObject());

@@ -10,10 +10,10 @@ export const isValidTopLevelImport = x =>
 
 const localNameCache = {}
 
-const importLocalName = (name, state) => {
+export const importLocalName = (name, state, bypassCache = false) => {
   const cacheKey = name + state.file.opts.filename
 
-  if (localNameCache[cacheKey]) {
+  if (!bypassCache && localNameCache[cacheKey]) {
     return localNameCache[cacheKey]
   }
 
@@ -45,7 +45,9 @@ const importLocalName = (name, state) => {
       },
     },
   })
+
   localNameCache[cacheKey] = localName
+
   return localName
 }
 

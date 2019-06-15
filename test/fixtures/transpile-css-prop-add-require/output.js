@@ -3,20 +3,30 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports["default"] = void 0;
 
-var _styledComponents = require("styled-components");
+var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _styledComponents2 = _interopRequireDefault(_styledComponents);
+var _react = _interopRequireDefault(require("react"));
 
-var _react = require("react");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _react2 = _interopRequireDefault(_react);
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n      width: 35em;\n    "]);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  _templateObject = function _templateObject() {
+    return data;
+  };
 
-// @flow
-exports.default = () => <_StyledDiv />;
+  return data;
+}
 
-var _StyledDiv = (0, _styledComponents2.default)("div")`
-      width: 35em;
-    `;
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var _default = function _default() {
+  return <_StyledDiv />;
+};
+
+exports["default"] = _default;
+
+var _StyledDiv = _styledComponents["default"].div(_templateObject());
