@@ -24,3 +24,17 @@ const WrappedComponent = styled(Inner).withConfig({
   displayName: "WrappedComponent",
   componentId: "sc-1cza72q-5"
 })``;
+const WrappedComponent2 = styled.div.withConfig({
+  displayName: "WrappedComponent2",
+  componentId: "sc-1cza72q-6"
+})({});
+const WrappedComponent3 = styled(Inner).withConfig({
+  displayName: "WrappedComponent3",
+  componentId: "sc-1cza72q-7"
+})({});
+const WrappedComponent4 = styled(Inner).attrs(() => ({
+  something: 'else'
+})).withConfig({
+  displayName: "WrappedComponent4",
+  componentId: "sc-1cza72q-8"
+})({});
