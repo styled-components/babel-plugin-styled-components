@@ -137,9 +137,18 @@ export default t => (path, state) => {
   if (
     path.node.tag
       ? isStyled(t)(path.node.tag, state)
-      : isStyled(t)(path.node.callee, state) &&
-        path.node.callee.property &&
-        path.node.callee.property.name !== 'withConfig'
+      : /* styled()`` */ (isStyled(t)(path.node.callee, state) &&
+          path.node.callee.property &&
+          path.node.callee.property.name !== 'withConfig') ||
+        // styled(x)({})
+        (isStyled(t)(path.node.callee, state) &&
+          !t.isMemberExpression(path.node.callee.callee)) ||
+        // styled(x).attrs()({})
+        (isStyled(t)(path.node.callee, state) &&
+          t.isMemberExpression(path.node.callee.callee) &&
+          path.node.callee.callee.property &&
+          path.node.callee.callee.property.name &&
+          path.node.callee.callee.property.name !== 'withConfig')
   ) {
     const displayName =
       useDisplayName(state) &&
