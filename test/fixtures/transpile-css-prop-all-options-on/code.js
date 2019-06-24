@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import SomeComponent from '../SomeComponentPath'
+const { SomeOtherComponent } = require('../SomeOtherComponentPath')
 
 /**
  * control
@@ -133,3 +135,22 @@ const ObjectPropMixedInputs = p => {
     </p>
   )
 }
+
+/* styled component defined after function it's used in */
+
+const EarlyUsageComponent = p => <Thing3 css="color: red;" />
+
+const Thing3 = styled.div`
+  color: blue;
+`
+
+const EarlyUsageComponent2 = p => <Thing4 css="color: red;" />
+
+function Thing4(props) {
+  return <div {...props} />
+}
+
+/* insert before usage for non-local scope styled HOC targets */
+
+const ImportedComponentUsage = p => <SomeComponent css="color: red;" />
+const RequiredComponentUsage = p => <SomeOtherComponent css="color: red;" />

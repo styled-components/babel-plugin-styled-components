@@ -98,3 +98,11 @@ const CustomCompWithDotLowerCase = p => (
 )
 
 const CustomElement = p => <button-ghost css="flex: 1">H</button-ghost>
+
+/* styled component defined after function it's used in */
+
+const EarlyUsageComponent = p => <Thing3 css="color: red;" />
+
+const Thing3 = styled.div`
+  color: blue;
+`

@@ -45,11 +45,20 @@ export default t => (path, state) => {
   )
 
   let styled
+  let injector
 
   if (TAG_NAME_REGEXP.test(name)) {
     styled = t.memberExpression(importName, t.identifier(name))
   } else {
     styled = t.callExpression(importName, [t.identifier(name)])
+
+    if (bindings[name] && !t.isImportDeclaration(bindings[name].path.parent)) {
+      injector = nodeToInsert =>
+        (t.isVariableDeclaration(bindings[name].path.parent)
+          ? bindings[name].path.parentPath
+          : bindings[name].path
+        ).insertAfter(nodeToInsert)
+    }
   }
 
   let css
@@ -179,9 +188,17 @@ export default t => (path, state) => {
     }, [])
   }
 
-  // Add the tagged template expression and then requeue the newly added node
-  // so Babel runs over it again
-  const length = program.node.body.push(
+  if (!injector) {
+    let parent = elem
+
+    while (!t.isProgram(parent.parentPath)) {
+      parent = parent.parentPath
+    }
+
+    injector = nodeToInsert => parent.insertBefore(nodeToInsert)
+  }
+
+  injector(
     t.variableDeclaration('var', [
       t.variableDeclarator(
         id,
@@ -191,6 +208,4 @@ export default t => (path, state) => {
       ),
     ])
   )
-
-  program.requeue(program.get('body')[length - 1])
 }

@@ -4,6 +4,26 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _templateObject17() {
+  var data = _taggedTemplateLiteral(["color: red;"]);
+
+  _templateObject17 = function _templateObject17() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject16() {
+  var data = _taggedTemplateLiteral(["\n  color: blue;\n"]);
+
+  _templateObject16 = function _templateObject16() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject15() {
   var data = _taggedTemplateLiteral(["flex: 1"]);
 
@@ -156,6 +176,8 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+var _StyledP = _styledComponents["default"].p(_templateObject());
+
 /*
  * Basic fixtures
  */
@@ -163,19 +185,29 @@ var StaticString = function StaticString(p) {
   return <_StyledP>A</_StyledP>;
 };
 
+var _StyledP2 = _styledComponents["default"].p(_templateObject2());
+
 var StaticTemplate = function StaticTemplate(p) {
   return <_StyledP2>
     A
   </_StyledP2>;
 };
 
+var _StyledP3 = _styledComponents["default"].p({
+  color: 'blue'
+});
+
 var ObjectProp = function ObjectProp(p) {
   return <_StyledP3>A</_StyledP3>;
 };
 
+var _StyledP4 = _styledComponents["default"].p(_templateObject3());
+
 var NoChildren = function NoChildren(p) {
   return <_StyledP4 />;
 };
+
+var _StyledP5 = _styledComponents["default"].p(_templateObject4());
 
 var CssHelperProp = function CssHelperProp(p) {
   return <_StyledP5>
@@ -187,19 +219,33 @@ var CssHelperProp = function CssHelperProp(p) {
  */
 
 
+var _StyledParagraph = (0, _styledComponents["default"])(Paragraph)(_templateObject5());
+
 var CustomComp = function CustomComp(p) {
   return <_StyledParagraph>H</_StyledParagraph>;
 };
 
+var _StyledP6 = _styledComponents["default"].p(_templateObject6(), function (p) {
+  return p._css;
+});
+
 var DynamicProp = function DynamicProp(p) {
   return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
 };
+
+var _StyledP7 = _styledComponents["default"].p(_templateObject7(), function (p) {
+  return p._css2;
+});
 
 var LocalInterpolation = function LocalInterpolation(p) {
   return <_StyledP7 _css2={props.bg}>
     H
   </_StyledP7>;
 };
+
+var _StyledP8 = _styledComponents["default"].p(_templateObject8(), function (props) {
+  return props.theme.a;
+});
 
 var FuncInterpolation = function FuncInterpolation(p) {
   return <_StyledP8>
@@ -209,11 +255,17 @@ var FuncInterpolation = function FuncInterpolation(p) {
 
 var radius = 10;
 
+var _StyledP9 = _styledComponents["default"].p(_templateObject9(), radius);
+
 var GlobalInterpolation = function GlobalInterpolation(p) {
   return <_StyledP9>
     H
   </_StyledP9>;
 };
+
+var _StyledP10 = _styledComponents["default"].p(_templateObject10(), function (p) {
+  return p._css3;
+});
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
   return <_StyledP10 _css3={p.color}>
@@ -221,68 +273,46 @@ var LocalCssHelperProp = function LocalCssHelperProp(p) {
   </_StyledP10>;
 };
 
+var _StyledP11 = _styledComponents["default"].p(_templateObject11(), function (props) {
+  return props.theme.color;
+});
+
 var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
   return <_StyledP11>
     A
   </_StyledP11>;
 };
 
+var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject12());
+
 var CustomCompWithDot = function CustomCompWithDot(p) {
   return <_StyledButtonGhost>H</_StyledButtonGhost>;
 };
+
+var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject13());
 
 var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
+var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost)(_templateObject14());
+
 var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
+var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"](_templateObject15());
+
 var CustomElement = function CustomElement(p) {
   return <_StyledButtonGhost3>H</_StyledButtonGhost3>;
 };
+/* styled component defined after function it's used in */
 
-var _StyledP = _styledComponents["default"].p(_templateObject());
 
-var _StyledP2 = _styledComponents["default"].p(_templateObject2());
+var EarlyUsageComponent = function EarlyUsageComponent(p) {
+  return <_StyledThing />;
+};
 
-var _StyledP3 = _styledComponents["default"].p({
-  color: 'blue'
-});
+var Thing3 = styled.div(_templateObject16());
 
-var _StyledP4 = _styledComponents["default"].p(_templateObject3());
-
-var _StyledP5 = _styledComponents["default"].p(_templateObject4());
-
-var _StyledParagraph = (0, _styledComponents["default"])(Paragraph)(_templateObject5());
-
-var _StyledP6 = _styledComponents["default"].p(_templateObject6(), function (p) {
-  return p._css;
-});
-
-var _StyledP7 = _styledComponents["default"].p(_templateObject7(), function (p) {
-  return p._css2;
-});
-
-var _StyledP8 = _styledComponents["default"].p(_templateObject8(), function (props) {
-  return props.theme.a;
-});
-
-var _StyledP9 = _styledComponents["default"].p(_templateObject9(), radius);
-
-var _StyledP10 = _styledComponents["default"].p(_templateObject10(), function (p) {
-  return p._css3;
-});
-
-var _StyledP11 = _styledComponents["default"].p(_templateObject11(), function (props) {
-  return props.theme.color;
-});
-
-var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject12());
-
-var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject13());
-
-var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost)(_templateObject14());
-
-var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"](_templateObject15());
+var _StyledThing = (0, _styledComponents["default"])(Thing3)(_templateObject17());
