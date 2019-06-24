@@ -9,3 +9,5 @@ const WrappedComponent = styled(Inner)``
 const WrappedComponent2 = styled.div({})
 const WrappedComponent3 = styled(Inner)({})
 const WrappedComponent4 = styled(Inner).attrs(() => ({ something: 'else' }))({})
+const WrappedComponent5 = styled.div.attrs(() => ({ something: 'else' }))({})
+const WrappedComponent6 = styled.div.attrs(() => ({ something: 'else' }))``
