@@ -70,6 +70,8 @@ export default t => (path, state) => {
       path.node.value.expression.tag.name === 'css'
     ) {
       css = path.node.value.expression.quasi
+    } else if (t.isObjectExpression(path.node.value.expression)) {
+      css = path.node.value.expression
     } else {
       css = t.templateLiteral(
         [
@@ -90,34 +92,44 @@ export default t => (path, state) => {
     elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
   }
 
-  css.expressions = css.expressions.reduce((acc, ex) => {
-    if (
-      Object.keys(bindings).some(key =>
-        bindings[key].referencePaths.find(p => p.node === ex)
-      ) ||
-      t.isFunctionExpression(ex) ||
-      t.isArrowFunctionExpression(ex)
-    ) {
-      acc.push(ex)
-    } else {
-      const name = path.scope.generateUidIdentifier('css')
-      const p = t.identifier('p')
+  if (!t.isObjectExpression(css)) {
+    css.expressions = css.expressions.reduce((acc, ex) => {
+      if (
+        Object.keys(bindings).some(key =>
+          bindings[key].referencePaths.find(p => p.node === ex)
+        ) ||
+        t.isFunctionExpression(ex) ||
+        t.isArrowFunctionExpression(ex)
+      ) {
+        acc.push(ex)
+      } else {
+        const name = path.scope.generateUidIdentifier('css')
+        const p = t.identifier('p')
 
-      elem.node.attributes.push(
-        t.jSXAttribute(t.jSXIdentifier(name.name), t.jSXExpressionContainer(ex))
-      )
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(name.name),
+            t.jSXExpressionContainer(ex)
+          )
+        )
 
-      acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
-    }
+        acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
+      }
 
-    return acc
-  }, [])
+      return acc
+    }, [])
+  }
 
   // Add the tagged template expression and then requeue the newly added node
   // so Babel runs over it again
   const length = program.node.body.push(
     t.variableDeclaration('var', [
-      t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
+      t.variableDeclarator(
+        id,
+        t.isObjectExpression(css)
+          ? t.callExpression(styled, [css])
+          : t.taggedTemplateExpression(styled, css)
+      ),
     ])
   )
 
