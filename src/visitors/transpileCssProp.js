@@ -94,33 +94,8 @@ export default t => (path, state) => {
     elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
   }
 
-  if (!t.isObjectExpression(css)) {
-    css.expressions = css.expressions.reduce((acc, ex) => {
-      if (
-        Object.keys(bindings).some(key =>
-          bindings[key].referencePaths.find(p => p.node === ex)
-        ) ||
-        t.isFunctionExpression(ex) ||
-        t.isArrowFunctionExpression(ex)
-      ) {
-        acc.push(ex)
-      } else {
-        const name = path.scope.generateUidIdentifier('css')
-        const p = t.identifier('p')
-
-        elem.node.attributes.push(
-          t.jSXAttribute(
-            t.jSXIdentifier(name.name),
-            t.jSXExpressionContainer(ex)
-          )
-        )
-
-        acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
-      }
-
-      return acc
-    }, [])
-  } else {
+  // object syntax
+  if (t.isObjectExpression(css)) {
     /**
      * for objects as CSS props, we have to recurse through the object and replace any
      * object value scope references with generated props similar to how the template
@@ -175,6 +150,33 @@ export default t => (path, state) => {
     if (replaceObjectWithPropFunction) {
       css = t.arrowFunctionExpression([p], css)
     }
+  } else {
+    // tagged template literal
+    css.expressions = css.expressions.reduce((acc, ex) => {
+      if (
+        Object.keys(bindings).some(key =>
+          bindings[key].referencePaths.find(p => p.node === ex)
+        ) ||
+        t.isFunctionExpression(ex) ||
+        t.isArrowFunctionExpression(ex)
+      ) {
+        acc.push(ex)
+      } else {
+        const name = path.scope.generateUidIdentifier('css')
+        const p = t.identifier('p')
+
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(name.name),
+            t.jSXExpressionContainer(ex)
+          )
+        )
+
+        acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
+      }
+
+      return acc
+    }, [])
   }
 
   // Add the tagged template expression and then requeue the newly added node
