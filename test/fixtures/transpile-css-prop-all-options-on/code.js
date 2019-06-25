@@ -112,3 +112,24 @@ const CustomCompWithDotLowerCase = p => (
 )
 
 const CustomElement = p => <button-ghost css="flex: 1">H</button-ghost>
+
+const globalVar = '"foo"'
+const getAfterValue = () => '"bar"'
+
+const ObjectPropMixedInputs = p => {
+  const color = 'red'
+
+  return (
+    <p
+      css={{
+        background: p.background,
+        color,
+        textAlign: 'left',
+        '::before': { content: globalVar },
+        '::after': { content: getAfterValue() },
+      }}
+    >
+      A
+    </p>
+  )
+}

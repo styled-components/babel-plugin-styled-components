@@ -104,6 +104,19 @@ var CustomElement = function CustomElement(p) {
   return <_StyledButtonGhost3>H</_StyledButtonGhost3>;
 };
 
+var globalVar = '"foo"';
+
+var getAfterValue = function getAfterValue() {
+  return '"bar"';
+};
+
+var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
+  var color = 'red';
+  return <_StyledP12 _css4={p.background} _css5={color} _css6={globalVar} _css7={getAfterValue()}>
+      A
+    </_StyledP12>;
+};
+
 var _StyledP = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-2"
@@ -195,3 +208,20 @@ var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"].withConfi
   displayName: "code___StyledButtonGhost3",
   componentId: "sc-7evkve-17"
 })(["flex:1"]);
+
+var _StyledP12 = _styledComponents["default"].p.withConfig({
+  displayName: "code___StyledP12",
+  componentId: "sc-7evkve-18"
+})(function (p) {
+  return {
+    background: p._css4,
+    color: p._css5,
+    textAlign: 'left',
+    '::before': {
+      content: p._css6
+    },
+    '::after': {
+      content: p._css7
+    }
+  };
+});

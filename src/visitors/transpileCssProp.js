@@ -120,6 +120,61 @@ export default t => (path, state) => {
 
       return acc
     }, [])
+  } else {
+    /**
+     * for objects as CSS props, we have to recurse through the object and replace any
+     * object value scope references with generated props similar to how the template
+     * literal transform above creates dynamic interpolations
+     */
+    const p = t.identifier('p')
+    let replaceObjectWithPropFunction = false
+
+    css.properties = css.properties.reduce(function propertiesReducer(
+      acc,
+      property
+    ) {
+      if (t.isObjectExpression(property.value)) {
+        // recurse for objects within objects (e.g. {'::before': { content: x }})
+        property.value.properties = property.value.properties.reduce(
+          propertiesReducer,
+          []
+        )
+
+        acc.push(property)
+      } else if (
+        // if a non-primitive value we have to interpolate it
+        [
+          t.isBigIntLiteral,
+          t.isBooleanLiteral,
+          t.isNullLiteral,
+          t.isNumericLiteral,
+          t.isStringLiteral,
+        ].every(x => !x(property.value))
+      ) {
+        replaceObjectWithPropFunction = true
+
+        const name = path.scope.generateUidIdentifier('css')
+
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(name.name),
+            t.jSXExpressionContainer(property.value)
+          )
+        )
+
+        acc.push(t.objectProperty(property.key, t.memberExpression(p, name)))
+      } else {
+        // some sort of primitive which is safe to pass through as-is
+        acc.push(property)
+      }
+
+      return acc
+    },
+    [])
+
+    if (replaceObjectWithPropFunction) {
+      css = t.arrowFunctionExpression([p], css)
+    }
   }
 
   // Add the tagged template expression and then requeue the newly added node
@@ -128,7 +183,7 @@ export default t => (path, state) => {
     t.variableDeclaration('var', [
       t.variableDeclarator(
         id,
-        t.isObjectExpression(css)
+        t.isObjectExpression(css) || t.isArrowFunctionExpression(css)
           ? t.callExpression(styled, [css])
           : t.taggedTemplateExpression(styled, css)
       ),
