@@ -31,9 +31,7 @@ var StaticTemplate = function StaticTemplate(p) {
 };
 
 var ObjectProp = function ObjectProp(p) {
-  return <_StyledP3 _css={{
-    color: 'blue'
-  }}>A</_StyledP3>;
+  return <_StyledP3>A</_StyledP3>;
 };
 
 var NoChildren = function NoChildren(p) {
@@ -55,11 +53,11 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_StyledP6 _css2={props.cssText}>H</_StyledP6>;
+  return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_StyledP7 _css3={props.bg}>
+  return <_StyledP7 _css2={props.bg}>
     H
   </_StyledP7>;
 };
@@ -79,7 +77,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
 };
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 _css4={p.color}>
+  return <_StyledP10 _css3={p.color}>
     A
   </_StyledP10>;
 };
@@ -98,6 +96,27 @@ var NestedCompWithDot = function NestedCompWithDot(p) {
   return <_StyledButtonGhostNew>H</_StyledButtonGhostNew>;
 };
 
+var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
+  return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
+};
+
+var CustomElement = function CustomElement(p) {
+  return <_StyledButtonGhost3>H</_StyledButtonGhost3>;
+};
+
+var globalVar = '"foo"';
+
+var getAfterValue = function getAfterValue() {
+  return '"bar"';
+};
+
+var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
+  var color = 'red';
+  return <_StyledP12 _css4={p.background} _css5={color} _css6={globalVar} _css7={getAfterValue()}>
+      A
+    </_StyledP12>;
+};
+
 var _StyledP = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-2"
@@ -111,8 +130,8 @@ var _StyledP2 = _styledComponents["default"].p.withConfig({
 var _StyledP3 = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP3",
   componentId: "sc-7evkve-4"
-})(["", ""], function (p) {
-  return p._css;
+})({
+  color: 'blue'
 });
 
 var _StyledP4 = _styledComponents["default"].p.withConfig({
@@ -134,14 +153,14 @@ var _StyledP6 = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP6",
   componentId: "sc-7evkve-8"
 })(["", ""], function (p) {
-  return p._css2;
+  return p._css;
 });
 
 var _StyledP7 = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP7",
   componentId: "sc-7evkve-9"
 })(["background:", ";"], function (p) {
-  return p._css3;
+  return p._css2;
 });
 
 var _StyledP8 = _styledComponents["default"].p.withConfig({
@@ -160,7 +179,7 @@ var _StyledP10 = _styledComponents["default"].p.withConfig({
   displayName: "code___StyledP10",
   componentId: "sc-7evkve-12"
 })(["color:", ";"], function (p) {
-  return p._css4;
+  return p._css3;
 });
 
 var _StyledP11 = _styledComponents["default"].p.withConfig({
@@ -179,3 +198,30 @@ var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New).
   displayName: "code___StyledButtonGhostNew",
   componentId: "sc-7evkve-15"
 })(["flex:1"]);
+
+var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost).withConfig({
+  displayName: "code___StyledButtonGhost2",
+  componentId: "sc-7evkve-16"
+})(["flex:1"]);
+
+var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"].withConfig({
+  displayName: "code___StyledButtonGhost3",
+  componentId: "sc-7evkve-17"
+})(["flex:1"]);
+
+var _StyledP12 = _styledComponents["default"].p.withConfig({
+  displayName: "code___StyledP12",
+  componentId: "sc-7evkve-18"
+})(function (p) {
+  return {
+    background: p._css4,
+    color: p._css5,
+    textAlign: 'left',
+    '::before': {
+      content: p._css6
+    },
+    '::after': {
+      content: p._css7
+    }
+  };
+});

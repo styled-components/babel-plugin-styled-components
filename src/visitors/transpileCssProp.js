@@ -4,6 +4,8 @@ import { addDefault } from '@babel/helper-module-imports'
 import { importLocalName } from '../utils/detectors'
 import { useCssProp } from '../utils/options'
 
+const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
+
 const getName = (node, t) => {
   if (typeof node.name === 'string') return node.name
   if (t.isJSXMemberExpression(node)) {
@@ -44,7 +46,7 @@ export default t => (path, state) => {
 
   let styled
 
-  if (/^[a-z]/.test(name)) {
+  if (TAG_NAME_REGEXP.test(name)) {
     styled = t.memberExpression(importName, t.identifier(name))
   } else {
     styled = t.callExpression(importName, [t.identifier(name)])
@@ -70,6 +72,8 @@ export default t => (path, state) => {
       path.node.value.expression.tag.name === 'css'
     ) {
       css = path.node.value.expression.quasi
+    } else if (t.isObjectExpression(path.node.value.expression)) {
+      css = path.node.value.expression
     } else {
       css = t.templateLiteral(
         [
@@ -90,34 +94,101 @@ export default t => (path, state) => {
     elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
   }
 
-  css.expressions = css.expressions.reduce((acc, ex) => {
-    if (
-      Object.keys(bindings).some(key =>
-        bindings[key].referencePaths.find(p => p.node === ex)
-      ) ||
-      t.isFunctionExpression(ex) ||
-      t.isArrowFunctionExpression(ex)
+  // object syntax
+  if (t.isObjectExpression(css)) {
+    /**
+     * for objects as CSS props, we have to recurse through the object and replace any
+     * object value scope references with generated props similar to how the template
+     * literal transform above creates dynamic interpolations
+     */
+    const p = t.identifier('p')
+    let replaceObjectWithPropFunction = false
+
+    css.properties = css.properties.reduce(function propertiesReducer(
+      acc,
+      property
     ) {
-      acc.push(ex)
-    } else {
-      const name = path.scope.generateUidIdentifier('css')
-      const p = t.identifier('p')
+      if (t.isObjectExpression(property.value)) {
+        // recurse for objects within objects (e.g. {'::before': { content: x }})
+        property.value.properties = property.value.properties.reduce(
+          propertiesReducer,
+          []
+        )
 
-      elem.node.attributes.push(
-        t.jSXAttribute(t.jSXIdentifier(name.name), t.jSXExpressionContainer(ex))
-      )
+        acc.push(property)
+      } else if (
+        // if a non-primitive value we have to interpolate it
+        [
+          t.isBigIntLiteral,
+          t.isBooleanLiteral,
+          t.isNullLiteral,
+          t.isNumericLiteral,
+          t.isStringLiteral,
+        ].every(x => !x(property.value))
+      ) {
+        replaceObjectWithPropFunction = true
 
-      acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
+        const name = path.scope.generateUidIdentifier('css')
+
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(name.name),
+            t.jSXExpressionContainer(property.value)
+          )
+        )
+
+        acc.push(t.objectProperty(property.key, t.memberExpression(p, name)))
+      } else {
+        // some sort of primitive which is safe to pass through as-is
+        acc.push(property)
+      }
+
+      return acc
+    },
+    [])
+
+    if (replaceObjectWithPropFunction) {
+      css = t.arrowFunctionExpression([p], css)
     }
+  } else {
+    // tagged template literal
+    css.expressions = css.expressions.reduce((acc, ex) => {
+      if (
+        Object.keys(bindings).some(key =>
+          bindings[key].referencePaths.find(p => p.node === ex)
+        ) ||
+        t.isFunctionExpression(ex) ||
+        t.isArrowFunctionExpression(ex)
+      ) {
+        acc.push(ex)
+      } else {
+        const name = path.scope.generateUidIdentifier('css')
+        const p = t.identifier('p')
 
-    return acc
-  }, [])
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(name.name),
+            t.jSXExpressionContainer(ex)
+          )
+        )
+
+        acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
+      }
+
+      return acc
+    }, [])
+  }
 
   // Add the tagged template expression and then requeue the newly added node
   // so Babel runs over it again
   const length = program.node.body.push(
     t.variableDeclaration('var', [
-      t.variableDeclarator(id, t.taggedTemplateExpression(styled, css)),
+      t.variableDeclarator(
+        id,
+        t.isObjectExpression(css) || t.isArrowFunctionExpression(css)
+          ? t.callExpression(styled, [css])
+          : t.taggedTemplateExpression(styled, css)
+      ),
     ])
   )
 
