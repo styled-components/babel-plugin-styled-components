@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 const WithAttrs = styled.div.attrs({
   some: 'value'
 }).withConfig({
