@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 const Test = styled.div.withConfig({
   displayName: "Test",
   componentId: "sc-1cza72q-0"

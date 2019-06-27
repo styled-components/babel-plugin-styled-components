@@ -24,19 +24,20 @@ export default t => (path, state) => {
 
   // state.customImportName is passed through from styled-components/macro if it's used
   // since the macro also inserts the import
-  let importName =
-    state.customImportName || t.identifier(importLocalName('default', state))
+  let importName = state.customImportName || importLocalName('default', state)
 
   const { bindings } = program.scope
 
   // Insert import if it doesn't exist yet
-  if (!bindings[importName.name]) {
+  if (!importName || !bindings[importName.name]) {
     addDefault(path, 'styled-components', {
       nameHint: 'styled',
     })
 
     importName = t.identifier(importLocalName('default', state, true))
   }
+
+  if (!t.isIdentifier(importName)) importName = t.identifier(importName)
 
   const elem = path.parentPath
   const name = getName(elem.node.name, t)

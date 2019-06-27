@@ -1,3 +1,4 @@
+import styled, { css } from 'styled-components';
 const partial =
 /*#__PURE__*/
 css(["color:red;"]);

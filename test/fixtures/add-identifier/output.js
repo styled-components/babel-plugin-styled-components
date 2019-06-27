@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 const Test = styled.div.withConfig({
   componentId: "sc-1289dod-0"
 })`width:100%;`;

@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 const Test =
 /*#__PURE__*/
 styled.div.withConfig({
