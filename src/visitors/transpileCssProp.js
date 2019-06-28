@@ -134,7 +134,9 @@ export default t => (path, state) => {
           t.isNullLiteral,
           t.isNumericLiteral,
           t.isStringLiteral,
-        ].every(x => !x(property.value))
+        ]
+          .filter(Boolean) // older versions of babel might not have bigint support baked in
+          .every(x => !x(property.value))
       ) {
         replaceObjectWithPropFunction = true
 
