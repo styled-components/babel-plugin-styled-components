@@ -29,7 +29,7 @@ export default t => (path, state) => {
   const { bindings } = program.scope
 
   // Insert import if it doesn't exist yet
-  if (!importName || !bindings[importName.name]) {
+  if (!importName || !bindings[importName.name] || !bindings[importName]) {
     addDefault(path, 'styled-components', {
       nameHint: 'styled',
     })
