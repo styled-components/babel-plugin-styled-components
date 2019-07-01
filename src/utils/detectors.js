@@ -13,7 +13,7 @@ const localNameCache = {}
 export const importLocalName = (name, state, bypassCache = false) => {
   const cacheKey = name + state.file.opts.filename
 
-  if (!bypassCache && localNameCache[cacheKey]) {
+  if (!bypassCache && cacheKey in localNameCache) {
     return localNameCache[cacheKey]
   }
 
