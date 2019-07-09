@@ -5,6 +5,7 @@ import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import transpileCssProp from './visitors/transpileCssProp'
+import shimUnusedCssTag from './visitors/shimUnusedCssTag'
 
 export default function({ types: t }) {
   return {
@@ -28,6 +29,7 @@ export default function({ types: t }) {
         pureAnnotation(t)(path, state)
       },
       TaggedTemplateExpression(path, state) {
+        shimUnusedCssTag(t)(path, state)
         minify(t)(path, state)
         displayNameAndId(t)(path, state)
         templateLiterals(t)(path, state)
