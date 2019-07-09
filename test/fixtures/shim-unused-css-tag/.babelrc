@@ -1,9 +1,12 @@
 {
+  "presets": ["@babel/preset-env"],
   "plugins": [
     [
       "../../../src",
       {
-        "shimCSSTag": true
+        "shimCSSTag": true,
+        "transpileTemplateLiterals": true,
+        "minify": true
       }
     ]
   ]
