@@ -10,7 +10,7 @@ var Named = _styledComponents["default"].div.withConfig({
 
 var NamedWithInterpolation = _styledComponents["default"].div.withConfig({
   displayName: "code__NamedWithInterpolation"
-})(["\n  color: ", ";\n"], function (color) {
+})(["\n  color: ", ";\n"], function (props) {
   return props.color;
 });
 
