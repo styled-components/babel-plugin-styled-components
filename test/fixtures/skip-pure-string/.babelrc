@@ -4,7 +4,7 @@
     [
       "../../../src",
       {
-        "shimCSSTag": true,
+        "skipPureString": true,
         "transpileTemplateLiterals": true,
         "minify": true
       }
