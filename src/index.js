@@ -29,8 +29,8 @@ export default function({ types: t }) {
         pureAnnotation(t)(path, state)
       },
       TaggedTemplateExpression(path, state) {
-        shimUnusedCssTag(t)(path, state)
         minify(t)(path, state)
+        shimUnusedCssTag(t)(path, state)
         displayNameAndId(t)(path, state)
         templateLiterals(t)(path, state)
         pureAnnotation(t)(path, state)
