@@ -3,8 +3,7 @@
     [
       "../../../src",
       {
-        "pure": true,
-        "shimCSSTag": false
+        "shimCSSTag": true
       }
     ]
   ]

@@ -14,3 +14,5 @@ export const useTranspileTemplateLiterals = state =>
 export const usePureAnnotation = state => getOption(state, 'pure', false)
 
 export const useCssProp = state => getOption(state, 'cssProp', true)
+
+export const useShimUnusedCssTag = state => getOption(state, 'shimCSSTag', true)
