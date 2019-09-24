@@ -5,6 +5,7 @@ import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import transpileCssProp from './visitors/transpileCssProp'
+import pureWrapStaticProps from './visitors/pureWrapStaticProps'
 
 export default function({ types: t }) {
   return {
@@ -32,6 +33,16 @@ export default function({ types: t }) {
         displayNameAndId(t)(path, state)
         templateLiterals(t)(path, state)
         pureAnnotation(t)(path, state)
+      },
+      FunctionDeclaration(path, state) {
+        // technically this is more like,
+        // "mark pure if it's a function component that consumes a styled component and also has static properties",
+        // but that's rather long ;)
+        pureWrapStaticProps(t)(path, state)
+      },
+      VariableDeclarator(path, state) {
+        // same thing for arrow functions
+        pureWrapStaticProps(t)(path, state)
       },
     },
   }

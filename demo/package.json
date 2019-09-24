@@ -1,0 +1,6 @@
+{
+  "name": "babel-pugin-styled-components-demo",
+  "scripts": {
+    "transpile": "../node_modules/.bin/babel demoComponents.js"
+  }
+}
