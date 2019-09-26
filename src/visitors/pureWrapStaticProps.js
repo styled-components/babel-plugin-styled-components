@@ -75,13 +75,13 @@ export default t => (componentPath, state, isStyledComponent = false) => {
     // get or construct the component node to put inside the IIFE depending on whether it's a
     // function declaration or variable declaration (i.e. styled component or arrow function)
     const componentNode = componentPath.isVariableDeclarator()
-      ? t.VariableDeclaration('const', [componentPath.node])
+      ? t.variableDeclaration('const', [componentPath.node])
       : componentPath.node
 
     const componentAndStaticProperties = [
       componentNode,
       ...staticProperties,
-      t.ReturnStatement(componentNameIdentifier),
+      t.returnStatement(componentNameIdentifier),
     ]
 
     const iife = buildIIFE({
@@ -91,21 +91,21 @@ export default t => (componentPath, state, isStyledComponent = false) => {
     annotateAsPure(iife.expression)
 
     // replace the original function node with the IIFE
-    const declarator = t.VariableDeclarator(
+    const declarator = t.variableDeclarator(
       componentNameIdentifier,
       iife.expression
     )
 
     const { parentPath } = componentPath
     if (parentPath.isExportDefaultDeclaration()) {
-      parentPath.replaceWith(t.VariableDeclaration('const', [declarator]))
+      parentPath.replaceWith(t.variableDeclaration('const', [declarator]))
       parentPath.insertAfter(
-        t.ExportDefaultDeclaration(componentNameIdentifier)
+        t.exportDefaultDeclaration(componentNameIdentifier)
       )
     } else {
       componentPath.replaceWith(
         componentPath.isStatement()
-          ? t.VariableDeclaration('const', [declarator])
+          ? t.variableDeclaration('const', [declarator])
           : declarator
       )
     }

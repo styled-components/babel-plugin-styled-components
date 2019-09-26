@@ -43,6 +43,7 @@
   "scripts": {
     "clean": "rimraf lib",
     "style": "prettier --write src/**/*.js",
+    "prebuild": "yarn clean",
     "build": "babel src -d lib",
     "watch": "yarn build -w",
     "test": "jest",

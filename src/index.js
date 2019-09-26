@@ -1,5 +1,6 @@
 import syntax from 'babel-plugin-syntax-jsx'
 import pureAnnotation from './visitors/pure'
+import pureInlineCalculations from './visitors/pureInlineCalculations'
 import minify from './visitors/minify'
 import displayNameAndId from './visitors/displayNameAndId'
 import templateLiterals from './visitors/templateLiterals'
@@ -29,6 +30,7 @@ export default function({ types: t }) {
         pureAnnotation(t)(path, state)
       },
       TaggedTemplateExpression(path, state) {
+        pureInlineCalculations(t)(path, state)
         minify(t)(path, state)
         displayNameAndId(t)(path, state)
         templateLiterals(t)(path, state)
