@@ -49,7 +49,7 @@ export default t => (path, state) => {
   let injector
 
   if (TAG_NAME_REGEXP.test(name)) {
-    styled = t.memberExpression(importName, t.identifier(name))
+    styled = t.callExpression(importName, [t.stringLiteral(name)])
   } else {
     styled = t.callExpression(importName, [t.identifier(name)])
 
