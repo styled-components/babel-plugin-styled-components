@@ -31,7 +31,7 @@ var Thing2 = (0, _styledComponents["default"])(Thing).withConfig({
  * Basic fixtures
  */
 
-var _StyledP = _styledComponents["default"].p.withConfig({
+var _StyledP = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-3"
 })(["flex:1;"]);
@@ -40,7 +40,7 @@ var StaticString = function StaticString(p) {
   return <_StyledP>A</_StyledP>;
 };
 
-var _StyledP2 = _styledComponents["default"].p.withConfig({
+var _StyledP2 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP2",
   componentId: "sc-7evkve-4"
 })(["flex:1;"]);
@@ -51,7 +51,7 @@ var StaticTemplate = function StaticTemplate(p) {
   </_StyledP2>;
 };
 
-var _StyledP3 = _styledComponents["default"].p.withConfig({
+var _StyledP3 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP3",
   componentId: "sc-7evkve-5"
 })({
@@ -62,7 +62,7 @@ var ObjectProp = function ObjectProp(p) {
   return <_StyledP3>A</_StyledP3>;
 };
 
-var _StyledP4 = _styledComponents["default"].p.withConfig({
+var _StyledP4 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP4",
   componentId: "sc-7evkve-6"
 })(["flex:1;"]);
@@ -71,7 +71,7 @@ var NoChildren = function NoChildren(p) {
   return <_StyledP4 />;
 };
 
-var _StyledP5 = _styledComponents["default"].p.withConfig({
+var _StyledP5 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP5",
   componentId: "sc-7evkve-7"
 })(["color:blue;"]);
@@ -95,7 +95,7 @@ var CustomComp = function CustomComp(p) {
   return <_StyledParagraph>H</_StyledParagraph>;
 };
 
-var _StyledP6 = _styledComponents["default"].p.withConfig({
+var _StyledP6 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP6",
   componentId: "sc-7evkve-9"
 })(["", ""], function (p) {
@@ -106,7 +106,7 @@ var DynamicProp = function DynamicProp(p) {
   return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
 };
 
-var _StyledP7 = _styledComponents["default"].p.withConfig({
+var _StyledP7 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP7",
   componentId: "sc-7evkve-10"
 })(["background:", ";"], function (p) {
@@ -119,7 +119,7 @@ var LocalInterpolation = function LocalInterpolation(p) {
   </_StyledP7>;
 };
 
-var _StyledP8 = _styledComponents["default"].p.withConfig({
+var _StyledP8 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP8",
   componentId: "sc-7evkve-11"
 })(["color:", ";"], function (props) {
@@ -134,7 +134,7 @@ var FuncInterpolation = function FuncInterpolation(p) {
 
 var radius = 10;
 
-var _StyledP9 = _styledComponents["default"].p.withConfig({
+var _StyledP9 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP9",
   componentId: "sc-7evkve-12"
 })(["border-radius:", "px;"], radius);
@@ -145,7 +145,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
   </_StyledP9>;
 };
 
-var _StyledP10 = _styledComponents["default"].p.withConfig({
+var _StyledP10 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP10",
   componentId: "sc-7evkve-13"
 })(["color:", ";"], function (p) {
@@ -158,7 +158,7 @@ var LocalCssHelperProp = function LocalCssHelperProp(p) {
   </_StyledP10>;
 };
 
-var _StyledP11 = _styledComponents["default"].p.withConfig({
+var _StyledP11 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP11",
   componentId: "sc-7evkve-14"
 })(["color:", ";"], function (props) {
@@ -198,7 +198,7 @@ var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
-var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"].withConfig({
+var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost").withConfig({
   displayName: "code___StyledButtonGhost3",
   componentId: "sc-7evkve-18"
 })(["flex:1"]);
@@ -213,7 +213,7 @@ var getAfterValue = function getAfterValue() {
   return '"bar"';
 };
 
-var _StyledP12 = _styledComponents["default"].p.withConfig({
+var _StyledP12 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP12",
   componentId: "sc-7evkve-19"
 })(function (p) {
