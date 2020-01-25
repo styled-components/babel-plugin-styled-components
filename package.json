@@ -22,11 +22,11 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-test": "^0.2.1",
-    "jest": "^24.8.0",
+    "jest": "^25.1.0",
     "jest-file-snapshot": "^0.3.6",
     "prettier": "^1.18.2",
-    "rimraf": "^2.6.3",
-    "styled-components": "^4.3.1"
+    "rimraf": "^3.0.0",
+    "styled-components": "^5.0.0"
   },
   "dependencies": {
     "@babel/helper-annotate-as-pure": "^7.0.0",
