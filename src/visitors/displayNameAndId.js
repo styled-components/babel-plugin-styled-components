@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import { useFileName, useFolderName, useDisplayName, useSSR } from '../utils/options'
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
 import hash from '../utils/hash'
@@ -48,21 +48,26 @@ const addConfig = t => (path, displayName, componentId) => {
   }
 }
 
-const getBlockName = file => {
+const getBlockName = (file, state) => {
+  if (state && useFolderName(state)) return getFolderName(file)
+
   const name = path.basename(
     file.opts.filename,
     path.extname(file.opts.filename)
   )
+
   return name !== 'index'
     ? name
-    : path.basename(path.dirname(file.opts.filename))
+    : getFolderName(file)
 }
+
+const getFolderName = file => path.basename(path.dirname(file.opts.filename))
 
 const getDisplayName = t => (path, state) => {
   const { file } = state
   const componentName = getName(t)(path)
   if (file) {
-    const blockName = getBlockName(file)
+    const blockName = getBlockName(file, state)
     if (blockName === componentName) {
       return componentName
     }
