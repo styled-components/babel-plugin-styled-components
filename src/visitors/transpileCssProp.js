@@ -2,7 +2,7 @@
 // @see https://github.com/satya164/babel-plugin-css-prop
 import { addDefault } from '@babel/helper-module-imports'
 import { importLocalName } from '../utils/detectors'
-import { useCssProp } from '../utils/options'
+import { useCssProp, isNative } from '../utils/options'
 
 const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
 
@@ -30,7 +30,7 @@ export default t => (path, state) => {
 
   // Insert import if it doesn't exist yet
   if (!importName || !bindings[importName.name] || !bindings[importName]) {
-    addDefault(path, 'styled-components', {
+    addDefault(path, isNative(state) ? 'styled-components/native' : 'styled-components', {
       nameHint: 'styled',
     })
 

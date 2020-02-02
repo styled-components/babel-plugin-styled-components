@@ -14,3 +14,4 @@ export const useTranspileTemplateLiterals = state =>
 export const usePureAnnotation = state => getOption(state, 'pure', false)
 
 export const useCssProp = state => getOption(state, 'cssProp', true)
+export const isNative = state => getOption(state, 'isNative', false)
