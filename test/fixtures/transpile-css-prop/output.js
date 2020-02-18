@@ -4,6 +4,36 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _templateObject20() {
+  var data = _taggedTemplateLiteral(["", ""]);
+
+  _templateObject20 = function _templateObject20() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject19() {
+  var data = _taggedTemplateLiteral(["\n  font-size: 122px;\n"]);
+
+  _templateObject19 = function _templateObject19() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject18() {
+  var data = _taggedTemplateLiteral(["\n  color: tomato;\n"]);
+
+  _templateObject18 = function _templateObject18() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject17() {
   var data = _taggedTemplateLiteral(["color: red;"]);
 
@@ -316,3 +346,14 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 var Thing3 = styled.div(_templateObject16());
 
 var _StyledThing = (0, _styledComponents["default"])(Thing3)(_templateObject17());
+
+var styledMixin1 = css(_templateObject18());
+var styledMixin2 = css(_templateObject19());
+
+var _StyledP12 = (0, _styledComponents["default"])("p")(_templateObject20(), function (p) {
+  return p._css4;
+});
+
+var ArrayCssHelperProp = function ArrayCssHelperProp(p) {
+  return <_StyledP12 _css4={[styledMixin1, styledMixin2]}>A</_StyledP12>;
+};
