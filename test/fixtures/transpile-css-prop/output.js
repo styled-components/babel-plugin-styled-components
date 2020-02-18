@@ -15,7 +15,7 @@ function _templateObject20() {
 }
 
 function _templateObject19() {
-  var data = _taggedTemplateLiteral(["\n  font-size: 122px;\n"]);
+  var data = _taggedTemplateLiteral(["\n  font-size: 10px;\n"]);
 
   _templateObject19 = function _templateObject19() {
     return data;
@@ -25,7 +25,7 @@ function _templateObject19() {
 }
 
 function _templateObject18() {
-  var data = _taggedTemplateLiteral(["\n  color: tomato;\n"]);
+  var data = _taggedTemplateLiteral(["\n  color: red;\n"]);
 
   _templateObject18 = function _templateObject18() {
     return data;
