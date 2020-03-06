@@ -1,3 +1,5 @@
+This is a fork of [styled-components/babel-plugin-styled-components](https://github.com/styled-components/babel-plugin-styled-components) with the addion of a bug pach that insuare that all styled-components IDs are prefixed with `sc-`
+
 # `babel-plugin-styled-components`
 
 This plugin is a highly recommended supplement to the base styled-components library, offering some useful features:
