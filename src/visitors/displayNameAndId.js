@@ -5,6 +5,7 @@ import {
   useDisplayName,
   useSSR,
   useNamespace,
+  preferOuterAssignment
 } from '../utils/options'
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
@@ -64,8 +65,8 @@ const getBlockName = file => {
 }
 
 const getDisplayName = t => (path, state) => {
-  const { file } = state
-  const componentName = getName(t)(path)
+  const file = useFileName(state) ? state.file : false;
+  const componentName = getName(t)(path, state)
   if (file) {
     const blockName = getBlockName(file)
     if (blockName === componentName) {
@@ -159,7 +160,7 @@ export default t => (path, state) => {
   ) {
     const displayName =
       useDisplayName(state) &&
-      getDisplayName(t)(path, useFileName(state) && state)
+      getDisplayName(t)(path, state)
 
     addConfig(t)(
       path,
