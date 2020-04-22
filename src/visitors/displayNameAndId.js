@@ -1,6 +1,11 @@
 import path from 'path'
 import fs from 'fs'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import {
+  useFileName,
+  useDisplayName,
+  useSSR,
+  useNamespace,
+} from '../utils/options'
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
 import hash from '../utils/hash'
@@ -130,7 +135,9 @@ const getNextId = state => {
 
 const getComponentId = state => {
   // Prefix the identifier with a character because CSS classes cannot start with a number
-  return `${prefixLeadingDigit(getFileHash(state))}-${getNextId(state)}`
+  return `${useNamespace(state)}${prefixLeadingDigit(
+    getFileHash(state)
+  )}-${getNextId(state)}`
 }
 
 export default t => (path, state) => {
