@@ -5,7 +5,7 @@ const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components/primitives',
 ]
 
-export const isValidTopLevelImport = x =>
+export const isValidTopLevelImport = (x) =>
   VALID_TOP_LEVEL_IMPORT_PATHS.includes(x)
 
 const localNameCache = {}
@@ -13,7 +13,9 @@ const localNameCache = {}
 export const importLocalName = (name, state, bypassCache = false) => {
   const cacheKey = name + state.file.opts.filename
 
-  if (!bypassCache && cacheKey in localNameCache) {
+  const foundInCache =
+    cacheKey in localNameCache && localNameCache[cacheKey] !== false
+  if (!bypassCache && foundInCache) {
     return localNameCache[cacheKey]
   }
 
@@ -55,7 +57,7 @@ export const importLocalName = (name, state, bypassCache = false) => {
   return localName
 }
 
-export const isStyled = t => (tag, state) => {
+export const isStyled = (t) => (tag, state) => {
   if (
     t.isCallExpression(tag) &&
     t.isMemberExpression(tag.callee) &&
@@ -90,26 +92,28 @@ export const isStyled = t => (tag, state) => {
   }
 }
 
-export const isCSSHelper = t => (tag, state) =>
+export const isCSSHelper = (t) => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('css', state)
 
-export const isCreateGlobalStyleHelper = t => (tag, state) =>
+export const isCreateGlobalStyleHelper = (t) => (tag, state) =>
   t.isIdentifier(tag) &&
   tag.name === importLocalName('createGlobalStyle', state)
 
-export const isInjectGlobalHelper = t => (tag, state) =>
+export const isInjectGlobalHelper = (t) => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('injectGlobal', state)
 
-export const isKeyframesHelper = t => (tag, state) =>
+export const isKeyframesHelper = (t) => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('keyframes', state)
 
-export const isWithThemeHelper = t => (tag, state) =>
+export const isWithThemeHelper = (t) => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('withTheme', state)
 
-export const isHelper = t => (tag, state) =>
-  isCSSHelper(t)(tag, state) || isKeyframesHelper(t)(tag, state) || isWithThemeHelper(t)(tag, state)
+export const isHelper = (t) => (tag, state) =>
+  isCSSHelper(t)(tag, state) ||
+  isKeyframesHelper(t)(tag, state) ||
+  isWithThemeHelper(t)(tag, state)
 
-export const isPureHelper = t => (tag, state) =>
+export const isPureHelper = (t) => (tag, state) =>
   isCSSHelper(t)(tag, state) ||
   isKeyframesHelper(t)(tag, state) ||
   isCreateGlobalStyleHelper(t)(tag, state) ||
