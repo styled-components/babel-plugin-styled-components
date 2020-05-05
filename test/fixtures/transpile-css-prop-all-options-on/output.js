@@ -247,23 +247,35 @@ var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP13",
   componentId: "sc-7evkve-20"
 })(function (p) {
-  return _objectSpread({}, {
-    color: color
-  }, {
-    background: p._css8,
-    textAlign: 'left',
+  return _objectSpread({}, _objectSpread({
     '::before': {
-      content: p._css9
+      content: p._css8
     },
     '::after': {
+      content: p._css9
+    }
+  }, {
+    '::before': {
       content: p._css10
+    },
+    '::after': {
+      content: p._css11
+    }
+  }), {
+    background: p._css12,
+    textAlign: 'left',
+    '::before': {
+      content: p._css13
+    },
+    '::after': {
+      content: p._css14
     }
   });
 });
 
 var SpreadObjectPropMixedInputs = function SpreadObjectPropMixedInputs(p) {
   var color = 'red';
-  return <_StyledP13 _css8={p.background} _css9={globalVar} _css10={getAfterValue()}>
+  return <_StyledP13 _css8={globalVar} _css9={getAfterValue()} _css10={globalVar} _css11={getAfterValue()} _css12={p.background} _css13={globalVar} _css14={getAfterValue()}>
       A
     </_StyledP13>;
 };

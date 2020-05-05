@@ -142,7 +142,14 @@ const SpreadObjectPropMixedInputs = p => {
   return (
     <p
       css={{
-        ...{ color },
+        ...{
+          '::before': { content: globalVar },
+          '::after': { content: getAfterValue() },
+          ...{
+            '::before': { content: globalVar },
+            '::after': { content: getAfterValue() },
+          },
+        },
         background: p.background,
         textAlign: 'left',
         '::before': { content: globalVar },

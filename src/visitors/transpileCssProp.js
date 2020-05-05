@@ -126,6 +126,13 @@ export default t => (path, state) => {
         )
 
         acc.push(property)
+      } else if (t.isSpreadElement(property)) {
+        // recurse for objects within objects (e.g. {'::before': { content: x }})
+        property.argument.properties = property.argument.properties.reduce(
+          propertiesReducer,
+          []
+        )
+        acc.push(property)
       } else if (
         // if a spread element or a non-primitive value we have to interpolate it
         !t.isSpreadElement(property) &&
@@ -152,7 +159,7 @@ export default t => (path, state) => {
 
         acc.push(t.objectProperty(property.key, t.memberExpression(p, name)))
       } else {
-        // spread element or some sort of primitive which is safe to pass through as-is
+        // some sort of primitive which is safe to pass through as-is
         acc.push(property)
       }
 
