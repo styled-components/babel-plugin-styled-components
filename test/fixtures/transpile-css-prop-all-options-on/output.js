@@ -6,6 +6,12 @@ var _SomeComponentPath = _interopRequireDefault(require("../SomeComponentPath"))
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _require = require('../SomeOtherComponentPath'),
     SomeOtherComponent = _require.SomeOtherComponent;
 /**
@@ -236,6 +242,31 @@ var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
       A
     </_StyledP12>;
 };
+
+var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP13",
+  componentId: "sc-7evkve-20"
+})(function (p) {
+  return _objectSpread({}, {
+    color: color
+  }, {
+    background: p._css8,
+    textAlign: 'left',
+    '::before': {
+      content: p._css9
+    },
+    '::after': {
+      content: p._css10
+    }
+  });
+});
+
+var SpreadObjectPropMixedInputs = function SpreadObjectPropMixedInputs(p) {
+  var color = 'red';
+  return <_StyledP13 _css8={p.background} _css9={globalVar} _css10={getAfterValue()}>
+      A
+    </_StyledP13>;
+};
 /* styled component defined after function it's used in */
 
 
@@ -245,12 +276,12 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = _styledComponents["default"].div.withConfig({
   displayName: "code__Thing3",
-  componentId: "sc-7evkve-20"
+  componentId: "sc-7evkve-21"
 })(["color:blue;"]);
 
 var _StyledThing = (0, _styledComponents["default"])(Thing3).withConfig({
   displayName: "code___StyledThing",
-  componentId: "sc-7evkve-21"
+  componentId: "sc-7evkve-22"
 })(["color:red;"]);
 
 var EarlyUsageComponent2 = function EarlyUsageComponent2(p) {
@@ -265,12 +296,12 @@ function Thing4(props) {
 
 var _StyledThing2 = (0, _styledComponents["default"])(Thing4).withConfig({
   displayName: "code___StyledThing2",
-  componentId: "sc-7evkve-22"
+  componentId: "sc-7evkve-23"
 })(["color:red;"]);
 
 var _StyledSomeComponent = (0, _styledComponents["default"])(_SomeComponentPath["default"]).withConfig({
   displayName: "code___StyledSomeComponent",
-  componentId: "sc-7evkve-23"
+  componentId: "sc-7evkve-24"
 })(["color:red;"]);
 
 var ImportedComponentUsage = function ImportedComponentUsage(p) {

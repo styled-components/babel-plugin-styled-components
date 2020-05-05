@@ -127,7 +127,8 @@ export default t => (path, state) => {
 
         acc.push(property)
       } else if (
-        // if a non-primitive value we have to interpolate it
+        // if a spread element or a non-primitive value we have to interpolate it
+        !t.isSpreadElement(property) &&
         [
           t.isBigIntLiteral,
           t.isBooleanLiteral,
@@ -151,7 +152,7 @@ export default t => (path, state) => {
 
         acc.push(t.objectProperty(property.key, t.memberExpression(p, name)))
       } else {
-        // some sort of primitive which is safe to pass through as-is
+        // spread element or some sort of primitive which is safe to pass through as-is
         acc.push(property)
       }
 
