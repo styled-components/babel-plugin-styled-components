@@ -1,3 +1,5 @@
+import { useTopLevelImportPaths } from './options'
+
 const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components',
   'styled-components/no-tags',
@@ -5,8 +7,10 @@ const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components/primitives',
 ]
 
-export const isValidTopLevelImport = x =>
-  VALID_TOP_LEVEL_IMPORT_PATHS.includes(x)
+export const isValidTopLevelImport = (x, state) =>
+  [...VALID_TOP_LEVEL_IMPORT_PATHS, ...useTopLevelImportPaths(state)].includes(
+    x
+  )
 
 const localNameCache = {}
 
@@ -28,7 +32,7 @@ export const importLocalName = (name, state, bypassCache = false) => {
       exit(path) {
         const { node } = path
 
-        if (isValidTopLevelImport(node.source.value)) {
+        if (isValidTopLevelImport(node.source.value, state)) {
           for (const specifier of path.get('specifiers')) {
             if (specifier.isImportDefaultSpecifier()) {
               localName = specifier.node.local.name
@@ -107,7 +111,9 @@ export const isWithThemeHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('withTheme', state)
 
 export const isHelper = t => (tag, state) =>
-  isCSSHelper(t)(tag, state) || isKeyframesHelper(t)(tag, state) || isWithThemeHelper(t)(tag, state)
+  isCSSHelper(t)(tag, state) ||
+  isKeyframesHelper(t)(tag, state) ||
+  isWithThemeHelper(t)(tag, state)
 
 export const isPureHelper = t => (tag, state) =>
   isCSSHelper(t)(tag, state) ||

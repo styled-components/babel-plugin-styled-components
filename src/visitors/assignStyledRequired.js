@@ -8,7 +8,7 @@ export default t => (path, state) => {
     path.node.init.arguments &&
     path.node.init.arguments[0] &&
     t.isLiteral(path.node.init.arguments[0]) &&
-    isValidTopLevelImport(path.node.init.arguments[0].value)
+    isValidTopLevelImport(path.node.init.arguments[0].value, state)
   ) {
     state.styledRequired = path.node.id.name
   }
