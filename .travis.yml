@@ -5,3 +5,4 @@ branches:
 node_js:
   - 10
   - 12
+  - 14
