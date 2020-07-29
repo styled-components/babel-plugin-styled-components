@@ -247,7 +247,7 @@ var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP13",
   componentId: "sc-7evkve-20"
 })(function (p) {
-  return _objectSpread({}, _objectSpread({
+  return _objectSpread(_objectSpread({}, _objectSpread({
     '::before': {
       content: p._css8
     },
@@ -261,7 +261,7 @@ var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
     '::after': {
       content: p._css11
     }
-  }), {
+  })), {}, {
     background: p._css12,
     textAlign: 'left',
     '::before': {
