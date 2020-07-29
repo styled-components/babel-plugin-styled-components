@@ -136,6 +136,31 @@ const ObjectPropMixedInputs = p => {
   )
 }
 
+const SpreadObjectPropMixedInputs = p => {
+  const color = 'red'
+
+  return (
+    <p
+      css={{
+        ...{
+          '::before': { content: globalVar },
+          '::after': { content: getAfterValue() },
+          ...{
+            '::before': { content: globalVar },
+            '::after': { content: getAfterValue() },
+          },
+        },
+        background: p.background,
+        textAlign: 'left',
+        '::before': { content: globalVar },
+        '::after': { content: getAfterValue() },
+      }}
+    >
+      A
+    </p>
+  )
+}
+
 /* styled component defined after function it's used in */
 
 const EarlyUsageComponent = p => <Thing3 css="color: red;" />

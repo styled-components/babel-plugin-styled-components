@@ -6,6 +6,12 @@ var _SomeComponentPath = _interopRequireDefault(require("../SomeComponentPath"))
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _require = require('../SomeOtherComponentPath'),
     SomeOtherComponent = _require.SomeOtherComponent;
 /**
@@ -31,7 +37,7 @@ var Thing2 = (0, _styledComponents["default"])(Thing).withConfig({
  * Basic fixtures
  */
 
-var _StyledP = _styledComponents["default"].p.withConfig({
+var _StyledP = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-3"
 })(["flex:1;"]);
@@ -40,7 +46,7 @@ var StaticString = function StaticString(p) {
   return <_StyledP>A</_StyledP>;
 };
 
-var _StyledP2 = _styledComponents["default"].p.withConfig({
+var _StyledP2 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP2",
   componentId: "sc-7evkve-4"
 })(["flex:1;"]);
@@ -51,7 +57,7 @@ var StaticTemplate = function StaticTemplate(p) {
   </_StyledP2>;
 };
 
-var _StyledP3 = _styledComponents["default"].p.withConfig({
+var _StyledP3 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP3",
   componentId: "sc-7evkve-5"
 })({
@@ -62,7 +68,7 @@ var ObjectProp = function ObjectProp(p) {
   return <_StyledP3>A</_StyledP3>;
 };
 
-var _StyledP4 = _styledComponents["default"].p.withConfig({
+var _StyledP4 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP4",
   componentId: "sc-7evkve-6"
 })(["flex:1;"]);
@@ -71,7 +77,7 @@ var NoChildren = function NoChildren(p) {
   return <_StyledP4 />;
 };
 
-var _StyledP5 = _styledComponents["default"].p.withConfig({
+var _StyledP5 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP5",
   componentId: "sc-7evkve-7"
 })(["color:blue;"]);
@@ -95,7 +101,7 @@ var CustomComp = function CustomComp(p) {
   return <_StyledParagraph>H</_StyledParagraph>;
 };
 
-var _StyledP6 = _styledComponents["default"].p.withConfig({
+var _StyledP6 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP6",
   componentId: "sc-7evkve-9"
 })(["", ""], function (p) {
@@ -106,7 +112,7 @@ var DynamicProp = function DynamicProp(p) {
   return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
 };
 
-var _StyledP7 = _styledComponents["default"].p.withConfig({
+var _StyledP7 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP7",
   componentId: "sc-7evkve-10"
 })(["background:", ";"], function (p) {
@@ -119,7 +125,7 @@ var LocalInterpolation = function LocalInterpolation(p) {
   </_StyledP7>;
 };
 
-var _StyledP8 = _styledComponents["default"].p.withConfig({
+var _StyledP8 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP8",
   componentId: "sc-7evkve-11"
 })(["color:", ";"], function (props) {
@@ -134,7 +140,7 @@ var FuncInterpolation = function FuncInterpolation(p) {
 
 var radius = 10;
 
-var _StyledP9 = _styledComponents["default"].p.withConfig({
+var _StyledP9 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP9",
   componentId: "sc-7evkve-12"
 })(["border-radius:", "px;"], radius);
@@ -145,7 +151,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
   </_StyledP9>;
 };
 
-var _StyledP10 = _styledComponents["default"].p.withConfig({
+var _StyledP10 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP10",
   componentId: "sc-7evkve-13"
 })(["color:", ";"], function (p) {
@@ -158,7 +164,7 @@ var LocalCssHelperProp = function LocalCssHelperProp(p) {
   </_StyledP10>;
 };
 
-var _StyledP11 = _styledComponents["default"].p.withConfig({
+var _StyledP11 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP11",
   componentId: "sc-7evkve-14"
 })(["color:", ";"], function (props) {
@@ -198,7 +204,7 @@ var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
-var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"].withConfig({
+var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost").withConfig({
   displayName: "code___StyledButtonGhost3",
   componentId: "sc-7evkve-18"
 })(["flex:1"]);
@@ -213,7 +219,7 @@ var getAfterValue = function getAfterValue() {
   return '"bar"';
 };
 
-var _StyledP12 = _styledComponents["default"].p.withConfig({
+var _StyledP12 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP12",
   componentId: "sc-7evkve-19"
 })(function (p) {
@@ -236,6 +242,43 @@ var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
       A
     </_StyledP12>;
 };
+
+var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP13",
+  componentId: "sc-7evkve-20"
+})(function (p) {
+  return _objectSpread(_objectSpread({}, _objectSpread({
+    '::before': {
+      content: p._css8
+    },
+    '::after': {
+      content: p._css9
+    }
+  }, {
+    '::before': {
+      content: p._css10
+    },
+    '::after': {
+      content: p._css11
+    }
+  })), {}, {
+    background: p._css12,
+    textAlign: 'left',
+    '::before': {
+      content: p._css13
+    },
+    '::after': {
+      content: p._css14
+    }
+  });
+});
+
+var SpreadObjectPropMixedInputs = function SpreadObjectPropMixedInputs(p) {
+  var color = 'red';
+  return <_StyledP13 _css8={globalVar} _css9={getAfterValue()} _css10={globalVar} _css11={getAfterValue()} _css12={p.background} _css13={globalVar} _css14={getAfterValue()}>
+      A
+    </_StyledP13>;
+};
 /* styled component defined after function it's used in */
 
 
@@ -245,12 +288,12 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = _styledComponents["default"].div.withConfig({
   displayName: "code__Thing3",
-  componentId: "sc-7evkve-20"
+  componentId: "sc-7evkve-21"
 })(["color:blue;"]);
 
 var _StyledThing = (0, _styledComponents["default"])(Thing3).withConfig({
   displayName: "code___StyledThing",
-  componentId: "sc-7evkve-21"
+  componentId: "sc-7evkve-22"
 })(["color:red;"]);
 
 var EarlyUsageComponent2 = function EarlyUsageComponent2(p) {
@@ -265,12 +308,12 @@ function Thing4(props) {
 
 var _StyledThing2 = (0, _styledComponents["default"])(Thing4).withConfig({
   displayName: "code___StyledThing2",
-  componentId: "sc-7evkve-22"
+  componentId: "sc-7evkve-23"
 })(["color:red;"]);
 
 var _StyledSomeComponent = (0, _styledComponents["default"])(_SomeComponentPath["default"]).withConfig({
   displayName: "code___StyledSomeComponent",
-  componentId: "sc-7evkve-23"
+  componentId: "sc-7evkve-24"
 })(["color:red;"]);
 
 var ImportedComponentUsage = function ImportedComponentUsage(p) {

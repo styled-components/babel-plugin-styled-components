@@ -176,7 +176,7 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var _StyledP = _styledComponents["default"].p(_templateObject());
+var _StyledP = (0, _styledComponents["default"])("p")(_templateObject());
 
 /*
  * Basic fixtures
@@ -185,7 +185,7 @@ var StaticString = function StaticString(p) {
   return <_StyledP>A</_StyledP>;
 };
 
-var _StyledP2 = _styledComponents["default"].p(_templateObject2());
+var _StyledP2 = (0, _styledComponents["default"])("p")(_templateObject2());
 
 var StaticTemplate = function StaticTemplate(p) {
   return <_StyledP2>
@@ -193,7 +193,7 @@ var StaticTemplate = function StaticTemplate(p) {
   </_StyledP2>;
 };
 
-var _StyledP3 = _styledComponents["default"].p({
+var _StyledP3 = (0, _styledComponents["default"])("p")({
   color: 'blue'
 });
 
@@ -201,13 +201,13 @@ var ObjectProp = function ObjectProp(p) {
   return <_StyledP3>A</_StyledP3>;
 };
 
-var _StyledP4 = _styledComponents["default"].p(_templateObject3());
+var _StyledP4 = (0, _styledComponents["default"])("p")(_templateObject3());
 
 var NoChildren = function NoChildren(p) {
   return <_StyledP4 />;
 };
 
-var _StyledP5 = _styledComponents["default"].p(_templateObject4());
+var _StyledP5 = (0, _styledComponents["default"])("p")(_templateObject4());
 
 var CssHelperProp = function CssHelperProp(p) {
   return <_StyledP5>
@@ -225,7 +225,7 @@ var CustomComp = function CustomComp(p) {
   return <_StyledParagraph>H</_StyledParagraph>;
 };
 
-var _StyledP6 = _styledComponents["default"].p(_templateObject6(), function (p) {
+var _StyledP6 = (0, _styledComponents["default"])("p")(_templateObject6(), function (p) {
   return p._css;
 });
 
@@ -233,7 +233,7 @@ var DynamicProp = function DynamicProp(p) {
   return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
 };
 
-var _StyledP7 = _styledComponents["default"].p(_templateObject7(), function (p) {
+var _StyledP7 = (0, _styledComponents["default"])("p")(_templateObject7(), function (p) {
   return p._css2;
 });
 
@@ -243,7 +243,7 @@ var LocalInterpolation = function LocalInterpolation(p) {
   </_StyledP7>;
 };
 
-var _StyledP8 = _styledComponents["default"].p(_templateObject8(), function (props) {
+var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject8(), function (props) {
   return props.theme.a;
 });
 
@@ -255,7 +255,7 @@ var FuncInterpolation = function FuncInterpolation(p) {
 
 var radius = 10;
 
-var _StyledP9 = _styledComponents["default"].p(_templateObject9(), radius);
+var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject9(), radius);
 
 var GlobalInterpolation = function GlobalInterpolation(p) {
   return <_StyledP9>
@@ -263,7 +263,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
   </_StyledP9>;
 };
 
-var _StyledP10 = _styledComponents["default"].p(_templateObject10(), function (p) {
+var _StyledP10 = (0, _styledComponents["default"])("p")(_templateObject10(), function (p) {
   return p._css3;
 });
 
@@ -273,7 +273,7 @@ var LocalCssHelperProp = function LocalCssHelperProp(p) {
   </_StyledP10>;
 };
 
-var _StyledP11 = _styledComponents["default"].p(_templateObject11(), function (props) {
+var _StyledP11 = (0, _styledComponents["default"])("p")(_templateObject11(), function (props) {
   return props.theme.color;
 });
 
@@ -301,7 +301,7 @@ var CustomCompWithDotLowerCase = function CustomCompWithDotLowerCase(p) {
   return <_StyledButtonGhost2>H</_StyledButtonGhost2>;
 };
 
-var _StyledButtonGhost3 = _styledComponents["default"]["button-ghost"](_templateObject15());
+var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost")(_templateObject15());
 
 var CustomElement = function CustomElement(p) {
   return <_StyledButtonGhost3>H</_StyledButtonGhost3>;

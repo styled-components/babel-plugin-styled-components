@@ -4,6 +4,7 @@ const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components/native',
   'styled-components/primitives',
 ]
+const CACHE_MISS = Symbol('CACHE_MISS');
 
 export const isValidTopLevelImport = x =>
   VALID_TOP_LEVEL_IMPORT_PATHS.includes(x)
@@ -13,7 +14,7 @@ const localNameCache = {}
 export const importLocalName = (name, state, bypassCache = false) => {
   const cacheKey = name + state.file.opts.filename
 
-  if (!bypassCache && cacheKey in localNameCache) {
+  if (!bypassCache && cacheKey in localNameCache && localNameCache[cacheKey] !== CACHE_MISS) {
     return localNameCache[cacheKey]
   }
 
@@ -21,7 +22,7 @@ export const importLocalName = (name, state, bypassCache = false) => {
     ? name === 'default'
       ? 'styled'
       : name
-    : false
+    : CACHE_MISS
 
   state.file.path.traverse({
     ImportDeclaration: {

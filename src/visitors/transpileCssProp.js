@@ -49,7 +49,7 @@ export default t => (path, state) => {
   let injector
 
   if (TAG_NAME_REGEXP.test(name)) {
-    styled = t.memberExpression(importName, t.identifier(name))
+    styled = t.callExpression(importName, [t.stringLiteral(name)])
   } else {
     styled = t.callExpression(importName, [t.identifier(name)])
 
@@ -125,6 +125,13 @@ export default t => (path, state) => {
           []
         )
 
+        acc.push(property)
+      } else if (t.isSpreadElement(property)) {
+        // recurse for objects within objects (e.g. {'::before': { content: x }})
+        property.argument.properties = property.argument.properties.reduce(
+          propertiesReducer,
+          []
+        )
         acc.push(property)
       } else if (
         // if a non-primitive value we have to interpolate it
