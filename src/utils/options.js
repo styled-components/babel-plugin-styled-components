@@ -5,6 +5,8 @@ function getOption({ opts }, name, defaultValue = true) {
 }
 
 export const useDisplayName = state => getOption(state, 'displayName')
+export const useTopLevelImportPaths = state =>
+  getOption(state, 'topLevelImportPaths', [])
 export const useSSR = state => getOption(state, 'ssr', true)
 export const useFileName = state => getOption(state, 'fileName')
 export const useMinify = state => getOption(state, 'minify')
