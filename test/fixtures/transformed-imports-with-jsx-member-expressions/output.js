@@ -14,29 +14,29 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 const someCss = (0, _styledComponents.css)([" background:purple;"]);
 
+const App1 = () => {
+  return <_StyledIcons />;
+};
+
+const App2 = () => {
+  return <_StyledIconsFoo />;
+};
+
+const App3 = () => {
+  return <_StyledIconsFooBar />;
+};
+
 var _StyledIcons = (0, _styledComponents.default)(_icons.default).withConfig({
   displayName: "code___StyledIcons",
   componentId: "sc-1wxehft-0"
 })(["", ""], someCss);
-
-const App1 = () => {
-  return <_StyledIcons />;
-};
 
 var _StyledIconsFoo = (0, _styledComponents.default)(_icons.default.Foo).withConfig({
   displayName: "code___StyledIconsFoo",
   componentId: "sc-1wxehft-1"
 })(["", ""], someCss);
 
-const App2 = () => {
-  return <_StyledIconsFoo />;
-};
-
 var _StyledIconsFooBar = (0, _styledComponents.default)(_icons.default.Foo.Bar).withConfig({
   displayName: "code___StyledIconsFooBar",
   componentId: "sc-1wxehft-2"
 })(["", ""], someCss);
-
-const App3 = () => {
-  return <_StyledIconsFooBar />;
-};

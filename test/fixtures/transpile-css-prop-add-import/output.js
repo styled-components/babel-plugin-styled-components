@@ -19,8 +19,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      width: 35em;\n    "])));
-
 var _default = function _default() {
   return <_StyledDiv>
     <_Card.default>
@@ -35,3 +33,5 @@ var _default = function _default() {
 };
 
 exports["default"] = _default;
+
+var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      width: 35em;\n    "])));
