@@ -201,11 +201,11 @@ export default t => (path, state) => {
   if (!injector) {
     let parent = elem
 
-    while (!t.isProgram(parent.parentPath)) {
+    while (!t.isProgram(parent)) {
       parent = parent.parentPath
     }
 
-    injector = nodeToInsert => parent.insertBefore(nodeToInsert)
+    injector = nodeToInsert => parent.pushContainer('body', nodeToInsert)
   }
 
   injector(
