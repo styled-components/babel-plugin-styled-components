@@ -34,6 +34,10 @@ export const importLocalName = (name, state, bypassCache = false) => {
 
         if (isValidTopLevelImport(node.source.value, state)) {
           for (const specifier of path.get('specifiers')) {
+            if (specifier.isImportSpecifier() && specifier.node.imported.name === 'styled') {
+              localName = 'styled'
+            }
+            
             if (specifier.isImportDefaultSpecifier()) {
               localName = specifier.node.local.name
             }
