@@ -279,6 +279,30 @@ var SpreadObjectPropMixedInputs = function SpreadObjectPropMixedInputs(p) {
       A
     </_StyledP13>;
 };
+
+var _StyledP14 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP14",
+  componentId: "sc-7evkve-21"
+})(function (p) {
+  return _objectSpread(_objectSpread({}, cssObj), {}, {
+    textAlign: 'left',
+    '::before': {
+      content: p._css15
+    },
+    '::after': {
+      content: p._css16
+    }
+  });
+});
+
+var SpreadObjectInputs = function SpreadObjectInputs(p) {
+  var cssObj = {
+    background: 'red'
+  };
+  return <_StyledP14 _css15={globalVar} _css16={getAfterValue()}>
+      A
+    </_StyledP14>;
+};
 /* styled component defined after function it's used in */
 
 
@@ -288,12 +312,12 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = _styledComponents["default"].div.withConfig({
   displayName: "code__Thing3",
-  componentId: "sc-7evkve-21"
+  componentId: "sc-7evkve-22"
 })(["color:blue;"]);
 
 var _StyledThing = (0, _styledComponents["default"])(Thing3).withConfig({
   displayName: "code___StyledThing",
-  componentId: "sc-7evkve-22"
+  componentId: "sc-7evkve-23"
 })(["color:red;"]);
 
 var EarlyUsageComponent2 = function EarlyUsageComponent2(p) {
@@ -308,12 +332,12 @@ function Thing4(props) {
 
 var _StyledThing2 = (0, _styledComponents["default"])(Thing4).withConfig({
   displayName: "code___StyledThing2",
-  componentId: "sc-7evkve-23"
+  componentId: "sc-7evkve-24"
 })(["color:red;"]);
 
 var _StyledSomeComponent = (0, _styledComponents["default"])(_SomeComponentPath["default"]).withConfig({
   displayName: "code___StyledSomeComponent",
-  componentId: "sc-7evkve-24"
+  componentId: "sc-7evkve-25"
 })(["color:red;"]);
 
 var ImportedComponentUsage = function ImportedComponentUsage(p) {
