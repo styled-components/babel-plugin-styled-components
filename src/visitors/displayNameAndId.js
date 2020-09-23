@@ -4,6 +4,7 @@ import {
   useFileName,
   useDisplayName,
   useSSR,
+  useMeaninglessFileNames,
   useNamespace,
 } from '../utils/options'
 import getName from '../utils/getName'
@@ -111,21 +112,22 @@ const getExistingConfig = t => path => {
   }
 }
 
-const getBlockName = file => {
+const getBlockName = (file, meaninglessFileNames) => {
   const name = path.basename(
     file.opts.filename,
     path.extname(file.opts.filename)
   )
-  return name !== 'index'
-    ? name
-    : path.basename(path.dirname(file.opts.filename))
+
+  return meaninglessFileNames.includes(name)
+    ? path.basename(path.dirname(file.opts.filename))
+    : name
 }
 
 const getDisplayName = t => (path, state) => {
   const { file } = state
   const componentName = getName(t)(path)
   if (file) {
-    const blockName = getBlockName(file)
+    const blockName = getBlockName(file, useMeaninglessFileNames(state))
     if (blockName === componentName) {
       return componentName
     }
