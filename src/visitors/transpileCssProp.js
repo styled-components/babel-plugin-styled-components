@@ -138,13 +138,11 @@ export default t => (path, state) => {
 
         acc.push(property)
       } else if (t.isSpreadElement(property)) {
-        if (t.isObjectExpression(property.argument)) {
-          // recurse for objects within objects (e.g. {'::before': { content: x }})
-          property.argument.properties = property.argument.properties.reduce(
-            propertiesReducer,
-            []
-          )
-        }
+        // recurse for objects within objects (e.g. {'::before': { content: x }})
+        property.argument.properties = property.argument.properties.reduce(
+          propertiesReducer,
+          []
+        )
         acc.push(property)
       } else if (
         // if a non-primitive value we have to interpolate it
