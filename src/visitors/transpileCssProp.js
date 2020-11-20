@@ -16,6 +16,16 @@ const getName = (node, t) => {
   )
 }
 
+const getNameExpression = (node, t) => {
+  if (typeof node.name === 'string') return t.identifier(node.name)
+  if (t.isJSXMemberExpression(node)) {
+    return t.memberExpression(getNameExpression(node.object, t), t.identifier(node.property.name))
+  }
+  throw path.buildCodeFrameError(
+    `Cannot infer name expression from node with type "${node.type}". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
+  )
+}
+
 export default t => (path, state) => {
   if (!useCssProp(state)) return
   if (path.node.name.name !== 'css') return
@@ -41,6 +51,7 @@ export default t => (path, state) => {
 
   const elem = path.parentPath
   const name = getName(elem.node.name, t)
+  const nameExpression = getNameExpression(elem.node.name, t);
   const id = path.scope.generateUidIdentifier(
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
@@ -51,7 +62,7 @@ export default t => (path, state) => {
   if (TAG_NAME_REGEXP.test(name)) {
     styled = t.callExpression(importName, [t.stringLiteral(name)])
   } else {
-    styled = t.callExpression(importName, [t.identifier(name)])
+    styled = t.callExpression(importName, [nameExpression])
 
     if (bindings[name] && !t.isImportDeclaration(bindings[name].path.parent)) {
       injector = nodeToInsert =>
