@@ -106,3 +106,13 @@ const EarlyUsageComponent = p => <Thing3 css="color: red;" />
 const Thing3 = styled.div`
   color: blue;
 `
+
+const styledMixin1 = css`
+  color: red;
+`
+
+const styledMixin2 = css`
+  font-size: 10px;
+`
+
+const ArrayCssHelperProp = p => <p css={[styledMixin1, styledMixin2]}>A</p>
