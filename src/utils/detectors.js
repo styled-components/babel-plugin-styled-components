@@ -63,7 +63,24 @@ export const importLocalName = (name, state, bypassCache = false) => {
   return localName
 }
 
-export const isStyled = t => (tag, state) => {
+// cache styled tags that we've already found from previous calls to isStyled()
+const visitedStyledTags = new WeakSet()
+
+export const isStyled = t => (tag, state, includeIIFE = false) => {
+  if (includeIIFE) {
+    // check to see if this is an IIFE wrapper created by pureWrapStaticProps()
+    // that replaced what was originally a `styled` call
+    if (t.isArrowFunctionExpression(tag) && tag.body && tag.body.body[0]) {
+      const statement = tag.body.body[0]
+      if (t.isVariableDeclaration(statement)) {
+        const callee = statement.declarations[0].init.callee
+        if (callee && isStyled(t)(callee, state)) {
+          return true
+        }
+      }
+    }
+  }
+
   if (
     t.isCallExpression(tag) &&
     t.isMemberExpression(tag.callee) &&
@@ -71,10 +88,13 @@ export const isStyled = t => (tag, state) => {
   ) {
     // styled.something()
     return isStyled(t)(tag.callee.object, state)
-  } else {
-    return (
-      (t.isMemberExpression(tag) &&
-        tag.object.name === importLocalName('default', state)) ||
+  }
+  if (visitedStyledTags.has(tag)) {
+    return true
+  }
+  const ret = Boolean(
+    (t.isMemberExpression(tag) &&
+      tag.object.name === importLocalName('default', state)) ||
       (t.isCallExpression(tag) &&
         tag.callee.name === importLocalName('default', state)) ||
       /**
@@ -94,8 +114,11 @@ export const isStyled = t => (tag, state) => {
         t.isMemberExpression(tag.callee) &&
         tag.callee.property.name === 'default' &&
         tag.callee.object.name === state.styledRequired)
-    )
+  )
+  if (ret) {
+    visitedStyledTags.add(tag)
   }
+  return ret
 }
 
 export const isCSSHelper = t => (tag, state) =>
@@ -124,3 +147,5 @@ export const isPureHelper = t => (tag, state) =>
   isKeyframesHelper(t)(tag, state) ||
   isCreateGlobalStyleHelper(t)(tag, state) ||
   isWithThemeHelper(t)(tag, state)
+
+export { isFunctionComponent } from './isFunctionComponent'

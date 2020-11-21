@@ -44,7 +44,9 @@
   "scripts": {
     "clean": "rimraf lib",
     "style": "prettier --write src/**/*.js",
+    "prebuild": "yarn clean",
     "build": "babel src -d lib",
+    "watch": "yarn build -w",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
     "prepublish": "npm run clean && npm run build"
