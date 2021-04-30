@@ -51,3 +51,22 @@ const WrappedComponent6 = styled.div.attrs(() => ({
   displayName: "WrappedComponent6",
   componentId: "sc-1cza72q-10"
 })``;
+const WrappedComponent7 = styled.div.withConfig({
+  shouldForwardProp: () => {},
+  displayName: "WrappedComponent7",
+  componentId: "sc-1cza72q-11"
+})({});
+const WrappedComponent8 = styled.div.withConfig({
+  shouldForwardProp: () => {},
+  displayName: "WrappedComponent8",
+  componentId: "sc-1cza72q-12"
+}).attrs(() => ({
+  something: 'else'
+}))({});
+const WrappedComponent9 = styled.div.attrs(() => ({
+  something: 'else'
+})).withConfig({
+  shouldForwardProp: () => {},
+  displayName: "WrappedComponent9",
+  componentId: "sc-1cza72q-13"
+})({});

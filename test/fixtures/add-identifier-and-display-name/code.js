@@ -13,3 +13,18 @@ const WrappedComponent3 = styled(Inner)({})
 const WrappedComponent4 = styled(Inner).attrs(() => ({ something: 'else' }))({})
 const WrappedComponent5 = styled.div.attrs(() => ({ something: 'else' }))({})
 const WrappedComponent6 = styled.div.attrs(() => ({ something: 'else' }))``
+const WrappedComponent7 = styled.div.withConfig({
+  shouldForwardProp: () => {},
+})({})
+
+const WrappedComponent8 = styled.div
+  .withConfig({
+    shouldForwardProp: () => {},
+  })
+  .attrs(() => ({ something: 'else' }))({})
+
+const WrappedComponent9 = styled.div
+  .attrs(() => ({ something: 'else' }))
+  .withConfig({
+    shouldForwardProp: () => {},
+  })({})
