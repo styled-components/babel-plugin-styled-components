@@ -106,3 +106,29 @@ const EarlyUsageComponent = p => <Thing3 css="color: red;" />
 const Thing3 = styled.div`
   color: blue;
 `
+
+const ObjectInterpolation = p => {
+  const theme = useTheme()
+
+  return (
+  <p
+    css={{
+      color: theme.colors.red,
+    }}
+  >
+    H
+  </p>
+)}
+
+const ObjectInterpolationCustomComponent = p => {
+  const theme = useTheme()
+
+  return (
+  <Thing3
+    css={{
+      color: theme.colors.red,
+    }}
+  >
+    H
+  </Thing3>
+)}

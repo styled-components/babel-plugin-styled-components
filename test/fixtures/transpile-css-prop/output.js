@@ -147,4 +147,30 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = styled.div(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n  color: blue;\n"])));
 
+var _StyledThing2 = (0, _styledComponents["default"])(Thing3)(function (p) {
+  return {
+    color: p._css5
+  };
+});
+
 var _StyledThing = (0, _styledComponents["default"])(Thing3)(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["color: red;"])));
+
+var _StyledP12 = (0, _styledComponents["default"])("p")(function (p) {
+  return {
+    color: p._css4
+  };
+});
+
+var ObjectInterpolation = function ObjectInterpolation(p) {
+  var theme = useTheme();
+  return <_StyledP12 _css4={theme.colors.red}>
+    H
+  </_StyledP12>;
+};
+
+var ObjectInterpolationCustomComponent = function ObjectInterpolationCustomComponent(p) {
+  var theme = useTheme();
+  return <_StyledThing2 _css5={theme.colors.red}>
+    H
+  </_StyledThing2>;
+};
