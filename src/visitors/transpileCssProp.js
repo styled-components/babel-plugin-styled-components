@@ -44,7 +44,7 @@ export default t => (path, state) => {
       nameHint: 'styled',
     })
 
-    importName = t.identifier(importLocalName('default', state, true))
+    importName = t.identifier(importLocalName('default', state, { bypassCache: true }))
   }
 
   if (!t.isIdentifier(importName)) importName = t.identifier(importName)

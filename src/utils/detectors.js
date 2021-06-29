@@ -14,8 +14,10 @@ export const isValidTopLevelImport = (x, state) =>
 
 const localNameCache = {}
 
-export const importLocalName = (name, state, bypassCache = false) => {
-  const cacheKey = name + state.file.opts.filename
+export const importLocalName = (name, state, options = {}) => {
+  const { cacheIdentifier, bypassCache = false } = options;
+  const cacheKeyAffix = cacheIdentifier ? `|${cacheIdentifier}` : '';
+  const cacheKey = name + state.file.opts.filename + cacheKeyAffix;
 
   if (!bypassCache && cacheKey in localNameCache) {
     return localNameCache[cacheKey]
@@ -74,9 +76,9 @@ export const isStyled = t => (tag, state) => {
   } else {
     return (
       (t.isMemberExpression(tag) &&
-        tag.object.name === importLocalName('default', state)) ||
+        tag.object.name === importLocalName('default', state, { cacheIdentifier: tag.object.name })) ||
       (t.isCallExpression(tag) &&
-        tag.callee.name === importLocalName('default', state)) ||
+        tag.callee.name === importLocalName('default', state, { cacheIdentifier: tag.callee.name })) ||
       /**
        * #93 Support require()
        * styled-components might be imported using a require()
