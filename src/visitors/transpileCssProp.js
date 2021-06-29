@@ -148,20 +148,27 @@ export default t => (path, state) => {
        */
       if (
         t.isMemberExpression(property.key) ||
-        t.isCallExpression(property.key)
+        t.isCallExpression(property.key) ||
+        // checking for css={{[something]: something}}
+        (t.isIdentifier(property.key) &&
+          path.scope.hasBinding(property.key.name) &&
+          // but not a object reference shorthand like css={{ color }}
+          (t.isIdentifier(property.value)
+            ? property.key.name !== property.value.name
+            : true))
       ) {
         replaceObjectWithPropFunction = true
 
-        const name = getLocalIdentifier(path)
+        const identifier = getLocalIdentifier(path)
 
         elem.node.attributes.push(
           t.jSXAttribute(
-            t.jSXIdentifier(name.name),
+            t.jSXIdentifier(identifier.name),
             t.jSXExpressionContainer(property.key)
           )
         )
 
-        property.key = t.memberExpression(p, name)
+        property.key = t.memberExpression(p, identifier)
       }
 
       if (t.isObjectExpression(property.value)) {
@@ -193,16 +200,18 @@ export default t => (path, state) => {
       ) {
         replaceObjectWithPropFunction = true
 
-        const name = getLocalIdentifier(path)
+        const identifier = getLocalIdentifier(path)
 
         elem.node.attributes.push(
           t.jSXAttribute(
-            t.jSXIdentifier(name.name),
+            t.jSXIdentifier(identifier.name),
             t.jSXExpressionContainer(property.value)
           )
         )
 
-        acc.push(t.objectProperty(property.key, t.memberExpression(p, name)))
+        acc.push(
+          t.objectProperty(property.key, t.memberExpression(p, identifier))
+        )
       } else {
         // some sort of primitive which is safe to pass through as-is
         acc.push(property)
@@ -227,17 +236,19 @@ export default t => (path, state) => {
       ) {
         acc.push(ex)
       } else {
-        const name = getLocalIdentifier(path)
+        const identifier = getLocalIdentifier(path)
         const p = t.identifier('p')
 
         elem.node.attributes.push(
           t.jSXAttribute(
-            t.jSXIdentifier(name.name),
+            t.jSXIdentifier(identifier.name),
             t.jSXExpressionContainer(ex)
           )
         )
 
-        acc.push(t.arrowFunctionExpression([p], t.memberExpression(p, name)))
+        acc.push(
+          t.arrowFunctionExpression([p], t.memberExpression(p, identifier))
+        )
       }
 
       return acc

@@ -105,6 +105,12 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  color: blue;\n"])));
 
+var _StyledThing5 = (0, _styledComponents["default"])(Thing3)(function (p) {
+  return _defineProperty({}, p.$_css8, {
+    color: 'red'
+  });
+});
+
 var _StyledThing4 = (0, _styledComponents["default"])(Thing3)(function (p) {
   return _defineProperty({}, p.$_css7, {
     color: 'red'
@@ -151,6 +157,20 @@ var ObjectFnInterpolationInKey = function ObjectFnInterpolationInKey(p) {
   return <_StyledThing4 $_css7={theme.breakpoints.md()}>
       H
     </_StyledThing4>;
+};
+
+var ObjectFnSimpleInterpolationInKey = function ObjectFnSimpleInterpolationInKey(p) {
+  var foo = '@media screen and (max-width: 600px)';
+  return <_StyledThing5 $_css8={foo}>
+      H
+    </_StyledThing5>;
+};
+
+var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
+  var color = 'red';
+  return <_StyledP13 $_css9={p.background} $_css10={color} $_css11={globalVar} $_css12={getAfterValue()}>
+      A
+    </_StyledP13>;
 };
 
 var _StyledP = (0, _styledComponents["default"])("p")(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["flex: 1;"])));
@@ -200,5 +220,19 @@ var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost")(_tem
 var _StyledP12 = (0, _styledComponents["default"])("p")(function (p) {
   return {
     color: p.$_css4
+  };
+});
+
+var _StyledP13 = (0, _styledComponents["default"])("p")(function (p) {
+  return {
+    background: p.$_css9,
+    color: p.$_css10,
+    textAlign: 'left',
+    '::before': {
+      content: p.$_css11
+    },
+    '::after': {
+      content: p.$_css12
+    }
   };
 });

@@ -166,3 +166,37 @@ const ObjectFnInterpolationInKey = p => {
     </Thing3>
   )
 }
+
+const ObjectFnSimpleInterpolationInKey = p => {
+  const foo = '@media screen and (max-width: 600px)'
+
+  return (
+    <Thing3
+      css={{
+        [foo]: {
+          color: 'red',
+        },
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectPropMixedInputs = p => {
+  const color = 'red'
+
+  return (
+    <p
+      css={{
+        background: p.background,
+        color,
+        textAlign: 'left',
+        '::before': { content: globalVar },
+        '::after': { content: getAfterValue() },
+      }}
+    >
+      A
+    </p>
+  )
+}
