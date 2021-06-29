@@ -111,24 +111,58 @@ const ObjectInterpolation = p => {
   const theme = useTheme()
 
   return (
-  <p
-    css={{
-      color: theme.colors.red,
-    }}
-  >
-    H
-  </p>
-)}
+    <p
+      css={{
+        color: theme.colors.red,
+      }}
+    >
+      H
+    </p>
+  )
+}
 
 const ObjectInterpolationCustomComponent = p => {
   const theme = useTheme()
 
   return (
-  <Thing3
-    css={{
-      color: theme.colors.red,
-    }}
-  >
-    H
-  </Thing3>
-)}
+    <Thing3
+      css={{
+        color: theme.colors.red,
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectInterpolationInKey = p => {
+  const theme = useTheme()
+
+  return (
+    <Thing3
+      css={{
+        [theme.breakpoints.md]: {
+          color: 'red',
+        },
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectFnInterpolationInKey = p => {
+  const theme = useTheme()
+
+  return (
+    <Thing3
+      css={{
+        [theme.breakpoints.md()]: {
+          color: 'red',
+        },
+      }}
+    >
+      H
+    </Thing3>
+  )
+}

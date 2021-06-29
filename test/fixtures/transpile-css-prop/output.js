@@ -6,6 +6,8 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4, _temp
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 /*
@@ -103,6 +105,14 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  color: blue;\n"])));
 
+var _StyledThing4 = (0, _styledComponents["default"])(Thing3)(_defineProperty({}, p._css7, {
+  color: 'red'
+}));
+
+var _StyledThing3 = (0, _styledComponents["default"])(Thing3)(_defineProperty({}, p._css6, {
+  color: 'red'
+}));
+
 var _StyledThing2 = (0, _styledComponents["default"])(Thing3)(function (p) {
   return {
     color: p._css5
@@ -114,15 +124,29 @@ var _StyledThing = (0, _styledComponents["default"])(Thing3)(_templateObject2 ||
 var ObjectInterpolation = function ObjectInterpolation(p) {
   var theme = useTheme();
   return <_StyledP12 _css4={theme.colors.red}>
-    H
-  </_StyledP12>;
+      H
+    </_StyledP12>;
 };
 
 var ObjectInterpolationCustomComponent = function ObjectInterpolationCustomComponent(p) {
   var theme = useTheme();
   return <_StyledThing2 _css5={theme.colors.red}>
-    H
-  </_StyledThing2>;
+      H
+    </_StyledThing2>;
+};
+
+var ObjectInterpolationInKey = function ObjectInterpolationInKey(p) {
+  var theme = useTheme();
+  return <_StyledThing3 _css6={theme.breakpoints.md}>
+      H
+    </_StyledThing3>;
+};
+
+var ObjectFnInterpolationInKey = function ObjectFnInterpolationInKey(p) {
+  var theme = useTheme();
+  return <_StyledThing4 _css7={theme.breakpoints.md()}>
+      H
+    </_StyledThing4>;
 };
 
 var _StyledP = (0, _styledComponents["default"])("p")(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["flex: 1;"])));

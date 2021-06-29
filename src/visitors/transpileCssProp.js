@@ -19,7 +19,10 @@ const getName = (node, t) => {
 const getNameExpression = (node, t) => {
   if (typeof node.name === 'string') return t.identifier(node.name)
   if (t.isJSXMemberExpression(node)) {
-    return t.memberExpression(getNameExpression(node.object, t), t.identifier(node.property.name))
+    return t.memberExpression(
+      getNameExpression(node.object, t),
+      t.identifier(node.property.name)
+    )
   }
   throw path.buildCodeFrameError(
     `Cannot infer name expression from node with type "${node.type}". Please submit an issue at github.com/styled-components/babel-plugin-styled-components with your code so we can take a look at your use case!`
@@ -44,14 +47,16 @@ export default t => (path, state) => {
       nameHint: 'styled',
     })
 
-    importName = t.identifier(importLocalName('default', state, { bypassCache: true }))
+    importName = t.identifier(
+      importLocalName('default', state, { bypassCache: true })
+    )
   }
 
   if (!t.isIdentifier(importName)) importName = t.identifier(importName)
 
   const elem = path.parentPath
   const name = getName(elem.node.name, t)
-  const nameExpression = getNameExpression(elem.node.name, t);
+  const nameExpression = getNameExpression(elem.node.name, t)
   const id = path.scope.generateUidIdentifier(
     'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
   )
@@ -119,7 +124,7 @@ export default t => (path, state) => {
   if (t.isObjectExpression(css)) {
     /**
      * for objects as CSS props, we have to recurse through the object and replace any
-     * object value scope references with generated props similar to how the template
+     * object key/value scope references with generated props similar to how the template
      * literal transform above creates dynamic interpolations
      */
     const p = t.identifier('p')
@@ -129,6 +134,25 @@ export default t => (path, state) => {
       acc,
       property
     ) {
+      /**
+       * handle potential object key interpolations
+       */
+      if (
+        t.isMemberExpression(property.key) ||
+        t.isCallExpression(property.key)
+      ) {
+        const name = path.scope.generateUidIdentifier('css')
+
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(name.name),
+            t.jSXExpressionContainer(property.key)
+          )
+        )
+
+        property.key = t.memberExpression(p, name)
+      }
+
       if (t.isObjectExpression(property.value)) {
         // recurse for objects within objects (e.g. {'::before': { content: x }})
         property.value.properties = property.value.properties.reduce(
