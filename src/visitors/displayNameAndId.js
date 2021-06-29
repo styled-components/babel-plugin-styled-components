@@ -17,6 +17,7 @@ const addConfig = t => (path, displayName, componentId) => {
   }
 
   const withConfigProps = []
+
   if (displayName) {
     withConfigProps.push(
       t.objectProperty(
@@ -32,6 +33,34 @@ const addConfig = t => (path, displayName, componentId) => {
         t.stringLiteral(componentId)
       )
     )
+  }
+
+  const existingConfig = getExistingConfig(t)(path)
+
+  if (
+    existingConfig &&
+    existingConfig.arguments.length &&
+    !existingConfig.arguments[0].properties.some(prop =>
+      ['displayName', 'componentId'].includes(prop.key.name)
+    )
+  ) {
+    existingConfig.arguments[0].properties.push(...withConfigProps)
+    return
+  }
+
+  if (
+    path.node.callee &&
+    t.isMemberExpression(path.node.callee.callee) &&
+    path.node.callee.callee.property &&
+    path.node.callee.callee.property.name &&
+    path.node.callee.callee.property.name == 'withConfig' &&
+    path.node.callee.arguments.length &&
+    !path.node.callee.arguments[0].properties.some(prop =>
+      ['displayName', 'componentId'].includes(prop.key.name)
+    )
+  ) {
+    path.node.callee.arguments[0].properties.push(...withConfigProps)
+    return
   }
 
   if (path.node.tag) {
@@ -50,6 +79,29 @@ const addConfig = t => (path, displayName, componentId) => {
         path.node.arguments
       )
     )
+  }
+}
+
+const getExistingConfig = t => path => {
+  if (
+    path.node.callee &&
+    t.isMemberExpression(path.node.callee.callee) &&
+    path.node.callee.callee.property &&
+    path.node.callee.callee.property.name &&
+    path.node.callee.callee.property.name == 'withConfig'
+  ) {
+    return path.node.callee
+  }
+
+  if (
+    path.node.callee &&
+    t.isMemberExpression(path.node.callee.callee) &&
+    path.node.callee.callee.object &&
+    path.node.callee.callee.object.callee &&
+    path.node.callee.callee.object.callee.property &&
+    path.node.callee.callee.object.callee.property.name === 'withConfig'
+  ) {
+    return path.node.callee.callee.object
   }
 }
 
@@ -155,7 +207,16 @@ export default t => (path, state) => {
           t.isMemberExpression(path.node.callee.callee) &&
           path.node.callee.callee.property &&
           path.node.callee.callee.property.name &&
-          path.node.callee.callee.property.name !== 'withConfig')
+          path.node.callee.callee.property.name !== 'withConfig') ||
+        // styled(x).withConfig({})
+        (isStyled(t)(path.node.callee, state) &&
+          t.isMemberExpression(path.node.callee.callee) &&
+          path.node.callee.callee.property &&
+          path.node.callee.callee.property.name &&
+          path.node.callee.callee.property.name == 'withConfig' &&
+          !path.node.callee.arguments[0].properties.some((prop) =>
+            ['displayName', 'componentId'].includes(prop.key.name)
+          ))
   ) {
     const displayName =
       useDisplayName(state) &&
