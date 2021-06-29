@@ -70,11 +70,11 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
+  return <_StyledP6 $_css={props.cssText}>H</_StyledP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_StyledP7 _css2={props.bg}>
+  return <_StyledP7 $_css2={props.bg}>
     H
   </_StyledP7>;
 };
@@ -94,7 +94,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
 };
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 _css3={p.color}>
+  return <_StyledP10 $_css3={p.color}>
     A
   </_StyledP10>;
 };
@@ -129,14 +129,14 @@ var getAfterValue = function getAfterValue() {
 
 var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
   var color = 'red';
-  return <_StyledP12 _css4={p.background} _css5={color} _css6={globalVar} _css7={getAfterValue()}>
+  return <_StyledP12 $_css4={p.background} $_css5={color} $_css6={globalVar} $_css7={getAfterValue()}>
       A
     </_StyledP12>;
 };
 
 var SpreadObjectPropMixedInputs = function SpreadObjectPropMixedInputs(p) {
   var color = 'red';
-  return <_StyledP13 _css8={globalVar} _css9={getAfterValue()} _css10={globalVar} _css11={getAfterValue()} _css12={p.background} _css13={globalVar} _css14={getAfterValue()}>
+  return <_StyledP13 $_css8={globalVar} $_css9={getAfterValue()} $_css10={globalVar} $_css11={getAfterValue()} $_css12={p.background} $_css13={globalVar} $_css14={getAfterValue()}>
       A
     </_StyledP13>;
 };
@@ -216,14 +216,14 @@ var _StyledP6 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP6",
   componentId: "sc-7evkve-12"
 })(["", ""], function (p) {
-  return p._css;
+  return p.$_css;
 });
 
 var _StyledP7 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP7",
   componentId: "sc-7evkve-13"
 })(["background:", ";"], function (p) {
-  return p._css2;
+  return p.$_css2;
 });
 
 var _StyledP8 = (0, _styledComponents["default"])("p").withConfig({
@@ -242,7 +242,7 @@ var _StyledP10 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP10",
   componentId: "sc-7evkve-16"
 })(["color:", ";"], function (p) {
-  return p._css3;
+  return p.$_css3;
 });
 
 var _StyledP11 = (0, _styledComponents["default"])("p").withConfig({
@@ -277,14 +277,14 @@ var _StyledP12 = (0, _styledComponents["default"])("p").withConfig({
   componentId: "sc-7evkve-22"
 })(function (p) {
   return {
-    background: p._css4,
-    color: p._css5,
+    background: p.$_css4,
+    color: p.$_css5,
     textAlign: 'left',
     '::before': {
-      content: p._css6
+      content: p.$_css6
     },
     '::after': {
-      content: p._css7
+      content: p.$_css7
     }
   };
 });
@@ -295,26 +295,26 @@ var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
 })(function (p) {
   return _objectSpread(_objectSpread({}, _objectSpread({
     '::before': {
-      content: p._css8
+      content: p.$_css8
     },
     '::after': {
-      content: p._css9
+      content: p.$_css9
     }
   }, {
     '::before': {
-      content: p._css10
+      content: p.$_css10
     },
     '::after': {
-      content: p._css11
+      content: p.$_css11
     }
   })), {}, {
-    background: p._css12,
+    background: p.$_css12,
     textAlign: 'left',
     '::before': {
-      content: p._css13
+      content: p.$_css13
     },
     '::after': {
-      content: p._css14
+      content: p.$_css14
     }
   });
 });

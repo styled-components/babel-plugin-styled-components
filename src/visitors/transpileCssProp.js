@@ -29,6 +29,15 @@ const getNameExpression = (node, t) => {
   )
 }
 
+const getLocalIdentifier = path => {
+  const identifier = path.scope.generateUidIdentifier('css')
+
+  // make it transient
+  identifier.name = identifier.name.replace('_', '$_')
+
+  return identifier
+}
+
 export default t => (path, state) => {
   if (!useCssProp(state)) return
   if (path.node.name.name !== 'css') return
@@ -143,7 +152,7 @@ export default t => (path, state) => {
       ) {
         replaceObjectWithPropFunction = true
 
-        const name = path.scope.generateUidIdentifier('css')
+        const name = getLocalIdentifier(path)
 
         elem.node.attributes.push(
           t.jSXAttribute(
@@ -184,7 +193,7 @@ export default t => (path, state) => {
       ) {
         replaceObjectWithPropFunction = true
 
-        const name = path.scope.generateUidIdentifier('css')
+        const name = getLocalIdentifier(path)
 
         elem.node.attributes.push(
           t.jSXAttribute(
@@ -218,7 +227,7 @@ export default t => (path, state) => {
       ) {
         acc.push(ex)
       } else {
-        const name = path.scope.generateUidIdentifier('css')
+        const name = getLocalIdentifier(path)
         const p = t.identifier('p')
 
         elem.node.attributes.push(

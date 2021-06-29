@@ -46,11 +46,11 @@ var CustomComp = function CustomComp(p) {
 };
 
 var DynamicProp = function DynamicProp(p) {
-  return <_StyledP6 _css={props.cssText}>H</_StyledP6>;
+  return <_StyledP6 $_css={props.cssText}>H</_StyledP6>;
 };
 
 var LocalInterpolation = function LocalInterpolation(p) {
-  return <_StyledP7 _css2={props.bg}>
+  return <_StyledP7 $_css2={props.bg}>
     H
   </_StyledP7>;
 };
@@ -70,7 +70,7 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
 };
 
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 _css3={p.color}>
+  return <_StyledP10 $_css3={p.color}>
     A
   </_StyledP10>;
 };
@@ -106,20 +106,20 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 var Thing3 = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  color: blue;\n"])));
 
 var _StyledThing4 = (0, _styledComponents["default"])(Thing3)(function (p) {
-  return _defineProperty({}, p._css7, {
+  return _defineProperty({}, p.$_css7, {
     color: 'red'
   });
 });
 
 var _StyledThing3 = (0, _styledComponents["default"])(Thing3)(function (p) {
-  return _defineProperty({}, p._css6, {
+  return _defineProperty({}, p.$_css6, {
     color: 'red'
   });
 });
 
 var _StyledThing2 = (0, _styledComponents["default"])(Thing3)(function (p) {
   return {
-    color: p._css5
+    color: p.$_css5
   };
 });
 
@@ -127,28 +127,28 @@ var _StyledThing = (0, _styledComponents["default"])(Thing3)(_templateObject2 ||
 
 var ObjectInterpolation = function ObjectInterpolation(p) {
   var theme = useTheme();
-  return <_StyledP12 _css4={theme.colors.red}>
+  return <_StyledP12 $_css4={theme.colors.red}>
       H
     </_StyledP12>;
 };
 
 var ObjectInterpolationCustomComponent = function ObjectInterpolationCustomComponent(p) {
   var theme = useTheme();
-  return <_StyledThing2 _css5={theme.colors.red}>
+  return <_StyledThing2 $_css5={theme.colors.red}>
       H
     </_StyledThing2>;
 };
 
 var ObjectInterpolationInKey = function ObjectInterpolationInKey(p) {
   var theme = useTheme();
-  return <_StyledThing3 _css6={theme.breakpoints.md}>
+  return <_StyledThing3 $_css6={theme.breakpoints.md}>
       H
     </_StyledThing3>;
 };
 
 var ObjectFnInterpolationInKey = function ObjectFnInterpolationInKey(p) {
   var theme = useTheme();
-  return <_StyledThing4 _css7={theme.breakpoints.md()}>
+  return <_StyledThing4 $_css7={theme.breakpoints.md()}>
       H
     </_StyledThing4>;
 };
@@ -168,11 +168,11 @@ var _StyledP5 = (0, _styledComponents["default"])("p")(_templateObject6 || (_tem
 var _StyledParagraph = (0, _styledComponents["default"])(Paragraph)(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["flex: 1"])));
 
 var _StyledP6 = (0, _styledComponents["default"])("p")(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["", ""])), function (p) {
-  return p._css;
+  return p.$_css;
 });
 
 var _StyledP7 = (0, _styledComponents["default"])("p")(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n      background: ", ";\n    "])), function (p) {
-  return p._css2;
+  return p.$_css2;
 });
 
 var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (props) {
@@ -182,7 +182,7 @@ var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject10 || (_te
 var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n      border-radius: ", "px;\n    "])), radius);
 
 var _StyledP10 = (0, _styledComponents["default"])("p")(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (p) {
-  return p._css3;
+  return p.$_css3;
 });
 
 var _StyledP11 = (0, _styledComponents["default"])("p")(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (props) {
@@ -199,6 +199,6 @@ var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost")(_tem
 
 var _StyledP12 = (0, _styledComponents["default"])("p")(function (p) {
   return {
-    color: p._css4
+    color: p.$_css4
   };
 });
