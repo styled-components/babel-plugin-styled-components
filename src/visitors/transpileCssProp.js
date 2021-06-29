@@ -141,6 +141,8 @@ export default t => (path, state) => {
         t.isMemberExpression(property.key) ||
         t.isCallExpression(property.key)
       ) {
+        replaceObjectWithPropFunction = true
+
         const name = path.scope.generateUidIdentifier('css')
 
         elem.node.attributes.push(

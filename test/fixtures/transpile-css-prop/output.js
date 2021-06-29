@@ -105,13 +105,17 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 
 var Thing3 = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  color: blue;\n"])));
 
-var _StyledThing4 = (0, _styledComponents["default"])(Thing3)(_defineProperty({}, p._css7, {
-  color: 'red'
-}));
+var _StyledThing4 = (0, _styledComponents["default"])(Thing3)(function (p) {
+  return _defineProperty({}, p._css7, {
+    color: 'red'
+  });
+});
 
-var _StyledThing3 = (0, _styledComponents["default"])(Thing3)(_defineProperty({}, p._css6, {
-  color: 'red'
-}));
+var _StyledThing3 = (0, _styledComponents["default"])(Thing3)(function (p) {
+  return _defineProperty({}, p._css6, {
+    color: 'red'
+  });
+});
 
 var _StyledThing2 = (0, _styledComponents["default"])(Thing3)(function (p) {
   return {
