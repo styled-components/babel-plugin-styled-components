@@ -13,21 +13,13 @@ var _Card = _interopRequireDefault(require("../../shared/components/Card"));
 
 var _config = _interopRequireDefault(require("../../../config"));
 
+var _templateObject;
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n      width: 35em;\n    "]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject());
+var _StyledDiv = (0, _styledComponents["default"])("div")(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n      width: 35em;\n    "])));
 
 var _default = function _default() {
   return <_StyledDiv>
