@@ -40,7 +40,7 @@ const addConfig = t => (path, displayName, componentId) => {
   if (
     existingConfig &&
     existingConfig.arguments.length &&
-    !existingConfig.arguments[0].properties.some(prop =>
+    !existingConfig.arguments[0].properties?.some(prop =>
       ['displayName', 'componentId'].includes(prop.key.name)
     )
   ) {
@@ -55,7 +55,7 @@ const addConfig = t => (path, displayName, componentId) => {
     path.node.callee.callee.property.name &&
     path.node.callee.callee.property.name == 'withConfig' &&
     path.node.callee.arguments.length &&
-    !path.node.callee.arguments[0].properties.some(prop =>
+    !path.node.callee.arguments[0].properties?.some(prop =>
       ['displayName', 'componentId'].includes(prop.key.name)
     )
   ) {
