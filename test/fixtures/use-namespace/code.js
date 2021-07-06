@@ -1,13 +1,23 @@
-import styled from 'styled-components'
+import * as styled from 'styled-components'
 
-const Test = styled.div`
+const css = styled.css`
+  background: black;
+`
+
+const GlobalStyle = styled.createGlobalStyle`
+  html {
+    background: black;
+  }
+`
+
+const Test = styled.default.div`
   color: red;
 `
 
-const before = styled.div`
+const before = styled.default.div`
   color: blue;
 `
 
-styled.div``
+styled.default.div``
 
-export default styled.button``
+export default styled.default.button``
