@@ -200,3 +200,17 @@ const ObjectPropMixedInputs = p => {
     </p>
   )
 }
+
+const ObjectPropWithSpread = () => {
+  const css = { color: 'red' }
+  const playing = true
+
+  return (
+    <div
+      css={{
+        ...css,
+        ...(playing ? { opacity: 0, bottom: '-100px' } : {}),
+      }}
+    />
+  )
+}

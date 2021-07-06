@@ -180,11 +180,28 @@ export default t => (path, state) => {
 
         acc.push(property)
       } else if (t.isSpreadElement(property)) {
-        // recurse for objects within objects (e.g. {'::before': { content: x }})
-        property.argument.properties = property.argument.properties.reduce(
-          propertiesReducer,
-          []
-        )
+        // handle spread variables and such
+
+        if (t.isObjectExpression(property.argument)) {
+          property.argument.properties = property.argument.properties.reduce(
+            propertiesReducer,
+            []
+          )
+        } else {
+          replaceObjectWithPropFunction = true
+
+          const identifier = getLocalIdentifier(path)
+
+          elem.node.attributes.push(
+            t.jSXAttribute(
+              t.jSXIdentifier(identifier.name),
+              t.jSXExpressionContainer(property.argument)
+            )
+          )
+
+          property.argument = t.memberExpression(p, identifier)
+        }
+
         acc.push(property)
       } else if (
         // if a non-primitive value we have to interpolate it
