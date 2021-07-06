@@ -9,7 +9,11 @@ import {
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
 import hash from '../utils/hash'
-import { isStyled } from '../utils/detectors'
+import {
+  isCreateGlobalStyleHelper,
+  isCSSHelper,
+  isStyled,
+} from '../utils/detectors'
 
 const addConfig = t => (path, displayName, componentId) => {
   if (!displayName && !componentId) {
@@ -211,8 +215,8 @@ export default t => (path, state) => {
           t.isMemberExpression(path.node.callee.callee) &&
           path.node.callee.callee.property &&
           path.node.callee.callee.property.name &&
-          path.node.callee.callee.property.name == 'withConfig' &&
-          !path.node.callee.arguments[0].properties.some((prop) =>
+          path.node.callee.callee.property.name === 'withConfig' &&
+          !path.node.callee.arguments[0].properties.some(prop =>
             ['displayName', 'componentId'].includes(prop.key.name)
           ))
   ) {
