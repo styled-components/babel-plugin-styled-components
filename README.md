@@ -22,6 +22,10 @@ Then add it to your babel configuration:
 }
 ```
 
+## Changelog
+
+See [Github Releases](https://github.com/styled-components/babel-plugin-styled-components/releases)
+
 ## Documentation
 
 **The documentation for this plugin lives on [the styled-components website](https://www.styled-components.com/docs/tooling#babel-plugin)!**
