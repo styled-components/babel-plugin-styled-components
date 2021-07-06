@@ -251,6 +251,17 @@ var ObjectFnSimpleInterpolationInKey = function ObjectFnSimpleInterpolationInKey
     </_StyledThing6>;
 };
 
+var ObjectPropWithSpread = function ObjectPropWithSpread() {
+  var css = {
+    color: 'red'
+  };
+  var playing = true;
+  return <_StyledDiv $_css20={css} $_css21={playing ? {
+    opacity: 0,
+    bottom: '-100px'
+  } : {}} />;
+};
+
 var _StyledP = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP",
   componentId: "sc-7evkve-10"
@@ -402,4 +413,11 @@ var _StyledP14 = (0, _styledComponents["default"])("p").withConfig({
   return {
     color: p.$_css15
   };
+});
+
+var _StyledDiv = (0, _styledComponents["default"])("div").withConfig({
+  displayName: "code___StyledDiv",
+  componentId: "sc-7evkve-30"
+})(function (p) {
+  return _objectSpread(_objectSpread({}, p.$_css20), p.$_css21);
 });
