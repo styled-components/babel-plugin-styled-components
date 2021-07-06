@@ -136,15 +136,20 @@ export const isKeyframesHelper = t => (tag, state) =>
 export const isWithThemeHelper = t => (tag, state) =>
   t.isIdentifier(tag) && tag.name === importLocalName('withTheme', state)
 
+export const isUseTheme = t => (tag, state) =>
+  t.isIdentifier(tag) && tag.name === importLocalName('useTheme', state)
+
 export const isHelper = t => (tag, state) =>
-  isCSSHelper(t)(tag, state) ||
   isCreateGlobalStyleHelper(t)(tag, state) ||
+  isCSSHelper(t)(tag, state) ||
   isInjectGlobalHelper(t)(tag, state) ||
+  isUseTheme(t)(tag, state) ||
   isKeyframesHelper(t)(tag, state) ||
   isWithThemeHelper(t)(tag, state)
 
 export const isPureHelper = t => (tag, state) =>
+  isCreateGlobalStyleHelper(t)(tag, state) ||
   isCSSHelper(t)(tag, state) ||
   isKeyframesHelper(t)(tag, state) ||
-  isCreateGlobalStyleHelper(t)(tag, state) ||
+  isUseTheme(t)(tag, state) ||
   isWithThemeHelper(t)(tag, state)
