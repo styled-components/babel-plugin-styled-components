@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css, createGlobalStyle } from 'styled-components'
 
 const Named = styled.div`
   width: 100%;
@@ -15,3 +15,13 @@ const Wrapped = styled(Inner)`
 const Foo = styled.div({
   color: 'green',
 })
+
+const style = css`
+  background: green;
+`
+
+const GlobalStyle = createGlobalStyle`
+  html {
+    background: silver;
+  }
+`
