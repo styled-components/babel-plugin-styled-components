@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "displayName": true,
+        "fileName": false,
+        "ssr": true,
+        "topLevelImportPathPatterns": [".*/styled-components/native$"],
+        "transpileTemplateLiterals": false
+      }
+    ]
+  ]
+}

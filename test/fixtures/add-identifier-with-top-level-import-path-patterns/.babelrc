@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "displayName": false,
+        "fileName": false,
+        "ssr": true,
+        "topLevelImportPathPatterns": [".*/styled$"],
+        "transpileTemplateLiterals": false
+      }
+    ]
+  ]
+}

@@ -1,4 +1,4 @@
-import { useTopLevelImportPaths } from './options'
+import { useTopLevelImportPaths, useTopLevelImportPathPatterns } from './options'
 
 const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components',
@@ -7,10 +7,16 @@ const VALID_TOP_LEVEL_IMPORT_PATHS = [
   'styled-components/primitives',
 ]
 
-export const isValidTopLevelImport = (x, state) =>
-  [...VALID_TOP_LEVEL_IMPORT_PATHS, ...useTopLevelImportPaths(state)].includes(
-    x
-  )
+export const isValidTopLevelImport = (x, state) => {
+  const isValid = [...VALID_TOP_LEVEL_IMPORT_PATHS, ...useTopLevelImportPaths(state)].includes(x);
+  if (isValid) return true;
+  for (const pattern of useTopLevelImportPathPatterns(state)) {
+    if (pattern.test(x)) {
+      return x;
+    }
+  }
+  return false;
+}
 
 const localNameCache = {}
 
