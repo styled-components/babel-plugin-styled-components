@@ -14,10 +14,8 @@ export default t => (path, state) => {
       templateLiteral.quasis.map(x => x.value.raw)
     )
 
-    const [
-      cookedValuesMinfified,
-      eliminatedExpressionIndices,
-    ] = minifyCookedValues(templateLiteral.quasis.map(x => x.value.cooked))
+    const [cookedValuesMinfified, eliminatedExpressionIndices] =
+      minifyCookedValues(templateLiteral.quasis.map(x => x.value.cooked))
 
     eliminatedExpressionIndices.forEach((expressionIndex, iteration) => {
       templateLiteral.expressions.splice(expressionIndex - iteration, 1)
