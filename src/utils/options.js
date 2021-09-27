@@ -21,6 +21,14 @@ export const useNamespace = state => {
   return ''
 }
 
+export const usePrefix = state => {
+  const prefix = getOption(state, 'prefix', '')
+  if (prefix) {
+    return `${prefix}`
+  }
+  return 'sc'
+}
+
 export const usePureAnnotation = state => getOption(state, 'pure', false)
 
 export const useCssProp = state => getOption(state, 'cssProp', true)

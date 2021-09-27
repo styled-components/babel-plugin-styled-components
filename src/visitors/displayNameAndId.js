@@ -5,6 +5,7 @@ import {
   useDisplayName,
   useSSR,
   useNamespace,
+  usePrefix,
 } from '../utils/options'
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
@@ -193,7 +194,7 @@ const getNextId = state => {
 
 const getComponentId = state => {
   // Prefix the identifier with a character because CSS classes cannot start with a number
-  return `${useNamespace(state)}sc-${getFileHash(state)}-${getNextId(state)}`
+  return `${useNamespace(state)}${usePrefix(state)}-${getFileHash(state)}-${getNextId(state)}`
 }
 
 export default t => (path, state) => {
