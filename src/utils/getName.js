@@ -10,7 +10,7 @@ export default t => path => {
   let namedNode
 
   path.find(path => {
-    // const X = styled
+    // X = styled
     if (path.isAssignmentExpression()) {
       namedNode = path.node.left
       // const X = { Y: styled }
@@ -19,7 +19,7 @@ export default t => path => {
       // class Y { (static) X = styled }
     } else if (path.isClassProperty()) {
       namedNode = path.node.key
-      // let X; X = styled
+      // const X = styled
     } else if (path.isVariableDeclarator()) {
       namedNode = path.node.id
     } else if (path.isStatement()) {
@@ -28,7 +28,12 @@ export default t => path => {
     }
 
     // we've got an displayName (if we need it) no need to continue
-    if (namedNode) return true
+    // However if this is an assignment expression like X = styled then we
+    // want to keep going up incase there is Y = X = styled; in this case we
+    // want to pick the outer name because react-refresh will add HMR variables
+    // like this: X = _a = styled. We could also consider only doing this if the
+    // name starts with an underscore.
+    if (namedNode && !path.isAssignmentExpression()) return true
   })
 
   // foo.bar -> bar

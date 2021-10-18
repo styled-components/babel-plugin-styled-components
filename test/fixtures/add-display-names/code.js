@@ -12,3 +12,4 @@ const WrappedComponent = styled(Inner)``
 class ClassComponent {
   static Child = styled.div``
 }
+var GoodName = BadName = styled.div``;
