@@ -8,9 +8,7 @@
         "ssr": true,
         "topLevelImportPaths": [
           "@xstyled/styled-components",
-          "@xstyled/styled-components/no-tags",
-          "@xstyled/styled-components/native",
-          "@xstyled/styled-components/primitives"
+          "@xstyled/styled-components/*"
         ],
         "transpileTemplateLiterals": false
       }
