@@ -122,7 +122,11 @@ export default t => (path, state) => {
 
   if (!css) return
 
-  elem.node.attributes = elem.node.attributes.filter(attr => attr !== path.node)
+  // strip off css prop from final output
+  elem.node.attributes = elem.node.attributes.filter(x =>
+    t.isJSXAttribute(x) ? x.name.name !== 'css' : false
+  )
+
   elem.node.name = t.jSXIdentifier(id.name)
 
   if (elem.parentPath.node.closingElement) {
@@ -155,7 +159,10 @@ export default t => (path, state) => {
           // but not a object reference shorthand like css={{ color }}
           (t.isIdentifier(property.value)
             ? property.key.name !== property.value.name
-            : true))
+            : true) &&
+          // and not a tricky expression
+          !t.isLogicalExpression(property.value) &&
+          !t.isConditionalExpression(property.value))
       ) {
         replaceObjectWithPropFunction = true
 
@@ -217,18 +224,58 @@ export default t => (path, state) => {
       ) {
         replaceObjectWithPropFunction = true
 
-        const identifier = getLocalIdentifier(path)
+        if (
+          // handle tricky expressions
+          t.isConditionalExpression(property.value) ||
+          t.isLogicalExpression(property.value)
+        ) {
+          const jSXIdentifier = getLocalIdentifier(path)
+          const injectedIdentifier = getLocalIdentifier(path)
 
-        elem.node.attributes.push(
-          t.jSXAttribute(
-            t.jSXIdentifier(identifier.name),
-            t.jSXExpressionContainer(property.value)
+          let insertionPoint = elem
+
+          while (insertionPoint.key !== 'body') {
+            insertionPoint = insertionPoint.parentPath
+          }
+
+          // convert complicated expressions into hoisted local variables
+          // TODO: add logic to put the injected variables just above JSXOpeningElement instead of at the root in case there is
+          // any variable manipulation happening
+          insertionPoint.unshiftContainer(
+            'body',
+            t.variableDeclaration('var', [
+              t.variableDeclarator(injectedIdentifier, property.value),
+            ])
           )
-        )
 
-        acc.push(
-          t.objectProperty(property.key, t.memberExpression(p, identifier))
-        )
+          elem.node.attributes.push(
+            t.jSXAttribute(
+              t.jSXIdentifier(jSXIdentifier.name),
+              t.jSXExpressionContainer(injectedIdentifier)
+            )
+          )
+
+          // now push the properties back into the assembled object
+          acc.push(
+            t.objectProperty(
+              t.identifier(property.key.name),
+              t.memberExpression(p, jSXIdentifier)
+            )
+          )
+        } else {
+          const identifier = getLocalIdentifier(path)
+
+          elem.node.attributes.push(
+            t.jSXAttribute(
+              t.jSXIdentifier(identifier.name),
+              t.jSXExpressionContainer(property.value)
+            )
+          )
+
+          acc.push(
+            t.objectProperty(property.key, t.memberExpression(p, identifier))
+          )
+        }
       } else {
         // some sort of primitive which is safe to pass through as-is
         acc.push(property)

@@ -214,3 +214,17 @@ const ObjectPropWithSpread = () => {
     />
   )
 }
+
+const ObjectInterpolationTernary = ({ height, width, ...p }) => {
+  return (
+    <p
+      css={{
+        height: height ?? '100%',
+        width: width ? `${width}px` : '100%',
+      }}
+      {...p}
+    >
+      H
+    </p>
+  )
+}

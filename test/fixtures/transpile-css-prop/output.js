@@ -2,6 +2,8 @@
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _excluded = ["height", "width"];
+
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -9,6 +11,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -188,6 +194,18 @@ var ObjectPropWithSpread = function ObjectPropWithSpread() {
   } : {}} />;
 };
 
+var ObjectInterpolationTernary = function ObjectInterpolationTernary(_ref4) {
+  var height = _ref4.height,
+      width = _ref4.width,
+      p = _objectWithoutProperties(_ref4, _excluded);
+
+  var $_css18 = width ? "".concat(width, "px") : '100%';
+  var $_css16 = height !== null && height !== void 0 ? height : '100%';
+  return <_StyledP14 $_css15={$_css16} $_css17={$_css18}>
+      H
+    </_StyledP14>;
+};
+
 var _StyledP = (0, _styledComponents["default"])("p")(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["flex: 1;"])));
 
 var _StyledP2 = (0, _styledComponents["default"])("p")(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n      flex: 1;\n    "])));
@@ -254,4 +272,11 @@ var _StyledP13 = (0, _styledComponents["default"])("p")(function (p) {
 
 var _StyledDiv = (0, _styledComponents["default"])("div")(function (p) {
   return _objectSpread(_objectSpread({}, p.$_css13), p.$_css14);
+});
+
+var _StyledP14 = (0, _styledComponents["default"])("p")(function (p) {
+  return {
+    height: p.$_css15,
+    width: p.$_css17
+  };
 });
