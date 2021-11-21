@@ -1,4 +1,4 @@
-import { styled } from '@example/example'
+import { styled } from '../../relative/example'
 
 const Test = styled.div`
   width: 100%;

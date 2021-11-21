@@ -1,4 +1,4 @@
-import styled from '@xstyled/styled-components';
+import styled from '@xstyled/styled-components/test';
 const Test = styled.div.withConfig({
   componentId: "sc-1mlyrvc-0"
 })`width:100%;`;

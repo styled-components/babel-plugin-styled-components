@@ -1,16 +1,19 @@
-import { useTopLevelImportPaths } from './options'
+import escapeRegExp from 'lodash/escapeRegExp'
+import { useTopLevelImportPathMatchers } from './options'
 
-const VALID_TOP_LEVEL_IMPORT_PATHS = [
+const VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS = [
   'styled-components',
   'styled-components/no-tags',
   'styled-components/native',
   'styled-components/primitives',
-]
+].map(literal => new RegExp(`^${escapeRegExp(literal)}$`))
 
-export const isValidTopLevelImport = (x, state) =>
-  [...VALID_TOP_LEVEL_IMPORT_PATHS, ...useTopLevelImportPaths(state)].includes(
-    x
-  )
+export const isValidTopLevelImport = (x, state) => {
+  return [
+    ...VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS,
+    ...useTopLevelImportPathMatchers(state),
+  ].some(re => re.test(x));
+}
 
 const localNameCache = {}
 

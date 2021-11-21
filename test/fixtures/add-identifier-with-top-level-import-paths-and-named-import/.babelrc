@@ -6,7 +6,7 @@
         "displayName": true,
         "fileName": false,
         "ssr": true,
-        "topLevelImportPaths": ["@example/example"],
+        "topLevelImportPaths": [".*\/example$"],
         "transpileTemplateLiterals": false
       }
     ]
