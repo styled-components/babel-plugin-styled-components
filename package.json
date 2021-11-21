@@ -16,11 +16,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.15.7",
-    "@babel/core": "^7.15.8",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-transform-modules-commonjs": "^7.15.4",
-    "@babel/preset-env": "^7.15.8",
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "babel-core": "7.0.0-bridge.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-test": "^0.2.1",
@@ -31,8 +31,8 @@
     "styled-components": "^5.3.1"
   },
   "dependencies": {
-    "@babel/helper-annotate-as-pure": "^7.15.4",
-    "@babel/helper-module-imports": "^7.15.4",
+    "@babel/helper-annotate-as-pure": "^7.16.0",
+    "@babel/helper-module-imports": "^7.16.0",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "lodash": "^4.17.11"
   },
