@@ -224,58 +224,18 @@ export default t => (path, state) => {
       ) {
         replaceObjectWithPropFunction = true
 
-        if (
-          // handle tricky expressions
-          t.isConditionalExpression(property.value) ||
-          t.isLogicalExpression(property.value)
-        ) {
-          const jSXIdentifier = getLocalIdentifier(path)
-          const injectedIdentifier = getLocalIdentifier(path)
+        const identifier = getLocalIdentifier(path)
 
-          let insertionPoint = elem
-
-          while (insertionPoint.key !== 'body') {
-            insertionPoint = insertionPoint.parentPath
-          }
-
-          // convert complicated expressions into hoisted local variables
-          // TODO: add logic to put the injected variables just above JSXOpeningElement instead of at the root in case there is
-          // any variable manipulation happening
-          insertionPoint.unshiftContainer(
-            'body',
-            t.variableDeclaration('var', [
-              t.variableDeclarator(injectedIdentifier, property.value),
-            ])
+        elem.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(identifier.name),
+            t.jSXExpressionContainer(property.value)
           )
+        )
 
-          elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(jSXIdentifier.name),
-              t.jSXExpressionContainer(injectedIdentifier)
-            )
-          )
-
-          // now push the properties back into the assembled object
-          acc.push(
-            t.objectProperty(
-              t.identifier(property.key.name),
-              t.memberExpression(p, jSXIdentifier)
-            )
-          )
-        } else {
-          const identifier = getLocalIdentifier(path)
-
-          elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(property.value)
-            )
-          )
-
-          acc.push(
-            t.objectProperty(property.key, t.memberExpression(p, identifier))
-          )
-        }
+        acc.push(
+          t.objectProperty(property.key, t.memberExpression(p, identifier))
+        )
       } else {
         // some sort of primitive which is safe to pass through as-is
         acc.push(property)

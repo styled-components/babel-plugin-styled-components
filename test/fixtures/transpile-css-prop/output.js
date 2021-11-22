@@ -2,7 +2,7 @@
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _excluded = ["height", "width"];
+var _excluded = ["bg", "content", "height", "width"];
 
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17;
 
@@ -194,14 +194,14 @@ var ObjectPropWithSpread = function ObjectPropWithSpread() {
   } : {}} />;
 };
 
-var ObjectInterpolationTernary = function ObjectInterpolationTernary(_ref4) {
-  var height = _ref4.height,
+var ObjectInterpolationLogical = function ObjectInterpolationLogical(_ref4) {
+  var bg = _ref4.bg,
+      content = _ref4.content,
+      height = _ref4.height,
       width = _ref4.width,
       p = _objectWithoutProperties(_ref4, _excluded);
 
-  var $_css18 = width ? "".concat(width, "px") : '100%';
-  var $_css16 = height !== null && height !== void 0 ? height : '100%';
-  return <_StyledP14 $_css15={$_css16} $_css17={$_css18}>
+  return <_StyledP14 $_css15={bg || 'red'} $_css16={height !== null && height !== void 0 ? height : '100%'} $_css17={width ? "".concat(width, "px") : '100%'} $_css18={content}>
       H
     </_StyledP14>;
 };
@@ -276,7 +276,11 @@ var _StyledDiv = (0, _styledComponents["default"])("div")(function (p) {
 
 var _StyledP14 = (0, _styledComponents["default"])("p")(function (p) {
   return {
-    height: p.$_css15,
-    width: p.$_css17
+    background: p.$_css15,
+    height: p.$_css16,
+    width: p.$_css17,
+    '::before': {
+      content: p.$_css18
+    }
   };
 });
