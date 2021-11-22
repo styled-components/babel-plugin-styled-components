@@ -214,3 +214,21 @@ const ObjectPropWithSpread = () => {
     />
   )
 }
+
+const ObjectInterpolationLogical = ({ bg, content, height, width, ...p }) => {
+  return (
+    <p
+      css={{
+        background: bg || 'red',
+        height: height ?? '100%',
+        width: width ? `${width}px` : '100%',
+        '::before': {
+          content,
+        },
+      }}
+      {...p}
+    >
+      H
+    </p>
+  )
+}

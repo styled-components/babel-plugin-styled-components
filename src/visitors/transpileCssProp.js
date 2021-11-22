@@ -122,7 +122,11 @@ export default t => (path, state) => {
 
   if (!css) return
 
-  elem.node.attributes = elem.node.attributes.filter(attr => attr !== path.node)
+  // strip off css prop from final output
+  elem.node.attributes = elem.node.attributes.filter(x =>
+    t.isJSXAttribute(x) ? x.name.name !== 'css' : false
+  )
+
   elem.node.name = t.jSXIdentifier(id.name)
 
   if (elem.parentPath.node.closingElement) {
@@ -155,7 +159,10 @@ export default t => (path, state) => {
           // but not a object reference shorthand like css={{ color }}
           (t.isIdentifier(property.value)
             ? property.key.name !== property.value.name
-            : true))
+            : true) &&
+          // and not a tricky expression
+          !t.isLogicalExpression(property.value) &&
+          !t.isConditionalExpression(property.value))
       ) {
         replaceObjectWithPropFunction = true
 
