@@ -123,8 +123,10 @@ export default t => (path, state) => {
   if (!css) return
 
   // strip off css prop from final output
-  elem.node.attributes = elem.node.attributes.filter(x =>
-    t.isJSXAttribute(x) ? x.name.name !== 'css' : false
+  elem.node.attributes = elem.node.attributes.filter(
+    x =>
+      t.isJSXSpreadAttribute(x) ||
+      (t.isJSXAttribute(x) ? x.name.name !== 'css' : false)
   )
 
   elem.node.name = t.jSXIdentifier(id.name)

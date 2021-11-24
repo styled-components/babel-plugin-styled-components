@@ -4,7 +4,7 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _excluded = ["bg", "content", "height", "width"];
 
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -201,9 +201,33 @@ var ObjectInterpolationLogical = function ObjectInterpolationLogical(_ref4) {
       width = _ref4.width,
       p = _objectWithoutProperties(_ref4, _excluded);
 
-  return <_StyledP14 $_css15={bg || 'red'} $_css16={height !== null && height !== void 0 ? height : '100%'} $_css17={width ? "".concat(width, "px") : '100%'} $_css18={content}>
+  return <_StyledP14 {...p} $_css15={bg || 'red'} $_css16={height !== null && height !== void 0 ? height : '100%'} $_css17={width ? "".concat(width, "px") : '100%'} $_css18={content}>
       H
     </_StyledP14>;
+};
+
+var RenderPropComponentCSSProp = function RenderPropComponentCSSProp() {
+  return <RenderPropComponent>
+      {function () {
+      return <_StyledDiv2 />;
+    }}
+    </RenderPropComponent>;
+};
+
+var RenderPropComponentSpread = function RenderPropComponentSpread(props) {
+  return <RenderPropComponent>
+      {function () {
+      return <div {...props.derivedProps} />;
+    }}
+    </RenderPropComponent>;
+};
+
+var RenderPropComponentSpreadCSSProp = function RenderPropComponentSpreadCSSProp(props) {
+  return <RenderPropComponent>
+      {function () {
+      return <_StyledDiv3 {...props.derivedProps} />;
+    }}
+    </RenderPropComponent>;
 };
 
 var _StyledP = (0, _styledComponents["default"])("p")(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["flex: 1;"])));
@@ -284,3 +308,7 @@ var _StyledP14 = (0, _styledComponents["default"])("p")(function (p) {
     }
   };
 });
+
+var _StyledDiv2 = (0, _styledComponents["default"])("div")(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n            color: black;\n          "])));
+
+var _StyledDiv3 = (0, _styledComponents["default"])("div")(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n            color: black;\n          "])));
