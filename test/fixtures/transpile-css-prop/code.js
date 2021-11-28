@@ -232,3 +232,40 @@ const ObjectInterpolationLogical = ({ bg, content, height, width, ...p }) => {
     </p>
   )
 }
+
+const RenderPropComponentCSSProp = () => {
+  return (
+    <RenderPropComponent>
+      {() => (
+        <div
+          css={`
+            color: black;
+          `}
+        />
+      )}
+    </RenderPropComponent>
+  )
+}
+
+const RenderPropComponentSpread = props => {
+  return (
+    <RenderPropComponent>
+      {() => <div {...props.derivedProps} />}
+    </RenderPropComponent>
+  )
+}
+
+const RenderPropComponentSpreadCSSProp = props => {
+  return (
+    <RenderPropComponent>
+      {() => (
+        <div
+          css={`
+            color: black;
+          `}
+          {...props.derivedProps}
+        />
+      )}
+    </RenderPropComponent>
+  )
+}
