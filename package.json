@@ -34,7 +34,8 @@
     "@babel/helper-annotate-as-pure": "^7.16.0",
     "@babel/helper-module-imports": "^7.16.0",
     "babel-plugin-syntax-jsx": "^6.18.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "picomatch": "^2.3.0"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

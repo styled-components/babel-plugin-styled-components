@@ -1,21 +1,20 @@
-import styled from '@xstyled/styled-components/test';
-const Test = styled.div.withConfig({
+import styledA from '@xstyled/styled-components/test';
+import styledB from '@xstyled/styled-components-test';
+import styledC from '@xstyled/styled-components';
+const Test = styledA.div`
+  width: 100%;
+`;
+const Test2 = true ? styledA.div`` : styledC.div.withConfig({
   componentId: "sc-1mlyrvc-0"
-})`width:100%;`;
-const Test2 = true ? styled.div.withConfig({
-  componentId: "sc-1mlyrvc-1"
-})`` : styled.div.withConfig({
-  componentId: "sc-1mlyrvc-2"
 })``;
 const styles = {
-  One: styled.div.withConfig({
-    componentId: "sc-1mlyrvc-3"
-  })``
+  One: styledA.div``
 };
 let Component;
-Component = styled.div.withConfig({
-  componentId: "sc-1mlyrvc-4"
+Component = styledC.div.withConfig({
+  componentId: "sc-1mlyrvc-1"
 })``;
-const WrappedComponent = styled(Inner).withConfig({
-  componentId: "sc-1mlyrvc-5"
+const WrappedComponent = styledC(Inner).withConfig({
+  componentId: "sc-1mlyrvc-2"
 })``;
+const NoTransformComponent = styledB.div``;
