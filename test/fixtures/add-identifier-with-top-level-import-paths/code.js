@@ -1,13 +1,12 @@
-import styledA from '@xstyled/styled-components/test'
-import styledB from '@xstyled/styled-components-test'
-import styledC from '@xstyled/styled-components'
+import styled from '@xstyled/styled-components'
+import unstyled from '@xstyled/styled-components-test'
 
-const Test = styledA.div`
+const Test = styled.div`
   width: 100%;
 `
-const Test2 = true ? styledA.div`` : styledC.div``
-const styles = { One: styledA.div`` }
+const Test2 = true ? styled.div`` : styled.div``
+const styles = { One: styled.div`` }
 let Component
-Component = styledC.div``
-const WrappedComponent = styledC(Inner)``
-const NoTransformComponent = styledB.div``;
+Component = styled.div``
+const WrappedComponent = styled(Inner)``
+const NoTransformComponent = unstyled.div``;
