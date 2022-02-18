@@ -1,3 +1,5 @@
+import pm from 'picomatch';
+
 function getOption({ opts }, name, defaultValue = true) {
   return opts[name] === undefined || opts[name] === null
     ? defaultValue
@@ -6,7 +8,7 @@ function getOption({ opts }, name, defaultValue = true) {
 
 export const useDisplayName = state => getOption(state, 'displayName')
 export const useTopLevelImportPathMatchers = state =>
-  getOption(state, 'topLevelImportPaths', []).map(pattern => new RegExp(pattern))
+  getOption(state, 'topLevelImportPaths', []).map(pattern => pm(pattern))
 export const useSSR = state => getOption(state, 'ssr', true)
 export const useFileName = state => getOption(state, 'fileName')
 export const useMeaninglessFileNames = state => getOption(state, 'meaninglessFileNames', ['index'])

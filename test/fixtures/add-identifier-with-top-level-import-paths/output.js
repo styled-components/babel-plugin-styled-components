@@ -1,4 +1,5 @@
-import styled from '@xstyled/styled-components/test';
+import styled from '@xstyled/styled-components';
+import unstyled from '@xstyled/styled-components-test';
 const Test = styled.div.withConfig({
   componentId: "sc-1mlyrvc-0"
 })`width:100%;`;
@@ -19,3 +20,4 @@ Component = styled.div.withConfig({
 const WrappedComponent = styled(Inner).withConfig({
   componentId: "sc-1mlyrvc-5"
 })``;
+const NoTransformComponent = unstyled.div``;
