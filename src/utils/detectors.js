@@ -5,13 +5,13 @@ const VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS = [
   'styled-components/no-tags',
   'styled-components/native',
   'styled-components/primitives',
-].map(literal => x => x === literal);
+].map(literal => x => x === literal)
 
 export const isValidTopLevelImport = (x, state) => {
   return [
     ...VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS,
     ...useTopLevelImportPathMatchers(state),
-  ].some(isMatch => isMatch(x));
+  ].some(isMatch => isMatch(x))
 }
 
 const localNameCache = {}
@@ -23,6 +23,9 @@ export const importLocalName = (name, state, options = {}) => {
 
   if (!bypassCache && cacheKey in localNameCache) {
     return localNameCache[cacheKey]
+    // state.customImportName is injected by the babel macro
+  } else if (state.customImportName) {
+    return state.customImportName.name
   }
 
   let localName = state.styledRequired
