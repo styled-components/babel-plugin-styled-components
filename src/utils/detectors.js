@@ -21,10 +21,11 @@ export const importLocalName = (name, state, options = {}) => {
   const cacheKeyAffix = cacheIdentifier ? `|${cacheIdentifier}` : ''
   const cacheKey = name + state.file.opts.filename + cacheKeyAffix
 
-  if (state.customImportName && !localNameCache[cacheKey]) {
-    return state.customImportName.name
-  } else if (!bypassCache && localNameCache[cacheKey]) {
+  if (!bypassCache && cacheKey in localNameCache) {
     return localNameCache[cacheKey]
+    // state.customImportName is injected by the babel macro
+  } else if (state.customImportName) {
+    return state.customImportName.name
   }
 
   let localName = state.styledRequired

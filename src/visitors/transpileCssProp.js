@@ -44,12 +44,14 @@ export default t => (path, state) => {
 
   const program = state.file.path
 
-  let importName = importLocalName('default', state)
+  // state.customImportName is passed through from styled-components/macro if it's used
+  // since the macro also inserts the import
+  let importName = state.customImportName || importLocalName('default', state)
 
   const { bindings } = program.scope
 
   // Insert import if it doesn't exist yet
-  if (!importName) {
+  if (!importName || !bindings[importName.name] || !bindings[importName]) {
     addDefault(path, 'styled-components', {
       nameHint: 'styled',
     })
