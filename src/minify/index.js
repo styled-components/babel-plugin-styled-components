@@ -64,13 +64,18 @@ export const compressSymbols = code =>
 
     // Only manipulate symbols outside of strings
     if (
-      countOccurences(str, "'") % 2 === 0 &&
-      countOccurences(str, '"') % 2 === 0
+      countOccurences(str, "'") % 2 !== 0 ||
+      countOccurences(str, '"') % 2 !== 0
     ) {
-      return str + fragment.trim()
+      return str + fragment
     }
 
-    return str + fragment
+    // Preserve whitespace preceding colon, to avoid joining selectors.
+    if (/^\s+:/.test(fragment)) {
+      return str + ' ' + fragment.trim()
+    }
+
+    return str + fragment.trim()
   }, '')
 
 // Detects lines that are exclusively line comments
