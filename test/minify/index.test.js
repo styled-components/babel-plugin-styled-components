@@ -113,6 +113,9 @@ describe('minify utils', () => {
 
   describe('compressSymbols', () => {
     it('removes spaces around symbols', () => {
+      // The whitespace preceding the colon is removed here as part of the
+      // trailing whitespace on the semi-colon. Contrast to the "preserves"
+      // test below.
       const input = ';  :  {  }  ,  ;  '
       const expected = ';:{},;'
 
@@ -122,6 +125,13 @@ describe('minify utils', () => {
     it('ignores symbols inside strings', () => {
       const input = ';   " : " \' : \' ;'
       const expected = ';" : " \' : \';'
+
+      expect(compressSymbols(input)).toBe(expected)
+    })
+
+    it('preserves whitespace preceding colons', () => {
+      const input = '& :last-child { color: blue; }'
+      const expected = '& :last-child{color:blue;}'
 
       expect(compressSymbols(input)).toBe(expected)
     })
