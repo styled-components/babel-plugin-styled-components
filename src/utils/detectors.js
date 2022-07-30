@@ -1,3 +1,4 @@
+import getSequenceExpressionValue from './getSequenceExpressionValue'
 import { useTopLevelImportPathMatchers } from './options'
 
 const VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS = [
@@ -81,6 +82,15 @@ export const isStyled = t => (tag, state) => {
   ) {
     // styled.something()
     return isStyled(t)(tag.callee.object, state)
+  } else if (
+    t.isCallExpression(tag) &&
+    t.isSequenceExpression(tag.callee) &&
+    t.isMemberExpression(getSequenceExpressionValue(tag.callee)) &&
+    getSequenceExpressionValue(tag.callee).property.name !==
+      'default' /** ignore default for #93 below */
+  ) {
+    // (..., styled).something()
+    return isStyled(t)(getSequenceExpressionValue(tag.callee), state)
   } else {
     return (
       (t.isMemberExpression(tag) &&
@@ -93,6 +103,12 @@ export const isStyled = t => (tag, state) => {
         tag.callee.name ===
           importLocalName('default', state, {
             cacheIdentifier: tag.callee.name,
+          })) ||
+      (t.isCallExpression(tag) &&
+        t.isSequenceExpression(tag.callee) &&
+        getSequenceExpressionValue(tag.callee).name ===
+          importLocalName('default', state, {
+            cacheIdentifier: getSequenceExpressionValue(tag.callee).name,
           })) ||
       /**
        * #93 Support require()
@@ -111,6 +127,13 @@ export const isStyled = t => (tag, state) => {
         t.isMemberExpression(tag.callee) &&
         tag.callee.property.name === 'default' &&
         tag.callee.object.name === state.styledRequired) ||
+      (state.styledRequired &&
+        t.isCallExpression(tag) &&
+        t.isSequenceExpression(tag.callee) &&
+        t.isMemberExpression(getSequenceExpressionValue(tag.callee)) &&
+        getSequenceExpressionValue(tag.callee).property.name === 'default' &&
+        getSequenceExpressionValue(tag.callee).object.name ===
+          state.styledRequired) ||
       (importLocalName('default', state) &&
         t.isMemberExpression(tag) &&
         t.isMemberExpression(tag.object) &&
