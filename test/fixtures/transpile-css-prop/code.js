@@ -233,6 +233,21 @@ const ObjectInterpolationLogical = ({ bg, content, height, width, ...p }) => {
   )
 }
 
+const ObjectInterpolationMember = p => {
+  const theme = useTheme()
+  const color = 'red'
+
+  return (
+    <p
+      css={{
+        color: theme.colors[color],
+      }}
+    >
+      H
+    </p>
+  )
+}
+
 const RenderPropComponentCSSProp = () => {
   return (
     <RenderPropComponent>

@@ -162,14 +162,15 @@ export default t => (path, state) => {
           (t.isIdentifier(property.value)
             ? property.key.name !== property.value.name
             : true) &&
-          // and not a tricky expression
+            // and not a tricky expression
+          !t.isMemberExpression(property.value) && 
           !t.isLogicalExpression(property.value) &&
           !t.isConditionalExpression(property.value))
       ) {
         replaceObjectWithPropFunction = true
 
         const identifier = getLocalIdentifier(path)
-
+        
         elem.node.attributes.push(
           t.jSXAttribute(
             t.jSXIdentifier(identifier.name),
