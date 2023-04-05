@@ -206,6 +206,14 @@ var ObjectInterpolationLogical = function ObjectInterpolationLogical(_ref4) {
     </_StyledP14>;
 };
 
+var ObjectInterpolationMember = function ObjectInterpolationMember(p) {
+  var theme = useTheme();
+  var color = 'red';
+  return <_StyledP15 $_css19={theme.colors[color]}>
+      H
+    </_StyledP15>;
+};
+
 var RenderPropComponentCSSProp = function RenderPropComponentCSSProp() {
   return <RenderPropComponent>
       {function () {
@@ -306,6 +314,12 @@ var _StyledP14 = (0, _styledComponents["default"])("p")(function (p) {
     '::before': {
       content: p.$_css18
     }
+  };
+});
+
+var _StyledP15 = (0, _styledComponents["default"])("p")(function (p) {
+  return {
+    color: p.$_css19
   };
 });
 

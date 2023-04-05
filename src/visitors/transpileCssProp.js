@@ -163,6 +163,7 @@ export default t => (path, state) => {
             ? property.key.name !== property.value.name
             : true) &&
           // and not a tricky expression
+          !t.isMemberExpression(property.value) &&
           !t.isLogicalExpression(property.value) &&
           !t.isConditionalExpression(property.value))
       ) {
