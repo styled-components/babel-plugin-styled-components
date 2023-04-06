@@ -1,5 +1,5 @@
 {
-  "version": "2.0.7",
+  "version": "2.1.1",
   "name": "babel-plugin-styled-components",
   "description": "Improve the debugging experience and add server-side rendering support to styled-components",
   "repository": "styled-components/babel-plugin-styled-components",
@@ -48,8 +48,8 @@
     "style": "prettier --write src/**/*.js",
     "build": "babel src -d lib",
     "test": "jest",
-    "test:watch": "npm run test -- --watch",
-    "prepublish": "npm run clean && npm run build"
+    "test:watch": "yarn test -- --watch",
+    "prepublish": "yarn clean && yarn build"
   },
   "keywords": [
     "styled-components",
