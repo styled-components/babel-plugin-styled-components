@@ -67,5 +67,6 @@
     "watchPathIgnorePatterns": [
       "fixtures\\/[^/]+\\/(output|error)\\.js"
     ]
-  }
+  },
+  "packageManager": "yarn@3.5.0"
 }
