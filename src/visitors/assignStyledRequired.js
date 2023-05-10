@@ -20,7 +20,7 @@ export default t => (path, state) => {
     init.callee.name === 'require' &&
     init.arguments &&
     init.arguments[0] &&
-    t.isLiteral(init.arguments[0]) &&
+    t.isStringLiteral(init.arguments[0]) &&
     isValidTopLevelImport(init.arguments[0].value, state)
   ) {
     state.styledRequired = path.node.id.name
