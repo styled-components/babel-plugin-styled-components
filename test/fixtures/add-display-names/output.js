@@ -22,9 +22,7 @@ Component = styled.div.withConfig({
 const WrappedComponent = styled(Inner).withConfig({
   displayName: "WrappedComponent"
 })``;
-
 class ClassComponent {}
-
 ClassComponent.Child = styled.div.withConfig({
   displayName: "Child"
 })``;
