@@ -28,3 +28,6 @@ class ClassComponent {}
 ClassComponent.Child = styled.div.withConfig({
   displayName: "Child"
 })``;
+var GoodName = BadName = styled.div.withConfig({
+  displayName: "GoodName"
+})``;

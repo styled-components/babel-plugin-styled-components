@@ -1,10 +1,20 @@
 import path from 'path'
 import fs from 'fs'
-import { useFileName, useDisplayName, useSSR } from '../utils/options'
+import {
+  useFileName,
+  useDisplayName,
+  useSSR,
+  useMeaninglessFileNames,
+  useNamespace,
+} from '../utils/options'
 import getName from '../utils/getName'
 import prefixLeadingDigit from '../utils/prefixDigit'
 import hash from '../utils/hash'
-import { isStyled } from '../utils/detectors'
+import {
+  isCreateGlobalStyleHelper,
+  isCSSHelper,
+  isStyled,
+} from '../utils/detectors'
 
 const addConfig = t => (path, displayName, componentId) => {
   if (!displayName && !componentId) {
@@ -12,6 +22,7 @@ const addConfig = t => (path, displayName, componentId) => {
   }
 
   const withConfigProps = []
+
   if (displayName) {
     withConfigProps.push(
       t.objectProperty(
@@ -27,6 +38,36 @@ const addConfig = t => (path, displayName, componentId) => {
         t.stringLiteral(componentId)
       )
     )
+  }
+
+  const existingConfig = getExistingConfig(t)(path)
+
+  if (
+    existingConfig &&
+    existingConfig.arguments.length &&
+    Array.isArray(existingConfig.arguments[0].properties) &&
+    !existingConfig.arguments[0].properties.some(prop =>
+      ['displayName', 'componentId'].includes(prop.key.name)
+    )
+  ) {
+    existingConfig.arguments[0].properties.push(...withConfigProps)
+    return
+  }
+
+  if (
+    path.node.callee &&
+    t.isMemberExpression(path.node.callee.callee) &&
+    path.node.callee.callee.property &&
+    path.node.callee.callee.property.name &&
+    path.node.callee.callee.property.name == 'withConfig' &&
+    path.node.callee.arguments.length &&
+    Array.isArray(path.node.callee.arguments[0].properties) &&
+    !path.node.callee.arguments[0].properties.some(prop =>
+      ['displayName', 'componentId'].includes(prop.key.name)
+    )
+  ) {
+    path.node.callee.arguments[0].properties.push(...withConfigProps)
+    return
   }
 
   if (path.node.tag) {
@@ -48,21 +89,45 @@ const addConfig = t => (path, displayName, componentId) => {
   }
 }
 
-const getBlockName = file => {
+const getExistingConfig = t => path => {
+  if (
+    path.node.callee &&
+    t.isMemberExpression(path.node.callee.callee) &&
+    path.node.callee.callee.property &&
+    path.node.callee.callee.property.name &&
+    path.node.callee.callee.property.name == 'withConfig'
+  ) {
+    return path.node.callee
+  }
+
+  if (
+    path.node.callee &&
+    t.isMemberExpression(path.node.callee.callee) &&
+    path.node.callee.callee.object &&
+    path.node.callee.callee.object.callee &&
+    path.node.callee.callee.object.callee.property &&
+    path.node.callee.callee.object.callee.property.name === 'withConfig'
+  ) {
+    return path.node.callee.callee.object
+  }
+}
+
+const getBlockName = (file, meaninglessFileNames) => {
   const name = path.basename(
     file.opts.filename,
     path.extname(file.opts.filename)
   )
-  return name !== 'index'
-    ? name
-    : path.basename(path.dirname(file.opts.filename))
+
+  return meaninglessFileNames.includes(name)
+    ? path.basename(path.dirname(file.opts.filename))
+    : name
 }
 
 const getDisplayName = t => (path, state) => {
   const { file } = state
   const componentName = getName(t)(path)
   if (file) {
-    const blockName = getBlockName(file)
+    const blockName = getBlockName(file, useMeaninglessFileNames(state))
     if (blockName === componentName) {
       return componentName
     }
@@ -130,7 +195,7 @@ const getNextId = state => {
 
 const getComponentId = state => {
   // Prefix the identifier with a character because CSS classes cannot start with a number
-  return `${prefixLeadingDigit(getFileHash(state))}-${getNextId(state)}`
+  return `${useNamespace(state)}sc-${getFileHash(state)}-${getNextId(state)}`
 }
 
 export default t => (path, state) => {
@@ -148,7 +213,18 @@ export default t => (path, state) => {
           t.isMemberExpression(path.node.callee.callee) &&
           path.node.callee.callee.property &&
           path.node.callee.callee.property.name &&
-          path.node.callee.callee.property.name !== 'withConfig')
+          path.node.callee.callee.property.name !== 'withConfig') ||
+        // styled(x).withConfig({})
+        (isStyled(t)(path.node.callee, state) &&
+          t.isMemberExpression(path.node.callee.callee) &&
+          path.node.callee.callee.property &&
+          path.node.callee.callee.property.name &&
+          path.node.callee.callee.property.name === 'withConfig' &&
+          path.node.callee.arguments.length &&
+          Array.isArray(path.node.callee.arguments[0].properties) &&
+          !path.node.callee.arguments[0].properties.some(prop =>
+            ['displayName', 'componentId'].includes(prop.key.name)
+          ))
   ) {
     const displayName =
       useDisplayName(state) &&

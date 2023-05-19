@@ -106,3 +106,181 @@ const EarlyUsageComponent = p => <Thing3 css="color: red;" />
 const Thing3 = styled.div`
   color: blue;
 `
+
+const ObjectInterpolation = p => {
+  const theme = useTheme()
+
+  return (
+    <p
+      css={{
+        color: theme.colors.red,
+      }}
+    >
+      H
+    </p>
+  )
+}
+
+const ObjectInterpolationCustomComponent = p => {
+  const theme = useTheme()
+
+  return (
+    <Thing3
+      css={{
+        color: theme.colors.red,
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectInterpolationInKey = p => {
+  const theme = useTheme()
+
+  return (
+    <Thing3
+      css={{
+        [theme.breakpoints.md]: {
+          color: 'red',
+        },
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectFnInterpolationInKey = p => {
+  const theme = useTheme()
+
+  return (
+    <Thing3
+      css={{
+        [theme.breakpoints.md()]: {
+          color: 'red',
+        },
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectFnSimpleInterpolationInKey = p => {
+  const foo = '@media screen and (max-width: 600px)'
+
+  return (
+    <Thing3
+      css={{
+        [foo]: {
+          color: 'red',
+        },
+      }}
+    >
+      H
+    </Thing3>
+  )
+}
+
+const ObjectPropMixedInputs = p => {
+  const color = 'red'
+
+  return (
+    <p
+      css={{
+        background: p.background,
+        color,
+        textAlign: 'left',
+        '::before': { content: globalVar },
+        '::after': { content: getAfterValue() },
+      }}
+    >
+      A
+    </p>
+  )
+}
+
+const ObjectPropWithSpread = () => {
+  const css = { color: 'red' }
+  const playing = true
+
+  return (
+    <div
+      css={{
+        ...css,
+        ...(playing ? { opacity: 0, bottom: '-100px' } : {}),
+      }}
+    />
+  )
+}
+
+const ObjectInterpolationLogical = ({ bg, content, height, width, ...p }) => {
+  return (
+    <p
+      css={{
+        background: bg || 'red',
+        height: height ?? '100%',
+        width: width ? `${width}px` : '100%',
+        '::before': {
+          content,
+        },
+      }}
+      {...p}
+    >
+      H
+    </p>
+  )
+}
+
+const ObjectInterpolationMember = p => {
+  const theme = useTheme()
+  const color = 'red'
+
+  return (
+    <p
+      css={{
+        color: theme.colors[color],
+      }}
+    >
+      H
+    </p>
+  )
+}
+
+const RenderPropComponentCSSProp = () => {
+  return (
+    <RenderPropComponent>
+      {() => (
+        <div
+          css={`
+            color: black;
+          `}
+        />
+      )}
+    </RenderPropComponent>
+  )
+}
+
+const RenderPropComponentSpread = props => {
+  return (
+    <RenderPropComponent>
+      {() => <div {...props.derivedProps} />}
+    </RenderPropComponent>
+  )
+}
+
+const RenderPropComponentSpreadCSSProp = props => {
+  return (
+    <RenderPropComponent>
+      {() => (
+        <div
+          css={`
+            color: black;
+          `}
+          {...props.derivedProps}
+        />
+      )}
+    </RenderPropComponent>
+  )
+}
