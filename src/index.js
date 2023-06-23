@@ -1,4 +1,4 @@
-import syntax from 'babel-plugin-syntax-jsx'
+import syntax from '@babel/plugin-syntax-jsx'
 import pureAnnotation from './visitors/pure'
 import minify from './visitors/minify'
 import displayNameAndId from './visitors/displayNameAndId'
@@ -6,7 +6,7 @@ import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import transpileCssProp from './visitors/transpileCssProp'
 
-export default function({ types: t }) {
+export default function ({ types: t }) {
   return {
     inherits: syntax,
     visitor: {
