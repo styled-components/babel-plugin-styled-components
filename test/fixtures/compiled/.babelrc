@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "fileName": false,
+        "transpileTemplateLiterals": false,
+        "ssr": true
+      }
+    ],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ]
+}
