@@ -38,7 +38,7 @@
     "picomatch": "^2.3.1"
   },
   "peerDependencies": {
-    "styled-components": ">= 2"
+    "styled-components": "^2"
   },
   "scripts": {
     "clean": "rimraf lib",
