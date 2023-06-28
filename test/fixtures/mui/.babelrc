@@ -1,0 +1,19 @@
+{
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "fileName": false,
+        "transpileTemplateLiterals": false,
+        "ssr": true,
+        "topLevelImportPaths": [
+          "@mui/material",
+          "@mui/material/*",
+          "@mui/system",
+          "@mui/styled-engine-sc"
+        ]
+      }
+    ],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+  ]
+}
