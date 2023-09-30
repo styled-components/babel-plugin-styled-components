@@ -2280,6 +2280,7 @@ __metadata:
     rimraf: ^5.0.1
     styled-components: ^6.0.0-rc.6
   peerDependencies:
+    "@babel/core": ^7.0.0-0
     styled-components: ">= 2"
   languageName: unknown
   linkType: soft
