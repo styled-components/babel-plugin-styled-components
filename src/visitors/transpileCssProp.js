@@ -260,7 +260,10 @@ export default t => {
               property.key,
               t.memberExpression(p, identifier),
               property.computed,
-              property.shorthand
+              // shorthand requires `value` to be the same Identifier as `key`;
+              // after rewriting `{ color }` to `{ color: p.$_cssN }` the
+              // invariant no longer holds, so force-clear the flag.
+              false
             )
           )
         } else {
