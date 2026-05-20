@@ -16,6 +16,17 @@ import {
   isStyled,
 } from '../utils/detectors'
 
+// Tolerant predicate for "does this withConfig arguments object already carry
+// displayName/componentId" — must skip SpreadElement entries and non-Identifier
+// keys, both of which are valid in an ObjectExpression but have no `.key.name`.
+const hasDisplayNameOrComponentId = (t, properties) =>
+  properties.some(
+    prop =>
+      t.isObjectProperty(prop) &&
+      t.isIdentifier(prop.key) &&
+      ['displayName', 'componentId'].includes(prop.key.name)
+  )
+
 const addConfig = t => (path, displayName, componentId) => {
   if (!displayName && !componentId) {
     return
@@ -46,9 +57,7 @@ const addConfig = t => (path, displayName, componentId) => {
     existingConfig &&
     existingConfig.arguments.length &&
     Array.isArray(existingConfig.arguments[0].properties) &&
-    !existingConfig.arguments[0].properties.some(prop =>
-      ['displayName', 'componentId'].includes(prop.key.name)
-    )
+    !hasDisplayNameOrComponentId(t, existingConfig.arguments[0].properties)
   ) {
     existingConfig.arguments[0].properties.push(...withConfigProps)
     return
@@ -62,9 +71,7 @@ const addConfig = t => (path, displayName, componentId) => {
     path.node.callee.callee.property.name == 'withConfig' &&
     path.node.callee.arguments.length &&
     Array.isArray(path.node.callee.arguments[0].properties) &&
-    !path.node.callee.arguments[0].properties.some(prop =>
-      ['displayName', 'componentId'].includes(prop.key.name)
-    )
+    !hasDisplayNameOrComponentId(t, path.node.callee.arguments[0].properties)
   ) {
     path.node.callee.arguments[0].properties.push(...withConfigProps)
     return
@@ -207,12 +214,7 @@ const taggedTagAlreadyConfigured = (t, path) => {
   if (!callee.property || callee.property.name !== 'withConfig') return false
   const firstArg = tag.arguments[0]
   if (!firstArg || !Array.isArray(firstArg.properties)) return false
-  return firstArg.properties.some(
-    prop =>
-      t.isObjectProperty(prop) &&
-      t.isIdentifier(prop.key) &&
-      ['displayName', 'componentId'].includes(prop.key.name)
-  )
+  return hasDisplayNameOrComponentId(t, firstArg.properties)
 }
 
 export default t => (path, state) => {
@@ -240,8 +242,9 @@ export default t => (path, state) => {
           path.node.callee.callee.property.name === 'withConfig' &&
           path.node.callee.arguments.length &&
           Array.isArray(path.node.callee.arguments[0].properties) &&
-          !path.node.callee.arguments[0].properties.some(prop =>
-            ['displayName', 'componentId'].includes(prop.key.name)
+          !hasDisplayNameOrComponentId(
+            t,
+            path.node.callee.arguments[0].properties
           ))
   ) {
     const displayName =
