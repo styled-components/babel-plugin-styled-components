@@ -6,7 +6,8 @@ import { processCallExpression, processTaggedTemplate } from './process'
 
 const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
 
-const ISSUE_URL = 'github.com/styled-components/babel-plugin-styled-components'
+const ISSUE_URL =
+  'https://github.com/styled-components/babel-plugin-styled-components'
 
 const getName = (node, t, path) => {
   if (typeof node.name === 'string') return node.name
@@ -58,7 +59,15 @@ export default t => {
     const { bindings } = program.scope
 
     const importBindingName = importName && (importName.name || importName)
-    if (!importBindingName || !bindings[importBindingName]) {
+    const importBinding = importBindingName && bindings[importBindingName]
+    const importBindingIsNamespace =
+      importBinding &&
+      importBinding.path &&
+      importBinding.path.isImportNamespaceSpecifier()
+    // A namespace binding (`import * as styled from 'styled-components'`) is
+    // not directly callable, so treat it the same as "no default binding" and
+    // inject a fresh default import to use as the css-prop callee.
+    if (!importBinding || importBindingIsNamespace) {
       addDefault(path, 'styled-components', {
         nameHint: 'styled',
       })

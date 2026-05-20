@@ -198,7 +198,7 @@ const getComponentId = state => {
   return `${useNamespace(state)}sc-${getFileHash(state)}-${getNextId(state)}`
 }
 
-const taggedTagAlreadyConfigured = t => path => {
+const taggedTagAlreadyConfigured = (t, path) => {
   const tag = path.node.tag
   if (!tag) return false
   if (!t.isCallExpression(tag)) return false
@@ -213,7 +213,7 @@ const taggedTagAlreadyConfigured = t => path => {
 }
 
 export default t => (path, state) => {
-  if (taggedTagAlreadyConfigured(t)(path)) return
+  if (taggedTagAlreadyConfigured(t, path)) return
   if (
     path.node.tag
       ? isStyled(t)(path.node.tag, state)

@@ -61,7 +61,9 @@ export const importLocalName = (name, state, options = {}) => {
             localName = specifier.node.local.name
           }
 
-          if (specifier.isImportNamespaceSpecifier()) {
+          // The namespace binding isn't directly callable, so prefer any
+          // other specifier (default or named) discovered in this file.
+          if (specifier.isImportNamespaceSpecifier() && !localName) {
             localName = name === 'default' ? specifier.node.local.name : name
           }
         }
