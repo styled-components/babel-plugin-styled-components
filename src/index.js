@@ -1,12 +1,14 @@
 import syntax from '@babel/plugin-syntax-jsx'
-import pureAnnotation from './visitors/pure'
-import minify from './visitors/minify'
-import displayNameAndId from './visitors/displayNameAndId'
-import templateLiterals from './visitors/templateLiterals'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import transpileCssProp from './visitors/transpileCssProp'
+import { processCallExpression, processTaggedTemplate } from './visitors/process'
 
 export default function ({ types: t }) {
+  const transpileCssPropVisit = transpileCssProp(t)
+  const assignStyledRequiredVisit = assignStyledRequired(t)
+  const processCallExpressionVisit = processCallExpression(t)
+  const processTaggedTemplateVisit = processTaggedTemplate(t)
+
   return {
     inherits: syntax,
     visitor: {
@@ -14,24 +16,20 @@ export default function ({ types: t }) {
         path.traverse(
           {
             JSXAttribute(path, state) {
-              transpileCssProp(t)(path, state)
+              transpileCssPropVisit(path, state)
             },
             VariableDeclarator(path, state) {
-              assignStyledRequired(t)(path, state)
+              assignStyledRequiredVisit(path, state)
             },
           },
           state
         )
       },
       CallExpression(path, state) {
-        displayNameAndId(t)(path, state)
-        pureAnnotation(t)(path, state)
+        processCallExpressionVisit(path, state)
       },
       TaggedTemplateExpression(path, state) {
-        minify(t)(path, state)
-        displayNameAndId(t)(path, state)
-        templateLiterals(t)(path, state)
-        pureAnnotation(t)(path, state)
+        processTaggedTemplateVisit(path, state)
       },
     },
   }
