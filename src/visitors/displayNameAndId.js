@@ -198,7 +198,22 @@ const getComponentId = state => {
   return `${useNamespace(state)}sc-${getFileHash(state)}-${getNextId(state)}`
 }
 
+const taggedTagAlreadyConfigured = t => path => {
+  const tag = path.node.tag
+  if (!tag) return false
+  if (!t.isCallExpression(tag)) return false
+  const callee = tag.callee
+  if (!t.isMemberExpression(callee)) return false
+  if (!callee.property || callee.property.name !== 'withConfig') return false
+  const firstArg = tag.arguments[0]
+  if (!firstArg || !Array.isArray(firstArg.properties)) return false
+  return firstArg.properties.some(prop =>
+    ['displayName', 'componentId'].includes(prop.key.name)
+  )
+}
+
 export default t => (path, state) => {
+  if (taggedTagAlreadyConfigured(t)(path)) return
   if (
     path.node.tag
       ? isStyled(t)(path.node.tag, state)
