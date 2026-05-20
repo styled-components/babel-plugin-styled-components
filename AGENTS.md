@@ -45,15 +45,13 @@ How to ship
 Project shape
 
 - Package manager: pnpm 11 via the `packageManager` field. Use `pnpm install --frozen-lockfile` in CI.
-- Dev runtime floor: Node 22.13+ (pnpm 11 requirement). The compiled `lib/` targets node 12 in `.babelrc` and the package has no `engines` constraint, so consumers on older Node continue to work.
-- Supply-chain delay: `pnpm-workspace.yaml` sets `minimumReleaseAge: 4320` (3 days). New dependency versions younger than that are rejected under `--frozen-lockfile`. If a refresh is genuinely needed, drop the lockfile and re-resolve.
-- Releases: changesets. Add a `.changeset/<slug>.md` for every user-visible change. `patch` for fixes, `minor` for new behavior, `major` only when the public API surface or peer-dep range changes. The release workflow publishes via `changesets/action@v1`.
+- Releases: changesets. Add a `.changeset/<slug>.md` for every user-visible change. `patch` for fixes, `minor` for new behavior, `major` only when the public API surface or peer-dep range changes.
 - Tests: `pnpm test`. Fixture-based via `babel-test`. Each directory under `test/fixtures/<name>/` has `code.js` (input), `.babelrc` (plugin config), and either `output.js` (expected) or `error.js` (expected throw). To regenerate intentionally: `pnpm exec jest -u`.
 
 Plugin internals
 
 - Babel plugins run per file per build. Hot-path discipline: pre-curry visitor factories once at plugin init, don't re-curry per node.
 - Module-level mutable state leaks across files in long-running watchers (webpack-dev-server, jest watch, Next dev). Per-file caches live on `state.file.set/get`.
-- The css-prop transform injects new `VariableDeclaration` nodes at the end of `Program.body`. Babel's outer traversal does not reliably re-visit those injected nodes in 7.23+. The current workaround is to apply the styled visitors eagerly from inside `transpileCssProp`. When changing this area, verify both that user-written `styled.div` keeps its `displayName`/`componentId` and that injected css-prop components receive them too, on a file that mixes both shapes.
+- The css-prop transform injects new `VariableDeclaration` nodes at the end of `Program.body`, and Babel's outer traversal does not reliably re-visit them. The styled visitors are applied eagerly from inside `transpileCssProp` to compensate. When changing this area, verify on a file that mixes user-written `styled.div` and css-prop usages that both receive `displayName`/`componentId`.
 - `componentId` is `sc-<file-hash>-<counter>`. The counter is per-file, source-order-stable. If a change makes counter values shift unexpectedly across a snapshot, treat it as a regression until proven otherwise.
 - `isStyled` and the helper detectors in `src/utils/detectors.js` are recursive predicate chains. They short-circuit through nested CallExpression/SequenceExpression shapes (the `(0, x.default)(...)` form produced by `@babel/plugin-transform-modules-commonjs`). When adding a new arm, also reason about whether the recursive traversal will revisit children of the matched shape and re-match downstream (the `addConfig` mutation is not perfectly idempotent across all shapes).
