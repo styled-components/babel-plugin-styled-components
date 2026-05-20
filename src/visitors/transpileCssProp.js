@@ -318,22 +318,12 @@ export default t => {
       injector = nodeToInsert => parent.pushContainer('body', nodeToInsert)
     }
 
-    const insertedPaths = injector(
-      t.variableDeclaration('var', [
-        t.variableDeclarator(
-          id,
-          t.isObjectExpression(css) || t.isArrowFunctionExpression(css)
-            ? t.callExpression(styled, [css])
-            : t.taggedTemplateExpression(styled, css)
-        ),
-      ])
-    )
-
-    // Eagerly run the styled visitors on every user-written styled component
-    // we haven't yet numbered, BEFORE numbering the just-injected one. This
-    // keeps componentId counters in source order regardless of when the
-    // css-prop transform fires (Babel's outer traversal does not reliably
-    // re-visit nodes pushed onto Program from inside Program-enter).
+    // Eagerly number every user-written styled component already present in
+    // Program.body BEFORE the css-prop injection lands, then number the
+    // injected declaration via the explicit loop below. Babel's outer
+    // traversal does not reliably re-visit nodes pushed onto Program from
+    // inside Program-enter, so without this pre-pass user-written components
+    // discovered later would compete with injected ones for counter values.
     if (!state.file.get(PROGRAM_BODY_PRENUMBERED)) {
       state.file.set(PROGRAM_BODY_PRENUMBERED, true)
       program.traverse({
@@ -345,6 +335,17 @@ export default t => {
         },
       })
     }
+
+    const insertedPaths = injector(
+      t.variableDeclaration('var', [
+        t.variableDeclarator(
+          id,
+          t.isObjectExpression(css) || t.isArrowFunctionExpression(css)
+            ? t.callExpression(styled, [css])
+            : t.taggedTemplateExpression(styled, css)
+        ),
+      ])
+    )
 
     for (const inserted of [].concat(insertedPaths)) {
       const initPath = inserted.get('declarations.0.init')
