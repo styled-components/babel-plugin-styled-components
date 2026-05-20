@@ -32,7 +32,8 @@ How to plan
 How to ship
 
 - Types are law. No `as any`, non-null assertions, or `@ts-expect-error` escape hatches, except as deliberate negative-behavior tests clearly labeled as such.
-- Tests ship with features. Branch coverage above 80%. Cover happy paths, edge cases, and failure modes. Prefer inline snapshots seeded empty. Use red/green to validate fix and test together. Local tests run well under 30s.
+- Tests ship with features. Branch coverage above 80%. Cover happy paths, edge cases, and failure modes. Prefer inline snapshots seeded empty. Local tests run well under 30s.
+- Red/green TDD is required for every fix. Add or adjust the failing test before the code change, confirm it fails (red) on the unmodified surrounding code, apply the fix, then confirm it passes (green). When the test is a fixture snapshot, generate it on the pre-fix tree so the diff captures the broken output, then update on the post-fix tree. A test that only ever passes alongside the fix is not a regression test.
 - Snapshot drift is suspect. When fixture `output.js` files change beyond cosmetic helper renames, isolate the cause before regenerating. Counter shifts (`componentId: "sc-<hash>-N"`) in particular signal that visit order changed; verify the new order is intentional and source-order-stable before committing.
 - Comments explain non-obvious current behavior. Never narrate change history, reference an issue number, or describe what a future maintainer should do.
 - Hot-path code earns microbenchmarks before claiming it is optimized. Babel plugins run per file per build, so per-node allocation and repeated AST walks matter.
