@@ -17,15 +17,23 @@ import {
 } from '../utils/detectors'
 
 // Tolerant predicate for "does this withConfig arguments object already carry
-// displayName/componentId" — must skip SpreadElement entries and non-Identifier
-// keys, both of which are valid in an ObjectExpression but have no `.key.name`.
+// displayName/componentId". `ObjectExpression.properties` can hold ObjectMethod
+// and SpreadElement entries with no key; keys themselves can be Identifier,
+// StringLiteral, or a computed Expression. Reading `.key.name` blindly crashes
+// on any of those, and a too-narrow check silently double-configures shapes
+// like `{ 'displayName': 'X' }` so the auto displayName overrides at runtime.
+const NAMES = ['displayName', 'componentId']
 const hasDisplayNameOrComponentId = (t, properties) =>
-  properties.some(
-    prop =>
-      t.isObjectProperty(prop) &&
-      t.isIdentifier(prop.key) &&
-      ['displayName', 'componentId'].includes(prop.key.name)
-  )
+  properties.some(prop => {
+    if (!t.isObjectProperty(prop)) return false
+    if (t.isIdentifier(prop.key) && !prop.computed) {
+      return NAMES.includes(prop.key.name)
+    }
+    if (t.isStringLiteral(prop.key)) {
+      return NAMES.includes(prop.key.value)
+    }
+    return false
+  })
 
 const addConfig = t => (path, displayName, componentId) => {
   if (!displayName && !componentId) {
