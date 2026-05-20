@@ -1,18 +1,18 @@
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 var _excluded = ["bg", "content", "height", "width"];
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19;
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject0, _templateObject1, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17;
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } })); }
 /*
  * Basic fixtures
  */
@@ -64,14 +64,14 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
   </_StyledP9>;
 };
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 $_css3={p.color}>
+  return <_StyledP0 $_css3={p.color}>
     A
-  </_StyledP10>;
+  </_StyledP0>;
 };
 var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
-  return <_StyledP11>
+  return <_StyledP1>
     A
-  </_StyledP11>;
+  </_StyledP1>;
 };
 var CustomCompWithDot = function CustomCompWithDot(p) {
   return <_StyledButtonGhost>H</_StyledButtonGhost>;
@@ -115,9 +115,9 @@ var _StyledThing2 = (0, _styledComponents["default"])(Thing3)(function (p) {
 var _StyledThing = (0, _styledComponents["default"])(Thing3)(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["color: red;"])));
 var ObjectInterpolation = function ObjectInterpolation(p) {
   var theme = useTheme();
-  return <_StyledP12 $_css4={theme.colors.red}>
+  return <_StyledP10 $_css4={theme.colors.red}>
       H
-    </_StyledP12>;
+    </_StyledP10>;
 };
 var ObjectInterpolationCustomComponent = function ObjectInterpolationCustomComponent(p) {
   var theme = useTheme();
@@ -145,16 +145,16 @@ var ObjectFnSimpleInterpolationInKey = function ObjectFnSimpleInterpolationInKey
 };
 var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
   var color = 'red';
-  return <_StyledP13 $_css9={p.background} $_css10={color} $_css11={globalVar} $_css12={getAfterValue()}>
+  return <_StyledP11 $_css9={p.background} $_css0={color} $_css1={globalVar} $_css10={getAfterValue()}>
       A
-    </_StyledP13>;
+    </_StyledP11>;
 };
 var ObjectPropWithSpread = function ObjectPropWithSpread() {
   var css = {
     color: 'red'
   };
   var playing = true;
-  return <_StyledDiv $_css13={css} $_css14={playing ? {
+  return <_StyledDiv $_css11={css} $_css12={playing ? {
     opacity: 0,
     bottom: '-100px'
   } : {}} />;
@@ -165,16 +165,16 @@ var ObjectInterpolationLogical = function ObjectInterpolationLogical(_ref4) {
     height = _ref4.height,
     width = _ref4.width,
     p = _objectWithoutProperties(_ref4, _excluded);
-  return <_StyledP14 {...p} $_css15={bg || 'red'} $_css16={height !== null && height !== void 0 ? height : '100%'} $_css17={width ? "".concat(width, "px") : '100%'} $_css18={content}>
+  return <_StyledP12 {...p} $_css13={bg || 'red'} $_css14={height !== null && height !== void 0 ? height : '100%'} $_css15={width ? "".concat(width, "px") : '100%'} $_css16={content}>
       H
-    </_StyledP14>;
+    </_StyledP12>;
 };
 var ObjectInterpolationMember = function ObjectInterpolationMember(p) {
   var theme = useTheme();
   var color = 'red';
-  return <_StyledP15 $_css19={theme.colors[color]}>
+  return <_StyledP13 $_css17={theme.colors[color]}>
       H
-    </_StyledP15>;
+    </_StyledP13>;
 };
 var RenderPropComponentCSSProp = function RenderPropComponentCSSProp() {
   return <RenderPropComponent>
@@ -211,55 +211,55 @@ var _StyledP6 = (0, _styledComponents["default"])("p")(_templateObject8 || (_tem
 var _StyledP7 = (0, _styledComponents["default"])("p")(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n      background: ", ";\n    "])), function (p) {
   return p.$_css2;
 });
-var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (props) {
+var _StyledP8 = (0, _styledComponents["default"])("p")(_templateObject0 || (_templateObject0 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (props) {
   return props.theme.a;
 });
-var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n      border-radius: ", "px;\n    "])), radius);
-var _StyledP10 = (0, _styledComponents["default"])("p")(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (p) {
+var _StyledP9 = (0, _styledComponents["default"])("p")(_templateObject1 || (_templateObject1 = _taggedTemplateLiteral(["\n      border-radius: ", "px;\n    "])), radius);
+var _StyledP0 = (0, _styledComponents["default"])("p")(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (p) {
   return p.$_css3;
 });
-var _StyledP11 = (0, _styledComponents["default"])("p")(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (props) {
+var _StyledP1 = (0, _styledComponents["default"])("p")(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n      color: ", ";\n    "])), function (props) {
   return props.theme.color;
 });
-var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["flex: 1"])));
-var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["flex: 1"])));
-var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost)(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["flex: 1"])));
-var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost")(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["flex: 1"])));
-var _StyledP12 = (0, _styledComponents["default"])("p")(function (p) {
+var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost)(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["flex: 1"])));
+var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New)(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["flex: 1"])));
+var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost)(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["flex: 1"])));
+var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost")(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["flex: 1"])));
+var _StyledP10 = (0, _styledComponents["default"])("p")(function (p) {
   return {
     color: p.$_css4
   };
 });
-var _StyledP13 = (0, _styledComponents["default"])("p")(function (p) {
+var _StyledP11 = (0, _styledComponents["default"])("p")(function (p) {
   return {
     background: p.$_css9,
-    color: p.$_css10,
+    color: p.$_css0,
     textAlign: 'left',
     '::before': {
-      content: p.$_css11
+      content: p.$_css1
     },
     '::after': {
-      content: p.$_css12
+      content: p.$_css10
     }
   };
 });
 var _StyledDiv = (0, _styledComponents["default"])("div")(function (p) {
-  return _objectSpread(_objectSpread({}, p.$_css13), p.$_css14);
+  return _objectSpread(_objectSpread({}, p.$_css11), p.$_css12);
 });
-var _StyledP14 = (0, _styledComponents["default"])("p")(function (p) {
+var _StyledP12 = (0, _styledComponents["default"])("p")(function (p) {
   return {
-    background: p.$_css15,
-    height: p.$_css16,
-    width: p.$_css17,
+    background: p.$_css13,
+    height: p.$_css14,
+    width: p.$_css15,
     '::before': {
-      content: p.$_css18
+      content: p.$_css16
     }
   };
 });
-var _StyledP15 = (0, _styledComponents["default"])("p")(function (p) {
+var _StyledP13 = (0, _styledComponents["default"])("p")(function (p) {
   return {
-    color: p.$_css19
+    color: p.$_css17
   };
 });
-var _StyledDiv2 = (0, _styledComponents["default"])("div")(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n            color: black;\n          "])));
-var _StyledDiv3 = (0, _styledComponents["default"])("div")(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n            color: black;\n          "])));
+var _StyledDiv2 = (0, _styledComponents["default"])("div")(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n            color: black;\n          "])));
+var _StyledDiv3 = (0, _styledComponents["default"])("div")(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n            color: black;\n          "])));

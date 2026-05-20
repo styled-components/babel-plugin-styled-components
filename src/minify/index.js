@@ -1,10 +1,14 @@
-import difference from 'lodash/difference'
-
 import {
   makePlaceholder,
   placeholderRegex,
   splitByPlaceholders,
 } from '../css/placeholderUtils'
+
+const difference = (a, b) => {
+  if (!a) return []
+  const set = new Set(b)
+  return a.filter(x => !set.has(x))
+}
 
 const injectUniquePlaceholders = strArr => {
   let i = 0

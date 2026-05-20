@@ -2,13 +2,13 @@
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 var _SomeComponentPath = _interopRequireDefault(require("../SomeComponentPath"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var _require = require('../SomeOtherComponentPath'),
   SomeOtherComponent = _require.SomeOtherComponent;
 
@@ -17,15 +17,15 @@ var _require = require('../SomeOtherComponentPath'),
  */
 var _StyledSomeOtherComponent = (0, _styledComponents["default"])(SomeOtherComponent).withConfig({
   displayName: "code___StyledSomeOtherComponent",
-  componentId: "sc-7evkve-0"
+  componentId: "sc-7evkve-21"
 })(["color:red;"]);
 var Thing = _styledComponents["default"].div.withConfig({
   displayName: "code__Thing",
-  componentId: "sc-7evkve-1"
+  componentId: "sc-7evkve-28"
 })(["color:red;"]);
 var Thing2 = (0, _styledComponents["default"])(Thing).withConfig({
   displayName: "code__Thing2",
-  componentId: "sc-7evkve-2"
+  componentId: "sc-7evkve-29"
 })(["background:blue;"]);
 
 /*
@@ -79,14 +79,14 @@ var GlobalInterpolation = function GlobalInterpolation(p) {
   </_StyledP9>;
 };
 var LocalCssHelperProp = function LocalCssHelperProp(p) {
-  return <_StyledP10 $_css3={p.color}>
+  return <_StyledP0 $_css3={p.color}>
     A
-  </_StyledP10>;
+  </_StyledP0>;
 };
 var DynamicCssHelperProp = function DynamicCssHelperProp(p) {
-  return <_StyledP11>
+  return <_StyledP1>
     A
-  </_StyledP11>;
+  </_StyledP1>;
 };
 var CustomCompWithDot = function CustomCompWithDot(p) {
   return <_StyledButtonGhost>H</_StyledButtonGhost>;
@@ -106,15 +106,15 @@ var getAfterValue = function getAfterValue() {
 };
 var ObjectPropMixedInputs = function ObjectPropMixedInputs(p) {
   var color = 'red';
-  return <_StyledP12 $_css4={p.background} $_css5={color} $_css6={globalVar} $_css7={getAfterValue()}>
+  return <_StyledP10 $_css4={p.background} $_css5={color} $_css6={globalVar} $_css7={getAfterValue()}>
       A
-    </_StyledP12>;
+    </_StyledP10>;
 };
 var SpreadObjectPropMixedInputs = function SpreadObjectPropMixedInputs(p) {
   var color = 'red';
-  return <_StyledP13 $_css8={globalVar} $_css9={getAfterValue()} $_css10={globalVar} $_css11={getAfterValue()} $_css12={p.background} $_css13={globalVar} $_css14={getAfterValue()}>
+  return <_StyledP11 $_css8={globalVar} $_css9={getAfterValue()} $_css0={globalVar} $_css1={getAfterValue()} $_css10={p.background} $_css11={globalVar} $_css12={getAfterValue()}>
       A
-    </_StyledP13>;
+    </_StyledP11>;
 };
 
 /* styled component defined after function it's used in */
@@ -124,43 +124,43 @@ var EarlyUsageComponent = function EarlyUsageComponent(p) {
 };
 var Thing3 = _styledComponents["default"].div.withConfig({
   displayName: "code__Thing3",
-  componentId: "sc-7evkve-3"
+  componentId: "sc-7evkve-30"
 })(["color:blue;"]);
 var _StyledThing6 = (0, _styledComponents["default"])(Thing3).withConfig({
   displayName: "code___StyledThing6",
-  componentId: "sc-7evkve-4"
-})(function (p) {
-  return _defineProperty({}, p.$_css19, {
-    color: 'red'
-  });
-});
-var _StyledThing5 = (0, _styledComponents["default"])(Thing3).withConfig({
-  displayName: "code___StyledThing5",
-  componentId: "sc-7evkve-5"
-})(function (p) {
-  return _defineProperty({}, p.$_css18, {
-    color: 'red'
-  });
-});
-var _StyledThing4 = (0, _styledComponents["default"])(Thing3).withConfig({
-  displayName: "code___StyledThing4",
-  componentId: "sc-7evkve-6"
+  componentId: "sc-7evkve-26"
 })(function (p) {
   return _defineProperty({}, p.$_css17, {
     color: 'red'
   });
 });
+var _StyledThing5 = (0, _styledComponents["default"])(Thing3).withConfig({
+  displayName: "code___StyledThing5",
+  componentId: "sc-7evkve-25"
+})(function (p) {
+  return _defineProperty({}, p.$_css16, {
+    color: 'red'
+  });
+});
+var _StyledThing4 = (0, _styledComponents["default"])(Thing3).withConfig({
+  displayName: "code___StyledThing4",
+  componentId: "sc-7evkve-24"
+})(function (p) {
+  return _defineProperty({}, p.$_css15, {
+    color: 'red'
+  });
+});
 var _StyledThing3 = (0, _styledComponents["default"])(Thing3).withConfig({
   displayName: "code___StyledThing3",
-  componentId: "sc-7evkve-7"
+  componentId: "sc-7evkve-23"
 })(function (p) {
   return {
-    color: p.$_css16
+    color: p.$_css14
   };
 });
 var _StyledThing = (0, _styledComponents["default"])(Thing3).withConfig({
   displayName: "code___StyledThing",
-  componentId: "sc-7evkve-8"
+  componentId: "sc-7evkve-18"
 })(["color:red;"]);
 var EarlyUsageComponent2 = function EarlyUsageComponent2(p) {
   return <_StyledThing2 />;
@@ -172,7 +172,7 @@ function Thing4(props) {
 /* insert before usage for non-local scope styled HOC targets */
 var _StyledThing2 = (0, _styledComponents["default"])(Thing4).withConfig({
   displayName: "code___StyledThing2",
-  componentId: "sc-7evkve-9"
+  componentId: "sc-7evkve-19"
 })(["color:red;"]);
 var ImportedComponentUsage = function ImportedComponentUsage(p) {
   return <_StyledSomeComponent />;
@@ -182,31 +182,31 @@ var RequiredComponentUsage = function RequiredComponentUsage(p) {
 };
 var ObjectInterpolation = function ObjectInterpolation(p) {
   var theme = useTheme();
-  return <_StyledP14 $_css15={theme.colors.red}>
+  return <_StyledP12 $_css13={theme.colors.red}>
       H
-    </_StyledP14>;
+    </_StyledP12>;
 };
 var ObjectInterpolationCustomComponent = function ObjectInterpolationCustomComponent(p) {
   var theme = useTheme();
-  return <_StyledThing3 $_css16={theme.colors.red}>
+  return <_StyledThing3 $_css14={theme.colors.red}>
       H
     </_StyledThing3>;
 };
 var ObjectInterpolationInKey = function ObjectInterpolationInKey(p) {
   var theme = useTheme();
-  return <_StyledThing4 $_css17={theme.breakpoints.md}>
+  return <_StyledThing4 $_css15={theme.breakpoints.md}>
       H
     </_StyledThing4>;
 };
 var ObjectFnInterpolationInKey = function ObjectFnInterpolationInKey(p) {
   var theme = useTheme();
-  return <_StyledThing5 $_css18={theme.breakpoints.md()}>
+  return <_StyledThing5 $_css16={theme.breakpoints.md()}>
       H
     </_StyledThing5>;
 };
 var ObjectFnSimpleInterpolationInKey = function ObjectFnSimpleInterpolationInKey(p) {
   var foo = '@media screen and (max-width: 600px)';
-  return <_StyledThing6 $_css19={foo}>
+  return <_StyledThing6 $_css17={foo}>
       H
     </_StyledThing6>;
 };
@@ -215,90 +215,90 @@ var ObjectPropWithSpread = function ObjectPropWithSpread() {
     color: 'red'
   };
   var playing = true;
-  return <_StyledDiv $_css20={css} $_css21={playing ? {
+  return <_StyledDiv $_css18={css} $_css19={playing ? {
     opacity: 0,
     bottom: '-100px'
   } : {}} />;
 };
 var _StyledP = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP",
-  componentId: "sc-7evkve-10"
+  componentId: "sc-7evkve-0"
 })(["flex:1;"]);
 var _StyledP2 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP2",
-  componentId: "sc-7evkve-11"
+  componentId: "sc-7evkve-1"
 })(["flex:1;"]);
 var _StyledP3 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP3",
-  componentId: "sc-7evkve-12"
+  componentId: "sc-7evkve-2"
 })({
   color: 'blue'
 });
 var _StyledP4 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP4",
-  componentId: "sc-7evkve-13"
+  componentId: "sc-7evkve-3"
 })(["flex:1;"]);
 var _StyledP5 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP5",
-  componentId: "sc-7evkve-14"
+  componentId: "sc-7evkve-4"
 })(["color:blue;"]);
 var _StyledParagraph = (0, _styledComponents["default"])(Paragraph).withConfig({
   displayName: "code___StyledParagraph",
-  componentId: "sc-7evkve-15"
+  componentId: "sc-7evkve-5"
 })(["flex:1"]);
 var _StyledP6 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP6",
-  componentId: "sc-7evkve-16"
+  componentId: "sc-7evkve-6"
 })(["", ""], function (p) {
   return p.$_css;
 });
 var _StyledP7 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP7",
-  componentId: "sc-7evkve-17"
+  componentId: "sc-7evkve-7"
 })(["background:", ";"], function (p) {
   return p.$_css2;
 });
 var _StyledP8 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP8",
-  componentId: "sc-7evkve-18"
+  componentId: "sc-7evkve-8"
 })(["color:", ";"], function (props) {
   return props.theme.a;
 });
 var _StyledP9 = (0, _styledComponents["default"])("p").withConfig({
   displayName: "code___StyledP9",
-  componentId: "sc-7evkve-19"
+  componentId: "sc-7evkve-9"
 })(["border-radius:", "px;"], radius);
-var _StyledP10 = (0, _styledComponents["default"])("p").withConfig({
-  displayName: "code___StyledP10",
-  componentId: "sc-7evkve-20"
+var _StyledP0 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP0",
+  componentId: "sc-7evkve-10"
 })(["color:", ";"], function (p) {
   return p.$_css3;
 });
-var _StyledP11 = (0, _styledComponents["default"])("p").withConfig({
-  displayName: "code___StyledP11",
-  componentId: "sc-7evkve-21"
+var _StyledP1 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP1",
+  componentId: "sc-7evkve-11"
 })(["color:", ";"], function (props) {
   return props.theme.color;
 });
 var _StyledButtonGhost = (0, _styledComponents["default"])(Button.Ghost).withConfig({
   displayName: "code___StyledButtonGhost",
-  componentId: "sc-7evkve-22"
+  componentId: "sc-7evkve-12"
 })(["flex:1"]);
 var _StyledButtonGhostNew = (0, _styledComponents["default"])(Button.Ghost.New).withConfig({
   displayName: "code___StyledButtonGhostNew",
-  componentId: "sc-7evkve-23"
+  componentId: "sc-7evkve-13"
 })(["flex:1"]);
 var _StyledButtonGhost2 = (0, _styledComponents["default"])(button.ghost).withConfig({
   displayName: "code___StyledButtonGhost2",
-  componentId: "sc-7evkve-24"
+  componentId: "sc-7evkve-14"
 })(["flex:1"]);
 var _StyledButtonGhost3 = (0, _styledComponents["default"])("button-ghost").withConfig({
   displayName: "code___StyledButtonGhost3",
-  componentId: "sc-7evkve-25"
+  componentId: "sc-7evkve-15"
 })(["flex:1"]);
-var _StyledP12 = (0, _styledComponents["default"])("p").withConfig({
-  displayName: "code___StyledP12",
-  componentId: "sc-7evkve-26"
+var _StyledP10 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP10",
+  componentId: "sc-7evkve-16"
 })(function (p) {
   return {
     background: p.$_css4,
@@ -312,9 +312,9 @@ var _StyledP12 = (0, _styledComponents["default"])("p").withConfig({
     }
   };
 });
-var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
-  displayName: "code___StyledP13",
-  componentId: "sc-7evkve-27"
+var _StyledP11 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP11",
+  componentId: "sc-7evkve-17"
 })(function (p) {
   return _objectSpread(_objectSpread({}, _objectSpread({
     '::before': {
@@ -325,37 +325,37 @@ var _StyledP13 = (0, _styledComponents["default"])("p").withConfig({
     }
   }, {
     '::before': {
-      content: p.$_css10
+      content: p.$_css0
     },
     '::after': {
-      content: p.$_css11
+      content: p.$_css1
     }
   })), {}, {
-    background: p.$_css12,
+    background: p.$_css10,
     textAlign: 'left',
     '::before': {
-      content: p.$_css13
+      content: p.$_css11
     },
     '::after': {
-      content: p.$_css14
+      content: p.$_css12
     }
   });
 });
 var _StyledSomeComponent = (0, _styledComponents["default"])(_SomeComponentPath["default"]).withConfig({
   displayName: "code___StyledSomeComponent",
-  componentId: "sc-7evkve-28"
+  componentId: "sc-7evkve-20"
 })(["color:red;"]);
-var _StyledP14 = (0, _styledComponents["default"])("p").withConfig({
-  displayName: "code___StyledP14",
-  componentId: "sc-7evkve-29"
+var _StyledP12 = (0, _styledComponents["default"])("p").withConfig({
+  displayName: "code___StyledP12",
+  componentId: "sc-7evkve-22"
 })(function (p) {
   return {
-    color: p.$_css15
+    color: p.$_css13
   };
 });
 var _StyledDiv = (0, _styledComponents["default"])("div").withConfig({
   displayName: "code___StyledDiv",
-  componentId: "sc-7evkve-30"
+  componentId: "sc-7evkve-27"
 })(function (p) {
-  return _objectSpread(_objectSpread({}, p.$_css20), p.$_css21);
+  return _objectSpread(_objectSpread({}, p.$_css18), p.$_css19);
 });
