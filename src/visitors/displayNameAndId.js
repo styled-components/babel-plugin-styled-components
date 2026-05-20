@@ -207,8 +207,11 @@ const taggedTagAlreadyConfigured = (t, path) => {
   if (!callee.property || callee.property.name !== 'withConfig') return false
   const firstArg = tag.arguments[0]
   if (!firstArg || !Array.isArray(firstArg.properties)) return false
-  return firstArg.properties.some(prop =>
-    ['displayName', 'componentId'].includes(prop.key.name)
+  return firstArg.properties.some(
+    prop =>
+      t.isObjectProperty(prop) &&
+      t.isIdentifier(prop.key) &&
+      ['displayName', 'componentId'].includes(prop.key.name)
   )
 }
 

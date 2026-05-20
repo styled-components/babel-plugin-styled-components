@@ -46,7 +46,7 @@ How to ship
 Project shape
 
 - Package manager: pnpm 11 via the `packageManager` field. Use `pnpm install --frozen-lockfile` in CI.
-- Releases: changesets. Add a `.changeset/<slug>.md` for every user-visible change. `patch` for fixes, `minor` for new behavior, `major` only when the public API surface or peer-dep range changes.
+- Releases: changesets. Add a `.changeset/<slug>.md` for every user-visible change. `patch` for fixes, `minor` for new behavior, `major` only when the change actually breaks working consumers. Declaring an implicit peer dependency that consumers must already have in order to use the plugin (for example adding `@babel/core` as an explicit peer) is not by itself a major; tightening an existing peer range to drop currently-supported versions is.
 - Tests: `pnpm test`. Fixture-based via `babel-test`. Each directory under `test/fixtures/<name>/` has `code.js` (input), `.babelrc` (plugin config), and either `output.js` (expected) or `error.js` (expected throw). To regenerate intentionally: `pnpm exec jest -u`.
 
 Plugin internals
