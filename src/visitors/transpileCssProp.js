@@ -174,8 +174,12 @@ export default t => {
         if (
           t.isMemberExpression(property.key) ||
           t.isCallExpression(property.key) ||
-          // checking for css={{[something]: something}}
+          // checking for css={{[something]: something}}; a plain (non-computed)
+          // identifier key is a literal property name and never resolves to a
+          // binding, even if the local scope happens to define a same-named
+          // variable. Only computed keys reference the surrounding scope.
           (t.isIdentifier(property.key) &&
+            property.computed &&
             path.scope.hasBinding(property.key.name) &&
             // but not a object reference shorthand like css={{ color }}
             (t.isIdentifier(property.value)
