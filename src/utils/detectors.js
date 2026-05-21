@@ -75,6 +75,37 @@ export const importLocalName = (name, state, options = {}) => {
   return localName
 }
 
+// Follow `const X = Y` (and TS `const X = Y as Type`) chains so a local
+// re-binding of the styled import still resolves to it. Lazy: only walks
+// the chain when the direct-name check misses, so the hot path is unchanged.
+const resolvesToDefaultLocal = (name, defaultLocal, state, t) => {
+  if (!name || !defaultLocal) return false
+  if (name === defaultLocal) return true
+  const scope = state.file.path.scope
+  const visited = new Set([name])
+  let current = name
+  while (true) {
+    const binding = scope.getBinding(current)
+    if (!binding || !binding.path.isVariableDeclarator()) return false
+    const init = binding.path.node.init
+    if (!init) return false
+    let nextName = null
+    if (t.isIdentifier(init)) {
+      nextName = init.name
+    } else if (
+      (init.type === 'TSAsExpression' || init.type === 'TSTypeAssertion') &&
+      t.isIdentifier(init.expression)
+    ) {
+      nextName = init.expression.name
+    }
+    if (!nextName) return false
+    if (nextName === defaultLocal) return true
+    if (visited.has(nextName)) return false
+    visited.add(nextName)
+    current = nextName
+  }
+}
+
 export const isStyled = t => (tag, state) => {
   if (
     t.isCallExpression(tag) &&
@@ -91,14 +122,16 @@ export const isStyled = t => (tag, state) => {
     return isStyled(t)(getSequenceExpressionValue(tag.callee), state)
   } else {
     const defaultLocal = importLocalName('default', state)
+    const matchesDefault = name =>
+      resolvesToDefaultLocal(name, defaultLocal, state, t)
     return (
       (t.isMemberExpression(tag) &&
-        tag.object.name === defaultLocal &&
+        matchesDefault(tag.object.name) &&
         !isHelper(t)(tag.property, state)) ||
-      (t.isCallExpression(tag) && tag.callee.name === defaultLocal) ||
+      (t.isCallExpression(tag) && matchesDefault(tag.callee.name)) ||
       (t.isCallExpression(tag) &&
         t.isSequenceExpression(tag.callee) &&
-        getSequenceExpressionValue(tag.callee).name === defaultLocal) ||
+        matchesDefault(getSequenceExpressionValue(tag.callee).name)) ||
       // styled.default.div``, styled.default.something() — require() forms
       (state.styledRequired &&
         t.isMemberExpression(tag) &&
