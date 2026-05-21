@@ -29,6 +29,13 @@ Then add it to your babel configuration:
 }
 ```
 
+## Options
+
+Full option reference lives on the [styled-components documentation site](https://www.styled-components.com/docs/tooling#babel-plugin). A couple worth flagging here:
+
+- `topLevelImportPaths` (`string[]`): additional module specifiers whose `styled` export should be recognized alongside `styled-components`. Useful for libraries that re-export the styled-components API.
+- `cssPropImportPath` (`string`, default `'styled-components'`): which package the css-prop transform should auto-import `styled` from when the file doesn't already have a styled import. Set to `'styled-components/native'` for React Native targets.
+
 ## Changelog
 
 See [Github Releases](https://github.com/styled-components/babel-plugin-styled-components/releases)
