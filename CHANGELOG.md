@@ -1,5 +1,17 @@
 # babel-plugin-styled-components
 
+## 2.3.0
+
+### Minor Changes
+
+- 0c5f21d: Add a `cssPropImportPath` option to control which package the css-prop transform auto-imports `styled` from when the file has no existing styled import. Defaults to `'styled-components'` (existing behavior). React Native targets can set it to `'styled-components/native'` so the auto-injected import resolves to the right runtime.
+- 0c5f21d: Detect styled declarations that go through a local alias of the import, including the TypeScript theme-typing pattern `const styled = baseStyled as ThemedStyledInterface<MyTheme>`. After type-stripping Babel sees a plain `const styled = baseStyled`, and the detector now follows single-identifier alias chains so `styled.div` resolves back to the original import.
+
+### Patch Changes
+
+- 0c5f21d: Fix invalid output when a `css={{ ... }}` object key matches a local binding name (e.g. `({ position }) => <div css={{ position: 'absolute' }} />`). The reducer no longer mis-treats non-computed property names as scope references, so plain keys stay literal while only computed `[expr]` keys are extracted as prop interpolations.
+- 0c5f21d: Recognize TypeScript's `__importDefault` interop helper alongside Babel's `_interopRequireDefault`. Files compiled through `tsc` / `ts-jest` (which emit `var sc_1 = __importDefault(require('styled-components'))`) now flow into the same detection path as Babel-compiled output, so styled declarations downstream pick up `displayName` and `componentId` as expected.
+
 ## 2.2.0
 
 ### Minor Changes
