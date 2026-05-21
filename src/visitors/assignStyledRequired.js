@@ -6,11 +6,13 @@ export default t => (path, state) => {
   if (
     t.isCallExpression(path.node.init) &&
     t.isIdentifier(path.node.init.callee) &&
-    init.callee.name === '_interopRequireDefault' &&
+    // `_interopRequireDefault` is Babel's CJS interop helper; `__importDefault`
+    // is TypeScript's. Both wrap a require() so the caller can reach `.default`.
+    (init.callee.name === '_interopRequireDefault' ||
+      init.callee.name === '__importDefault') &&
     init.arguments &&
     init.arguments[0]
   ) {
-    // _interopRequireDefault(require())
     init = path.node.init.arguments[0];
   }
 
