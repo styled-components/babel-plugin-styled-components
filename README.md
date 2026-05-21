@@ -6,6 +6,13 @@ This plugin is a highly recommended supplement to the base styled-components lib
 - better debugging through automatic annotation of your styled components based on their context in the file system, etc.
 - various types of minification for styles and the tagged template literals styled-components uses
 
+## Requirements
+
+This plugin is tested against:
+
+- `@babel/core` `^7`
+- `styled-components` `>= 6` (earlier majors may still work but aren't exercised in CI)
+
 ## Quick start
 
 Install the plugin first:
