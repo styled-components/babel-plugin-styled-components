@@ -42,6 +42,7 @@ const getLocalIdentifier = path => {
 }
 
 const PROGRAM_BODY_PRENUMBERED = 'styled-components-program-prenumbered'
+const INJECTED_DEFAULT_IMPORT = 'styled-components-injected-default-import'
 
 export default t => {
   const taggedTemplateVisit = processTaggedTemplate(t)
@@ -68,13 +69,20 @@ export default t => {
     // not directly callable, so treat it the same as "no default binding" and
     // inject a fresh default import to use as the css-prop callee.
     if (!importBinding || importBindingIsNamespace) {
-      addDefault(path, useCssPropImportPath(state), {
-        nameHint: 'styled',
-      })
+      // The injected import never becomes a program-scope binding, so later
+      // css props reuse the name resolved for the first injection
+      let injectedName = state.file.get(INJECTED_DEFAULT_IMPORT)
 
-      importName = t.identifier(
-        importLocalName('default', state, { bypassCache: true })
-      )
+      if (!injectedName) {
+        addDefault(path, useCssPropImportPath(state), {
+          nameHint: 'styled',
+        })
+
+        injectedName = importLocalName('default', state, { bypassCache: true })
+        state.file.set(INJECTED_DEFAULT_IMPORT, injectedName)
+      }
+
+      importName = t.identifier(injectedName)
     }
 
     if (!t.isIdentifier(importName)) importName = t.identifier(importName)
