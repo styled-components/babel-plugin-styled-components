@@ -7,10 +7,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    env:
+      PNPM_CONFIG_VIRTUAL_STORE_TYPE: project
     strategy:
       matrix:
+        os: [ubuntu-latest]
         node: ["22", "24"]
+        include:
+          - os: windows-latest
+            node: "24"
     steps:
       - uses: actions/checkout@v4
 
