@@ -68,10 +68,15 @@ export default t => {
       importBinding &&
       importBinding.path &&
       importBinding.path.isImportNamespaceSpecifier()
-    // A namespace binding (`import * as styled from 'styled-components'`) is
-    // not directly callable, so treat it the same as "no default binding" and
-    // inject a fresh default import to use as the css-prop callee.
-    if (!importBinding || importBindingIsNamespace) {
+    // A namespace binding (`import * as styled from 'styled-components'`) and a
+    // `require()` result are not directly callable, so treat them the same as
+    // "no default binding" and inject a fresh default import to use as the
+    // css-prop callee.
+    if (
+      !importBinding ||
+      importBindingIsNamespace ||
+      importName === state.styledRequired
+    ) {
       // The injected binding never becomes a program-scope binding, so later
       // css props reuse the name resolved for the first injection
       let injectedName = injectedDefaultName(state)

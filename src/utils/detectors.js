@@ -42,7 +42,7 @@ export const importLocalName = (name, state) => {
 
   let localName = state.styledRequired
     ? name === 'default'
-      ? 'styled'
+      ? state.styledRequired
       : name
     : false
 
@@ -57,10 +57,11 @@ export const importLocalName = (name, state) => {
       if (isTypeOnly(specifier)) continue
 
       if (
+        name === 'default' &&
         specifier.type === 'ImportSpecifier' &&
         specifier.imported.name === 'styled'
       ) {
-        localName = 'styled'
+        localName = specifier.local.name
       }
 
       if (specifier.type === 'ImportDefaultSpecifier') {
@@ -151,11 +152,20 @@ const resolvesToDefaultLocal = (name, defaultLocal, state, t) => {
   }
 }
 
+// With only a styled `require` in the file, the default name is the required
+// variable. A global `styled` (a bundler-provided identifier) keeps resolving
+// as the default too.
+const globalStyledAlias = (state, defaultLocal) =>
+  state.styledRequired && defaultLocal === state.styledRequired
+    ? 'styled'
+    : null
+
 // `ns.default`: the callable default export reached through a namespace
 const isNamespaceDefault = (t, node, defaultLocal, state) =>
   t.isMemberExpression(node) &&
   node.property.name === 'default' &&
   (node.object.name === defaultLocal ||
+    node.object.name === globalStyledAlias(state, defaultLocal) ||
     importNamespaceNames(state).includes(node.object.name))
 
 export const isStyled = t => (tag, state) => {
@@ -174,8 +184,10 @@ export const isStyled = t => (tag, state) => {
     return isStyled(t)(getSequenceExpressionValue(tag.callee), state)
   } else {
     const defaultLocal = importLocalName('default', state)
+    const alias = globalStyledAlias(state, defaultLocal)
     const matchesDefault = name =>
-      resolvesToDefaultLocal(name, defaultLocal, state, t)
+      resolvesToDefaultLocal(name, defaultLocal, state, t) ||
+      resolvesToDefaultLocal(name, alias, state, t)
     return (
       (t.isMemberExpression(tag) &&
         tag.property.name !== 'default' &&
