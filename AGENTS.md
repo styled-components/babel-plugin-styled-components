@@ -13,6 +13,7 @@ Commands
 - `pnpm build`: compile `src/` to `lib/`; run it to verify every set of changes. Don't start a dev server unless asked
 - `pnpm bench [--base <ref>] [--config default|all|bare] [--rounds N] [--normalize-aliases]`: interleaved A/B of the plugin at `<ref>` (default `origin/main`) against the working tree over generated inputs; fails when outputs differ
 - `pnpm bench:profile [--input small|medium|large|large-cjs]`: CPU profile with the plugin frames that drive Babel's work
+- `node scripts/compat.js [--base <ref>]`: styled-components v5, v6, and v7 prerelease smoke against the working tree and `<ref>` (default `origin/main`)
 - `pnpm style`: Prettier over `src/`
 - `pnpm changeset`: add a release note
 
@@ -85,6 +86,14 @@ Testing
 - A new css-prop fixture family includes one fixture without `@babel/preset-env`: its CommonJS transform folds repeated imports into one `require`, which hides import-shape bugs.
 - Avoid snapshot churn. A change rewrites only the snapshots its behavior requires, and a hand-written expected output is changed only when the expectation itself was wrong, with the reason in the commit.
 - Jest `roots` is `test/`, so agent worktrees under `.claude/worktrees/` stay out of the run.
+
+Review
+
+- Every behavior change is checked against styled-components v5 (latest 5.x), v6 (latest 6.x), and v7 (latest prerelease dist-tag). `node scripts/compat.js` compiles smoke programs with the branch and with main, then executes the output (`renderToString` plus `ServerStyleSheet`) against each version. Generated CSS, displayName, and componentId match main except the intended change. No runtime errors.
+- Module formats: the plugin loads from CJS configs (`babel.config.js`, `.babelrc`) and ESM configs (`babel.config.mjs`, a `"type": "module"` project). Input covers ESM (default, named, aliased, and namespace imports) and CJS (`require`, `require(...).default`, destructured require). Babel's modules transform is checked both ways (preset-env `modules: false` and `'commonjs'`). Transformed output runs as native ESM and as CJS.
+- Known interop facts: v5 and v6 expose styled as `module.exports.default` and have no `exports` map, so a default import under native Node ESM yields the module object (a packaging limit, not a plugin bug). v7 `require()` returns the callable styled with named exports attached. Non-tag exports (`isStyledComponent`, `createTheme`, `ThemeProvider`, `ServerStyleSheet`, and the rest of that set) must never receive `.withConfig`.
+- Output changes (hash shifts, newly recognized forms, minify differences) need a changeset line even when intended.
+- Perf: run `pnpm bench` on main and the branch for changes that touch visitors or detectors. A slower branch is a regression.
 
 Performance
 
