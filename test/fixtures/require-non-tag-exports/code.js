@@ -12,3 +12,6 @@ const viaComputed = sc['isStyledComponent'](A)
 const themeComputed = sc.default['createTheme']({})
 const C = sc['div']`color: green;`
 const D = sc.default['div']`color: orange;`
+const helperCss = sc['css']`color: purple;`
+const helperDefaultCss = sc.default.css`color: pink;`
+const helperKeyframes = sc['keyframes']`from { opacity: 0; } to { opacity: 1; }`

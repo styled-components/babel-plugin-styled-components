@@ -10,3 +10,5 @@ const Also = ns.default['div'].withConfig({
   displayName: "code__Also",
   componentId: "sc-18vnb1u-1"
 })(["color: blue;"]);
+const helperCss = ns.default.css`color: green;`;
+const helperComputed = ns['css']`color: purple;`;

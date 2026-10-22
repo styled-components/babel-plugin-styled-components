@@ -99,7 +99,12 @@ export function check() {
     sourceType: 'module',
     modules: 'commonjs',
     majors: [5, 6, 7],
-    plain: ['isStyledComponent.withConfig', "['createTheme'].withConfig"],
+    plain: [
+      'isStyledComponent.withConfig',
+      "['createTheme'].withConfig",
+      'css.withConfig',
+      "['css'].withConfig",
+    ],
     code: `
 import * as ns from 'styled-components'
 export const Comp = ns.default.div\`color: red;\`
@@ -111,6 +116,8 @@ export function check() {
     }
   }
   if (typeof ns.default.createTheme === 'function') ns.default['createTheme']({ color: 'red' })
+  if (typeof ns['css'] === 'function') ns['css']\`color: red;\`
+  if (typeof ns.default.css === 'function') ns.default.css\`color: blue;\`
 }
 `,
   },
@@ -123,6 +130,8 @@ export function check() {
       "['isStyledComponent'].withConfig",
       'createTheme.withConfig',
       "['createTheme'].withConfig",
+      'css.withConfig',
+      "['css'].withConfig",
     ],
     code: `
 const sc = require('styled-components')
@@ -141,6 +150,9 @@ exports.check = () => {
     }
   }
   if (typeof sc.default.createTheme === 'function') sc.default['createTheme']({ color: 'red' })
+  if (typeof sc['css'] === 'function') sc['css']\`color: red;\`
+  if (typeof sc.default.css === 'function') sc.default.css\`color: blue;\`
+  if (typeof sc['keyframes'] === 'function') sc['keyframes']\`from { opacity: 0; } to { opacity: 1; }\`
 }
 `,
   },
