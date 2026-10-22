@@ -20,73 +20,83 @@ const injectUniquePlaceholders = strArr => {
 
 const makeMultilineCommentRegex = newlinePattern =>
   new RegExp('\\/\\*[^!](.|' + newlinePattern + ')*?\\*\\/', 'g')
-const lineCommentStart = /\/\//g
 const symbolRegex = /(\s*[;:{},]\s*)/g
 
-// Counts occurences of substr inside str
-const countOccurences = (str, substr) => str.split(substr).length - 1
-
-// Counts parentheses left open inside str. A closing one without a match in str
-// ends a value opened on a previous line (e.g. `);` after `minmax(`), so it's ignored
-const countOpenParens = str => {
-  let depth = 0
-
+// Returns the quote character still open at the end of str, given the one open
+// at its start ('' when outside a string). A backslash escapes the next character
+const quoteOpenAfter = (str, quote) => {
   for (let i = 0; i < str.length; i++) {
-    if (str[i] === '(') {
+    const char = str[i]
+
+    if (char === '\\') {
+      i++
+    } else if (quote) {
+      if (char === quote) {
+        quote = ''
+      }
+    } else if (char === '"' || char === "'") {
+      quote = char
+    }
+  }
+
+  return quote
+}
+
+// Cuts the line at the first `//` the styled-components runtime treats as a
+// comment: outside strings and parentheses, and not directly after a colon
+// (`https://`). A `)` without a match on the line closes a value opened on a
+// previous line (e.g. `);` after `minmax(`), so it's ignored
+export const stripLineComment = line => {
+  if (line.indexOf('//') === -1) {
+    return line
+  }
+
+  let depth = 0
+  let quote = ''
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i]
+
+    if (char === '\\') {
+      i++
+    } else if (quote) {
+      if (char === quote) {
+        quote = ''
+      }
+    } else if (char === '"' || char === "'") {
+      quote = char
+    } else if (char === '(') {
       depth++
-    } else if (str[i] === ')' && depth > 0) {
-      depth--
+    } else if (char === ')') {
+      if (depth > 0) {
+        depth--
+      }
+    } else if (
+      char === '/' &&
+      line[i + 1] === '/' &&
+      depth === 0 &&
+      line[i - 1] !== ':'
+    ) {
+      return line.slice(0, i)
     }
   }
 
-  return depth
+  return line
 }
 
-// Joins substrings until predicate returns true
-const reduceSubstr = (substrs, join, predicate) => {
-  const length = substrs.length
-  let res = substrs[0]
+export const compressSymbols = code => {
+  let quote = ''
 
-  if (length === 1) {
-    return res
-  }
-
-  for (let i = 1; i < length; i++) {
-    if (predicate(res)) {
-      break
-    }
-
-    res += join + substrs[i]
-  }
-
-  return res
-}
-
-// Joins at comment starts when it's inside a string or parantheses
-// effectively removing line comments
-export const stripLineComment = line =>
-  reduceSubstr(
-    line.split(lineCommentStart),
-    '//',
-    str =>
-      !str.endsWith(':') && // NOTE: This is another guard against urls, if they're not inside strings or parantheses.
-      countOccurences(str, "'") % 2 === 0 &&
-      countOccurences(str, '"') % 2 === 0 &&
-      countOpenParens(str) === 0
-  )
-
-export const compressSymbols = code =>
-  code.split(symbolRegex).reduce((str, fragment, index) => {
+  return code.split(symbolRegex).reduce((str, fragment, index) => {
     // Even-indices are non-symbol fragments
     if (index % 2 === 0) {
+      quote = quoteOpenAfter(fragment, quote)
+
       return str + fragment
     }
 
     // Only manipulate symbols outside of strings
-    if (
-      countOccurences(str, "'") % 2 !== 0 ||
-      countOccurences(str, '"') % 2 !== 0
-    ) {
+    if (quote) {
       return str + fragment
     }
 
@@ -97,6 +107,7 @@ export const compressSymbols = code =>
 
     return str + fragment.trim()
   }, '')
+}
 
 // Detects lines that are exclusively line comments
 const isLineComment = line => line.trim().startsWith('//')
