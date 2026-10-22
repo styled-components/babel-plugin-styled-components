@@ -129,6 +129,13 @@ const resolvesToDefaultLocal = (name, defaultLocal, state, t) => {
   }
 }
 
+// `ns.default`: the callable default export reached through a namespace
+const isNamespaceDefault = (t, node, defaultLocal, state) =>
+  t.isMemberExpression(node) &&
+  node.property.name === 'default' &&
+  (node.object.name === defaultLocal ||
+    importNamespaceNames(state).includes(node.object.name))
+
 export const isStyled = t => (tag, state) => {
   if (
     t.isCallExpression(tag) &&
@@ -149,6 +156,7 @@ export const isStyled = t => (tag, state) => {
       resolvesToDefaultLocal(name, defaultLocal, state, t)
     return (
       (t.isMemberExpression(tag) &&
+        tag.property.name !== 'default' &&
         matchesDefault(tag.object.name) &&
         !isHelper(t)(tag.property, state)) ||
       (t.isCallExpression(tag) && matchesDefault(tag.callee.name)) ||
@@ -174,10 +182,17 @@ export const isStyled = t => (tag, state) => {
         getSequenceExpressionValue(tag.callee).object.name ===
           state.styledRequired) ||
       (t.isMemberExpression(tag) &&
-        t.isMemberExpression(tag.object) &&
-        tag.object.property.name === 'default' &&
-        (tag.object.object.name === defaultLocal ||
-          importNamespaceNames(state).includes(tag.object.object.name)))
+        isNamespaceDefault(t, tag.object, defaultLocal, state)) ||
+      (t.isCallExpression(tag) &&
+        isNamespaceDefault(t, tag.callee, defaultLocal, state)) ||
+      (t.isCallExpression(tag) &&
+        t.isSequenceExpression(tag.callee) &&
+        isNamespaceDefault(
+          t,
+          getSequenceExpressionValue(tag.callee),
+          defaultLocal,
+          state
+        ))
     )
   }
 }
