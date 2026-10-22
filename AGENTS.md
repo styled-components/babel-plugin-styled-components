@@ -83,6 +83,7 @@ Testing
 - Snapshot drift is suspect. When fixture `output.js` files change beyond cosmetic helper renames, isolate the cause before regenerating. Counter shifts (`componentId: "sc-<hash>-N"`) in particular signal that visit order changed; verify the new order is intentional and source-order-stable before committing.
 - Fixture snapshots carry no machine paths on any OS: `error.js` holds the error message and code frame with the working directory as `<cwd>` and forward slashes (babel-test is patched in `patches/` to do this), and a test in `test/index.test.js` fails on any absolute path. CI runs on Linux and Windows; `.gitattributes` keeps checkouts LF.
 - A new css-prop fixture family includes one fixture without `@babel/preset-env`: its CommonJS transform folds repeated imports into one `require`, which hides import-shape bugs.
+- Avoid snapshot churn. A change rewrites only the snapshots its behavior requires, and a hand-written expected output is changed only when the expectation itself was wrong, with the reason in the commit.
 - Jest `roots` is `test/`, so agent worktrees under `.claude/worktrees/` stay out of the run.
 
 Performance
@@ -104,7 +105,7 @@ Babel plugin internals
 - Babel plugins run per file per build. Hot-path discipline: pre-curry visitor factories once at plugin init, don't re-curry per node.
 - Module-level mutable state leaks across files in long-running watchers (webpack-dev-server, jest watch, Next dev). Per-file caches live on `state.file.set/get`.
 - The css-prop transform injects new `VariableDeclaration` nodes at the end of `Program.body`, and Babel's outer traversal does not reliably re-visit them. The styled visitors are applied eagerly from inside `transpileCssProp` to compensate. When changing this area, verify on a file that mixes user-written `styled.div` and css-prop usages that both receive `displayName`/`componentId`.
-- `componentId` is `sc-<file-hash>-<counter>`. The counter is per-file, source-order-stable. If a change makes counter values shift unexpectedly across a snapshot, treat it as a regression until proven otherwise.
+- `componentId` is `sc-<file-hash>-<counter>`. The counter is per-file, source-order-stable. Components found by the css-prop pre-pass are numbered first; a component whose styled `require` sits below the first css prop is not found by it and takes its number in source order. If a change makes counter values shift unexpectedly across a snapshot, treat it as a regression until proven otherwise.
 - `isStyled` and the helper detectors in `src/utils/detectors.js` are recursive predicate chains. They short-circuit through nested CallExpression/SequenceExpression shapes (the `(0, x.default)(...)` form produced by `@babel/plugin-transform-modules-commonjs`). When adding a new arm, also reason about whether the recursive traversal will revisit children of the matched shape and re-match downstream (the `addConfig` mutation is not perfectly idempotent across all shapes).
 
 Not applicable
