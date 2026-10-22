@@ -34,6 +34,28 @@ describe('minify utils', () => {
       expect(stripLineComment('    ); // long comment')).toBe('    ); ')
     })
 
+    it('strips comments after a string containing the other quote type', () => {
+      expect(stripLineComment('content: "it\'s"; // c')).toBe(
+        'content: "it\'s"; '
+      )
+      expect(stripLineComment("content: 'say \"hi'; // c")).toBe(
+        "content: 'say \"hi'; "
+      )
+    })
+
+    it('strips comments after a string containing an escaped quote', () => {
+      expect(stripLineComment('content: "\\""; // c')).toBe('content: "\\""; ')
+      expect(stripLineComment('content: "\\\\"; // c')).toBe(
+        'content: "\\\\"; '
+      )
+    })
+
+    it('ignores parens inside strings when looking for comments', () => {
+      expect(stripLineComment('content: "("; // c')).toBe('content: "("; ')
+      expect(stripLineComment('content: ")("; // c')).toBe('content: ")("; ')
+      expect(stripLineComment('content: ")"; // c')).toBe('content: ")"; ')
+    })
+
     it('ignores comment markers inside parens that follow an unmatched closing paren', () => {
       expect(stripLineComment('  ), url(//cdn.example.com/x.png)')).toBe(
         '  ), url(//cdn.example.com/x.png)'
@@ -123,6 +145,26 @@ describe('minify utils', () => {
       expect(minifyCooked(input)).toEqual([actual, []])
     })
 
+    it('Removes line comments after a multi-line selector or at-rule prelude', () => {
+      const input =
+        '&:is(\n  .a,\n  .b\n) { // c\n  color: red;\n}\n@media (\n  min-width: 1px\n) { // c\n  color: blue;\n}\ncolor: green;'
+      const expected =
+        '&:is( .a,.b ){color:red;}@media ( min-width:1px ){color:blue;}color:green;'
+      const [actual] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(actual).toBe(minifyCooked(input)[0])
+    })
+
+    it('Removes line comments after a string and keeps the following declaration', () => {
+      const input = 'content: "it\'s"; // c\ncontent: "("; // c\ncolor: red;'
+      const expected = 'content:"it\'s";content:"(";color:red;'
+      const [actual] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(actual).toBe(minifyCooked(input)[0])
+    })
+
     it('Removes line comments inside a multi-line value', () => {
       const input = 'width: calc(\n  10px // first\n  + 20px\n);\ncolor: blue;'
       const expected = 'width:calc( 10px  + 20px );color:blue;'
@@ -188,6 +230,13 @@ describe('minify utils', () => {
     it('ignores symbols inside strings', () => {
       const input = ';   " : " \' : \' ;'
       const expected = ';" : " \' : \';'
+
+      expect(compressSymbols(input)).toBe(expected)
+    })
+
+    it('tracks strings containing the other quote type or an escaped quote', () => {
+      const input = `content: "it's"; content: ' a ; b '; content: "\\" ; "; color: red;`
+      const expected = `content:"it's";content:' a ; b ';content:"\\" ; ";color:red;`
 
       expect(compressSymbols(input)).toBe(expected)
     })
