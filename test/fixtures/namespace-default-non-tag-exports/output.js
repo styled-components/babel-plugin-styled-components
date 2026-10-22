@@ -12,3 +12,11 @@ const Also = ns.default['div'].withConfig({
 })(["color: blue;"]);
 const helperCss = ns.default.css`color: green;`;
 const helperComputed = ns['css']`color: purple;`;
+const Proxy = ns.box.withConfig({
+  displayName: "code__Proxy",
+  componentId: "sc-18vnb1u-2"
+})(["color: white;"]);
+const ProxyDefault = ns.default.foo.withConfig({
+  displayName: "code__ProxyDefault",
+  componentId: "sc-18vnb1u-3"
+})(["color: black;"]);

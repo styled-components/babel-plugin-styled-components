@@ -11,3 +11,5 @@ const helper = ns.isStyledComponent(Tag)
 const renamed = ns.default
 const Aliased = renamed.span`color: purple;`
 const unknown = renamed.somethingNew`color: black;`
+const Proxy = ns.box`color: white;`
+const skipped = ns.css`color: yellow;`

@@ -203,9 +203,9 @@ export function check() {
 
 // Compact import x access x export matrix. Compile-only: the full generator is
 // the audit harness, and this is the slice `node scripts/compat.js` always runs.
-const MATRIX_TAGS = new Set(['div', 'View'])
-// Open mode (`import styled`) still decorates unknown names. It skips object
-// methods and known non-tag exports, same as OPEN_SKIP in the detector.
+// Every factory binding uses open mode: unknown names are decorated, and object
+// methods plus known non-tag exports are not. A namespace import uses the same
+// member rules because a CommonJS transform binds it to the module exports.
 const MATRIX_OPEN_SKIP = new Set([
   'isStyledComponent',
   'css',
@@ -215,35 +215,30 @@ const MATRIX_OPEN_SKIP = new Set([
 const MATRIX_IMPORTS = [
   {
     name: 'require sc',
-    mode: 'allow',
     sourceType: 'script',
     bind: 'sc',
     head: `const sc = require('styled-components')`,
   },
   {
     name: 'import styled',
-    mode: 'open',
     sourceType: 'module',
     bind: 'styled',
     head: `import styled from 'styled-components'`,
   },
   {
     name: 'import sc',
-    mode: 'allow',
     sourceType: 'module',
     bind: 'sc',
     head: `import sc from 'styled-components'`,
   },
   {
     name: 'import { styled as s }',
-    mode: 'allow',
     sourceType: 'module',
     bind: 's',
     head: `import { styled as s } from 'styled-components'`,
   },
   {
     name: 'import * as ns',
-    mode: 'namespace',
     sourceType: 'module',
     bind: 'ns',
     head: `import * as ns from 'styled-components'`,
@@ -256,16 +251,24 @@ const MATRIX_ACCESS = [
   { name: 'default.computed', expr: (b, x) => `${b}.default['${x}']` },
   { name: 'computed-default.dot', expr: (b, x) => `${b}['default'].${x}` },
 ]
-const MATRIX_EXPORTS = ['div', 'View', 'isStyledComponent', 'css', 'hasOwnProperty', 'somethingNew']
-const matrixMemberDecorated = (mode, name) => {
-  if (mode === 'open') return !MATRIX_OPEN_SKIP.has(name)
-  return MATRIX_TAGS.has(name)
-}
+const MATRIX_EXPORTS = [
+  'div',
+  'View',
+  'isStyledComponent',
+  'css',
+  'hasOwnProperty',
+  'somethingNew',
+  'box',
+  'foo',
+  'feNotAFilter',
+  'marquee',
+]
+const matrixMemberDecorated = name => !MATRIX_OPEN_SKIP.has(name)
 
 for (const imp of MATRIX_IMPORTS) {
   for (const access of MATRIX_ACCESS) {
     for (const name of MATRIX_EXPORTS) {
-      const decorated = matrixMemberDecorated(imp.mode, name)
+      const decorated = matrixMemberDecorated(name)
       CASES.push({
         name: `matrix ${imp.name} ${access.name} ${name}`,
         sourceType: imp.sourceType,
@@ -341,7 +344,7 @@ const Comp = sc.default[css]\`color: red;\`
     name: 'matrix object method and unknown export do not crash',
     sourceType: 'script',
     majors: [5, 6, 7],
-    plain: ['hasOwnProperty.withConfig', 'toString.withConfig', 'somethingNew.withConfig'],
+    plain: ['hasOwnProperty.withConfig', 'toString.withConfig'],
     code: `
 const sc = require('styled-components')
 const Comp = sc.default.div\`color: red;\`
@@ -367,6 +370,63 @@ exports.Comp = Comp
 exports.check = () => {
   if (!Comp.styledComponentId) throw new Error('computed default call was not decorated')
 }
+`,
+  },
+  {
+    name: 'matrix computed const helper key is not decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: false,
+    code: `
+const sc = require('styled-components')
+const name = 'css'
+const Comp = sc[name]\`color: red;\`
+const Other = sc[\`css\`]\`color: blue;\`
+const Third = sc.default[name]\`color: green;\`
+`,
+  },
+  {
+    name: 'matrix computed const tag and spelled helper are decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['sc[tag].withConfig', 'sc[css].withConfig'],
+    absent: ['sc[name].withConfig', 'sc[`css`].withConfig'],
+    code: `
+const sc = require('styled-components')
+const tag = 'box'
+const css = 'div'
+const name = 'css'
+const Comp = sc[tag]\`color: red;\`
+const ViaDiv = sc[css]\`color: blue;\`
+const Skipped = sc[name]\`color: green;\`
+const SkippedTpl = sc[\`css\`]\`color: orange;\`
+`,
+  },
+  {
+    name: 'matrix unresolved computed key is decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['sc[dynamic].withConfig'],
+    code: `
+const sc = require('styled-components')
+let dynamic = 'css'
+const Comp = sc[dynamic]\`color: red;\`
+`,
+  },
+  {
+    name: 'matrix require use before reassignment stays decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['Before = sc.div.withConfig'],
+    absent: ['After = sc.div.withConfig'],
+    code: `
+let sc = require('styled-components')
+const Before = sc.div\`color: red;\`
+sc = { div: s => () => null }
+const After = sc.div\`color: blue;\`
 `,
   }
 )

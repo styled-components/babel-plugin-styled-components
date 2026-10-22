@@ -15,3 +15,7 @@ const D = sc.default['div']`color: orange;`
 const helperCss = sc['css']`color: purple;`
 const helperDefaultCss = sc.default.css`color: pink;`
 const helperKeyframes = sc['keyframes']`from { opacity: 0; } to { opacity: 1; }`
+const Box = sc.box`color: white;`
+const Foo = sc.default.foo`color: black;`
+const Filter = sc['feNotAFilter']`color: teal;`
+const Marquee = sc.default['marquee']`color: gray;`
