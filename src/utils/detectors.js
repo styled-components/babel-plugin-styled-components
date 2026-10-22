@@ -43,9 +43,12 @@ const styledRequireVisited = (state, name) => {
 export const injectedDefaultName = state =>
   state.file.get(INJECTED_DEFAULT_NAME)
 
+const LEGACY_DEFAULT_LOCAL = 'styled-components-legacy-default-local'
+
 export const registerInjectedDefault = (state, name) => {
   state.file.set(INJECTED_DEFAULT_NAME, name)
   state.file.set(IMPORT_NAMES_CACHE, null)
+  state.file.set(LEGACY_DEFAULT_LOCAL, null)
 }
 
 export const importLocalName = (name, state) => {
@@ -111,18 +114,10 @@ export const importLocalName = (name, state) => {
   return localName
 }
 
-// Real functions on the styled factory that have no `.withConfig`. On v7 the
-// factory is a proxy, so any other name is a component and stays decorated.
-// The same set applies to require(), a default or named `styled` import, a
-// namespace import, and `.default` / `['default']` of those.
+// Known non-tag exports. Object and function prototype names are not listed
+// here; `isBuiltinPrototypeKey` covers them. None of those names are DOM or
+// SVG tags (`name`, `length`, `caller`, and `arguments` included).
 const OPEN_SKIP = new Set([
-  'constructor',
-  'hasOwnProperty',
-  'isPrototypeOf',
-  'propertyIsEnumerable',
-  'toLocaleString',
-  'toString',
-  'valueOf',
   'NativeStyleContext',
   'ParentContext',
   'SafeAreaInsetsProvider',
@@ -161,19 +156,26 @@ const OPEN_SKIP = new Set([
 const INTEROP_REQUIRE = new Set(['_interopRequireDefault', '__importDefault'])
 
 // A computed key whose value is known at compile time: a string, a template
-// with no interpolation, or a const binding of one of those. `let` and `var`
-// are not folded, and neither is any other expression. Those stay dynamic and
-// are decorated, which throws if the runtime value is a helper.
+// whose parts all fold to strings, or a const binding of one of those.
+// `let`, `var`, destructuring, and imports do not fold.
 const resolveStaticKey = (t, node, scope, seen) => {
   const current = unwrapType(node)
   if (!current) return null
   if (t.isStringLiteral(current)) return current.value
-  if (
-    t.isTemplateLiteral(current) &&
-    (!current.expressions || current.expressions.length === 0)
-  ) {
-    const cooked = current.quasis[0] && current.quasis[0].value.cooked
-    return cooked == null ? null : cooked
+  if (t.isTemplateLiteral(current)) {
+    const quasis = current.quasis || []
+    const expressions = current.expressions || []
+    let out = ''
+    for (let i = 0; i < quasis.length; i++) {
+      const cooked = quasis[i] && quasis[i].value.cooked
+      if (cooked == null) return null
+      out += cooked
+      if (i >= expressions.length) continue
+      const part = resolveStaticKey(t, expressions[i], scope, seen)
+      if (part == null) return null
+      out += part
+    }
+    return out
   }
   if (!t.isIdentifier(current) || !scope) return null
   const binding = scope.getBinding(current.name)
@@ -187,7 +189,14 @@ const resolveStaticKey = (t, node, scope, seen) => {
   if (seen && seen.has(binding)) return null
   const next = seen || new Set()
   next.add(binding)
-  return resolveStaticKey(t, binding.path.node.init, binding.scope, next)
+  const resolved = resolveStaticKey(
+    t,
+    binding.path.node.init,
+    binding.scope,
+    next
+  )
+  next.delete(binding)
+  return resolved
 }
 
 // `sc.div` / `sc['div']` / `sc[\`div\`]` / `const tag = 'div'; sc[tag]` have a
@@ -256,16 +265,70 @@ const staticDefaultObject = (t, node, scope) => {
   return node.object
 }
 
-// A later `sc = ...` in the same scope. Uses that appear before it still see
-// the original factory. Source order, not reachability: a use written above
-// the assignment stays decorated even when it runs after the assignment.
+const referencePathFor = (binding, referenceNode) => {
+  const paths = binding.referencePaths
+  if (!paths || !referenceNode) return null
+  for (let i = 0; i < paths.length; i++) {
+    if (paths[i].node === referenceNode) return paths[i]
+  }
+  return null
+}
+
+const isLoopPath = path =>
+  path.isForStatement() ||
+  path.isWhileStatement() ||
+  path.isDoWhileStatement() ||
+  path.isForInStatement() ||
+  path.isForOfStatement()
+
+// A function nested inside the binding's scope can run after a reassignment
+// even when the function is written above it.
+const inNestedFunction = (binding, refPath) => {
+  let scope = refPath.scope
+  while (scope && scope !== binding.scope) {
+    if (scope.path && scope.path.isFunction()) return true
+    scope = scope.parent
+  }
+  return false
+}
+
+// A loop that both reads the binding and assigns it runs the read again
+// after the assignment. A read in a loop whose assignment is outside the
+// loop still sees the factory on every iteration.
+const loopReassigns = (binding, refPath) => {
+  const stop = binding.scope && binding.scope.path
+  const violations = binding.constantViolations || []
+  let path = refPath.parentPath
+  while (path && path !== stop) {
+    if (isLoopPath(path)) {
+      for (let i = 0; i < violations.length; i++) {
+        const violation = violations[i]
+        if (violation === path || path.isAncestor(violation)) return true
+      }
+    }
+    path = path.parentPath
+  }
+  return false
+}
+
 const assignmentPrecedes = (binding, referenceNode) => {
-  if (!binding || binding.constant !== false) return false
   if (!referenceNode || typeof referenceNode.start !== 'number') return true
   return binding.constantViolations.some(violation => {
     const start = violation.node && violation.node.start
     return typeof start === 'number' && start < referenceNode.start
   })
+}
+
+// True when this reference must not be treated as the factory. Straight-line
+// uses in the binding's scope that sit before the assignment stay decorated.
+const reassignmentUnsafe = (binding, referenceNode) => {
+  if (!binding || binding.constant !== false) return false
+  const refPath = referencePathFor(binding, referenceNode)
+  if (refPath) {
+    if (inNestedFunction(binding, refPath)) return true
+    if (loopReassigns(binding, refPath)) return true
+  }
+  return assignmentPrecedes(binding, referenceNode)
 }
 
 const importedNameOf = (t, specifier) => {
@@ -303,7 +366,7 @@ const styledBindingKind = (name, scope, state, t, seen, referenceNode) => {
     return null
   }
 
-  if (assignmentPrecedes(binding, referenceNode)) return null
+  if (reassignmentUnsafe(binding, referenceNode)) return null
 
   const bpath = binding.path
   if (
@@ -366,12 +429,108 @@ const styledBindingKind = (name, scope, state, t, seen, referenceNode) => {
   return null
 }
 
-const decorateKeyedMember = (kind, key, property, state, t) => {
+// `in` is safe here: these prototypes are ordinary objects, and the check
+// does not read the property. A name that is also a real tag would be kept,
+// but no DOM or SVG tag is on either prototype.
+const isBuiltinPrototypeKey = name =>
+  name in Object.prototype || name in Function.prototype
+
+// 2.3.0's default local: the string `'styled'` whenever a require() of the
+// package exists, then overwritten by top-level imports. A named `styled`
+// import sets the string `'styled'`, not the local alias. A default import
+// sets that import's local name. A namespace sets its local name only when
+// nothing else did.
+const legacyDefaultLocal = (state, t) => {
+  if (state.customImportName) return state.customImportName.name
+
+  const hadRequired = !!state.styledRequired
+  const cached = state.file.get(LEGACY_DEFAULT_LOCAL)
+  if (cached && cached.hadRequired === hadRequired) return cached.value
+
+  let localName = hadRequired ? 'styled' : null
+  const body =
+    state.file.path && state.file.path.node && state.file.path.node.body
+  if (body) {
+    for (const node of body) {
+      if (node.type !== 'ImportDeclaration') continue
+      if (isTypeOnly(node)) continue
+      if (!isValidTopLevelImport(node.source.value, state)) continue
+      for (const specifier of node.specifiers) {
+        if (isTypeOnly(specifier)) continue
+        const imported = specifier.imported
+        const importedName = !imported
+          ? null
+          : t.isIdentifier(imported)
+            ? imported.name
+            : t.isStringLiteral(imported)
+              ? imported.value
+              : null
+        if (specifier.type === 'ImportSpecifier' && importedName === 'styled') {
+          localName = 'styled'
+        }
+        if (specifier.type === 'ImportDefaultSpecifier') {
+          localName = specifier.local.name
+        }
+        if (
+          specifier.type === 'ImportSpecifier' &&
+          importedName === 'default'
+        ) {
+          localName = specifier.local.name
+        }
+        if (specifier.type === 'ImportNamespaceSpecifier' && !localName) {
+          localName = specifier.local.name
+        }
+      }
+    }
+  }
+
+  state.file.set(LEGACY_DEFAULT_LOCAL, { hadRequired, value: localName })
+  return localName
+}
+
+const resolvesToDefaultLocal = (name, defaultLocal, state, t) => {
+  if (!name || !defaultLocal) return false
+  if (name === defaultLocal) return true
+  const scope = state.file && state.file.path && state.file.path.scope
+  if (!scope) return false
+  const visited = new Set([name])
+  let current = name
+  while (true) {
+    const binding = scope.getBinding(current)
+    if (!binding || !binding.path.isVariableDeclarator()) return false
+    const init = binding.path.node.init
+    if (!init) return false
+    let nextName = null
+    if (t.isIdentifier(init)) {
+      nextName = init.name
+    } else if (
+      (init.type === 'TSAsExpression' || init.type === 'TSTypeAssertion') &&
+      t.isIdentifier(init.expression)
+    ) {
+      nextName = init.expression.name
+    }
+    if (!nextName) return false
+    if (nextName === defaultLocal) return true
+    if (visited.has(nextName)) return false
+    visited.add(nextName)
+    current = nextName
+  }
+}
+
+const legacyDecoratesUnresolved = (objectName, state, t) =>
+  resolvesToDefaultLocal(objectName, legacyDefaultLocal(state, t), state, t)
+
+const decorateKeyedMember = (kind, key, property, state, t, objectName) => {
   if (!kind || !key) return false
-  // Unresolved computed key. Decorated unless the key expression itself is a
-  // helper identifier (`sc[css]`), which 2.3.0 also left alone.
-  if (key.kind === 'dynamic') return !isHelper(t)(property, state)
+  // An unresolved key is decorated only for the names 2.3.0 decorated
+  // (`styled[dynamic]`, a default import's local name). A require named
+  // something else, and an alias that is not that name, stay plain.
+  if (key.kind === 'dynamic') {
+    if (!legacyDecoratesUnresolved(objectName, state, t)) return false
+    return !isHelper(t)(property, state)
+  }
   if (key.kind !== 'static' || key.name === 'default') return false
+  if (isBuiltinPrototypeKey(key.name)) return false
   if (kind === 'open' || kind === 'namespace') return !OPEN_SKIP.has(key.name)
   return false
 }
@@ -454,7 +613,14 @@ export const isStyled = t => (tag, state, scope) => {
     // An unresolved computed key stays decorated, including when the
     // variable is spelled like a helper.
     if (outer && outer.kind === 'dynamic') return true
-    return decorateKeyedMember('open', outer, tag.property, state, t)
+    return decorateKeyedMember(
+      'open',
+      outer,
+      tag.property,
+      state,
+      t,
+      tag.object.object.name
+    )
   }
 
   if (!t.isIdentifier(tag.object)) return false
@@ -471,7 +637,8 @@ export const isStyled = t => (tag, state, scope) => {
     memberKey(t, tag, lookup),
     tag.property,
     state,
-    t
+    t,
+    tag.object.name
   )
 }
 
