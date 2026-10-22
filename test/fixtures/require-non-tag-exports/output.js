@@ -23,3 +23,6 @@ const D = sc.default['div'].withConfig({
   displayName: "code__D",
   componentId: "sc-c84c7x-3"
 })(["color: orange;"]);
+const helperCss = sc['css']`color: purple;`;
+const helperDefaultCss = sc.default.css`color: pink;`;
+const helperKeyframes = sc['keyframes']`from { opacity: 0; } to { opacity: 1; }`;

@@ -162,8 +162,10 @@ const globalStyledAlias = (state, defaultLocal) =>
 
 // Named exports that are never styled tags. A required binding is the module
 // object (v5, v6) or the callable `styled` with these attached (v7), so
-// `sc.isStyledComponent(x)` must not be decorated. Helpers stay with isHelper.
-// Intrinsic tags (div, View, and the rest) are not in this set.
+// `sc.isStyledComponent(x)` must not be decorated. Helper names are included
+// because isHelper only matches identifier keys, and `sc.default.css` /
+// `sc['css']` are member expressions. Intrinsic tags (div, View, and the rest)
+// are not in this set.
 const NON_TAG_EXPORTS = new Set([
   'NativeStyleContext',
   'ParentContext',
@@ -177,9 +179,12 @@ const NON_TAG_EXPORTS = new Set([
   'ThemeProvider',
   '__PRIVATE__',
   '__testOnly_verticalAlignCompanions',
+  'createGlobalStyle',
   'createTheme',
+  'css',
   'extractCSS',
   'isStyledComponent',
+  'keyframes',
   'matchMedia',
   'setAnimationDebug',
   'styled',
@@ -192,7 +197,9 @@ const NON_TAG_EXPORTS = new Set([
   'useMediaQuery',
   'useNativeStyleContext',
   'useParentContext',
+  'useTheme',
   'version',
+  'withTheme',
 ])
 
 // Static member key: `sc.div` and `sc['div']`. A computed non-literal has none.
