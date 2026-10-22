@@ -1,0 +1,14 @@
+{
+  "parserOpts": {
+    "plugins": ["typescript"]
+  },
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "transpileTemplateLiterals": false,
+        "ssr": true
+      }
+    ]
+  ]
+}
