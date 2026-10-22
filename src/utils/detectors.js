@@ -70,6 +70,34 @@ export const importLocalName = (name, state, options = {}) => {
   return localName
 }
 
+const NAMESPACE_NAMES_CACHE = 'styled-components-import-namespace-names'
+const NO_NAMESPACE_NAMES = []
+
+// Local names bound by `import * as X from 'styled-components'`. Kept apart
+// from `importLocalName('default')` so a default import injected later (the
+// css-prop transform) does not displace the namespace binding.
+const importNamespaceNames = state => {
+  if (state.customImportName) return NO_NAMESPACE_NAMES
+
+  let names = state.file.get(NAMESPACE_NAMES_CACHE)
+  if (names) return names
+
+  names = []
+  for (const node of state.file.path.node.body) {
+    if (node.type !== 'ImportDeclaration') continue
+    if (!isValidTopLevelImport(node.source.value, state)) continue
+
+    for (const specifier of node.specifiers) {
+      if (specifier.type === 'ImportNamespaceSpecifier') {
+        names.push(specifier.local.name)
+      }
+    }
+  }
+
+  state.file.set(NAMESPACE_NAMES_CACHE, names)
+  return names
+}
+
 // Follow `const X = Y` (and TS `const X = Y as Type`) chains so a local
 // re-binding of the styled import still resolves to it. Lazy: only walks
 // the chain when the direct-name check misses, so the hot path is unchanged.
@@ -145,11 +173,11 @@ export const isStyled = t => (tag, state) => {
         getSequenceExpressionValue(tag.callee).property.name === 'default' &&
         getSequenceExpressionValue(tag.callee).object.name ===
           state.styledRequired) ||
-      (defaultLocal &&
-        t.isMemberExpression(tag) &&
+      (t.isMemberExpression(tag) &&
         t.isMemberExpression(tag.object) &&
         tag.object.property.name === 'default' &&
-        tag.object.object.name === defaultLocal)
+        (tag.object.object.name === defaultLocal ||
+          importNamespaceNames(state).includes(tag.object.object.name)))
     )
   }
 }
