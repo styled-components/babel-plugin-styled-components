@@ -2,8 +2,7 @@ let sc = require('styled-components')
 
 const Before = sc.div`color: red;`
 
-// Written above the assignment, so this stays decorated even though the
-// function runs after `sc` has been replaced.
+// The function can run after `sc` is replaced, so this stays plain.
 function writtenAbove() {
   return sc.span`color: blue;`
 }

@@ -4,13 +4,9 @@ const Before = sc.div.withConfig({
   componentId: "sc-m6xnle-0"
 })(["color: red;"]);
 
-// Written above the assignment, so this stays decorated even though the
-// function runs after `sc` has been replaced.
+// The function can run after `sc` is replaced, so this stays plain.
 function writtenAbove() {
-  return sc.span.withConfig({
-    displayName: "code",
-    componentId: "sc-m6xnle-1"
-  })(["color: blue;"]);
+  return sc.span`color: blue;`;
 }
 sc = {
   div: s => () => null,

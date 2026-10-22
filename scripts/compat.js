@@ -404,15 +404,82 @@ const SkippedTpl = sc[\`css\`]\`color: orange;\`
 `,
   },
   {
-    name: 'matrix unresolved computed key is decorated',
+    name: 'matrix unresolved computed key on require is not decorated',
     sourceType: 'script',
     compileOnly: true,
-    expectWithConfig: true,
-    present: ['sc[dynamic].withConfig'],
+    expectWithConfig: false,
     code: `
 const sc = require('styled-components')
 let dynamic = 'css'
+const bag = { key: 'css' }
+const { key: fromBag } = bag
 const Comp = sc[dynamic]\`color: red;\`
+const FromBag = sc[fromBag]\`color: blue;\`
+const Folded = sc[\`\${'css'}\`]\`color: green;\`
+`,
+  },
+  {
+    name: 'matrix unresolved computed key on styled import is decorated',
+    sourceType: 'module',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['styled[dynamic].withConfig', 's2[dynamic].withConfig'],
+    absent: ['styled[css].withConfig'],
+    code: `
+import styled, { css } from 'styled-components'
+const s2 = styled
+let dynamic = 'div'
+const Comp = styled[dynamic]\`color: red;\`
+const Alias = s2[dynamic]\`color: blue;\`
+const Helper = styled[css]\`color: green;\`
+`,
+  },
+  {
+    name: 'matrix unresolved computed key on styled alias is not decorated',
+    sourceType: 'module',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['s.box.withConfig'],
+    absent: ['s[dynamic].withConfig', 's[themeKey].withConfig'],
+    code: `
+import { styled as s, ThemeProvider as themeKey } from 'styled-components'
+let dynamic = 'div'
+const Comp = s.box\`color: red;\`
+const Skipped = s[dynamic]\`color: blue;\`
+const SkippedImport = s[themeKey]\`color: green;\`
+`,
+  },
+  {
+    name: 'matrix prototype members are not decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['sc.div.withConfig'],
+    absent: [
+      '__lookupGetter__.withConfig',
+      '__lookupSetter__.withConfig',
+      '__proto__.withConfig',
+      '.bind.withConfig',
+      '.apply.withConfig',
+      '.call.withConfig',
+      '.length.withConfig',
+      '.name.withConfig',
+      '.arguments.withConfig',
+      '.caller.withConfig',
+    ],
+    code: `
+const sc = require('styled-components')
+const Comp = sc.div\`color: red;\`
+const Lookup = sc.__lookupGetter__\`x\`
+const LookupSet = sc.__lookupSetter__\`x\`
+const Proto = sc.__proto__\`x\`
+const Bound = sc.bind\`x\`
+const Applied = sc.apply\`x\`
+const Called = sc.call\`x\`
+const Len = sc.length\`x\`
+const Named = sc.name\`x\`
+const Args = sc.arguments\`x\`
+const Caller = sc.caller\`x\`
 `,
   },
   {
@@ -427,6 +494,116 @@ let sc = require('styled-components')
 const Before = sc.div\`color: red;\`
 sc = { div: s => () => null }
 const After = sc.div\`color: blue;\`
+`,
+  },
+  {
+    name: 'matrix require use in nested function is not decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['Before = sc.div.withConfig'],
+    absent: ['sc.span.withConfig', 'After = sc.div.withConfig'],
+    code: `
+let sc = require('styled-components')
+const Before = sc.div\`color: red;\`
+function writtenAbove() { return sc.span\`color: blue;\` }
+sc = { span: s => () => null, div: s => () => null }
+const Late = writtenAbove()
+const After = sc.div\`color: green;\`
+`,
+  },
+  {
+    name: 'matrix require use inside reassignment loop is not decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['First = sc.div.withConfig'],
+    absent: ['Comp = sc.div.withConfig', 'After = sc.div.withConfig'],
+    code: `
+let sc = require('styled-components')
+const First = sc.div\`color: red;\`
+for (let i = 0; i < 2; i++) {
+  const Comp = sc.div\`color: blue;\`
+  sc = { div: s => () => null }
+}
+const After = sc.div\`color: green;\`
+`,
+  },
+  {
+    name: 'closure over reassigned require does not throw',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: ['sc.span.withConfig'],
+    present: ['sc.default.div.withConfig'],
+    code: `
+let sc = require('styled-components')
+const real = sc
+const Comp = sc.default.div\`color: red;\`
+function writtenAbove() { return sc.span\`color: blue;\` }
+exports.Comp = Comp
+exports.check = () => {
+  if (typeof real.span !== 'function') return
+  sc = { span: s => () => null, div: s => () => null }
+  const Late = writtenAbove()
+  if (typeof Late !== 'function') throw new Error('closure did not return the stand-in')
+}
+`,
+  },
+  {
+    name: 'loop that reassigns require does not throw',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: ['sc.div.withConfig'],
+    present: ['sc.default.div.withConfig'],
+    code: `
+let sc = require('styled-components')
+const Comp = sc.default.div\`color: red;\`
+exports.Comp = Comp
+exports.check = () => {
+  if (typeof sc.div !== 'function') return
+  for (let i = 0; i < 2; i++) {
+    sc.div\`color: blue;\`
+    sc = { div: s => () => null }
+  }
+}
+`,
+  },
+  {
+    name: 'prototype members do not throw',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: ['__lookupGetter__.withConfig', '.bind.withConfig'],
+    present: ['sc.default.div.withConfig'],
+    code: `
+const sc = require('styled-components')
+const Comp = sc.default.div\`color: red;\`
+exports.Comp = Comp
+exports.check = () => {
+  if (typeof sc.__lookupGetter__ !== 'function' || typeof sc.bind !== 'function') return
+  sc.__lookupGetter__\`x\`
+  const bound = sc.bind\`x\`
+  if (typeof bound !== 'function') throw new Error('bind was decorated')
+}
+`,
+  },
+  {
+    name: 'unresolved require computed key does not throw',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: ['sc[dynamic].withConfig'],
+    present: ['sc.default.div.withConfig', 'sc.default[css].withConfig'],
+    code: `
+const sc = require('styled-components')
+const css = 'div'
+let dynamic = 'css'
+const Comp = sc.default.div\`color: red;\`
+const Kept = sc.default[css]\`color: blue;\`
+exports.Comp = Comp
+exports.check = () => {
+  const helper = sc[dynamic]\`color: green;\`
+  if (helper == null) throw new Error('unresolved key did not return the helper')
+  if (!Kept.styledComponentId) throw new Error('folded default key lost its id')
+}
 `,
   }
 )
