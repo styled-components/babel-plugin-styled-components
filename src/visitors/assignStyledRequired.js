@@ -1,7 +1,7 @@
 import { isValidTopLevelImport } from '../utils/detectors'
 
 export default t => (path, state) => {
-  let init = path.node.init;
+  let init = path.node.init
 
   if (
     t.isCallExpression(path.node.init) &&
@@ -13,7 +13,7 @@ export default t => (path, state) => {
     init.arguments &&
     init.arguments[0]
   ) {
-    init = path.node.init.arguments[0];
+    init = path.node.init.arguments[0]
   }
 
   if (
