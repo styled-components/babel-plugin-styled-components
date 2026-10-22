@@ -225,36 +225,39 @@ const taggedTagAlreadyConfigured = (t, path) => {
   return hasDisplayNameOrComponentId(t, firstArg.properties)
 }
 
-export default t => (path, state) => {
-  if (taggedTagAlreadyConfigured(t, path)) return
-  if (
-    path.node.tag
-      ? isStyled(t)(path.node.tag, state)
-      : /* styled()`` */ (isStyled(t)(path.node.callee, state) &&
-          path.node.callee.property &&
-          path.node.callee.property.name !== 'withConfig') ||
-        // styled(x)({})
-        (isStyled(t)(path.node.callee, state) &&
-          !t.isMemberExpression(path.node.callee.callee)) ||
-        // styled(x).attrs()({})
-        (isStyled(t)(path.node.callee, state) &&
-          t.isMemberExpression(path.node.callee.callee) &&
-          path.node.callee.callee.property &&
-          path.node.callee.callee.property.name &&
-          path.node.callee.callee.property.name !== 'withConfig') ||
-        // styled(x).withConfig({})
-        (isStyled(t)(path.node.callee, state) &&
-          t.isMemberExpression(path.node.callee.callee) &&
-          path.node.callee.callee.property &&
-          path.node.callee.callee.property.name &&
-          path.node.callee.callee.property.name === 'withConfig' &&
-          path.node.callee.arguments.length &&
-          Array.isArray(path.node.callee.arguments[0].properties) &&
-          !hasDisplayNameOrComponentId(
-            t,
-            path.node.callee.arguments[0].properties
-          ))
-  ) {
+// Whether a styled callee still needs displayName/componentId
+const calleeNeedsConfig = (t, callee) => {
+  // styled()``
+  if (callee.property && callee.property.name !== 'withConfig') return true
+  // styled(x)({})
+  if (!t.isMemberExpression(callee.callee)) return true
+
+  const method = callee.callee.property && callee.callee.property.name
+  if (!method) return false
+  // styled(x).attrs()({})
+  if (method !== 'withConfig') return true
+
+  // styled(x).withConfig({})
+  return (
+    callee.arguments.length > 0 &&
+    Array.isArray(callee.arguments[0].properties) &&
+    !hasDisplayNameOrComponentId(t, callee.arguments[0].properties)
+  )
+}
+
+export default t => {
+  const isStyledNode = isStyled(t)
+
+  return (path, state) => {
+    if (taggedTagAlreadyConfigured(t, path)) return
+
+    const { tag, callee } = path.node
+    const needsConfig = tag
+      ? isStyledNode(tag, state)
+      : isStyledNode(callee, state) && calleeNeedsConfig(t, callee)
+
+    if (!needsConfig) return
+
     const displayName =
       useDisplayName(state) &&
       getDisplayName(t)(path, useFileName(state) && state)
