@@ -36,43 +36,72 @@ export const importLocalName = (name, state, options = {}) => {
       : name
     : false
 
-  state.file.path.traverse({
-    ImportDeclaration: {
-      exit(path) {
-        const { node } = path
-        if (!isValidTopLevelImport(node.source.value, state)) return
+  forEachImportDeclaration(state.file.path, node => {
+    if (!isValidTopLevelImport(node.source.value, state)) return
 
-        for (const specifier of path.get('specifiers')) {
-          if (
-            specifier.isImportSpecifier() &&
-            specifier.node.imported.name === 'styled'
-          ) {
-            localName = 'styled'
-          }
+    for (const specifier of node.specifiers) {
+      if (
+        specifier.type === 'ImportSpecifier' &&
+        specifier.imported.name === 'styled'
+      ) {
+        localName = 'styled'
+      }
 
-          if (specifier.isImportDefaultSpecifier()) {
-            localName = specifier.node.local.name
-          }
+      if (specifier.type === 'ImportDefaultSpecifier') {
+        localName = specifier.local.name
+      }
 
-          if (
-            specifier.isImportSpecifier() &&
-            specifier.node.imported.name === name
-          ) {
-            localName = specifier.node.local.name
-          }
+      if (
+        specifier.type === 'ImportSpecifier' &&
+        specifier.imported.name === name
+      ) {
+        localName = specifier.local.name
+      }
 
-          // The namespace binding isn't directly callable, so prefer any
-          // other specifier (default or named) discovered in this file.
-          if (specifier.isImportNamespaceSpecifier() && !localName) {
-            localName = name === 'default' ? specifier.node.local.name : name
-          }
-        }
-      },
-    },
+      // The namespace binding isn't directly callable, so prefer any
+      // other specifier (default or named) discovered in this file.
+      if (specifier.type === 'ImportNamespaceSpecifier' && !localName) {
+        localName = name === 'default' ? specifier.local.name : name
+      }
+    }
   })
 
   cache[name] = localName
   return localName
+}
+
+const isModuleDeclaration = node =>
+  node.type === 'TSModuleDeclaration' || node.type === 'DeclareModule'
+
+const containsModuleDeclaration = body =>
+  body.some(node =>
+    node.type === 'ExportNamedDeclaration'
+      ? node.declaration && isModuleDeclaration(node.declaration)
+      : isModuleDeclaration(node)
+  )
+
+// Visits import declarations in source order. They sit at the top level of the
+// program body, except inside TypeScript and Flow module declarations, which
+// only a full walk reaches
+const forEachImportDeclaration = (program, visit) => {
+  const { body } = program.node
+
+  if (containsModuleDeclaration(body)) {
+    program.traverse({
+      ImportDeclaration: {
+        exit(path) {
+          visit(path.node)
+        },
+      },
+    })
+    return
+  }
+
+  for (const node of body) {
+    if (node.type === 'ImportDeclaration') {
+      visit(node)
+    }
+  }
 }
 
 // Follow `const X = Y` (and TS `const X = Y as Type`) chains so a local
