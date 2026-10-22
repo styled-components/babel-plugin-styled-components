@@ -12,6 +12,10 @@ export const isValidTopLevelImport = (x, state) =>
   VALID_TOP_LEVEL_IMPORT_PATHS.has(x) ||
   useTopLevelImportPathMatchers(state).some(isMatch => isMatch(x))
 
+// `import type` and `import typeof` (declaration or specifier) bind no value
+const isTypeOnly = node =>
+  node.importKind === 'type' || node.importKind === 'typeof'
+
 const IMPORT_NAMES_CACHE = 'styled-components-import-local-names'
 
 export const importLocalName = (name, state, options = {}) => {
@@ -37,9 +41,12 @@ export const importLocalName = (name, state, options = {}) => {
   // and Flow `declare module` or `declare namespace` bodies are ambient
   for (const node of state.file.path.node.body) {
     if (node.type !== 'ImportDeclaration') continue
+    if (isTypeOnly(node)) continue
     if (!isValidTopLevelImport(node.source.value, state)) continue
 
     for (const specifier of node.specifiers) {
+      if (isTypeOnly(specifier)) continue
+
       if (
         specifier.type === 'ImportSpecifier' &&
         specifier.imported.name === 'styled'
@@ -85,6 +92,7 @@ const importNamespaceNames = state => {
   names = []
   for (const node of state.file.path.node.body) {
     if (node.type !== 'ImportDeclaration') continue
+    if (isTypeOnly(node)) continue
     if (!isValidTopLevelImport(node.source.value, state)) continue
 
     for (const specifier of node.specifiers) {
