@@ -1,0 +1,33 @@
+diff --git a/src/index.js b/src/index.js
+index cfe5f4f399845caba48b245b953194dc02d11a81..32edeacdb7dffca0fa5a2233df4f4291d6b5e842 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -191,13 +191,22 @@ exports.create = function create(config) {
+           filename: error,
+           // Errors might have ansi colors, for example babel codeframe error
+           // Strip them so the error is more readable
+-          // Also replace the current working directory with a placeholder
+-          // This makes sure that the stacktraces are same across machines
++          // Snapshot the message (which carries Babel's code frame), not the
++          // stack: stack frames point into dependency installs outside the
++          // working directory and change with every dependency release.
++          // Also replace the current working directory with a placeholder, in
++          // either separator style and any drive-letter case, and write the
++          // rest of each such path with forward slashes so Windows matches
+           content:
+-            stripAnsi(e.stack).replace(
+-              new RegExp(escapeRegexp(process.cwd()), 'g'),
+-              '<cwd>'
+-            ) + '\n',
++            stripAnsi(String(e))
++              .replace(
++                new RegExp(
++                  escapeRegexp(process.cwd()).replace(/\\\\|\//g, '[\\\\/]'),
++                  'gi'
++                ),
++                '<cwd>'
++              )
++              .replace(/<cwd>[^\s:]*/g, (p) => p.replace(/\\/g, '/')) + '\n',
+           stack,
+         };
+       }

@@ -1,2 +1,4 @@
 minimumReleaseAge: 4320
+patchedDependencies:
+  babel-test@0.2.4: patches/babel-test@0.2.4.patch
 virtualStoreType: global

@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "ssr": false,
+        "displayName": false,
+        "transpileTemplateLiterals": false,
+        "minify": false,
+        "cssProp": true
+      }
+    ]
+  ]
+}
