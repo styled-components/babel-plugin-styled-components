@@ -1,19 +1,16 @@
 import getSequenceExpressionValue from './getSequenceExpressionValue'
 import { useTopLevelImportPathMatchers } from './options'
 
-const VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS = [
+const VALID_TOP_LEVEL_IMPORT_PATHS = new Set([
   'styled-components',
   'styled-components/no-tags',
   'styled-components/native',
   'styled-components/primitives',
-].map(literal => x => x === literal)
+])
 
-export const isValidTopLevelImport = (x, state) => {
-  return [
-    ...VALID_TOP_LEVEL_IMPORT_PATH_MATCHERS,
-    ...useTopLevelImportPathMatchers(state),
-  ].some(isMatch => isMatch(x))
-}
+export const isValidTopLevelImport = (x, state) =>
+  VALID_TOP_LEVEL_IMPORT_PATHS.has(x) ||
+  useTopLevelImportPathMatchers(state).some(isMatch => isMatch(x))
 
 const IMPORT_NAMES_CACHE = 'styled-components-import-local-names'
 

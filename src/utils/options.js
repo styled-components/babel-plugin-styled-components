@@ -7,8 +7,23 @@ function getOption({ opts }, name, defaultValue = true) {
 }
 
 export const useDisplayName = state => getOption(state, 'displayName')
-export const useTopLevelImportPathMatchers = state =>
-  getOption(state, 'topLevelImportPaths', []).map(pattern => pm(pattern))
+
+const NO_PATTERNS = []
+// Compiled matchers per topLevelImportPaths value, so each config compiles once
+const compiledMatchers = new WeakMap()
+
+export const useTopLevelImportPathMatchers = state => {
+  const patterns = getOption(state, 'topLevelImportPaths', NO_PATTERNS)
+  let matchers = compiledMatchers.get(patterns)
+
+  if (!matchers) {
+    matchers = patterns.map(pattern => pm(pattern))
+    compiledMatchers.set(patterns, matchers)
+  }
+
+  return matchers
+}
+
 export const useSSR = state => getOption(state, 'ssr', true)
 export const useFileName = state => getOption(state, 'fileName')
 export const useMeaninglessFileNames = state => getOption(state, 'meaninglessFileNames', ['index'])
