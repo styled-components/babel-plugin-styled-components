@@ -160,6 +160,41 @@ const globalStyledAlias = (state, defaultLocal) =>
     ? 'styled'
     : null
 
+// Named exports that are never styled tags. A required binding is the module
+// object (v5, v6) or the callable `styled` with these attached (v7), so
+// `sc.isStyledComponent(x)` must not be decorated. Helpers stay with isHelper.
+// Intrinsic tags (div, View, and the rest) are not in this set.
+const NON_TAG_EXPORTS = new Set([
+  'NativeStyleContext',
+  'ParentContext',
+  'SafeAreaInsetsProvider',
+  'ServerStyleSheet',
+  'StyleSheetConsumer',
+  'StyleSheetContext',
+  'StyleSheetManager',
+  'ThemeConsumer',
+  'ThemeContext',
+  'ThemeProvider',
+  '__PRIVATE__',
+  '__testOnly_verticalAlignCompanions',
+  'createTheme',
+  'extractCSS',
+  'isStyledComponent',
+  'matchMedia',
+  'setAnimationDebug',
+  'styled',
+  'stylisPluginRSC',
+  'toStyleSheet',
+  'useBreakpoint',
+  'useContainer',
+  'useContainerQuery',
+  'useMediaEnv',
+  'useMediaQuery',
+  'useNativeStyleContext',
+  'useParentContext',
+  'version',
+])
+
 // `ns.default`: the callable default export reached through a namespace
 const isNamespaceDefault = (t, node, defaultLocal, state) =>
   t.isMemberExpression(node) &&
@@ -191,6 +226,9 @@ export const isStyled = t => (tag, state) => {
     return (
       (t.isMemberExpression(tag) &&
         tag.property.name !== 'default' &&
+        !(
+          t.isIdentifier(tag.property) && NON_TAG_EXPORTS.has(tag.property.name)
+        ) &&
         matchesDefault(tag.object.name) &&
         !isHelper(t)(tag.property, state)) ||
       (t.isCallExpression(tag) && matchesDefault(tag.callee.name)) ||
