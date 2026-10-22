@@ -21,3 +21,10 @@ var Bar = (0, styled_components_1.default)('span').withConfig({
   displayName: "Bar",
   componentId: "sc-1km53of-1"
 })`color:blue;`;
+var Box = styled_components_1.default.box.withConfig({
+  displayName: "Box",
+  componentId: "sc-1km53of-2"
+})`color:green;`;
+var helper = styled_components_1.default.css`
+  color: pink;
+`;

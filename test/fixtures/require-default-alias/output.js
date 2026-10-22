@@ -5,4 +5,7 @@ const Tag = styled.div.withConfig({
   componentId: "sc-oqdthy-0"
 })(["color: red;"]);
 const helper = styled.isStyledComponent(Tag);
-const unknown = styled.somethingNew`color: blue;`;
+const unknown = styled.somethingNew.withConfig({
+  displayName: "code__unknown",
+  componentId: "sc-oqdthy-1"
+})(["color: blue;"]);

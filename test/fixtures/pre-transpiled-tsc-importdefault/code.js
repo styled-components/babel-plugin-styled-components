@@ -14,3 +14,9 @@ var Foo = styled_components_1.default.div`
 var Bar = (0, styled_components_1.default)('span')`
   color: blue;
 `;
+var Box = styled_components_1.default.box`
+  color: green;
+`;
+var helper = styled_components_1.default.css`
+  color: pink;
+`;

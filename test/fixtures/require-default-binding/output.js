@@ -12,4 +12,7 @@ const Called = viaComputed(Base).withConfig({
   componentId: "sc-1odpxj7-1"
 })(["color: blue;"]);
 const helper = styled.isStyledComponent(Tag);
-const unknown = styled.somethingNew`color: green;`;
+const unknown = styled.somethingNew.withConfig({
+  displayName: "code__unknown",
+  componentId: "sc-1odpxj7-2"
+})(["color: green;"]);

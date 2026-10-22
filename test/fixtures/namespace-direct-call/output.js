@@ -20,4 +20,12 @@ const Aliased = renamed.span.withConfig({
   displayName: "code__Aliased",
   componentId: "sc-p2vwnu-3"
 })(["color: purple;"]);
-const unknown = renamed.somethingNew`color: black;`;
+const unknown = renamed.somethingNew.withConfig({
+  displayName: "code__unknown",
+  componentId: "sc-p2vwnu-4"
+})(["color: black;"]);
+const Proxy = ns.box.withConfig({
+  displayName: "code__Proxy",
+  componentId: "sc-p2vwnu-5"
+})(["color: white;"]);
+const skipped = ns.css`color: yellow;`;

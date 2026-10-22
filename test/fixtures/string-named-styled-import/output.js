@@ -4,4 +4,7 @@ const Tag = s.div.withConfig({
   componentId: "sc-2s7ou2-0"
 })(["color: red;"]);
 const helper = s.isStyledComponent(Tag);
-const unknown = s.somethingNew`color: blue;`;
+const unknown = s.somethingNew.withConfig({
+  displayName: "code__unknown",
+  componentId: "sc-2s7ou2-1"
+})(["color: blue;"]);

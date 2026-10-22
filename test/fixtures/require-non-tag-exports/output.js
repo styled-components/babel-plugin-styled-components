@@ -26,3 +26,19 @@ const D = sc.default['div'].withConfig({
 const helperCss = sc['css']`color: purple;`;
 const helperDefaultCss = sc.default.css`color: pink;`;
 const helperKeyframes = sc['keyframes']`from { opacity: 0; } to { opacity: 1; }`;
+const Box = sc.box.withConfig({
+  displayName: "code__Box",
+  componentId: "sc-c84c7x-4"
+})(["color: white;"]);
+const Foo = sc.default.foo.withConfig({
+  displayName: "code__Foo",
+  componentId: "sc-c84c7x-5"
+})(["color: black;"]);
+const Filter = sc['feNotAFilter'].withConfig({
+  displayName: "code__Filter",
+  componentId: "sc-c84c7x-6"
+})(["color: teal;"]);
+const Marquee = sc.default['marquee'].withConfig({
+  displayName: "code__Marquee",
+  componentId: "sc-c84c7x-7"
+})(["color: gray;"]);
