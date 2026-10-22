@@ -29,6 +29,16 @@ describe('minify utils', () => {
         'https://test.com'
       )
     })
+
+    it('strips comments after a closing paren opened on a previous line', () => {
+      expect(stripLineComment('    ); // long comment')).toBe('    ); ')
+    })
+
+    it('ignores comment markers inside parens that follow an unmatched closing paren', () => {
+      expect(stripLineComment('  ), url(//cdn.example.com/x.png)')).toBe(
+        '  ), url(//cdn.example.com/x.png)'
+      )
+    })
   })
 
   describe('minify(Raw|Cooked)', () => {
@@ -88,6 +98,59 @@ describe('minify utils', () => {
       expect(actual).toBe(expected)
       expect(indices).toEqual([1])
       expect(minifyCooked(input)).toEqual([actual, [1]])
+    })
+
+    it('Removes line comments after a multi-line value and keeps the following block', () => {
+      const placeholder = makePlaceholder(0)
+      const input = `grid-template-rows: auto auto minmax(\n  0,\n  1fr\n); // long comment\n\n${placeholder} {\n  color: red;\n}`
+      const expected = `grid-template-rows:auto auto minmax( 0,1fr );${placeholder}{color:red;}`
+      const [actual, indices] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(indices).toEqual([])
+      expect(minifyCooked(input)).toEqual([actual, []])
+    })
+
+    it('Removes line comments after a multi-line value with interpolations and keeps the next declaration', () => {
+      const placeholder1 = makePlaceholder(0)
+      const placeholder2 = makePlaceholder(1)
+      const input = `max-height: calc(\n  ${placeholder1} + ${placeholder2}\n); // comment\ncolor: blue;`
+      const expected = `max-height:calc( ${placeholder1} + ${placeholder2} );color:blue;`
+      const [actual, indices] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(indices).toEqual([])
+      expect(minifyCooked(input)).toEqual([actual, []])
+    })
+
+    it('Removes line comments inside a multi-line value', () => {
+      const input = 'width: calc(\n  10px // first\n  + 20px\n);\ncolor: blue;'
+      const expected = 'width:calc( 10px  + 20px );color:blue;'
+      const [actual] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(actual).toBe(minifyCooked(input)[0])
+    })
+
+    it('Removes line comments filling an entire line inside a multi-line value', () => {
+      const input =
+        'grid-template-columns: repeat(\n  // three columns\n  3, 1fr\n);'
+      const expected = 'grid-template-columns:repeat( 3,1fr );'
+      const [actual] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(actual).toBe(minifyCooked(input)[0])
+    })
+
+    it('Keeps comment markers inside parens and strings', () => {
+      const input =
+        'background: url(//cdn.example.com/x.png); // a\nbackground: url(http://example.com/x.png); // b\ncontent: "//not a comment"; // c\ncolor: red;'
+      const expected =
+        'background:url(//cdn.example.com/x.png);background:url(http://example.com/x.png);content:"//not a comment";color:red;'
+      const [actual] = minifyRaw(input)
+
+      expect(actual).toBe(expected)
+      expect(actual).toBe(minifyCooked(input)[0])
     })
   })
 
