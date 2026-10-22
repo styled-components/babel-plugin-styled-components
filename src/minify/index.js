@@ -26,6 +26,22 @@ const symbolRegex = /(\s*[;:{},]\s*)/g
 // Counts occurences of substr inside str
 const countOccurences = (str, substr) => str.split(substr).length - 1
 
+// Counts parentheses left open inside str. A closing one without a match in str
+// ends a value opened on a previous line (e.g. `);` after `minmax(`), so it's ignored
+const countOpenParens = str => {
+  let depth = 0
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(') {
+      depth++
+    } else if (str[i] === ')' && depth > 0) {
+      depth--
+    }
+  }
+
+  return depth
+}
+
 // Joins substrings until predicate returns true
 const reduceSubstr = (substrs, join, predicate) => {
   const length = substrs.length
@@ -56,7 +72,7 @@ export const stripLineComment = line =>
       !str.endsWith(':') && // NOTE: This is another guard against urls, if they're not inside strings or parantheses.
       countOccurences(str, "'") % 2 === 0 &&
       countOccurences(str, '"') % 2 === 0 &&
-      countOccurences(str, '(') === countOccurences(str, ')')
+      countOpenParens(str) === 0
   )
 
 export const compressSymbols = code =>
