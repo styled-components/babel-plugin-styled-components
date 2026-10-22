@@ -201,6 +201,176 @@ export function check() {
   },
 ]
 
+// Compact import x access x export matrix. Compile-only: the full generator is
+// the audit harness, and this is the slice `node scripts/compat.js` always runs.
+const MATRIX_TAGS = new Set(['div', 'View'])
+// Open mode (`import styled`) still decorates unknown names. It skips object
+// methods and known non-tag exports, same as OPEN_SKIP in the detector.
+const MATRIX_OPEN_SKIP = new Set([
+  'isStyledComponent',
+  'css',
+  'hasOwnProperty',
+  'toString',
+])
+const MATRIX_IMPORTS = [
+  {
+    name: 'require sc',
+    mode: 'allow',
+    sourceType: 'script',
+    bind: 'sc',
+    head: `const sc = require('styled-components')`,
+  },
+  {
+    name: 'import styled',
+    mode: 'open',
+    sourceType: 'module',
+    bind: 'styled',
+    head: `import styled from 'styled-components'`,
+  },
+  {
+    name: 'import sc',
+    mode: 'allow',
+    sourceType: 'module',
+    bind: 'sc',
+    head: `import sc from 'styled-components'`,
+  },
+  {
+    name: 'import { styled as s }',
+    mode: 'allow',
+    sourceType: 'module',
+    bind: 's',
+    head: `import { styled as s } from 'styled-components'`,
+  },
+  {
+    name: 'import * as ns',
+    mode: 'namespace',
+    sourceType: 'module',
+    bind: 'ns',
+    head: `import * as ns from 'styled-components'`,
+  },
+]
+const MATRIX_ACCESS = [
+  { name: 'dot', expr: (b, x) => `${b}.${x}` },
+  { name: 'default.dot', expr: (b, x) => `${b}.default.${x}` },
+  { name: 'computed', expr: (b, x) => `${b}['${x}']` },
+  { name: 'default.computed', expr: (b, x) => `${b}.default['${x}']` },
+  { name: 'computed-default.dot', expr: (b, x) => `${b}['default'].${x}` },
+]
+const MATRIX_EXPORTS = ['div', 'View', 'isStyledComponent', 'css', 'hasOwnProperty', 'somethingNew']
+const matrixMemberDecorated = (mode, name) => {
+  if (mode === 'open') return !MATRIX_OPEN_SKIP.has(name)
+  return MATRIX_TAGS.has(name)
+}
+
+for (const imp of MATRIX_IMPORTS) {
+  for (const access of MATRIX_ACCESS) {
+    for (const name of MATRIX_EXPORTS) {
+      const decorated = matrixMemberDecorated(imp.mode, name)
+      CASES.push({
+        name: `matrix ${imp.name} ${access.name} ${name}`,
+        sourceType: imp.sourceType,
+        compileOnly: true,
+        expectWithConfig: decorated,
+        code: `${imp.head}\nconst Comp = ${access.expr(imp.bind, name)}\`color: red;\`\n`,
+      })
+    }
+  }
+  for (const call of [
+    { name: 'call', expr: b => `${b}(Base)`, absent: [] },
+    { name: 'default.call', expr: b => `${b}.default(Base)`, absent: [] },
+    {
+      name: 'computed-default.call',
+      expr: b => `${b}['default'](Base)`,
+      absent: [`['default'].withConfig`],
+      present: [`['default'](Base).withConfig`],
+    },
+  ]) {
+    CASES.push({
+      name: `matrix ${imp.name} ${call.name}`,
+      sourceType: imp.sourceType,
+      compileOnly: true,
+      expectWithConfig: true,
+      absent: call.absent,
+      present: call.present,
+      code: `${imp.head}\nfunction Base(props) { return props.children || null }\nconst Comp = ${call.expr(imp.bind)}` + '`color: red;`\n',
+    })
+  }
+}
+
+CASES.push(
+  {
+    name: 'matrix shadow param is not the require',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    absent: ['sc.div.withConfig'],
+    code: `
+const sc = require('styled-components')
+function make(sc) { return sc.div\`color: red;\` }
+const Comp = make({ div: s => () => null })
+const Real = sc.default.div\`color: blue;\`
+`,
+  },
+  {
+    name: 'matrix reassigned require is not decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    absent: ['sc.div.withConfig'],
+    code: `
+const real = require('styled-components')
+let sc = require('styled-components')
+sc = { div: s => () => null }
+const Comp = sc.div\`color: red;\`
+const Real = real.default.div\`color: blue;\`
+`,
+  },
+  {
+    name: 'matrix computed variable key stays decorated',
+    sourceType: 'script',
+    compileOnly: true,
+    expectWithConfig: true,
+    present: ['sc.default[css].withConfig'],
+    code: `
+const sc = require('styled-components')
+const css = 'div'
+const Comp = sc.default[css]\`color: red;\`
+`,
+  },
+  {
+    name: 'matrix object method and unknown export do not crash',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: ['hasOwnProperty.withConfig', 'toString.withConfig', 'somethingNew.withConfig'],
+    code: `
+const sc = require('styled-components')
+const Comp = sc.default.div\`color: red;\`
+exports.Comp = Comp
+exports.check = () => {
+  const has = sc.hasOwnProperty('css')
+  if (typeof has !== 'boolean') throw new Error('hasOwnProperty was rewritten')
+  if (typeof sc.toString() !== 'string') throw new Error('toString was rewritten')
+}
+`,
+  },
+  {
+    name: 'matrix computed default call decorates the result',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: ["['default'].withConfig"],
+    present: ["['default'](Base).withConfig"],
+    code: `
+const sc = require('styled-components')
+function Base(props) { return props.children || null }
+const Comp = sc['default'](Base)\`color: red;\`
+exports.Comp = Comp
+exports.check = () => {
+  if (!Comp.styledComponentId) throw new Error('computed default call was not decorated')
+}
+`,
+  }
+)
+
 const parseOptions = argv => {
   const { values } = parseArgs({
     args: argv,
@@ -394,9 +564,19 @@ const idsEqual = (left, right) => JSON.stringify(left || []) === JSON.stringify(
 const assertHeadShape = (name, code) => {
   const source = CASES.find(item => item.name === name)
   const problems = []
-  if (!code.includes('withConfig')) problems.push('plugin did not add withConfig to a tag')
-  for (const marker of source.plain) {
+  if (source.expectWithConfig === false) {
+    if (code.includes('withConfig')) problems.push('unexpected withConfig')
+  } else if (!code.includes('withConfig')) {
+    problems.push('plugin did not add withConfig to a tag')
+  }
+  for (const marker of source.plain || []) {
     if (code.includes(marker)) problems.push(`head output contains ${marker}`)
+  }
+  for (const marker of source.absent || []) {
+    if (code.includes(marker)) problems.push(`head output contains ${marker}`)
+  }
+  for (const marker of source.present || []) {
+    if (!code.includes(marker)) problems.push(`head output missing ${marker}`)
   }
   return problems
 }
@@ -476,12 +656,13 @@ const main = async () => {
 
     for (const source of CASES) {
       console.log(source.name)
-      const baseCode = compile(basePlugin, source)
       const headCode = compile(headPlugin, source)
       for (const problem of assertHeadShape(source.name, headCode)) {
         console.error(`  head: ${problem}`)
         process.exitCode = 1
       }
+      if (source.compileOnly) continue
+      const baseCode = compile(basePlugin, source)
       for (const version of versions.filter(item => source.majors.includes(item.major))) {
         console.log(`  v${version.major} ${version.spec}`)
         const nativeEsm = source.modules === false

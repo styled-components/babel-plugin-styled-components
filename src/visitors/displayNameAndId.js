@@ -232,8 +232,12 @@ const calleeNeedsConfig = (t, callee) => {
   // styled(x)({})
   if (!t.isMemberExpression(callee.callee)) return true
 
-  const method = callee.callee.property && callee.callee.property.name
-  if (!method) return false
+  const property = callee.callee.property
+  // `styled['default'](x)({})` has a string key, so `.name` is empty.
+  const method =
+    property &&
+    (property.name || (t.isStringLiteral(property) ? property.value : null))
+  if (!method) return true
   // styled(x).attrs()({})
   if (method !== 'withConfig') return true
 
@@ -253,8 +257,8 @@ export default t => {
 
     const { tag, callee } = path.node
     const needsConfig = tag
-      ? isStyledNode(tag, state)
-      : isStyledNode(callee, state) && calleeNeedsConfig(t, callee)
+      ? isStyledNode(tag, state, path.scope)
+      : isStyledNode(callee, state, path.scope) && calleeNeedsConfig(t, callee)
 
     if (!needsConfig) return
 
