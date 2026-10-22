@@ -195,6 +195,13 @@ const NON_TAG_EXPORTS = new Set([
   'version',
 ])
 
+// Static member key: `sc.div` and `sc['div']`. A computed non-literal has none.
+const memberPropertyName = (t, property) => {
+  if (t.isIdentifier(property)) return property.name
+  if (t.isStringLiteral(property)) return property.value
+  return null
+}
+
 // `ns.default`: the callable default export reached through a namespace
 const isNamespaceDefault = (t, node, defaultLocal, state) =>
   t.isMemberExpression(node) &&
@@ -226,9 +233,7 @@ export const isStyled = t => (tag, state) => {
     return (
       (t.isMemberExpression(tag) &&
         tag.property.name !== 'default' &&
-        !(
-          t.isIdentifier(tag.property) && NON_TAG_EXPORTS.has(tag.property.name)
-        ) &&
+        !NON_TAG_EXPORTS.has(memberPropertyName(t, tag.property)) &&
         matchesDefault(tag.object.name) &&
         !isHelper(t)(tag.property, state)) ||
       (t.isCallExpression(tag) && matchesDefault(tag.callee.name)) ||
@@ -240,7 +245,8 @@ export const isStyled = t => (tag, state) => {
         t.isMemberExpression(tag) &&
         t.isMemberExpression(tag.object) &&
         tag.object.property.name === 'default' &&
-        tag.object.object.name === state.styledRequired) ||
+        tag.object.object.name === state.styledRequired &&
+        !NON_TAG_EXPORTS.has(memberPropertyName(t, tag.property))) ||
       (state.styledRequired &&
         t.isCallExpression(tag) &&
         t.isMemberExpression(tag.callee) &&
@@ -254,7 +260,8 @@ export const isStyled = t => (tag, state) => {
         getSequenceExpressionValue(tag.callee).object.name ===
           state.styledRequired) ||
       (t.isMemberExpression(tag) &&
-        isNamespaceDefault(t, tag.object, defaultLocal, state)) ||
+        isNamespaceDefault(t, tag.object, defaultLocal, state) &&
+        !NON_TAG_EXPORTS.has(memberPropertyName(t, tag.property))) ||
       (t.isCallExpression(tag) &&
         isNamespaceDefault(t, tag.callee, defaultLocal, state)) ||
       (t.isCallExpression(tag) &&

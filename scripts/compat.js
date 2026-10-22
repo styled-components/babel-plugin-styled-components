@@ -99,12 +99,62 @@ export function check() {
     sourceType: 'module',
     modules: 'commonjs',
     majors: [5, 6, 7],
-    plain: ['isStyledComponent.withConfig'],
+    plain: ['isStyledComponent.withConfig', "['createTheme'].withConfig"],
     code: `
 import * as ns from 'styled-components'
 export const Comp = ns.default.div\`color: red;\`
 export function check() {
   if (ns.isStyledComponent(Comp) !== true) throw new Error('namespace helper rejected the tag')
+  if (typeof ns.default.isStyledComponent === 'function') {
+    if (ns.default.isStyledComponent(Comp) !== true) {
+      throw new Error('namespace default helper rejected the tag')
+    }
+  }
+  if (typeof ns.default.createTheme === 'function') ns.default['createTheme']({ color: 'red' })
+}
+`,
+  },
+  {
+    name: 'cjs require, default member and computed helpers',
+    sourceType: 'script',
+    majors: [5, 6, 7],
+    plain: [
+      'isStyledComponent.withConfig',
+      "['isStyledComponent'].withConfig",
+      'createTheme.withConfig',
+      "['createTheme'].withConfig",
+    ],
+    code: `
+const sc = require('styled-components')
+const Comp = sc.default.div\`color: red;\`
+const ViaComputedTag = sc.default['div']\`color: blue;\`
+exports.Comp = Comp
+exports.ViaComputedTag = ViaComputedTag
+exports.check = () => {
+  if (sc['isStyledComponent'](Comp) !== true) throw new Error('computed helper rejected the tag')
+  if (sc['isStyledComponent'](ViaComputedTag) !== true) {
+    throw new Error('computed helper rejected the computed tag')
+  }
+  if (typeof sc.default.isStyledComponent === 'function') {
+    if (sc.default.isStyledComponent(Comp) !== true) {
+      throw new Error('default member helper rejected the tag')
+    }
+  }
+  if (typeof sc.default.createTheme === 'function') sc.default['createTheme']({ color: 'red' })
+}
+`,
+  },
+  {
+    name: 'cjs require, computed tag',
+    sourceType: 'script',
+    majors: [7],
+    plain: ['isStyledComponent.withConfig'],
+    code: `
+const sc = require('styled-components')
+const Comp = sc['div']\`color: red;\`
+exports.Comp = Comp
+exports.check = () => {
+  if (sc['isStyledComponent'](Comp) !== true) throw new Error('computed helper rejected the tag')
 }
 `,
   },
