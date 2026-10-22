@@ -33,8 +33,11 @@ export const importLocalName = (name, state, options = {}) => {
       : name
     : false
 
-  forEachImportDeclaration(state.file.path, node => {
-    if (!isValidTopLevelImport(node.source.value, state)) return
+  // Only top-level declarations are real bindings; imports inside TypeScript
+  // and Flow `declare module` or `declare namespace` bodies are ambient
+  for (const node of state.file.path.node.body) {
+    if (node.type !== 'ImportDeclaration') continue
+    if (!isValidTopLevelImport(node.source.value, state)) continue
 
     for (const specifier of node.specifiers) {
       if (
@@ -61,44 +64,10 @@ export const importLocalName = (name, state, options = {}) => {
         localName = name === 'default' ? specifier.local.name : name
       }
     }
-  })
+  }
 
   cache[name] = localName
   return localName
-}
-
-const isModuleDeclaration = node =>
-  node.type === 'TSModuleDeclaration' || node.type === 'DeclareModule'
-
-const containsModuleDeclaration = body =>
-  body.some(node =>
-    node.type === 'ExportNamedDeclaration'
-      ? node.declaration && isModuleDeclaration(node.declaration)
-      : isModuleDeclaration(node)
-  )
-
-// Visits import declarations in source order. They sit at the top level of the
-// program body, except inside TypeScript and Flow module declarations, which
-// only a full walk reaches
-const forEachImportDeclaration = (program, visit) => {
-  const { body } = program.node
-
-  if (containsModuleDeclaration(body)) {
-    program.traverse({
-      ImportDeclaration: {
-        exit(path) {
-          visit(path.node)
-        },
-      },
-    })
-    return
-  }
-
-  for (const node of body) {
-    if (node.type === 'ImportDeclaration') {
-      visit(node)
-    }
-  }
 }
 
 // Follow `const X = Y` (and TS `const X = Y as Type`) chains so a local

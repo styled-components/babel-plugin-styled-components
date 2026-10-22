@@ -1,0 +1,14 @@
+{
+  "parserOpts": {
+    "plugins": ["flow"]
+  },
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "transpileTemplateLiterals": false,
+        "ssr": true
+      }
+    ]
+  ]
+}
