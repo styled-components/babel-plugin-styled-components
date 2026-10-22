@@ -47,6 +47,8 @@
     "build": "babel src -d lib",
     "test": "jest",
     "test:watch": "pnpm test -- --watch",
+    "bench": "node scripts/bench/index.js",
+    "bench:profile": "node scripts/bench/profile.js",
     "prepublishOnly": "pnpm clean && pnpm build",
     "changeset": "changeset",
     "changeset-publish": "pnpm build && changeset publish"
