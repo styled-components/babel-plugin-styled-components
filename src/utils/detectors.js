@@ -17,19 +17,28 @@ const isTypeOnly = node =>
   node.importKind === 'type' || node.importKind === 'typeof'
 
 const IMPORT_NAMES_CACHE = 'styled-components-import-local-names'
+const INJECTED_DEFAULT_NAME = 'styled-components-injected-default-name'
 
-export const importLocalName = (name, state, options = {}) => {
-  const { bypassCache = false } = options
+// The default binding the css-prop transform injected, which can be a
+// `require` (script files) that no ImportDeclaration scan would find
+export const injectedDefaultName = state =>
+  state.file.get(INJECTED_DEFAULT_NAME)
 
+export const registerInjectedDefault = (state, name) => {
+  state.file.set(INJECTED_DEFAULT_NAME, name)
+  state.file.set(IMPORT_NAMES_CACHE, null)
+}
+
+export const importLocalName = (name, state) => {
   if (state.customImportName) return state.customImportName.name
 
   let cache = state.file.get(IMPORT_NAMES_CACHE)
-  if (!cache || bypassCache) {
+  if (!cache) {
     cache = {}
     state.file.set(IMPORT_NAMES_CACHE, cache)
   }
 
-  if (!bypassCache && name in cache) return cache[name]
+  if (name in cache) return cache[name]
 
   let localName = state.styledRequired
     ? name === 'default'
@@ -71,6 +80,11 @@ export const importLocalName = (name, state, options = {}) => {
         localName = name === 'default' ? specifier.local.name : name
       }
     }
+  }
+
+  if (name === 'default') {
+    const injected = injectedDefaultName(state)
+    if (injected) localName = injected
   }
 
   cache[name] = localName

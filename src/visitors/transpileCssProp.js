@@ -1,6 +1,10 @@
 // Most of this code was taken from @satya164's babel-plugin-css-prop
 import { addDefault } from '@babel/helper-module-imports'
-import { importLocalName } from '../utils/detectors'
+import {
+  importLocalName,
+  injectedDefaultName,
+  registerInjectedDefault,
+} from '../utils/detectors'
 import { useCssProp, useCssPropImportPath } from '../utils/options'
 import { processCallExpression, processTaggedTemplate } from './process'
 
@@ -42,7 +46,6 @@ const getLocalIdentifier = path => {
 }
 
 const PROGRAM_BODY_PRENUMBERED = 'styled-components-program-prenumbered'
-const INJECTED_DEFAULT_IMPORT = 'styled-components-injected-default-import'
 
 export default t => {
   const taggedTemplateVisit = processTaggedTemplate(t)
@@ -69,17 +72,15 @@ export default t => {
     // not directly callable, so treat it the same as "no default binding" and
     // inject a fresh default import to use as the css-prop callee.
     if (!importBinding || importBindingIsNamespace) {
-      // The injected import never becomes a program-scope binding, so later
+      // The injected binding never becomes a program-scope binding, so later
       // css props reuse the name resolved for the first injection
-      let injectedName = state.file.get(INJECTED_DEFAULT_IMPORT)
+      let injectedName = injectedDefaultName(state)
 
       if (!injectedName) {
-        addDefault(path, useCssPropImportPath(state), {
+        injectedName = addDefault(path, useCssPropImportPath(state), {
           nameHint: 'styled',
-        })
-
-        injectedName = importLocalName('default', state, { bypassCache: true })
-        state.file.set(INJECTED_DEFAULT_IMPORT, injectedName)
+        }).name
+        registerInjectedDefault(state, injectedName)
       }
 
       importName = t.identifier(injectedName)
