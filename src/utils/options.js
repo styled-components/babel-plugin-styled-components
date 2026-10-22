@@ -1,4 +1,4 @@
-import pm from 'picomatch';
+import pm from 'picomatch'
 
 function getOption({ opts }, name, defaultValue = true) {
   return opts[name] === undefined || opts[name] === null
@@ -26,7 +26,8 @@ export const useTopLevelImportPathMatchers = state => {
 
 export const useSSR = state => getOption(state, 'ssr', true)
 export const useFileName = state => getOption(state, 'fileName')
-export const useMeaninglessFileNames = state => getOption(state, 'meaninglessFileNames', ['index'])
+export const useMeaninglessFileNames = state =>
+  getOption(state, 'meaninglessFileNames', ['index'])
 export const useMinify = state => getOption(state, 'minify')
 export const useTranspileTemplateLiterals = state =>
   getOption(state, 'transpileTemplateLiterals')
