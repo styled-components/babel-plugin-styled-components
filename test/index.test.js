@@ -2,6 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import { create } from 'babel-test'
 import { toMatchFile } from 'jest-file-snapshot'
+import { transformSync } from '@babel/core'
+import plugin from '../src'
 
 expect.extend({ toMatchFile })
 
@@ -46,5 +48,33 @@ describe('runtime dependencies', () => {
       .map(([name, peers]) => `${name} ${peers['@babel/core']}`)
 
     expect(narrower).toEqual([])
+  })
+})
+
+describe('jsx parser option', () => {
+  // Stands in for Babel 8's TypeScript preset, which runs after this plugin
+  // and leaves any `jsx` parser plugin in place
+  const lateTypescript = () => ({
+    manipulateOptions(opts, parserOpts) {
+      parserOpts.plugins.push('typescript')
+    },
+  })
+
+  const transform = (code, filename) =>
+    transformSync(code, {
+      babelrc: false,
+      configFile: false,
+      filename,
+      plugins: [plugin, lateTypescript],
+    }).code
+
+  it.each(['a.ts', 'a.mts', 'a.cts'])('stays off for %s', filename => {
+    expect(transform('export const C = <any>B', filename)).toBe(
+      'export const C = <any> B;'
+    )
+  })
+
+  it.each(['a.tsx', 'a.js'])('turns on for %s', filename => {
+    expect(transform('const A = <div />', filename)).toBe('const A = <div />;')
   })
 })

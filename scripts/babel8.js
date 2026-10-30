@@ -9,6 +9,7 @@ const fs = require('fs')
 const path = require('path')
 const babel7 = require('@babel/core')
 const babel = require('babel8')
+const presetTypescript = require('babel8-preset-typescript').default
 
 const ROOT = path.resolve(__dirname, '..')
 const FIXTURES = path.join(ROOT, 'test', 'fixtures')
@@ -23,6 +24,20 @@ const SKIP = {
   'imports-inside-exported-ambient-namespace':
     'Babel 8 rejects an import inside `declare namespace` while parsing, as TypeScript does',
 }
+
+// Fixtures always parse as code.js, so the extension rules run here
+const TYPESCRIPT_CASES = [
+  {
+    file: 'a.ts',
+    code: 'export const C = <any>B',
+    expected: 'export const C = B;\n',
+  },
+  {
+    file: 'a.tsx',
+    code: 'const A = <div />',
+    expected: 'const A = <div />;\n',
+  },
+]
 
 // Mirrors the babel-test patch in patches/ so error.js matches across machines
 const normalizeError = e =>
@@ -99,6 +114,16 @@ const main = async () => {
       : (read(path.join(dir, 'output.js')) ?? read(path.join(dir, 'error.js')))
     if (actual === expected) passed++
     else failed.push({ name, expected, actual })
+  }
+
+  for (const { file, code, expected } of TYPESCRIPT_CASES) {
+    const actual = await transform(babel, code, {
+      filename: path.join(ROOT, file),
+      plugins: [lib],
+      presets: [presetTypescript],
+    })
+    if (actual === expected) passed++
+    else failed.push({ name: file, expected, actual })
   }
 
   for (const { name, expected, actual } of failed) {
