@@ -95,7 +95,6 @@ export default t => {
 
     const elem = path.parentPath
     const name = getName(elem.node.name, t, path)
-    const nameExpression = getNameExpression(elem.node.name, t, path)
     const id = path.scope.generateUidIdentifier(
       'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
     )
@@ -106,7 +105,9 @@ export default t => {
     if (TAG_NAME_REGEXP.test(name)) {
       styled = t.callExpression(importName, [t.stringLiteral(name)])
     } else {
-      styled = t.callExpression(importName, [nameExpression])
+      styled = t.callExpression(importName, [
+        getNameExpression(elem.node.name, t, path),
+      ])
 
       if (
         bindings[name] &&

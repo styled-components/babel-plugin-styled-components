@@ -1,17 +1,19 @@
 // Runs the built plugin (`lib/`) through Babel 8 over the fixture suite and
 // compares against the same output.js / error.js files Jest uses on Babel 7.
-// Babel 8 ships as ESM only, which Jest's module sandbox cannot require, so
-// this runs as plain Node. Run with `pnpm build && pnpm test:babel8`.
+// A fixture that also runs Babel's own presets or plugins has a snapshot that
+// differs between majors by design, so it runs with this plugin alone and
+// must match Babel 7's output instead. Babel 8 ships as ESM only, which
+// Jest's module sandbox cannot require, so this runs as plain Node. Run with
+// `pnpm build && pnpm test:babel8`.
 const fs = require('fs')
 const path = require('path')
+const babel7 = require('@babel/core')
 const babel = require('babel8')
 
 const ROOT = path.resolve(__dirname, '..')
 const FIXTURES = path.join(ROOT, 'test', 'fixtures')
 const PLUGIN = '../../../src'
 
-// Their snapshots are mostly Babel's own output (helpers, module interop,
-// preset-env targets), which differs between majors by design.
 const usesOtherBabelPlugins = config =>
   [...(config.presets || []), ...(config.plugins || [])].some(
     entry => (Array.isArray(entry) ? entry[0] : entry) !== PLUGIN
@@ -45,6 +47,20 @@ const read = file =>
 const readConfig = dir =>
   JSON.parse(read(path.join(dir, '.babelrc')).replace(/,(\s*[\]}])/g, '$1'))
 
+const transform = async (instance, code, options) => {
+  try {
+    const result = await instance.transformAsync(code, {
+      ...options,
+      babelrc: false,
+      configFile: false,
+      cwd: ROOT,
+    })
+    return result.code + '\n'
+  } catch (e) {
+    return normalizeError(e)
+  }
+}
+
 const main = async () => {
   const lib = path.join(ROOT, 'lib', 'index.js')
   if (!fs.existsSync(lib)) {
@@ -60,35 +76,27 @@ const main = async () => {
     const dir = path.join(FIXTURES, name)
     const config = readConfig(dir)
 
-    if (SKIP[name] || usesOtherBabelPlugins(config)) {
-      skipped.push(
-        `${name}: ${SKIP[name] || 'output depends on Babel presets or plugins'}`
-      )
+    if (SKIP[name]) {
+      skipped.push(`${name}: ${SKIP[name]}`)
       continue
     }
 
     const filename = path.join(dir, 'code.js')
-    const plugins = config.plugins.map(entry =>
-      Array.isArray(entry) ? [lib, ...entry.slice(1)] : lib
-    )
-
-    let actual
-    try {
-      const result = await babel.transformAsync(read(filename), {
-        ...config,
-        plugins,
-        babelrc: false,
-        configFile: false,
-        cwd: ROOT,
-        filename,
-      })
-      actual = result.code + '\n'
-    } catch (e) {
-      actual = normalizeError(e)
+    const code = read(filename)
+    const pluginOnly = usesOtherBabelPlugins(config)
+    const options = {
+      ...config,
+      presets: [],
+      plugins: config.plugins
+        .filter(entry => (Array.isArray(entry) ? entry[0] : entry) === PLUGIN)
+        .map(entry => (Array.isArray(entry) ? [lib, ...entry.slice(1)] : lib)),
+      filename,
     }
 
-    const expected =
-      read(path.join(dir, 'output.js')) ?? read(path.join(dir, 'error.js'))
+    const actual = await transform(babel, code, options)
+    const expected = pluginOnly
+      ? await transform(babel7, code, options)
+      : (read(path.join(dir, 'output.js')) ?? read(path.join(dir, 'error.js')))
     if (actual === expected) passed++
     else failed.push({ name, expected, actual })
   }
