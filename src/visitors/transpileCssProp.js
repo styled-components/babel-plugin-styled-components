@@ -162,10 +162,10 @@ export default t => {
         (t.isJSXAttribute(x) ? x.name.name !== 'css' : false)
     )
 
-    elem.node.name = t.jSXIdentifier(id.name)
+    elem.node.name = t.jsxIdentifier(id.name)
 
     if (elem.parentPath.node.closingElement) {
-      elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
+      elem.parentPath.node.closingElement.name = t.jsxIdentifier(id.name)
     }
 
     // object syntax
@@ -209,9 +209,9 @@ export default t => {
           const identifier = getLocalIdentifier(path)
 
           elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(property.key)
+            t.jsxAttribute(
+              t.jsxIdentifier(identifier.name),
+              t.jsxExpressionContainer(property.key)
             )
           )
 
@@ -240,9 +240,9 @@ export default t => {
             const identifier = getLocalIdentifier(path)
 
             elem.node.attributes.push(
-              t.jSXAttribute(
-                t.jSXIdentifier(identifier.name),
-                t.jSXExpressionContainer(property.argument)
+              t.jsxAttribute(
+                t.jsxIdentifier(identifier.name),
+                t.jsxExpressionContainer(property.argument)
               )
             )
 
@@ -267,9 +267,9 @@ export default t => {
           const identifier = getLocalIdentifier(path)
 
           elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(property.value)
+            t.jsxAttribute(
+              t.jsxIdentifier(identifier.name),
+              t.jsxExpressionContainer(property.value)
             )
           )
 
@@ -311,9 +311,9 @@ export default t => {
           const p = t.identifier('p')
 
           elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(ex)
+            t.jsxAttribute(
+              t.jsxIdentifier(identifier.name),
+              t.jsxExpressionContainer(ex)
             )
           )
 

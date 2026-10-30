@@ -10,7 +10,7 @@ This plugin is a highly recommended supplement to the base styled-components lib
 
 This plugin is tested against:
 
-- `@babel/core` `^7`
+- `@babel/core` `^7` and `^8`
 - `styled-components` `>= 6` (earlier majors may still work but aren't exercised in CI)
 
 ## Quick start

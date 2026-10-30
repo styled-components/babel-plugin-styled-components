@@ -11,6 +11,7 @@ Commands
 - `pnpm exec jest -u`: regenerate fixture outputs, only after the snapshot-drift rule below is satisfied
 - `pnpm exec jest --coverage`: prints live coverage
 - `pnpm build`: compile `src/` to `lib/`; run it to verify every set of changes. Don't start a dev server unless asked
+- `pnpm test:babel8`: the built `lib/` over the fixtures on Babel 8, outside Jest because Babel 8 is ESM-only; run `pnpm build` first
 - `pnpm bench [--base <ref>] [--config default|all|bare] [--rounds N] [--normalize-aliases]`: interleaved A/B of the plugin at `<ref>` (default `origin/main`) against the working tree over generated inputs; fails when outputs differ
 - `pnpm bench:profile [--input small|medium|large|large-cjs]`: CPU profile with the plugin frames that drive Babel's work
 - `node scripts/compat.js [--base <ref>]`: styled-components v5, v6, and v7 prerelease smoke against the working tree and `<ref>` (default `origin/main`)

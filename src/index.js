@@ -1,4 +1,3 @@
-import syntax from '@babel/plugin-syntax-jsx'
 import assignStyledRequired from './visitors/assignStyledRequired'
 import transpileCssProp from './visitors/transpileCssProp'
 import {
@@ -13,7 +12,19 @@ export default function ({ types: t }) {
   const processTaggedTemplateVisit = processTaggedTemplate(t)
 
   return {
-    inherits: syntax,
+    // Same as @babel/plugin-syntax-jsx, whose peer range is pinned to one
+    // Babel major. With TypeScript, the TypeScript preset decides per file
+    // (.tsx) whether JSX is on, and forcing it breaks `<T>value` assertions
+    manipulateOptions(opts, parserOpts) {
+      if (
+        parserOpts.plugins.some(
+          p => (Array.isArray(p) ? p[0] : p) === 'typescript'
+        )
+      ) {
+        return
+      }
+      parserOpts.plugins.push('jsx')
+    },
     visitor: {
       Program(path, state) {
         path.traverse(

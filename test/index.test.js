@@ -29,3 +29,22 @@ describe('fixture snapshots', () => {
     expect(leaks).toEqual([])
   })
 })
+
+describe('runtime dependencies', () => {
+  const majors = range =>
+    new Set((range.match(/\^\d+/g) || []).map(m => m.slice(1)))
+  const pkg = require('../package.json')
+  const supported = majors(pkg.peerDependencies['@babel/core'])
+
+  it('accept every @babel/core major the plugin supports', () => {
+    const narrower = Object.keys(pkg.dependencies)
+      .map(name => [name, require(`${name}/package.json`).peerDependencies])
+      .filter(([, peers]) => peers && peers['@babel/core'])
+      .filter(([, peers]) =>
+        [...supported].some(major => !majors(peers['@babel/core']).has(major))
+      )
+      .map(([name, peers]) => `${name} ${peers['@babel/core']}`)
+
+    expect(narrower).toEqual([])
+  })
+})
