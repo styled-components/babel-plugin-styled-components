@@ -1,0 +1,17 @@
+{
+  "parserOpts": {
+    "plugins": [["typescript", { "dts": false }]]
+  },
+  "plugins": [
+    [
+      "../../../src",
+      {
+        "displayName": true,
+        "fileName": false,
+        "ssr": false,
+        "transpileTemplateLiterals": false,
+        "minify": false
+      }
+    ]
+  ]
+}

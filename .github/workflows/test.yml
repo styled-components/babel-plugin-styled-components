@@ -33,3 +33,6 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      - name: Run fixtures on Babel 8
+        run: pnpm build && pnpm test:babel8

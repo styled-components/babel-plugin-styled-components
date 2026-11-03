@@ -8,7 +8,7 @@ import {
 import { useCssProp, useCssPropImportPath } from '../utils/options'
 import { processCallExpression, processTaggedTemplate } from './process'
 
-const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
+const LOWERCASE_TAG_REGEXP = /^[a-z][a-z\d]*$/
 
 const ISSUE_URL =
   'https://github.com/styled-components/babel-plugin-styled-components'
@@ -26,9 +26,13 @@ const getName = (node, t, path) => {
 const getNameExpression = (node, t, path) => {
   if (typeof node.name === 'string') return t.identifier(node.name)
   if (t.isJSXMemberExpression(node)) {
+    const { name } = node.property
+    const computed = !t.isValidIdentifier(name)
+
     return t.memberExpression(
       getNameExpression(node.object, t, path),
-      t.identifier(node.property.name)
+      computed ? t.stringLiteral(name) : t.identifier(name),
+      computed
     )
   }
   throw path.buildCodeFrameError(
@@ -140,18 +144,27 @@ export default t => {
 
     const elem = path.parentPath
     const name = getName(elem.node.name, t, path)
-    const nameExpression = getNameExpression(elem.node.name, t, path)
     const id = path.scope.generateUidIdentifier(
       'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
     )
 
+    // JSX renders any lowercase-first name as an element, but `myButton` or
+    // `my_card` naming a binding has always resolved to that binding here
+    const isTag =
+      t.isJSXIdentifier(elem.node.name) &&
+      (!t.isValidIdentifier(name) ||
+        (t.react.isCompatTag(name) &&
+          (LOWERCASE_TAG_REGEXP.test(name) || !path.scope.getBinding(name))))
+
     let styled
     let injector
 
-    if (TAG_NAME_REGEXP.test(name)) {
+    if (isTag) {
       styled = t.callExpression(importName, [t.stringLiteral(name)])
     } else {
-      styled = t.callExpression(importName, [nameExpression])
+      styled = t.callExpression(importName, [
+        getNameExpression(elem.node.name, t, path),
+      ])
 
       if (
         bindings[name] &&
@@ -209,10 +222,10 @@ export default t => {
         (t.isJSXAttribute(x) ? x.name.name !== 'css' : false)
     )
 
-    elem.node.name = t.jSXIdentifier(id.name)
+    elem.node.name = t.jsxIdentifier(id.name)
 
     if (elem.parentPath.node.closingElement) {
-      elem.parentPath.node.closingElement.name = t.jSXIdentifier(id.name)
+      elem.parentPath.node.closingElement.name = t.jsxIdentifier(id.name)
     }
 
     // object syntax
@@ -256,9 +269,9 @@ export default t => {
           const identifier = getLocalIdentifier(path)
 
           elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(property.key)
+            t.jsxAttribute(
+              t.jsxIdentifier(identifier.name),
+              t.jsxExpressionContainer(property.key)
             )
           )
 
@@ -287,9 +300,9 @@ export default t => {
             const identifier = getLocalIdentifier(path)
 
             elem.node.attributes.push(
-              t.jSXAttribute(
-                t.jSXIdentifier(identifier.name),
-                t.jSXExpressionContainer(property.argument)
+              t.jsxAttribute(
+                t.jsxIdentifier(identifier.name),
+                t.jsxExpressionContainer(property.argument)
               )
             )
 
@@ -314,9 +327,9 @@ export default t => {
           const identifier = getLocalIdentifier(path)
 
           elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(property.value)
+            t.jsxAttribute(
+              t.jsxIdentifier(identifier.name),
+              t.jsxExpressionContainer(property.value)
             )
           )
 
@@ -358,9 +371,9 @@ export default t => {
           const p = t.identifier('p')
 
           elem.node.attributes.push(
-            t.jSXAttribute(
-              t.jSXIdentifier(identifier.name),
-              t.jSXExpressionContainer(ex)
+            t.jsxAttribute(
+              t.jsxIdentifier(identifier.name),
+              t.jsxExpressionContainer(ex)
             )
           )
 
