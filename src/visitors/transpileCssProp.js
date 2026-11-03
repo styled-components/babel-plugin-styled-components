@@ -45,6 +45,48 @@ const getLocalIdentifier = path => {
   return identifier
 }
 
+const topLevelStatement = path =>
+  path.find(p => p.parentPath && p.parentPath.isProgram())
+
+// Top-level statements declaring the program-scope values the css value reads.
+// Imports and hoisted function declarations are always initialized, so they
+// never constrain placement.
+const cssDependencyStatements = (attributePath, bindings) => {
+  const statements = []
+
+  attributePath.get('value').traverse({
+    ReferencedIdentifier(p) {
+      const binding = bindings[p.node.name]
+
+      if (
+        binding &&
+        binding.kind !== 'module' &&
+        binding.kind !== 'hoisted' &&
+        p.scope.getBinding(p.node.name) === binding
+      ) {
+        statements.push(topLevelStatement(binding.path))
+      }
+    },
+  })
+
+  return statements
+}
+
+// The generated declaration goes after the component's own statement and after
+// every dependency declared in a later statement. A dependency sharing the
+// usage's statement cannot be satisfied, so it is skipped.
+const latestProgramStatement = (componentPath, dependencies, usagePath) => {
+  const usageKey = topLevelStatement(usagePath).key
+
+  return dependencies.reduce(
+    (latest, statement) =>
+      statement.key > latest.key && statement.key !== usageKey
+        ? statement
+        : latest,
+    topLevelStatement(componentPath)
+  )
+}
+
 const PROGRAM_BODY_PRENUMBERED = 'styled-components-program-prenumbered'
 
 export default t => {
@@ -112,11 +154,13 @@ export default t => {
         bindings[name] &&
         !t.isImportDeclaration(bindings[name].path.parent)
       ) {
-        injector = nodeToInsert =>
-          (t.isVariableDeclaration(bindings[name].path.parent)
-            ? bindings[name].path.parentPath
-            : bindings[name].path
-          ).insertAfter(nodeToInsert)
+        const anchor = latestProgramStatement(
+          bindings[name].path,
+          cssDependencyStatements(path, bindings),
+          path
+        )
+
+        injector = nodeToInsert => anchor.insertAfter(nodeToInsert)
       }
     }
 
