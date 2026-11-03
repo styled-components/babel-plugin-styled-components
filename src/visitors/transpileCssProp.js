@@ -8,8 +8,6 @@ import {
 import { useCssProp, useCssPropImportPath } from '../utils/options'
 import { processCallExpression, processTaggedTemplate } from './process'
 
-const TAG_NAME_REGEXP = /^[a-z][a-z\d]*(\-[a-z][a-z\d]*)?$/
-
 const ISSUE_URL =
   'https://github.com/styled-components/babel-plugin-styled-components'
 
@@ -26,9 +24,13 @@ const getName = (node, t, path) => {
 const getNameExpression = (node, t, path) => {
   if (typeof node.name === 'string') return t.identifier(node.name)
   if (t.isJSXMemberExpression(node)) {
+    const { name } = node.property
+    const computed = !t.isValidIdentifier(name)
+
     return t.memberExpression(
       getNameExpression(node.object, t, path),
-      t.identifier(node.property.name)
+      computed ? t.stringLiteral(name) : t.identifier(name),
+      computed
     )
   }
   throw path.buildCodeFrameError(
@@ -99,10 +101,10 @@ export default t => {
       'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
     )
 
-    // A hyphenated JSX name can't be a binding, so JSX renders it as an element
+    // Same rule JSX uses to render a name as an element instead of a binding
     const isTag =
       t.isJSXIdentifier(elem.node.name) &&
-      (TAG_NAME_REGEXP.test(name) || name.includes('-'))
+      (t.react.isCompatTag(name) || !t.isValidIdentifier(name))
 
     let styled
     let injector
