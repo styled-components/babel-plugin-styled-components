@@ -1,5 +1,16 @@
 # babel-plugin-styled-components
 
+## 2.4.0
+
+### Minor Changes
+
+- 9e4200b: Support Babel 8. The plugin now installs alongside `@babel/core@8` without peer dependency warnings or errors, and the `css` prop transform no longer crashes with `t.jSXIdentifier is not a function` on Babel 8. The plugin also no longer depends on `@babel/plugin-syntax-jsx`, which only accepted Babel 7 as a peer.
+
+### Patch Changes
+
+- 9e4200b: The `css` prop now works on custom elements like `<my-foo-bar>` and `<foo-1>`, on lowercase names with no variable of that name in scope like `<clipPath>` and `<foo_bar>`, and on hyphenated members like `<Icons.arrow-up>`. These used to compile to code that referenced a variable that doesn't exist, like `styled(clipPath)`, and threw when it ran. A lowercase name that does match a variable, like `<myButton css>` after `const myButton = styled.button`, still styles that variable.
+- 62f7cc1: Fix a `ReferenceError: Cannot access 'x' before initialization` when the `css` prop is used on a component declared in the same file (such as `const { Paragraph } = Typography`) and the css reads a `const` declared further down; the generated component now follows every value its css reads.
+
 ## 2.3.1
 
 ### Patch Changes
