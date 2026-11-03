@@ -49,12 +49,15 @@ const topLevelStatement = path =>
   path.find(p => p.parentPath && p.parentPath.isProgram())
 
 // Top-level statements declaring the program-scope values the css value reads.
-// Imports and hoisted function declarations are always initialized, so they
-// never constrain placement.
+// Imports and hoisted function declarations are always initialized, and a
+// function body reads only when called, so none of them constrain placement.
 const cssDependencyStatements = (attributePath, bindings) => {
   const statements = []
 
   attributePath.get('value').traverse({
+    Function(p) {
+      p.skip()
+    },
     ReferencedIdentifier(p) {
       const binding = bindings[p.node.name]
 
