@@ -12,10 +12,8 @@ export default function ({ types: t }) {
   const processTaggedTemplateVisit = processTaggedTemplate(t)
 
   return {
-    // Same as @babel/plugin-syntax-jsx, whose peer range is pinned to one
-    // Babel major. Presets run after this, and Babel 8's TypeScript preset
-    // neither removes `jsx` from .ts files nor adds it to .tsx files, so the
-    // extension decides: `jsx` breaks `<T>value` assertions in .ts
+    // Babel 8's TypeScript preset runs later and leaves `jsx` on .ts files,
+    // where it breaks `<T>value` assertions, so the extension decides first
     manipulateOptions(opts, parserOpts) {
       if (
         /\.[cm]?ts$/.test(opts.filename) ||

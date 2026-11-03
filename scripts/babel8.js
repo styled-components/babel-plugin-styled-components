@@ -88,28 +88,27 @@ const main = async () => {
   const failed = []
 
   for (const name of fs.readdirSync(FIXTURES).sort()) {
-    const dir = path.join(FIXTURES, name)
-    const config = readConfig(dir)
-
     if (SKIP[name]) {
       skipped.push(`${name}: ${SKIP[name]}`)
       continue
     }
 
+    const dir = path.join(FIXTURES, name)
+    const config = readConfig(dir)
     const filename = path.join(dir, 'code.js')
     const code = read(filename)
-    const pluginOnly = usesOtherBabelPlugins(config)
+    const matchesBabel7 = usesOtherBabelPlugins(config)
     const options = {
       ...config,
       presets: [],
-      plugins: config.plugins
+      plugins: (config.plugins || [])
         .filter(entry => (Array.isArray(entry) ? entry[0] : entry) === PLUGIN)
         .map(entry => (Array.isArray(entry) ? [lib, ...entry.slice(1)] : lib)),
       filename,
     }
 
     const actual = await transform(babel, code, options)
-    const expected = pluginOnly
+    const expected = matchesBabel7
       ? await transform(babel7, code, options)
       : (read(path.join(dir, 'output.js')) ?? read(path.join(dir, 'error.js')))
     if (actual === expected) passed++
