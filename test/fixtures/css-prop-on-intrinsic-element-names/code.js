@@ -16,3 +16,13 @@ const Svg = () => (
 const Underscore = () => <foo_bar css="flex: 5">H</foo_bar>
 
 const HyphenatedMember = () => <Icons.arrow-up css="flex: 6" />
+
+const myButton = styled.button``
+const my_card = styled.div``
+
+const BoundLowercase = () => (
+  <>
+    <myButton css="flex: 7" />
+    <my_card css="flex: 8" />
+  </>
+)

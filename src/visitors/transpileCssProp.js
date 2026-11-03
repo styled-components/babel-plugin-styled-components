@@ -8,6 +8,8 @@ import {
 import { useCssProp, useCssPropImportPath } from '../utils/options'
 import { processCallExpression, processTaggedTemplate } from './process'
 
+const LOWERCASE_TAG_REGEXP = /^[a-z][a-z\d]*$/
+
 const ISSUE_URL =
   'https://github.com/styled-components/babel-plugin-styled-components'
 
@@ -101,10 +103,13 @@ export default t => {
       'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
     )
 
-    // Same rule JSX uses to render a name as an element instead of a binding
+    // JSX renders any lowercase-first name as an element, but `myButton` or
+    // `my_card` naming a binding has always resolved to that binding here
     const isTag =
       t.isJSXIdentifier(elem.node.name) &&
-      (t.react.isCompatTag(name) || !t.isValidIdentifier(name))
+      (!t.isValidIdentifier(name) ||
+        (t.react.isCompatTag(name) &&
+          (LOWERCASE_TAG_REGEXP.test(name) || !path.scope.getBinding(name))))
 
     let styled
     let injector

@@ -8,6 +8,14 @@ const Svg = () => <svg>
   </svg>;
 const Underscore = () => <_StyledFoo_bar>H</_StyledFoo_bar>;
 const HyphenatedMember = () => <_StyledIconsArrowUp />;
+const myButton = styled.button``;
+var _StyledMyButton = styled(myButton)`flex: 7`;
+const my_card = styled.div``;
+var _StyledMy_card = styled(my_card)`flex: 8`;
+const BoundLowercase = () => <>
+    <_StyledMyButton />
+    <_StyledMy_card />
+  </>;
 var _StyledButtonGhost = styled("button-ghost")`flex: 1`;
 var _StyledMyFooBar = styled("my-foo-bar")`flex: 2`;
 var _StyledFoo = styled("foo-1")`flex: 3`;
