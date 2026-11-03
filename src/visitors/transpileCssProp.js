@@ -99,10 +99,15 @@ export default t => {
       'Styled' + name.replace(/^([a-z])/, (match, p1) => p1.toUpperCase())
     )
 
+    // A hyphenated JSX name can't be a binding, so JSX renders it as an element
+    const isTag =
+      t.isJSXIdentifier(elem.node.name) &&
+      (TAG_NAME_REGEXP.test(name) || name.includes('-'))
+
     let styled
     let injector
 
-    if (TAG_NAME_REGEXP.test(name)) {
+    if (isTag) {
       styled = t.callExpression(importName, [t.stringLiteral(name)])
     } else {
       styled = t.callExpression(importName, [
